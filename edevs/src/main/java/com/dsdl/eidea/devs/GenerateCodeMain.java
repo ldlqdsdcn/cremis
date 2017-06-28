@@ -37,9 +37,9 @@ public class GenerateCodeMain implements CodeGenerationService {
         codeMain.messageService = applicationContext.getBean(MessageService.class);
         codeMain.languageService = applicationContext.getBean(LanguageService.class);
         codeMain.pageMenuService=applicationContext.getBean(PageMenuService.class);
-        GenModelDto genModelDto = new GenModelDto("test_leave", "Leave", "test", "用户Session");
-        genModelDto.setPagingByDb(false);
-        genModelDto.setBasePackage("com.dsdl.eidea");
+        GenModelDto genModelDto = new GenModelDto("base_areas", "Area", "base", "区域");
+        genModelDto.setPagingByDb(true);
+        genModelDto.setBasePackage("cn.cityre.edi.mis");
         List<GenModelDto> list = new ArrayList<>();
         list.add(genModelDto);
 
@@ -47,7 +47,7 @@ public class GenerateCodeMain implements CodeGenerationService {
         /**
          * 设置项目跟目录
          */
-        genSettings.setRootPath("D:\\dsdl\\code\\eidea4\\");
+        genSettings.setRootPath("D:\\dsdl\\code\\cremis\\");
         /**
          * 设置 controller 和 jsp文件输出项目位置
          */

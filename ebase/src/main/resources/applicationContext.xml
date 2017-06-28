@@ -21,6 +21,8 @@
     <context:component-scan base-package="com.dsdl.eidea.**.dao"/>
     <context:component-scan base-package="com.dsdl.eidea.core.init"/>
     <context:component-scan base-package="com.dsdl.eidea.**.service"/>
+    <context:component-scan base-package="cn.cityre.edi.**.service"/>
+    <context:component-scan base-package="cn.cityre.edi.**.dao"/>
     <context:component-scan base-package="com.dsdl.eidea.core.web.converter"/>
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
