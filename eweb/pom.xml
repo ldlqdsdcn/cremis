@@ -151,7 +151,6 @@
             <artifactId>batik-svggen</artifactId>
             <version>1.7</version>
         </dependency>
-
     </dependencies>
     <build>
         <plugins>
@@ -164,6 +163,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>cremis</finalName>
     </build>
 
 </project>

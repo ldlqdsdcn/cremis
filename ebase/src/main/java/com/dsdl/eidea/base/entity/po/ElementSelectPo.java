@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "core_element_select",catalog = "e_idea")
+@Table(name = "core_element_select",catalog = "cre_mis")
 public class ElementSelectPo {
     @Id
     @Column(name = "id",nullable = false,unique = true,length = 11)

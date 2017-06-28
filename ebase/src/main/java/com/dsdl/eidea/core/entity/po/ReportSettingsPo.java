@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Entity
 @Setter
 @Getter
-@Table(name = "core_report_settings", catalog = "e_idea")
+@Table(name = "core_report_settings", catalog = "cre_mis")
 public class ReportSettingsPo implements Serializable {
     @Id
     @Column(name = "[key]", unique = true, nullable = false, length = 100)
