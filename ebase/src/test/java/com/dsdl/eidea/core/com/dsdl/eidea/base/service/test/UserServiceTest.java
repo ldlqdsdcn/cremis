@@ -1,5 +1,8 @@
 package com.dsdl.eidea.core.com.dsdl.eidea.base.service.test;
 
+import cn.cityre.edi.mis.sys.entity.bo.CityCanAccessedBo;
+import cn.cityre.edi.mis.sys.entity.bo.LetterBo;
+import cn.cityre.edi.mis.sys.entity.bo.ProvinceAccessBo;
 import com.dsdl.eidea.base.def.OperatorDef;
 import com.dsdl.eidea.base.entity.bo.UserBo;
 import com.dsdl.eidea.base.entity.bo.UserSessionBo;
@@ -54,5 +57,23 @@ public class UserServiceTest {
         System.out.println(gson.toJson(userBoList.get(0)));
         List<UserSessionBo> userSessionBoList=userSessionService.getUserSessionList(new Search());
         System.out.println(gson.toJson(userSessionBoList.get(0)));
+    }
+    @Test
+    public void testGetUserAccessedCityList()
+    {
+     List<LetterBo> letterBos=   userService.getProvinceAccessList(1);
+     for(LetterBo letterBo:letterBos)
+     {
+         System.out.println(letterBo.getFirstLetter());
+         for(ProvinceAccessBo provinceAccessBo:letterBo.getProvinceAccessBoList())
+         {
+             System.out.println(provinceAccessBo.getName());
+             for(CityCanAccessedBo cityCanAccessedBo:provinceAccessBo.getCityCanAccessedBoList())
+             {
+                 System.out.print(cityCanAccessedBo.getCityName()+" ");
+             }
+             System.out.println();
+         }
+     }
     }
 }

@@ -1,5 +1,7 @@
 package com.dsdl.eidea.base.service;
 
+import cn.cityre.edi.mis.sys.entity.bo.LetterBo;
+import cn.cityre.edi.mis.sys.entity.bo.ProvinceAccessBo;
 import com.dsdl.eidea.base.def.OperatorDef;
 import com.dsdl.eidea.base.entity.bo.*;
 import com.dsdl.eidea.core.dto.PaginationResult;
@@ -94,4 +96,18 @@ public interface UserService {
      * saveUserForProfile:修改个人设置信息
      */
     void saveUserForProfile(UserBo userBo);
+
+    /**
+     * 获取用户可访问的省份列表
+     * @param userId
+     * @return
+     */
+    List<LetterBo> getProvinceAccessList(Integer userId);
+
+    /**
+     * 保存用户访问城市权限
+     * @param userId 当前选择的用户id
+     * @param letterBoList 当前选择的权限列表
+     */
+    void saveUserAccessCitiesPrivileges(Integer userId,List<LetterBo> letterBoList);
 }

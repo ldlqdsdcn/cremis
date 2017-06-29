@@ -1,8 +1,10 @@
 package com.dsdl.eidea.base.web.controller;
 
-import com.dsdl.eidea.base.entity.bo.ModuleRoleBo;
-import com.dsdl.eidea.base.entity.bo.RoleBo;
+import cn.cityre.edi.mis.sys.entity.bo.LetterBo;
+import com.dsdl.eidea.base.entity.bo.*;
 import com.dsdl.eidea.base.service.RoleService;
+import com.dsdl.eidea.base.web.vo.RoleAccessCitiesVo;
+import com.dsdl.eidea.base.web.vo.UserAccessCitiesVo;
 import com.dsdl.eidea.base.web.vo.UserResource;
 import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.DeleteParams;
@@ -16,12 +18,10 @@ import com.googlecode.genericdao.search.Search;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.management.relation.Role;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -117,5 +117,26 @@ public class RoleController {
         }
         roleService.deletes(deleteParams.getIds());
         return list(session,deleteParams.getQueryParams());
+    }
+
+    @RequestMapping(value = "/saveRoleAccessCitiesPrivileges", method = RequestMethod.POST)
+    @ResponseBody
+    @RequiresPermissions(value = "update")
+    public JsonResult<RoleAccessCitiesVo> saveRoleAccessCitiesPrivileges(@RequestBody RoleAccessCitiesVo userAccessCitiesVo) {
+        roleService.saveRoleAccessCitiesPrivileges(userAccessCitiesVo.getRoleId(), userAccessCitiesVo.getLetterBoList());
+        return getRoleAccessCities(userAccessCitiesVo.getRoleId());
+    }
+
+    @RequestMapping(value = "/getRoleAccessCities/{roleId}", method = RequestMethod.GET)
+    @ResponseBody
+    @RequiresPermissions(value = "view")
+    public JsonResult<RoleAccessCitiesVo> getRoleAccessCities(@PathVariable("roleId") Integer roleId) {
+        RoleBo roleBo = roleService.getRoleBo(roleId);
+        List<LetterBo> letterBoList = roleService.getProvinceAccessList(roleId);
+        RoleAccessCitiesVo roleAccessCitiesVo = new RoleAccessCitiesVo();
+        roleAccessCitiesVo.setLetterBoList(letterBoList);
+        roleAccessCitiesVo.setRoleId(roleId);
+        roleAccessCitiesVo.setName(roleBo.getName());
+        return JsonResult.success(roleAccessCitiesVo);
     }
 }

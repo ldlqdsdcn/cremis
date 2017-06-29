@@ -2,6 +2,7 @@ package com.dsdl.eidea.base.service;
 
 import java.util.List;
 
+import cn.cityre.edi.mis.sys.entity.bo.LetterBo;
 import com.dsdl.eidea.base.entity.bo.RoleBo;
 import com.dsdl.eidea.base.entity.po.RolePo;
 import com.dsdl.eidea.core.dto.PaginationResult;
@@ -26,4 +27,18 @@ public interface RoleService {
 
     boolean getHasUsers(Integer id);
 
+
+    /**
+     * 获取用户可访问的省份列表
+     * @param roleId
+     * @return
+     */
+    List<LetterBo> getProvinceAccessList(Integer roleId);
+
+    /**
+     * 保存用户访问城市权限
+     * @param roleId 当前选择的角色id
+     * @param letterBoList 当前选择的权限列表
+     */
+    void saveRoleAccessCitiesPrivileges(Integer roleId,List<LetterBo> letterBoList);
 }

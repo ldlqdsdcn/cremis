@@ -1,5 +1,11 @@
 package com.dsdl.eidea.base.service.impl;
 
+import cn.cityre.edi.mis.base.entity.po.CityPo;
+import cn.cityre.edi.mis.base.entity.po.ProvincePo;
+import cn.cityre.edi.mis.sys.entity.bo.CityCanAccessedBo;
+import cn.cityre.edi.mis.sys.entity.bo.LetterBo;
+import cn.cityre.edi.mis.sys.entity.bo.ProvinceAccessBo;
+import cn.cityre.edi.mis.sys.entity.po.UserCityAccessPo;
 import com.dsdl.eidea.base.service.AccountService;
 import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.QueryParams;
@@ -13,6 +19,7 @@ import com.dsdl.eidea.base.entity.po.*;
 import com.dsdl.eidea.base.service.UserService;
 import com.dsdl.eidea.base.util.JwtUtil;
 import com.dsdl.eidea.core.dao.CommonDao;
+import com.dsdl.eidea.util.ChineseCharToEn;
 import com.googlecode.genericdao.search.Search;
 import com.googlecode.genericdao.search.SearchResult;
 import org.modelmapper.ModelMapper;
@@ -25,6 +32,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * Created by Bobo on 2016/12/17 14:02.
@@ -34,11 +43,17 @@ public class UserServiceImpl implements UserService {
     @DataAccess(entity = UserPo.class)
     private CommonDao<UserPo, Integer> userDao;
     @DataAccess(entity = RolePo.class)
-    private CommonDao<RolePo,Integer> roleDao;
+    private CommonDao<RolePo, Integer> roleDao;
     @DataAccess(entity = UserRolePo.class)
     private CommonDao<UserRolePo, Integer> userRoleDao;
     @DataAccess(entity = UserSessionPo.class)
     private CommonDao<UserSessionPo, Integer> userSessionDao;
+    @DataAccess(entity = UserCityAccessPo.class)
+    private CommonDao<UserCityAccessPo, Integer> userCityAccessDao;
+    @DataAccess(entity = CityPo.class)
+    private CommonDao<CityPo, Integer> cityDao;
+    @DataAccess(entity = ProvincePo.class)
+    private CommonDao<ProvincePo, Integer> provinceDao;
     @Autowired
     private AccountService accountService;
     private ModelMapper modelMapper = new ModelMapper();
@@ -48,22 +63,23 @@ public class UserServiceImpl implements UserService {
         search.setFirstResult(queryParams.getFirstResult());
         search.setMaxResults(queryParams.getPageSize());
         PaginationResult<UserBo> paginationResult = null;
-        if (queryParams.isInit()){
+        if (queryParams.isInit()) {
             SearchResult<UserPo> searchResult = userDao.searchAndCount(search);
-            List<UserBo> list = modelMapper.map(searchResult.getResult(),new TypeToken<List<UserBo>>(){}.getType());
-            paginationResult = PaginationResult.pagination(list,searchResult.getTotalCount(),queryParams.getPageNo(),queryParams.getPageSize());
-        }else{
+            List<UserBo> list = modelMapper.map(searchResult.getResult(), new TypeToken<List<UserBo>>() {
+            }.getType());
+            paginationResult = PaginationResult.pagination(list, searchResult.getTotalCount(), queryParams.getPageNo(), queryParams.getPageSize());
+        } else {
             List<UserPo> userPoList = userDao.search(search);
-            List<UserBo> userBoList = modelMapper.map(userPoList,new TypeToken<List<UserBo>>(){}.getType());
-            paginationResult = PaginationResult.pagination(userBoList,queryParams.getTotalRecords(),queryParams.getPageNo(),queryParams.getPageSize());
+            List<UserBo> userBoList = modelMapper.map(userPoList, new TypeToken<List<UserBo>>() {
+            }.getType());
+            paginationResult = PaginationResult.pagination(userBoList, queryParams.getTotalRecords(), queryParams.getPageNo(), queryParams.getPageSize());
         }
         return paginationResult;
     }
 
     @Override
     public void deleteUserList(Integer[] ids) {
-        for(Integer id:ids)
-        {
+        for (Integer id : ids) {
             accountService.deleteUser(id);
         }
         userDao.removeByIdsForLog(ids);
@@ -288,11 +304,12 @@ public class UserServiceImpl implements UserService {
         UserContent userContent = new UserContent(privilegesMap, userSessionBo, token, orgIdList);
         return userContent;
     }
+
     @Override
     public UserBo getUserByUsername(String username) {
         Search search = new Search();
         search.addFilterEqual("username", username);
-        UserPo userPo=userDao.searchUnique(search);
+        UserPo userPo = userDao.searchUnique(search);
         UserBo userBo = modelMapper.map(userPo, UserBo.class);
         if (userPo != null) {
             List<UserRoleBo> userRoleBoList = modelMapper.map(userPo.getSysUserRoles(), new TypeToken<List<UserRoleBo>>() {
@@ -310,8 +327,87 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUserForProfile(UserBo userBo) {
-        UserPo userPo=userDao.find(userBo.getId());
+        UserPo userPo = userDao.find(userBo.getId());
         userPo.setName(userBo.getName());
         userDao.saveForLog(userPo);
+    }
+
+    /**
+     * @param userId
+     * @return
+     * @see UserService#getCanAccessOrgList(Integer)
+     */
+    @Override
+    public List<LetterBo> getProvinceAccessList(Integer userId) {
+        ChineseCharToEn chineseCharToEn = new ChineseCharToEn();
+        Search search = new Search();
+        search.addFilterEqual("userId", userId);
+        List<UserCityAccessPo> userCityAccessPoList = userCityAccessDao.search(search);
+        Search provinceSearch = new Search();
+        provinceSearch.addFilterEqual("isactive", "Y");
+        List<ProvincePo> provincePoList = provinceDao.search(provinceSearch);
+        Map<String, LetterBo> letterBoMap = new HashMap<>();
+        List<ProvinceAccessBo> provinceAccessBoList = new ArrayList<>();
+        for (ProvincePo provincePo : provincePoList) {
+            String firstLetter = chineseCharToEn.getFirstLetter(provincePo.getProvince());
+            LetterBo letterBo = letterBoMap.get(firstLetter);
+            if (letterBo == null) {
+                letterBo = new LetterBo();
+                letterBo.setFirstLetter(firstLetter);
+                letterBoMap.put(firstLetter, letterBo);
+            }
+            ProvinceAccessBo provinceAccessBo = new ProvinceAccessBo();
+            provinceAccessBo.setName(provincePo.getProvince());
+            provinceAccessBo.setProvinceNo(provincePo.getProvinceid());
+            provinceAccessBo.setProvinceId(provincePo.getId());
+            letterBo.addProvinceAccessBo(provinceAccessBo);
+            provinceAccessBoList.add(provinceAccessBo);
+        }
+        Search citySearch = new Search();
+        citySearch.addFilterEqual("isactive", "Y");
+        List<CityPo> cityPoList = cityDao.search(citySearch);
+
+        cityPoList.forEach(cityPo -> {
+            ProvinceAccessBo provinceAccessBo = getProvinceAccessBo(provinceAccessBoList, cityPo.getProvinceid());
+            CityCanAccessedBo cityCanAccessedBo = new CityCanAccessedBo();
+            cityCanAccessedBo.setSelected(isSelected(userCityAccessPoList, cityPo.getId()));
+            cityCanAccessedBo.setCityId(cityPo.getId());
+            cityCanAccessedBo.setCityName(cityPo.getCity());
+            provinceAccessBo.addCityCanAccessedBo(cityCanAccessedBo);
+        });
+        List<LetterBo> letterBoList = letterBoMap.values().stream().sorted((LetterBo letterBo1, LetterBo letterBo2) -> letterBo1.getFirstLetter().compareTo(letterBo2.getFirstLetter())).collect(Collectors.toList());
+        return letterBoList;
+    }
+
+    @Override
+    public void saveUserAccessCitiesPrivileges(Integer userId, List<LetterBo> letterBoList) {
+        List<CityCanAccessedBo> cityCanAccessedBos = new ArrayList<>();
+        letterBoList.forEach(e -> {
+            e.getProvinceAccessBoList().forEach(p -> {
+                List<CityCanAccessedBo> selectedList = p.getCityCanAccessedBoList().stream().filter(e2 -> e2.isSelected()).collect(Collectors.toList());
+                cityCanAccessedBos.addAll(selectedList);
+            });
+        });
+        Search search = new Search();
+        search.addFilterEqual("userId", userId);
+        search.addField("id");
+        List<Integer> userCityAccessPoIdList = userCityAccessDao.search(search);
+        for (Integer id : userCityAccessPoIdList) {
+            userCityAccessDao.removeById(id);
+        }
+        for (CityCanAccessedBo cityCanAccessedBo : cityCanAccessedBos) {
+            UserCityAccessPo userCityAccessPo = new UserCityAccessPo();
+            userCityAccessPo.setCityId(cityCanAccessedBo.getCityId());
+            userCityAccessPo.setUserId(userId);
+            userCityAccessDao.save(userCityAccessPo);
+        }
+    }
+
+    private boolean isSelected(List<UserCityAccessPo> userCityAccessPoList, Integer cityId) {
+        return userCityAccessPoList.stream().anyMatch(e -> e.getCityId().equals(cityId));
+    }
+
+    private ProvinceAccessBo getProvinceAccessBo(List<ProvinceAccessBo> provinceAccessBoList, String provinceNo) {
+        return provinceAccessBoList.stream().filter(e -> e.getProvinceNo().equals(provinceNo)).findFirst().orElseThrow(() -> new NullPointerException("找不到" + provinceNo + "对应的城市"));
     }
 }

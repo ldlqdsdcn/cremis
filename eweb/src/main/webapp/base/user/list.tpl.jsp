@@ -48,6 +48,10 @@
                         <a class="btn btn-primary btn-xs" href="#/edit?id={{user.id}}">
                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;<eidea:label key="common.button.edit"/><%--编辑--%>
                         </a>
+
+                        <a class="btn btn-primary btn-xs" href="#/accessCities?id={{user.id}}">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;用户权限
+                        </a>
                     </td>
                 </tr>
                 </tbody>

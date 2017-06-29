@@ -1,5 +1,12 @@
 package com.dsdl.eidea.base.service.impl;
 
+import cn.cityre.edi.mis.base.entity.po.CityPo;
+import cn.cityre.edi.mis.base.entity.po.ProvincePo;
+import cn.cityre.edi.mis.sys.entity.bo.CityCanAccessedBo;
+import cn.cityre.edi.mis.sys.entity.bo.LetterBo;
+import cn.cityre.edi.mis.sys.entity.bo.ProvinceAccessBo;
+import cn.cityre.edi.mis.sys.entity.po.RoleCityAccessPo;
+import cn.cityre.edi.mis.sys.entity.po.UserCityAccessPo;
 import com.dsdl.eidea.base.service.AccountService;
 import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.QueryParams;
@@ -11,6 +18,7 @@ import com.dsdl.eidea.base.entity.bo.RoleOrgaccessBo;
 import com.dsdl.eidea.base.entity.po.*;
 import com.dsdl.eidea.base.service.RoleService;
 import com.dsdl.eidea.core.dao.CommonDao;
+import com.dsdl.eidea.util.ChineseCharToEn;
 import com.googlecode.genericdao.search.ISearch;
 import com.googlecode.genericdao.search.Search;
 import com.googlecode.genericdao.search.SearchResult;
@@ -20,8 +28,11 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.management.relation.Role;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,6 +53,14 @@ public class RoleServiceImpl implements RoleService {
     private CommonDao<RoleOrgaccessPo, Integer> roleOrgaccessDao;
     @Autowired
     private AccountService accountService;
+    @DataAccess(entity = RoleCityAccessPo.class)
+    private CommonDao<RoleCityAccessPo, Integer> roleCityAccessDao;
+    @DataAccess(entity = CityPo.class)
+    private CommonDao<CityPo, Integer> cityDao;
+    @DataAccess(entity = ProvincePo.class)
+    private CommonDao<ProvincePo, Integer> provinceDao;
+
+
     private final ModelMapper modelMapper = new ModelMapper();
 
     public RoleServiceImpl() {
@@ -184,6 +203,7 @@ public class RoleServiceImpl implements RoleService {
         return false;
     }
 
+
     private RoleBo initRoleBoByPo(RolePo rolePo) {
         RoleBo roleBo = null;
         if (rolePo == null) {
@@ -311,5 +331,79 @@ public class RoleServiceImpl implements RoleService {
             accountService.deleteRole(id);
         }
         roleDao.removeByIdsForLog(ids);
+    }
+
+
+    @Override
+    public List<LetterBo> getProvinceAccessList(Integer roleId) {
+        ChineseCharToEn chineseCharToEn = new ChineseCharToEn();
+        Search search = new Search();
+        search.addFilterEqual("roleId", roleId);
+        List<RoleCityAccessPo> roleCityAccessPoList = roleCityAccessDao.search(search);
+        Search provinceSearch = new Search();
+        provinceSearch.addFilterEqual("isactive", "Y");
+        List<ProvincePo> provincePoList = provinceDao.search(provinceSearch);
+        Map<String, LetterBo> letterBoMap = new HashMap<>();
+        List<ProvinceAccessBo> provinceAccessBoList = new ArrayList<>();
+        for (ProvincePo provincePo : provincePoList) {
+            String firstLetter = chineseCharToEn.getFirstLetter(provincePo.getProvince());
+            LetterBo letterBo = letterBoMap.get(firstLetter);
+            if (letterBo == null) {
+                letterBo = new LetterBo();
+                letterBo.setFirstLetter(firstLetter);
+                letterBoMap.put(firstLetter, letterBo);
+            }
+            ProvinceAccessBo provinceAccessBo = new ProvinceAccessBo();
+            provinceAccessBo.setName(provincePo.getProvince());
+            provinceAccessBo.setProvinceNo(provincePo.getProvinceid());
+            provinceAccessBo.setProvinceId(provincePo.getId());
+            letterBo.addProvinceAccessBo(provinceAccessBo);
+            provinceAccessBoList.add(provinceAccessBo);
+        }
+        Search citySearch = new Search();
+        citySearch.addFilterEqual("isactive", "Y");
+        List<CityPo> cityPoList = cityDao.search(citySearch);
+
+        cityPoList.forEach(cityPo -> {
+            ProvinceAccessBo provinceAccessBo = getProvinceAccessBo(provinceAccessBoList, cityPo.getProvinceid());
+            CityCanAccessedBo cityCanAccessedBo = new CityCanAccessedBo();
+            cityCanAccessedBo.setSelected(isSelected(roleCityAccessPoList, cityPo.getId()));
+            cityCanAccessedBo.setCityId(cityPo.getId());
+            cityCanAccessedBo.setCityName(cityPo.getCity());
+            provinceAccessBo.addCityCanAccessedBo(cityCanAccessedBo);
+        });
+        List<LetterBo> letterBoList = letterBoMap.values().stream().sorted((LetterBo letterBo1, LetterBo letterBo2) -> letterBo1.getFirstLetter().compareTo(letterBo2.getFirstLetter())).collect(Collectors.toList());
+        return letterBoList;
+    }
+
+    @Override
+    public void saveRoleAccessCitiesPrivileges(Integer roleId, List<LetterBo> letterBoList) {
+        List<CityCanAccessedBo> cityCanAccessedBos = new ArrayList<>();
+        letterBoList.forEach(e -> {
+            e.getProvinceAccessBoList().forEach(p -> {
+                List<CityCanAccessedBo> selectedList = p.getCityCanAccessedBoList().stream().filter(e2 -> e2.isSelected()).collect(Collectors.toList());
+                cityCanAccessedBos.addAll(selectedList);
+            });
+        });
+        Search search = new Search();
+        search.addFilterEqual("roleId", roleId);
+        search.addField("id");
+        List<Integer> roleCityAccessPoIdList = roleCityAccessDao.search(search);
+        for (Integer id : roleCityAccessPoIdList) {
+            roleCityAccessDao.removeById(id);
+        }
+        for (CityCanAccessedBo cityCanAccessedBo : cityCanAccessedBos) {
+            RoleCityAccessPo roleCityAccessPo = new RoleCityAccessPo();
+            roleCityAccessPo.setCityId(cityCanAccessedBo.getCityId());
+            roleCityAccessPo.setRoleId(roleId);
+            roleCityAccessDao.save(roleCityAccessPo);
+        }
+    }
+    private boolean isSelected(List<RoleCityAccessPo> roleCityAccessPoList, Integer cityId) {
+        return roleCityAccessPoList.stream().anyMatch(e -> e.getCityId().equals(cityId));
+    }
+
+    private ProvinceAccessBo getProvinceAccessBo(List<ProvinceAccessBo> provinceAccessBoList, String provinceNo) {
+        return provinceAccessBoList.stream().filter(e -> e.getProvinceNo().equals(provinceNo)).findFirst().orElseThrow(() -> new NullPointerException("找不到" + provinceNo + "对应的城市"));
     }
 }

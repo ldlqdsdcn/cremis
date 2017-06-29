@@ -1,16 +1,10 @@
 
 package com.dsdl.eidea.base.entity.bo;
 
-import com.dsdl.eidea.base.entity.po.UserRolePo;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
-
-import javax.persistence.Column;
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Bobo on 2016/12/17 13:59.

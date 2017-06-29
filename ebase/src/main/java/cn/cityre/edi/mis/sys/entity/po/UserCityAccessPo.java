@@ -3,7 +3,7 @@ package cn.cityre.edi.mis.sys.entity.po;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 /**
  * Created by 刘大磊 on 2017/6/28 16:45.
@@ -12,8 +12,13 @@ import javax.persistence.Entity;
 @Getter
 @Setter
 @Entity(name = "sys_user_cityaccess")
-public class UserCityAccess {
+public class UserCityAccessPo {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "[id]")
+    @Id
     private Integer id;
+    @Column(name = "user_id" )
     private Integer userId;
+    @Column(name = "city_id" )
     private Integer cityId;
 }
