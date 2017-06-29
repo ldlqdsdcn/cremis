@@ -10,27 +10,21 @@
     <div id="changePassword" class="modal-dialog" ng-app='passwordApp'>
         <div class="modal-content" ng-controller="listCtrl">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="myModalLabel">请选择城市</h4>
             </div>
             <form name="editForm" novalidate ng-submit="save()" method="post" class="form-horizontal form-label-left">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label><%--旧密码--%><eidea:label key="change.password.button.old.password"/></label>
-                        <input type="password" class="form-control" placeholder="<eidea:label key="change.password.input.old.password"/>" ng-model="userBo.oldPassword" required minlength="6" ng-maxlength="45"/>
+                        <select id="provinceList" ng-model="datadictPo.dataType"
+                                ng-options="datadictTypePo.value as datadictTypePo.value for datadictTypePo in datadictTypeList" required></select>
                     </div>
                     <div class="form-group">
-                        <label><%--新密码--%><eidea:label key="change.password.button.new.password"/></label>
-                        <input type="password" class="form-control" placeholder="<eidea:label key="change.password.input.new.password"/>" ng-model="userBo.password" required minlength="6" ng-maxlength="45"/>
+                        <select id="cityList"></select>
                     </div>
-                    <div class="form-group">
-                        <label><%--确认密码--%><eidea:label key="change.password.button.confirm.password"/></label>
-                        <input type="password" class="form-control" placeholder="<eidea:label key="change.password.input.confirm.password"/>" ng-model="userBo.repassword" required minlength="6" ng-maxlength="45"/>
-                    </div>
+
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><%--关闭--%><eidea:label key="common.button.closed"/></button>
-                    <button type="submit" class="btn btn-primary" ng-disabled="unableChange"><%--提交更改--%><eidea:label key="change.password.input.submit.changes"/></button>
+                       <button type="submit" class="btn btn-primary" ><eidea:label key="common.button.save"/></button>
                 </div>
                 <div class="form-group">
                     <p class="text-center" style="color: red"  >

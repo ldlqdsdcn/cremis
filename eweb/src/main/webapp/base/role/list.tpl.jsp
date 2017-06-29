@@ -38,6 +38,9 @@
                         <a class="btn btn-primary btn-xs" href="#/edit?id={{model.id}}">
                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;<eidea:label key="common.button.edit"/><%--编辑--%>
                         </a>
+                        <a class="btn btn-primary btn-xs" href="#/accessCities?id={{model.id}}">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;城市权限
+                        </a>
                     </td>
                 </tr>
                 <tr>

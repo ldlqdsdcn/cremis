@@ -5,6 +5,7 @@
 * email:ldlqdsd@126.com
 */
 package cn.cityre.edi.mis.base.service;
+import cn.cityre.edi.mis.base.entity.po.CityPo;
 import cn.cityre.edi.mis.base.entity.po.ProvincePo;
 import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.QueryParams;
@@ -19,4 +20,19 @@ public interface ProvinceService {
 	ProvincePo getProvince(Integer id);
 	void saveProvince(ProvincePo province);
 	void deletes(Integer[] ids);
+
+	/**
+	 * 获取用户可以操作的省份
+	 * @param userId
+	 * @return
+	 */
+	List<ProvincePo> getProvinceList(Integer userId);
+
+	/**
+	 * 获取用户可以操作的城市
+	 * @param userId
+	 * @param provinceId
+	 * @return
+	 */
+	List<CityPo> getCityListByProvinceId(Integer userId,Integer provinceId);
 }

@@ -27,6 +27,7 @@
                 $routeProvider
                         .when('/list', {templateUrl: '<c:url value="/base/role/list.tpl.jsp"/>'})
                         .when('/edit', {templateUrl: '<c:url value="/base/role/edit.tpl.jsp"/>'})
+                    .when('/accessCities',{templateUrl: '<c:url value="/base/role/roleAccessCities.tpl.jsp"/>'})
                         .otherwise({redirectTo: '/list'});
             }]);
     app.controller('listCtrl', function ($rootScope,$scope,$http,$window) {
@@ -199,7 +200,112 @@
 
         buttonHeader.editInit($scope,$http,$window,$timeout, Upload,"/base");
     });
+    app.controller('accessCitiesCtrl', function ($routeParams,$scope, $http,$window,$timeout, Upload) {
+        $scope.checkedall=false;
+        $scope.canAdd=PrivilegeService.hasPrivilege('add');
+        $scope.canSave=false;
+        //用户编辑
 
+        url = "<c:url value="/base/role/getRoleAccessCities/"/>"+ $routeParams.id;
+        $http.get(url).success(function (data) {
+            if (data.success) {
+                $scope.userBo = data.data;
+                $scope.canSave=PrivilegeService.hasPrivilege('update');
+            } else {
+                bootbox.alert(data.message);
+            }
+        }).error(function (data) {
+            bootbox.alert(data);
+        })
+        //验证登录名称
+        var userName = true;
+        //用户保存
+        $scope.save = function () {
+
+
+            var postUrl = '<c:url value="/base/role/saveRoleAccessCitiesPrivileges"/>';
+
+            $http.post(postUrl, $scope.userBo).success(function (data) {
+                if (data.success) {
+                    $scope.errorCode = -1;
+                    $scope.message = "<eidea:label key="base.save.success"/>";
+                    $scope.userBo = data.data;
+                } else {
+                    $scope.message = data.message;
+                    $scope.errorCode = data.errorCode;
+                    if (data.errorCode == ERROR_VALIDATE_PARAM) {
+                        $scope.errorMessages = data.data;
+                    }
+                    else {
+                        $scope.errorMessages = [data.message];
+                    }
+                }
+            });
+
+        }
+        var param = {"queryParams": $scope.queryParams};
+
+        $scope.selectAll=function ()
+        {
+            $scope.checkedall = !$scope.checkedall;
+
+            var letterList = $scope.userBo.letterBoList;
+            for (var i = 0; i < letterList.length; i++) {
+                var letter = letterList[i];
+                var provinceAccessBoList = letter.provinceAccessBoList;
+                for (var j = 0; j < provinceAccessBoList.length; j++) {
+                    var p = provinceAccessBoList[j];
+                    p.selected = $scope.checkedall;
+                    var cities = p.cityCanAccessedBoList;
+                    for (var t = 0; t < cities.length; t++) {
+                        cities[t].selected = $scope.checkedall;
+                    }
+
+
+                }
+
+
+            }
+        }
+        $scope.selectAllByProvince=function(provinceId)
+        {
+            var letterList=$scope.userBo.letterBoList;
+            for(var i=0;i<letterList.length;i++)
+            {
+                var letter=letterList[i];
+                var provinceAccessBoList=  letter.provinceAccessBoList;
+                for(var j=0;j<provinceAccessBoList.length;j++)
+                {
+                    var p=provinceAccessBoList[j];
+                    if(p.provinceId==provinceId)
+                    {
+                        if(p.selected)
+                        {
+                            p.selected=false;
+                        }
+                        else
+                        {
+                            p.selected=true;
+                        }
+                        var cities=p.cityCanAccessedBoList;
+                        for(var t=0;t<cities.length;t++)
+                        {
+                            cities[t].selected=p.selected;
+                        }
+                        return;
+                    }
+
+
+                }
+
+            }
+
+        }
+
+
+
+        buttonHeader.editInit($scope,$http,$window,$timeout, Upload,"/base");
+    });
     app.run([
         'bootstrap3ElementModifier',
         function (bootstrap3ElementModifier) {

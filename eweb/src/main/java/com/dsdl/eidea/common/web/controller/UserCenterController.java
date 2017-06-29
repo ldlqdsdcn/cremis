@@ -1,5 +1,8 @@
 package com.dsdl.eidea.common.web.controller;
 
+import cn.cityre.edi.mis.base.entity.po.CityPo;
+import cn.cityre.edi.mis.base.entity.po.ProvincePo;
+import cn.cityre.edi.mis.base.service.CityService;
 import com.dsdl.eidea.base.entity.bo.ChangePasswordBo;
 import com.dsdl.eidea.base.entity.bo.UserBo;
 import com.dsdl.eidea.base.entity.bo.UserContent;
@@ -12,12 +15,11 @@ import com.dsdl.eidea.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by 刘大磊 on 2016/12/21 9:23.
@@ -28,6 +30,8 @@ public class UserCenterController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private CityService cityService;
 
     /**
      * changePassword:用户修改密码
@@ -89,5 +93,23 @@ public class UserCenterController {
         userService.saveUserForProfile(userBo);
         return getProfile(request);
     }
+    @RequestMapping(value = "/selectCity/{cityId}", method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult selectCity(@PathVariable("cityId") Integer cityId, HttpSession session)
+    {
+        CityPo cityPo=cityService.getCity(cityId);
+        session.setAttribute(WebConst.SESSION_CURRENT_CITY,cityPo);
+        return JsonResult.success("选择城市成功！");
+    }
+    @RequestMapping(value = "/getProvinceList", method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult<List<ProvincePo>> getProvinceList()
+    {
+        return null;
+    }
 
+    public JsonResult<List<CityPo>> getCityList()
+    {
+        return null;
+    }
 }

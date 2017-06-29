@@ -18,6 +18,7 @@ public class WebConst {
     public static final String SESSION_LANGUAGE="language";
     public static final String ORG_IDS = "orgIdList";
     public static final String SESSION_TIMESTAMP = "timestamp";
+    public static final String SESSION_CURRENT_CITY="currentCity";
     /**
      * token header 权限验证
      */
