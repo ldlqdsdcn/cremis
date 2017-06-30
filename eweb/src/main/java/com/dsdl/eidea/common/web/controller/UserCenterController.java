@@ -3,6 +3,7 @@ package com.dsdl.eidea.common.web.controller;
 import cn.cityre.edi.mis.base.entity.po.CityPo;
 import cn.cityre.edi.mis.base.entity.po.ProvincePo;
 import cn.cityre.edi.mis.base.service.CityService;
+import cn.cityre.edi.mis.base.service.ProvinceService;
 import com.dsdl.eidea.base.entity.bo.ChangePasswordBo;
 import com.dsdl.eidea.base.entity.bo.UserBo;
 import com.dsdl.eidea.base.entity.bo.UserContent;
@@ -32,6 +33,8 @@ public class UserCenterController {
     private UserService userService;
     @Autowired
     private CityService cityService;
+    @Autowired
+    private ProvinceService provinceService;
 
     /**
      * changePassword:用户修改密码
@@ -93,23 +96,28 @@ public class UserCenterController {
         userService.saveUserForProfile(userBo);
         return getProfile(request);
     }
+
     @RequestMapping(value = "/selectCity/{cityId}", method = RequestMethod.GET)
     @ResponseBody
-    public JsonResult selectCity(@PathVariable("cityId") Integer cityId, HttpSession session)
-    {
-        CityPo cityPo=cityService.getCity(cityId);
-        session.setAttribute(WebConst.SESSION_CURRENT_CITY,cityPo);
+    public JsonResult selectCity(@PathVariable("cityId") Integer cityId, HttpSession session) {
+        CityPo cityPo = cityService.getCity(cityId);
+        session.setAttribute(WebConst.SESSION_CURRENT_CITY, cityPo);
         return JsonResult.success("选择城市成功！");
     }
+
     @RequestMapping(value = "/getProvinceList", method = RequestMethod.GET)
     @ResponseBody
-    public JsonResult<List<ProvincePo>> getProvinceList()
-    {
-        return null;
+    public JsonResult<List<ProvincePo>> getProvinceList(HttpSession session) {
+        UserBo userBo = (UserBo) session.getAttribute(WebConst.SESSION_LOGINUSER);
+        List<ProvincePo> provincePoList = provinceService.getProvinceList(userBo.getId());
+        return JsonResult.success(provincePoList);
     }
 
-    public JsonResult<List<CityPo>> getCityList()
-    {
-        return null;
+    @RequestMapping(value = "/getCityList/{provinceId}", method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult<List<CityPo>> getCityList(HttpSession session, @PathVariable("provinceId") Integer provinceId) {
+        UserBo userBo = (UserBo) session.getAttribute(WebConst.SESSION_LOGINUSER);
+        List<CityPo> cityPoList = provinceService.getCityListByProvinceId(userBo.getId(), provinceId);
+        return JsonResult.success(cityPoList);
     }
 }

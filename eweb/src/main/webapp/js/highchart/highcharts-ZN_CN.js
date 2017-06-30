@@ -55,8 +55,8 @@
     },
       credits: {
           enabled: true,
-          text: '鼎商动力软件股份有限公司 ',
-          href: 'http://www.dsdl.com ',
+          text: '禧泰数据 ',
+          href: 'http://www.cityre.cn/',
           style: {
               color:'#c6c6cc',
               fontSize: '15px'

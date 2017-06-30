@@ -151,7 +151,7 @@
                         </li>
                         <li ng-app="changeLanguageApp" ng-controller="changeLanguageCtrl">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                {{defaultLanguageName}}
+                                <TAG ng-bind="defaultLanguageName"></TAG>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
                                 <li ng-repeat="language in languages">
@@ -161,7 +161,7 @@
 
                         </li>
                         <li >
-                            <a href="javascript:;" class="user-profile dropdown-toggle">[青岛]请选择城市</a>
+                            <a href="#"  class="user-profile dropdown-toggle" data-toggle="modal" data-target="#selectCityModal">[<c:out value="${sessionScope.currentCity.city}"/>]&nbsp;&nbsp;选择城市</a>
                         </li>
                     </ul>
                 </nav>
@@ -169,6 +169,7 @@
             <!--用户修改密码-->
             <%@ include file="/common/change_password.jsp" %>
             <!--用户修改密码-->
+            <%@ include file="/common/common_select_city.jsp" %>
         </div>
         <!--top navigation-->
         <!--page content-->
@@ -183,7 +184,7 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="home">
-                        <iframe src="<c:url value="/default.jsp"/>" width="100%" height="100%"  frameborder="0"></iframe>
+                        <iframe src="<c:url value="/common/dashboard.jsp"/>" width="100%" height="100%"  frameborder="0"></iframe>
                     </div>
                 </div>
             </div>
@@ -270,6 +271,9 @@
             }
         })
     })
+    <c:if test="${sessionScope.currentCity==null}">
+            $("#selectCityModal").modal('show');
+    </c:if>
 </script>
 </body>
 </html>

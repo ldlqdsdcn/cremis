@@ -7,19 +7,20 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="modal fade" id="selectCityModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div id="changePassword" class="modal-dialog" ng-app='passwordApp'>
-        <div class="modal-content" ng-controller="listCtrl">
+    <div id="selectCity" class="modal-dialog" ng-app='selectCityApp'>
+        <div class="modal-content" ng-controller="selectCityCtrl">
             <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="myModalLabel">请选择城市</h4>
             </div>
             <form name="editForm" novalidate ng-submit="save()" method="post" class="form-horizontal form-label-left">
                 <div class="modal-body">
                     <div class="form-group">
-                        <select id="provinceList" ng-model="datadictPo.dataType"
-                                ng-options="datadictTypePo.value as datadictTypePo.value for datadictTypePo in datadictTypeList" required></select>
+                        <select id="provinceList" class="form-control"   ng-change="changeCity()"
+                                ng-options="province.id as province.province for province in provinceList" ng-model="provinceId"></select>
                     </div>
                     <div class="form-group">
-                        <select id="cityList"></select>
+                        <select id="cityList" class="form-control" ng-options="city.id as city.city for city in cityList" ng-model="cityId"></select>
                     </div>
 
                 </div>
@@ -39,39 +40,54 @@
     </div>
 </div>
 <script type="text/javascript">
-    var app = angular.module('passwordApp', ['ngRoute', 'ui.bootstrap', 'jcs-autoValidate']).config(['$routeProvider', function ($routeProvider) {
+    var app = angular.module('selectCityApp', ['ngRoute', 'ui.bootstrap', 'jcs-autoValidate']).config(['$routeProvider', function ($routeProvider) {
     }]);
-    app.controller('listCtrl', function ($scope, $http) {
+    app.controller('selectCityCtrl', function ($scope, $http) {
+        $scope.provinceList=[];
+        $scope.cityList=[];
+        $scope.provinceId=null;
+        $scope.cityId=null;
+        $scope.getProvinceList = function () {
+            $http.get("<c:url value="/common/userCenter/getProvinceList"/>").success(function (data) {
+                if (data.success) {
+                    $scope.provinceList = data.data;
+                    if($scope.cityId==null)
+                    {
+                        $scope.provinceId=$scope.provinceList[0].id;
+                        $scope.getCityList($scope.provinceList[0].id);
+                    }
+                } else {
+                    bootbox.alert(data.message);
+                }
+            });
+        }
+        $scope.changeCity=function () {
+            $scope.getCityList($scope.provinceId);
+        }
+        $scope.getCityList = function (provinceId) {
+            $http.get("<c:url value="/common/userCenter/getCityList/"/>"+provinceId).success(function (data) {
+                if (data.success) {
+                    $scope.cityList = data.data;
+                    $scope.cityId=$scope.cityList[0].id;
+                } else {
+                    bootbox.alert(data.message);
+                }
+            });
+        }
+
         $scope.save=function () {
-            if($scope.userBo.oldPassword == $scope.userBo.password){
-                $scope.userBo.password="";
-                $scope.userBo.repassword="";
-                $scope.message="<eidea:message key="change.password.msg.new.old.password.can.not.same"/>";
-                return false;
-            }else{
-                $scope.message="";
-            }
-            if($scope.userBo.password == $scope.userBo.repassword){
-                $scope.message="";
-            }else{
-                $scope.message="<eidea:message key="change.password.msg.new.confirm.password.not.same"/>";
-                $scope.userBo.repassword="";
-                return false;
-            }
-            //用户密码修改
-            if ($scope.editForm.$valid) {
-                $scope.unableChange=true;
-                changePasswordVo={oldPassword:md5($scope.userBo.oldPassword),password:md5($scope.userBo.password)};
-                $http.post("<c:url value="/common/userCenter/changePassword"/>",changePasswordVo).success(function (data) {
+                $http.get("<c:url value="/common/userCenter/selectCity/"/>"+$scope.cityId).success(function (data) {
                     if (data.success) {
                         $scope.message=data.data;
+                        $('#selectCityModal').modal('hide');
+                        window.location.href="<c:url value="/index.jsp"/>";
                     }else {
                         $scope.message=data.message;
                     }
-                    $scope.unableChange=false;
                 });
-            }
+
         }
+        $scope.getProvinceList();
     });
-    angular.bootstrap(document.getElementById("changePassword"), ['passwordApp']);
+    angular.bootstrap(document.getElementById("selectCity"), ['selectCityApp']);
 </script>

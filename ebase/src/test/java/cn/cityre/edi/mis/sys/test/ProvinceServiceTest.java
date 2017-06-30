@@ -1,7 +1,12 @@
 package cn.cityre.edi.mis.sys.test;
 
 import cn.cityre.edi.mis.base.entity.po.ProvincePo;
+import cn.cityre.edi.mis.base.service.ProvinceService;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +14,11 @@ import java.util.List;
 /**
  * Created by 刘大磊 on 2017/6/29 10:01.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class ProvinceServiceTest {
+    @Autowired
+    private ProvinceService provinceService;
     @Test
     public void testProvinceSort()
     {
@@ -35,6 +44,16 @@ public class ProvinceServiceTest {
         for(ProvincePo p:provincePoList)
         {
             System.out.println(p.getId()+" "+p.getProvince());
+        }
+    }
+    @Test
+    public void testGetProvinceByUserId()
+    {
+        List<ProvincePo> provincePoList=provinceService.getProvinceList(1);
+
+        for(ProvincePo provincePo:provincePoList)
+        {
+            System.out.println(provincePo.getProvince());
         }
     }
 }

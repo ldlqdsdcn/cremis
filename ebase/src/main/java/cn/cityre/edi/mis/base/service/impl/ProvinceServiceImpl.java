@@ -40,7 +40,6 @@ public class ProvinceServiceImpl implements ProvinceService {
 
     @DataAccess(entity = RoleCityAccessPo.class)
     private CommonDao<RoleCityAccessPo, Integer> roleCityAccessDao;
-
     @DataAccess(entity = CityPo.class)
     private CommonDao<CityPo, Integer> cityDao;
 
@@ -72,8 +71,12 @@ public class ProvinceServiceImpl implements ProvinceService {
 
     @Override
     public List<ProvincePo> getProvinceList(Integer userId) {
-
-        return null;
+        List<CityPo> cityPoList = getCityListByProvinceId(userId, null);
+        Set<String> provinceIdSet = cityPoList.stream().map(e -> e.getProvinceid()).collect(Collectors.toSet());
+        Search search = new Search();
+        search.addFilterIn("provinceid", provinceIdSet);
+        List<ProvincePo> provincePoList = provinceDao.search(search);
+        return provincePoList;
     }
 
     @Override
@@ -81,21 +84,21 @@ public class ProvinceServiceImpl implements ProvinceService {
         UserBo userBo = userService.getUser(userId);
         Integer[] roleIds = userBo.getRoleIds();
         Search roleAccessCitySearch = new Search();
-        roleAccessCitySearch.addFilterIn("roldId", roleIds);
+        roleAccessCitySearch.addFilterIn("roleId", roleIds);
         List<RoleCityAccessPo> roleCityAccessPoList = roleCityAccessDao.search(roleAccessCitySearch);
-        Set<Integer> cityIdSet=roleCityAccessPoList.stream().map(p->p.getCityId()).collect(Collectors.toSet());
+        Set<Integer> cityIdSet = roleCityAccessPoList.stream().map(p -> p.getCityId()).collect(Collectors.toSet());
         Search userCitySearch = new Search();
         userCitySearch.addFilterEqual("userId", userId);
         List<UserCityAccessPo> userCityAccessPoList = userCityAccessDao.search(userCitySearch);
-        Set<Integer> cityIdForUser=userCityAccessPoList.stream().map(p->p.getCityId()).collect(Collectors.toSet());
+        Set<Integer> cityIdForUser = userCityAccessPoList.stream().map(p -> p.getCityId()).collect(Collectors.toSet());
         cityIdSet.addAll(cityIdForUser);
-        Search citySearch=new Search();
-        citySearch.addFilterIn("id",cityIdSet);
-        if(provinceId!=null)
-        {
-
+        Search citySearch = new Search();
+        citySearch.addFilterIn("id", cityIdSet);
+        if (provinceId != null) {
+            ProvincePo provincePo = provinceDao.find(provinceId);
+            citySearch.addFilterEqual("provinceid", provincePo.getProvinceid());
         }
-        List<CityPo> cityPoList=cityDao.search(citySearch);
+        List<CityPo> cityPoList = cityDao.search(citySearch);
         return cityPoList;
     }
 }
