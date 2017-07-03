@@ -16,7 +16,6 @@
     <input type="hidden" id="leftTabs" value="<eidea:label key="bootstrap.addtab.close.left.tabs"/>">
     <input type="hidden" id="rightTabs" value="<eidea:label key="bootstrap.addtab.close.right.tabs"/>">
     <!-- Bootstrap core CSS -->
-
     <link rel="stylesheet" href="<c:url value="/css/bootstrap/bootstrap.min.css"/>" type="text/css" media="all"/>
     <link rel="stylesheet" href="<c:url value="/css/bootstrap/bootstrap-theme.min.css"/>" type="text/css" media="all"/>
     <link rel="stylesheet" href="<c:url value="/css/bootstrap/bootstrap.addtabs.css"/>" type="text/css" media="all"/>
@@ -161,7 +160,7 @@
 
                         </li>
                         <li >
-                            <a href="#"  class="user-profile dropdown-toggle" data-toggle="modal" data-target="#selectCityModal">[<c:out value="${sessionScope.currentCity.city}"/>]&nbsp;&nbsp;选择城市</a>
+                            <a href="#"  class="user-profile dropdown-toggle" data-toggle="modal" data-target="#selectCityModal">[<c:out value="${sessionScope.currentCity.city}"/>]&nbsp;&nbsp;<eidea:label key="common.header.selectCity"/></a>
                         </li>
                     </ul>
                 </nav>

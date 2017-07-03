@@ -2,10 +2,7 @@ package com.dsdl.eidea.util;
 
 import org.junit.Test;
 
-import java.text.ParseException;
-import java.util.Date;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Created by 刘大磊 on 2017/1/5 9:22.
@@ -37,6 +34,8 @@ public class DateTimeHelperTest {
     @Test
     public void testGetCurrentYear()
     {
+
+        final List<Integer> piDigits = Arrays.asList(1,2,3,4,5,6,7,8);
         String year=DateTimeHelper.getCurrentYear();
         System.out.println(year);
         System.out.println(DateTimeHelper.getHourMinute(new Date()));

@@ -11,7 +11,7 @@
         <div class="modal-content" ng-controller="selectCityCtrl">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">请选择城市</h4>
+                <h4 class="modal-title" id="myModalLabel"><eidea:message key="common.selectCity.title"/></h4>
             </div>
             <form name="editForm" novalidate ng-submit="save()" method="post" class="form-horizontal form-label-left">
                 <div class="modal-body">
@@ -25,7 +25,7 @@
 
                 </div>
                 <div class="modal-footer">
-                       <button type="submit" class="btn btn-primary" ><eidea:label key="common.button.save"/></button>
+                       <button type="submit" class="btn btn-primary" ><eidea:label key="common.button.confirm"/></button>
                 </div>
                 <div class="form-group">
                     <p class="text-center" style="color: red"  >
