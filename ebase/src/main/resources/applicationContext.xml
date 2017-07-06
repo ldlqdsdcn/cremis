@@ -25,6 +25,7 @@
     <context:component-scan base-package="cn.cityre.edi.**.dao"/>
     <context:component-scan base-package="com.dsdl.eidea.core.web.converter"/>
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="order" value="1" />
         <property name="locations">
             <list>
                 <value>classpath:database.properties</value>
