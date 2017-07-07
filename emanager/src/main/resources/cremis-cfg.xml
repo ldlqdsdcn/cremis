@@ -12,7 +12,6 @@
                http://www.springframework.org/schema/task  
                http://www.springframework.org/schema/task/spring-task-4.0.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
     <import resource="classpath:applicationContext.xml"/>
-    <!--<import resource="classpath:spring-city-database.xml"/>-->
     <context:component-scan base-package="cn.cityre.mis.**.service"/>
     <context:component-scan base-package="cn.cityre.mis.**.dao"/>
 

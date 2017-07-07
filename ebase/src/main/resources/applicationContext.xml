@@ -30,7 +30,6 @@
             <list>
                 <value>classpath:database.properties</value>
                 <value>classpath:mail.properties</value>
-                <value>classpath:city_database.properties</value>
             </list>
         </property>
     </bean>
@@ -50,6 +49,4 @@
     <import resource="classpath:spring/spirng-jms.xml"/>
     <!--activiti 工作流-->
     <import resource="classpath:spring/spring-activiti.cfg.xml"/>
-
-    <import resource="classpath:spring-city-database.xml"/>
 </beans>
