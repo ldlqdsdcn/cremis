@@ -4,14 +4,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="order" value="2" />
-		<property name="locations">
-			<list>
-				<value>classpath:city_database.properties</value>
-			</list>
-		</property>
-	</bean>
 	<!-- 采用druid作为连接池 -->
 	<bean id="370200DataSource" class="com.alibaba.druid.pool.DruidDataSource"
 		  init-method="init" destroy-method="close">

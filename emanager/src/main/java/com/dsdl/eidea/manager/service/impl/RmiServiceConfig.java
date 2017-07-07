@@ -9,7 +9,7 @@ import com.dsdl.eidea.core.service.LabelService;
 /**
  * Created by 刘大磊 on 2017/1/16 13:06.
  */
-@Configuration
+
 public class RmiServiceConfig {
     @Bean
     public RmiServiceExporter rmiLabelServiceExporter(LabelRmiService labelRmiService) {

@@ -33,6 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -83,7 +84,7 @@ public class FieldServiceImpl implements FieldService {
     private CommonDao<ElementCheckboxPo, Integer> elementCheckboxDao;
     @DataAccess(entity = ElementSelectPo.class)
     private CommonDao<ElementSelectPo, Integer> elementSelectDao;
-    @Autowired
+   @Resource(name = "dataSourceCore")
     private DataSource dataSource;
 
     public PaginationResult<FieldPo> getFieldListByPaging(Search search, QueryParams queryParams) {

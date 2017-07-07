@@ -8,7 +8,10 @@ package cn.cityre.edi.mis.base.web.controller;
 
 import cn.cityre.edi.mis.base.entity.po.AreaPo;
 import cn.cityre.edi.mis.base.service.AreaService;
+import cn.cityre.mis.city.entity.po.CityAreaPo;
+import cn.cityre.mis.city.service.CityAreaService;
 import com.dsdl.eidea.core.web.controller.BaseController;
+import com.googlecode.genericdao.search.SearchResult;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import com.dsdl.eidea.core.web.def.WebConst;
 import com.dsdl.eidea.core.web.result.JsonResult;
@@ -18,6 +21,7 @@ import com.dsdl.eidea.core.web.vo.PagingSettingResult;
 import com.googlecode.genericdao.search.Search;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,8 +39,11 @@ import java.util.List;
 * Created by 刘大磊 on 2017-06-28 15:50:20.
 */ @Controller
 @RequestMapping("/base/area")
+@Scope("request")
 public class AreaController extends BaseController {
 private static final String URI = "area";
+@Autowired
+private CityAreaService cityAreaService;
 @Autowired
 private AreaService areaService;
 @RequestMapping(value = "/showList", method = RequestMethod.GET)
@@ -50,10 +57,11 @@ return modelAndView;
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
     @RequiresPermissions("view")
-public JsonResult<PaginationResult<AreaPo>> list(HttpSession session,@RequestBody QueryParams queryParams) {
-    Search search = SearchHelper.getSearchParam(URI, session);
-    PaginationResult<AreaPo> paginationResult = areaService.getAreaListByPaging(search, queryParams);
-    return JsonResult.success(paginationResult);
+public JsonResult<PaginationResult<CityAreaPo>> list(HttpSession session, @RequestBody QueryParams queryParams) {
+        List<CityAreaPo> cityAreaPoList=cityAreaService.getAreaListByPaging();
+        PaginationResult<CityAreaPo> paginationResult = null;
+        paginationResult = PaginationResult.pagination(cityAreaPoList, cityAreaPoList.size(), queryParams.getPageNo(), queryParams.getPageSize());
+        return JsonResult.success(paginationResult);
     }
     @RequiresPermissions("view")
     @RequestMapping(value = "/get", method = RequestMethod.GET)
@@ -104,7 +112,7 @@ public JsonResult<PaginationResult<AreaPo>> list(HttpSession session,@RequestBod
     @RequestMapping(value = "/deletes", method = RequestMethod.POST)
     @ResponseBody
 
-    public JsonResult<PaginationResult<AreaPo>> deletes(@RequestBody DeleteParams<Integer> deleteParams, HttpSession session) {
+    public JsonResult<PaginationResult<CityAreaPo>> deletes(@RequestBody DeleteParams<Integer> deleteParams, HttpSession session) {
     if (deleteParams.getIds() == null||deleteParams.getIds().length == 0)  {
                 return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(), getMessage("common.error.delete.failure",getMessage("area.title")));
                 }
