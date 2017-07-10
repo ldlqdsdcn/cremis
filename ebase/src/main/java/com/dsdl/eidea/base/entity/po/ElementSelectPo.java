@@ -23,4 +23,8 @@ public class ElementSelectPo {
     private String sql;
     @Column(name = "element_id",length = 11)
     private Integer elementId;
+    @Column(name="key_type",length=11)
+    private Integer keyType;
+    @Column(name = "value_type",length = 11)
+    private Integer valueType;
 }

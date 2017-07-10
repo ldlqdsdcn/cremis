@@ -5,8 +5,7 @@ Date: 2017-05-04 13:22:23
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/inc/taglib.jsp" %>
 <div class="container-fluid" ng-controller="editFieldCtrl">
-    <div ui-view ng-show="fieldTrlListShow||fieldValidatorListShow"></div>
-    <form role="form" name="editForm" novalidate ng-submit="save()" ng-show="fieldEditShow" class="form-horizontal form-label-left input_mask">
+    <form role="form" name="editForm" novalidate ng-submit="save()" class="form-horizontal form-label-left input_mask">
         <table class="table table-borderless">
             <tr>
                 <td class="control-label"><%--seqNo--%><eidea:label key="base.field.label.seqNo"/></td>
@@ -154,12 +153,10 @@ Date: 2017-05-04 13:22:23
         </table>
         <div class="form-group">
             <p class="text-right">
-                <button type="reset" ng-click="create()" class="btn btn-default btn-sm" ng-show="canAdd"><%--新建--%>
-                    <eidea:label key="common.button.create"/></button>
+                <a ui-sref="editField({fieldId:null})" ui-sref-active="active" class="btn btn-default btn-sm" ng-show="canAdd"><%--新建--%><eidea:label key="common.button.create"/> </a>
                 <button type="submit" class="btn btn-default btn-sm" ng-show="canSave"><%--保存--%><eidea:label
                         key="common.button.save"/></button>
-                <button type="button" class="btn btn-default btn-sm" ng-click="back()"><eidea:label
-                        key="common.button.back"/></button>
+               <a ui-sref="listField" ui-sref-active="active" class="btn btn-default btn-sm"><%--返回--%><eidea:label key="common.button.back"/></a>
             </p>
         </div>
         <div class="form-group">

@@ -60,9 +60,8 @@
                         {{model.requestMapping}}
                     </td>
                     <td>
-                        <a class="btn btn-primary btn-xs" href="#/edit?id={{model.id}}">
-                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;<eidea:label key="common.button.edit"/><%--编辑--%>
-                        </a>
+                        <a ui-sref="edit({id:model.id})" ui-sref="active" class="btn btn-primary btn-xs">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"/>&nbsp;<eidea:label key="common.button.edit"/> </a>
                     </td>
                 </tr>
                 </tbody>

@@ -115,6 +115,13 @@ public class TableServiceImpl implements TableService {
             return false;
         }
     }
+    @Override
+    public TablePo getExistTableByName(String tableName){
+        Search search = new Search();
+        search.addFilterEqual("name",tableName);
+        TablePo  tablePo = tableDao.searchUnique(search);
+        return tablePo;
+    }
 
     @Override
     public TableBo getTableBo(Integer id) {

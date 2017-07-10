@@ -5,8 +5,7 @@ Date: 2017-05-02 15:43:14
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/inc/taglib.jsp" %>
 <div class="container-fluid" ng-controller="editTabCtrl">
-    <div ui-view ng-show="tabTrlListShow||fieldListShow||fieldTrlListShow||fieldValidatorListShow"></div>
-    <form role="form" name="editForm" novalidate ng-submit="save()" ng-show="tabEditShow"
+    <form role="form" name="editForm" novalidate ng-submit="save()"
           class="form-horizontal form-label-left input_mask">
         <table class="table table-borderless">
             <tr>
@@ -87,12 +86,10 @@ Date: 2017-05-02 15:43:14
         </table>
         <div class="form-group">
             <p class="text-right">
-                <button type="reset" ng-click="create()" class="btn btn-default btn-sm" ng-show="canAdd"><%--新建--%>
-                    <eidea:label key="common.button.create"/></button>
+                <a ui-sref="editTab({tabId:null})" ui-sref-active="active" class="btn btn-default btn-sm"><%--新建--%><eidea:label key="common.button.create"/> </a>
                 <button type="submit" class="btn btn-default btn-sm" ng-show="canSave"><%--保存--%><eidea:label
                         key="common.button.save"/></button>
-                <button class="btn btn-default btn-sm" ng-click="back()"><eidea:label
-                        key="common.button.back"/></button>
+                <a ui-sref="listTab" ui-sref-active="active" class="btn btn-primary btn-sm"><%--返回--%><eidea:label key="common.button.back"/></a>
             </p>
         </div>
         <div class="form-group">

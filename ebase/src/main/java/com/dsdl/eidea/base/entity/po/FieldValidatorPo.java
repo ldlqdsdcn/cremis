@@ -25,7 +25,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity(name = "core_field_validator")
-@org.hibernate.annotations.Cache(usage= CacheConcurrencyStrategy.READ_ONLY)
+@org.hibernate.annotations.Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class FieldValidatorPo implements java.io.Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "[id]")

@@ -3,6 +3,7 @@ package com.dsdl.eidea.core.service;
 import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.entity.bo.TableBo;
 import com.dsdl.eidea.core.entity.bo.TableMetaDataBo;
+import com.dsdl.eidea.core.entity.po.TablePo;
 import com.dsdl.eidea.core.params.QueryParams;
 import com.googlecode.genericdao.search.ISearch;
 import com.googlecode.genericdao.search.Search;
@@ -19,6 +20,8 @@ public interface TableService {
 
 
     boolean findExistTableByName(String tableName);
+
+    TablePo getExistTableByName(String tableName);
 
     TableBo getTableBo(Integer id);
 

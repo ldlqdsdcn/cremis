@@ -32,7 +32,7 @@ import org.hibernate.validator.constraints.NotBlank;
 @Getter
 @Setter
 @Entity(name = "core_field")
-@org.hibernate.annotations.Cache(usage= CacheConcurrencyStrategy.READ_ONLY)
+@org.hibernate.annotations.Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class FieldPo implements java.io.Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "[id]", length = 11, nullable = false, unique = true)
