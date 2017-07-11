@@ -6,6 +6,7 @@
  */
 package com.dsdl.eidea.base.web.controller;
 
+import com.dsdl.eidea.base.entity.bo.UserBo;
 import com.dsdl.eidea.base.entity.po.FieldPo;
 import com.dsdl.eidea.base.service.FieldService;
 import com.dsdl.eidea.core.def.FieldInputType;
@@ -33,6 +34,7 @@ import com.dsdl.eidea.core.params.QueryParams;
 import com.dsdl.eidea.core.params.DeleteParams;
 
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -88,8 +90,14 @@ public class FieldController extends BaseController {
     @RequiresPermissions("add")
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     @ResponseBody
-    public JsonResult<FieldPo> create() {
+    public JsonResult<FieldPo> create(HttpSession httpSession) {
+        UserBo userBo = (UserBo)httpSession.getAttribute(WebConst.SESSION_LOGINUSER);
+        Date date = new Date();
         FieldPo fieldPo = new FieldPo();
+        fieldPo.setCreated(date);
+        fieldPo.setCreatedby(userBo.getId());
+        fieldPo.setUpdated(date);
+        fieldPo.setUpdatedby(userBo.getId());
         return JsonResult.success(fieldPo);
     }
 
@@ -112,11 +120,14 @@ public class FieldController extends BaseController {
     @RequiresPermissions("update")
     @RequestMapping(value = "/saveForUpdated", method = RequestMethod.POST)
     @ResponseBody
-    public JsonResult<FieldPo> saveForUpdate(@Validated @RequestBody FieldPo fieldPo) {
-
+    public JsonResult<FieldPo> saveForUpdate(HttpSession httpSession,@Validated @RequestBody FieldPo fieldPo) {
+        UserBo userBo = (UserBo)httpSession.getAttribute(WebConst.SESSION_LOGINUSER);
+        Date date = new Date();
         if (fieldPo.getId() == null) {
             return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(), getMessage("common.errror.pk.required"));
         }
+        fieldPo.setUpdatedby(userBo.getId());
+        fieldPo.setUpdated(date);
         fieldService.saveField(fieldPo);
         return get(fieldPo.getId());
     }

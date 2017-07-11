@@ -6,6 +6,7 @@
  */
 package com.dsdl.eidea.base.web.controller;
 
+import com.dsdl.eidea.base.entity.bo.UserBo;
 import com.dsdl.eidea.base.entity.po.TabPo;
 import com.dsdl.eidea.base.service.ChangelogService;
 import com.dsdl.eidea.base.service.TabService;
@@ -14,6 +15,7 @@ import com.dsdl.eidea.core.entity.bo.TableBo;
 import com.dsdl.eidea.core.entity.bo.TableColumnBo;
 import com.dsdl.eidea.core.service.TableService;
 import com.dsdl.eidea.core.web.controller.BaseController;
+import org.activiti.engine.impl.util.json.HTTP;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import com.dsdl.eidea.core.web.def.WebConst;
 import com.dsdl.eidea.core.web.result.JsonResult;
@@ -35,6 +37,7 @@ import com.dsdl.eidea.core.params.DeleteParams;
 
 import javax.persistence.Table;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -96,8 +99,14 @@ public class TabController extends BaseController {
     @RequiresPermissions("add")
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     @ResponseBody
-    public JsonResult<TabPo> create() {
+    public JsonResult<TabPo> create(HttpSession httpSession) {
+        UserBo userBo = (UserBo) httpSession.getAttribute(WebConst.SESSION_LOGINUSER);
+        Date date = new Date();
         TabPo tabPo = new TabPo();
+        tabPo.setCreated(date);
+        tabPo.setCreatedby(userBo.getId());
+        tabPo.setUpdated(date);
+        tabPo.setUpdatedby(userBo.getId());
         return JsonResult.success(tabPo);
     }
 
@@ -119,14 +128,17 @@ public class TabController extends BaseController {
     @RequiresPermissions("update")
     @RequestMapping(value = "/saveForUpdated", method = RequestMethod.POST)
     @ResponseBody
-    public JsonResult<TabPo> saveForUpdate(@Validated @RequestBody TabPo tabPo) {
-
+    public JsonResult<TabPo> saveForUpdate(HttpSession httpSession,@Validated @RequestBody TabPo tabPo) {
+        UserBo userBo = (UserBo) httpSession.getAttribute(WebConst.SESSION_LOGINUSER);
+        Date date = new Date();
         if (tabPo.getId() == null) {
             return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(), getMessage("common.errror.pk.required"));
         }
         if(windowService.getWindow(tabPo.getWindowId())==null){
             return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(),getMessage("error.window.id.not_exist"));
         }
+        tabPo.setUpdatedby(userBo.getId());
+        tabPo.setUpdated(date);
         tabService.saveTab(tabPo);
         return get(tabPo.getId());
     }

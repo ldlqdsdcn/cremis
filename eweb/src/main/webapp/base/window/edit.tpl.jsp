@@ -45,12 +45,12 @@ Date: 2017-05-02 15:41:30
                 <td class="form-group"><input type="text" class="form-control" id="createdby"
                                               placeholder="<eidea:message key="common.please.input"><eidea:param value="base.window.label.createdby" type="label"/></eidea:message>"
                                               ng-model="windowPo.createdby" required ng-minlength="1"
-                                              ng-maxlength="11">
+                                              ng-maxlength="11" ng-disabled="true">
                 </td>
                 <td class="control-label"><eidea:label key="base.window.label.created"/></td>
                 <td class="input-group date bootstrap-datetime"><input type="text" class="form-control" id="created"
                                                                        placeholder="<eidea:message key="common.please.input"><eidea:param value="base.window.label.created" type="label"/></eidea:message>"
-                                                                       ng-model="windowPo.created"
+                                                                       ng-model="windowPo.created" ng-disabled="true"
                                                                        uib-datepicker-popup="yyyy-MM-dd HH:mm:ss"
                                                                        required>
                     <span class="input-group-addon"><span
@@ -62,14 +62,14 @@ Date: 2017-05-02 15:41:30
                 <td class="form-group "><input type="text" class="form-control" id="updatedby"
                                                placeholder="<eidea:message key="common.please.input"><eidea:param value="base.window.label.updatedby" type="label"/></eidea:message>"
                                                ng-model="windowPo.updatedby" ng-minlength="1" ng-maxlength="11"
-                                               required>
+                                               required ng-disabled="true">
                 </td>
                 <td class="control-label"><eidea:label key="base.window.label.updated"/></td>
                 <td class="input-group date bootstrap-datetime"><input type="text" class="form-control" id="updated"
                                                                        placeholder="<eidea:message key="common.please.input"><eidea:param value="base.window.label.updated" type="label"/></eidea:message>"
                                                                        ng-model="windowPo.updated"
                                                                        uib-datepicker-popup="yyyy-MM-dd HH:mm:ss"
-                                                                       required>
+                                                                       required ng-disabled="true">
                     <span class="input-group-addon"><span
                             class="glyphicon glyphicon-calendar"></span></span>
                 </td>

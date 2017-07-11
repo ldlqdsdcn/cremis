@@ -6,16 +6,21 @@
 */
 package com.dsdl.eidea.base.web.controller;
 
+import com.dsdl.eidea.base.entity.bo.UserBo;
 import com.dsdl.eidea.base.entity.po.WindowPo;
 import com.dsdl.eidea.base.service.WindowService;
+import com.dsdl.eidea.core.dto.PaginationResult;
+import com.dsdl.eidea.core.params.DeleteParams;
+import com.dsdl.eidea.core.params.QueryParams;
 import com.dsdl.eidea.core.web.controller.BaseController;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import com.dsdl.eidea.core.web.def.WebConst;
 import com.dsdl.eidea.core.web.result.JsonResult;
 import com.dsdl.eidea.core.web.result.def.ErrorCodes;
 import com.dsdl.eidea.core.web.util.SearchHelper;
 import com.dsdl.eidea.core.web.vo.PagingSettingResult;
 import com.googlecode.genericdao.search.Search;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.h2.engine.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -24,11 +29,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import com.dsdl.eidea.core.dto.PaginationResult;
-import com.dsdl.eidea.core.params.QueryParams;
-import com.dsdl.eidea.core.params.DeleteParams;
+
 import javax.servlet.http.HttpSession;
-import java.util.List;
+import java.util.Date;
 
 /**
 * Created by 刘大磊 on 2017-05-02 15:41:30.
@@ -70,8 +73,16 @@ public JsonResult<PaginationResult<WindowPo>> list(HttpSession session,@RequestB
     @RequiresPermissions("add")
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     @ResponseBody
-    public JsonResult<WindowPo> create() {
+    public JsonResult<WindowPo> create(HttpSession httpSession) {
+        UserBo userBo = (UserBo) httpSession.getAttribute(WebConst.SESSION_LOGINUSER);
         WindowPo windowPo = new WindowPo();
+//        创建人
+        windowPo.setCreatedby(userBo.getId());
+        windowPo.setUpdatedby(userBo.getId());
+//        创建时间
+        Date date = new Date();
+        windowPo.setUpdated(date);
+        windowPo.setCreated(date);
         return JsonResult.success(windowPo);
     }
 
@@ -93,11 +104,14 @@ public JsonResult<PaginationResult<WindowPo>> list(HttpSession session,@RequestB
     @RequiresPermissions("update")
     @RequestMapping(value = "/saveForUpdated", method = RequestMethod.POST)
     @ResponseBody
-    public JsonResult<WindowPo> saveForUpdate(@Validated @RequestBody WindowPo windowPo) {
-
+    public JsonResult<WindowPo> saveForUpdate(HttpSession httpSession,@Validated @RequestBody WindowPo windowPo) {
+        UserBo userBo = (UserBo) httpSession.getAttribute(WebConst.SESSION_LOGINUSER);
+        Date date = new Date();
         if (windowPo.getId() == null) {
             return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(), getMessage("common.errror.pk.required"));
         }
+        windowPo.setUpdatedby(userBo.getId());
+        windowPo.setUpdated(date);
         if (windowService.findExistWindowByName(windowPo.getName())){
             if (windowService.getExistWindowByName(windowPo.getName()).getId()==windowPo.getId()){
                 windowService.saveWindow(windowPo);
