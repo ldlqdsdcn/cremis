@@ -13,7 +13,7 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-public class UserPo implements java.io.Serializable {
+public class MisUserPo implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id",nullable = false,unique = true,length = 10)
@@ -52,7 +52,7 @@ public class UserPo implements java.io.Serializable {
     @Column(name = "isValid",length = 4)
     private Byte isValid;
     @Column(name = "accountSecret",length = 64,nullable = false)
-    private String acountSecret;
+    private String accountSecret;
     @Column(name = "createTime",nullable = false)
     private Date createTime;
     @Column(name = "updateTime",nullable = false)

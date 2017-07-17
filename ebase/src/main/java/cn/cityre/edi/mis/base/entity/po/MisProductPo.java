@@ -14,7 +14,7 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-public class ProductPo implements java.io.Serializable {
+public class MisProductPo implements java.io.Serializable {
     @Id
     @Column(name = "productCode",nullable = false,unique = true,length = 32)
     private String productCode;

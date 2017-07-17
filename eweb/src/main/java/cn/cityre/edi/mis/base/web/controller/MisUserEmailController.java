@@ -1,7 +1,7 @@
 package cn.cityre.edi.mis.base.web.controller;
 
-import cn.cityre.edi.mis.base.entity.po.MisApiKeyPo;
-import cn.cityre.edi.mis.base.service.ApiKeyService;
+import cn.cityre.edi.mis.base.entity.po.MisUserEmailPo;
+import cn.cityre.edi.mis.base.service.MisUserEmailService;
 import com.dsdl.eidea.base.web.vo.UserResource;
 import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.DeleteParams;
@@ -24,69 +24,69 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 
 /**
- * Created by cityre on 2017/7/10.
+ * Created by cityre on 2017/7/12.
  */
-@Controller
-@RequestMapping("/base/apikey")
-public class ApiKeyController {
-    private final static  String URL = "apikey";
+@Controller(value = "misUserEmailController")
+@RequestMapping(value = "/base/useremail")
+public class MisUserEmailController {
+    private final static String URL="user_email";
     @Autowired
-    private ApiKeyService apiKeyService;
+    private MisUserEmailService misUserEmailService;
 
     @RequestMapping(value = "/showList",method = RequestMethod.GET)
-    @RequiresPermissions("view")
+    @RequiresPermissions(value = "view")
     public ModelAndView showList(){
-        ModelAndView modelAndView = new ModelAndView("/base/apikey/apikey");
-        modelAndView.addObject(WebConst.PAGING_SETTINGS, PagingSettingResult.getDbPaging());
+        ModelAndView modelAndView = new ModelAndView("/base/useremail/useremail");
         modelAndView.addObject(WebConst.PAGE_URI,URL);
+        modelAndView.addObject(WebConst.PAGING_SETTINGS, PagingSettingResult.getDbPaging());
         return modelAndView;
     }
-    @RequiresPermissions(value = "view")
+    @RequiresPermissions("view")
     @ResponseBody
     @RequestMapping(value = "/list",method = RequestMethod.POST)
-    public JsonResult<PaginationResult<MisApiKeyPo>> list(HttpSession httpSession, @RequestBody QueryParams queryParams){
-        UserResource userResource = (UserResource) httpSession.getAttribute(WebConst.SESSION_RESOURCE);
+    public JsonResult<PaginationResult<MisUserEmailPo>> list(HttpSession httpSession, @RequestBody QueryParams queryParams){
         Search search = SearchHelper.getSearchParam(URL,httpSession);
-        PaginationResult<MisApiKeyPo> paginationResult = apiKeyService.getApiKeyList(search,queryParams);
+        PaginationResult<MisUserEmailPo> paginationResult = misUserEmailService.getUserEmailList(search,queryParams);
         return JsonResult.success(paginationResult);
     }
-    @ResponseBody
-    @RequiresPermissions("view")
     @RequestMapping(value = "/get",method = RequestMethod.GET)
-    public JsonResult<MisApiKeyPo> get(HttpSession httpSession, Integer id){
-        UserResource userResource = (UserResource) httpSession.getAttribute(WebConst.SESSION_RESOURCE);
-        MisApiKeyPo misApiKeyPo = apiKeyService.getApiKey(id);
-        return  JsonResult.success(misApiKeyPo);
+    @RequiresPermissions("view")
+    @ResponseBody
+    public JsonResult<MisUserEmailPo> get(Integer id){
+        MisUserEmailPo misUserEmailPo=misUserEmailService.getUserEmail(id);
+        return JsonResult.success(misUserEmailPo);
     }
     @ResponseBody
-    @RequestMapping(value = "/create",method = RequestMethod.GET)
     @RequiresPermissions("add")
-    public JsonResult<MisApiKeyPo> create(){
-        MisApiKeyPo misApiKeyPo = new MisApiKeyPo();
-        return  JsonResult.success(misApiKeyPo);
+    @RequestMapping(value = "/create",method = RequestMethod.GET)
+    public JsonResult<MisUserEmailPo> create(){
+        MisUserEmailPo misUserEmailPo = new MisUserEmailPo();
+        misUserEmailPo.setIsPrimary((byte) 0);
+        misUserEmailPo.setIsVerified((byte) 0);
+        return JsonResult.success(misUserEmailPo);
     }
     @ResponseBody
     @RequiresPermissions("add")
     @RequestMapping(value = "/saveForCreated",method = RequestMethod.POST)
-    public JsonResult<MisApiKeyPo> saveForCreated(HttpSession httpSession, @Validated @RequestBody MisApiKeyPo misApiKeyPo){
+    public JsonResult<MisUserEmailPo> saveForCreated(HttpSession httpSession, @Validated @RequestBody MisUserEmailPo misUserEmailPo){
         UserResource userResource = (UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
-        apiKeyService.saveApiKey(misApiKeyPo);
-        return JsonResult.success(misApiKeyPo);
+        misUserEmailService.saveUserEmail(misUserEmailPo);
+        return get(misUserEmailPo.getId());
     }
     @ResponseBody
     @RequiresPermissions("update")
     @RequestMapping(value = "/saveForUpdated",method = RequestMethod.POST)
-    public JsonResult<MisApiKeyPo> saveForUpdated(HttpSession httpSession , @Validated @RequestBody MisApiKeyPo misApiKeyPo){
-        UserResource userResource =(UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
-        apiKeyService.saveApiKey(misApiKeyPo);
-        return JsonResult.success(misApiKeyPo);
+    public JsonResult<MisUserEmailPo> saveForUpdated(HttpSession httpSession, @Validated @RequestBody MisUserEmailPo misUserEmailPo){
+        UserResource userResource = (UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
+        misUserEmailService.saveUserEmail(misUserEmailPo);
+        return get(misUserEmailPo.getId());
     }
     @ResponseBody
+    @RequiresPermissions("delete")
     @RequestMapping(value = "/deletes",method = RequestMethod.POST)
-    @RequiresPermissions(value = "delete")
-    public JsonResult<PaginationResult<MisApiKeyPo>> deletes(HttpSession httpSession, @RequestBody DeleteParams<Integer> deleteParams){
+    public JsonResult<PaginationResult<MisUserEmailPo>> deletes(HttpSession httpSession, @RequestBody DeleteParams<Integer> deleteParams){
         UserResource userResource = (UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
-        apiKeyService.deleteApiKey(deleteParams.getIds());
+        misUserEmailService.deleteUserEmail(deleteParams.getIds());
         return list(httpSession,deleteParams.getQueryParams());
     }
 }

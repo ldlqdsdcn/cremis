@@ -15,29 +15,34 @@ Date: 2017-06-28 15:50:20
             <div class="span12">
                 <br>
                 <div class="form-group">
-                    <label for="productCode"><%--productCode--%><eidea:label
-                            key="base.product.label.productCode"/></label>
-                    <input class="form-control" id="productCode" type="text" ng-model="misProductPo.productCode"
+                    <label for="unionUid"><%--unionUid--%><eidea:label
+                            key="base.v2017.user.label.unionUid"/></label>
+                    <input class="form-control" id="unionUid" type="text" ng-model="userphonePo.unionUid"
                            placeholder="<eidea:message key="common.please.input">
-                    <eidea:param value="base.product.label.productCode" type="label"/></eidea:message> " required ng-blur="getExistProduct()"/>
+                    <eidea:param value="base.v2017.user.label.unionUid" type="label"/></eidea:message> " required />
                 </div>
                 <div class="form-group">
-                    <label for="productName"><%--productName--%><eidea:label
-                            key="base.product.label.productName"/></label>
-                    <input class="form-control" id="productName" type="text" ng-model="misProductPo.productName"
+                    <label for="phone"><%--phone--%><eidea:label
+                            key="base.v2017.phonepin.label.phone"/></label>
+                    <input class="form-control" id="phone" type="text" ng-model="userphonePo.phone"
                            placeholder="<eidea:message key="common.please.input">
-                    <eidea:param value="base.product.label.productName" type="label"/></eidea:message> " required/>
+                    <eidea:param value="base.v2017.phonepin.label.phone" type="label"/></eidea:message> " required/>
                 </div>
                 <div class="form-group">
-                    <label for="platform"><%--platform--%><eidea:label key="base.product.label.platform"/></label>
-                    <select id="platform" class="form-control" ng-model="misProductPo.platform" ng-options="option.key as option.value for option in platformTypeList"></select>
-                    <%--<input class="form-control" id="platform" type="text" ng-model="misProductPo.platform"--%>
-                           <%--placeholder="<eidea:message key="common.please.input">--%>
-                    <%--<eidea:param value="base.product.label.platform" type="label"/></eidea:message> " required/>--%>
+                    <label for="isVerified"><%--isVerified--%><eidea:label key="base.v2017.user.label.isVerified"/>
+                    <input type="checkbox" class="form-control" id="isVerified" ng-model="userphonePo.isVerified"
+                           ng-true-value="1" ng-false-value="0"/></label>
                 </div>
+                <div class="form-group">
+                <label for="isPrimary"><%--isPrimary--%><eidea:label key="base.v2017.useremail.label.isPrimary"/>
+                <input class="form-control" id="isPrimary" type="checkbox" ng-model="userphonePo.isPrimary"
+                       ng-true-value="1" ng-false-value="0"/></label>
+
+            </div>
+
                 <div class="form-group">
                     <label for="createTime"><%--createTime--%><eidea:label key="base.product.label.createTime"/></label>
-                    <input class="form-control" id="createTime" type="text" ng-model="misProductPo.createTime"
+                    <input class="form-control" id="createTime" type="text" ng-model="userphonePo.createTime"
                            placeholder="<eidea:message key="common.please.input">
                     <eidea:param value="base.product.label.createTime" type="label"/></eidea:message> " required
                            uib-datepicker-popup="yyyy-MM-dd HH:mm:ss" ng-disabled="true"/>
@@ -46,7 +51,7 @@ Date: 2017-06-28 15:50:20
                 </div>
                 <div class="form-group">
                     <label for="updateTime"><%--createTime--%><eidea:label key="base.product.label.updateTime"/></label>
-                    <input class="form-control" id="updateTime" type="text" ng-model="misProductPo.updateTime"
+                    <input class="form-control" id="updateTime" type="text" ng-model="userphonePo.updateTime"
                            placeholder="<eidea:message key="common.please.input">
                     <eidea:param value="base.product.label.updateTime " type="label"/></eidea:message> " required
                            uib-datepicker-popup="yyyy-MM-dd HH:mm:ss" ng-disabled="true"/>

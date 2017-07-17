@@ -49,12 +49,12 @@
             return false;
         }
 
-        $scope.pageChanged=function () {
-            $http.post("<c:url value="/base/product/list"/> ",$scope.queryParams).success(function (response) {
-                $scope.loading=false;
-                if (response.success){
+        $scope.pageChanged = function () {
+            $http.post("<c:url value="/base/product/list"/> ", $scope.queryParams).success(function (response) {
+                $scope.loading = false;
+                if (response.success) {
                     $scope.updateList(response.data);
-                }else{
+                } else {
                     bootbox.alert(response.message);
                 }
             })
@@ -142,8 +142,16 @@
         });
 
         $scope.message = '';
-        $scope.productPo = {};
+        $scope.misProductPo = {};
         $scope.canAdd = PrivilegeService.hasPrivilege('add');
+        $http.get("<c:url value="/base/product/getPlatformTypeList"/> ").success(function (response) {
+            if (response.success){
+                var platformType = $.parseJSON(response.data);
+                $scope.platformTypeList = platformType.platformTypeList;
+            }else {
+                bootbox.alert(response.message);
+            }
+        });
         var url = "<c:url value="/base/product/create"/>";
         if ($routeParams.productCode != null) {
             url = "<c:url value="/base/product/get"/>" + "?productCode=" + $routeParams.productCode;
@@ -151,8 +159,8 @@
         $http.get(url)
             .success(function (response) {
                 if (response.success) {
-                    $scope.productPo= response.data;
-                    $scope.canSave = (PrivilegeService.hasPrivilege('add') && $scope.productPo.productCode== null) || PrivilegeService.hasPrivilege('update');
+                    $scope.misProductPo = response.data;
+                    $scope.canSave = (PrivilegeService.hasPrivilege('add') && $scope.misProductPo.productCode == null) || PrivilegeService.hasPrivilege('update');
                 }
                 else {
                     bootbox.alert(response.message);
@@ -160,16 +168,35 @@
             }).error(function (response) {
             bootbox.alert(response);
         });
+        <%--//验证产品是否存在--%>
+        <%--var isExist = true;--%>
+        <%--$scope.getExistProduct = function () {--%>
+            <%--$http.post("<c:url value="/base/product/getExistProductList"/> ", $scope.misProductPo).success(function (response) {--%>
+                <%--if (response.success) {--%>
+                    <%--if (response.data) {--%>
+                        <%--$scope.message = "<eidea:message key="error.v2017.product.exist"/>";--%>
+                    <%--}else {--%>
+                        <%--isExist = false;--%>
+                    <%--}--%>
+                <%--}else{--%>
+                    <%--bootbox.alert(response.message);--%>
+                <%--}--%>
+            <%--})--%>
+        <%--}--%>
         $scope.save = function () {
+            <%--if(isExist){--%>
+                <%--$scope.message = "<eidea:message key="error.v2017.product.exist"/>";--%>
+                <%--return false;--%>
+            <%--}--%>
             if ($scope.editForm.$valid) {
                 var postUrl = '<c:url value="/base/product/saveForUpdated"/>';
-                if ($scope.productPo.productCode == null) {
+                if ($scope.misProductPo.productCode == null) {
                     postUrl = '<c:url value="/base/product/saveForCreated"/>';
                 }
-                $http.post(postUrl, $scope.productPo).success(function (data) {
+                $http.post(postUrl, $scope.misProductPo).success(function (data) {
                     if (data.success) {
                         $scope.message = "<eidea:label key="base.save.success"/>";
-                        $scope.productPo = data.data;
+                        $scope.misProductPo = data.data;
                     }
                     else {
                         $scope.message = data.message;
@@ -180,15 +207,16 @@
                 });
             }
         }
+
         $scope.create = function () {
             $scope.message = "";
-            $scope.productPo = {};
+            $scope.misProductPo = {};
             var url = "<c:url value="/base/product/create"/>";
             $http.get(url)
                 .success(function (response) {
                     if (response.success) {
-                        $scope.productPo = response.data;
-                        $scope.canSave = (PrivilegeService.hasPrivilege('add') && $scope.productPo.productCode == null) || PrivilegeService.hasPrivilege('update');
+                        $scope.misProductPo = response.data;
+                        $scope.canSave = (PrivilegeService.hasPrivilege('add') && $scope.misProductPo.productCode == null) || PrivilegeService.hasPrivilege('update');
                     }
                     else {
                         bootbox.alert(response.message);

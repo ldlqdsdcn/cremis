@@ -20,7 +20,6 @@ import com.dsdl.eidea.core.web.util.SearchHelper;
 import com.dsdl.eidea.core.web.vo.PagingSettingResult;
 import com.googlecode.genericdao.search.Search;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.h2.engine.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -31,6 +30,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -73,16 +74,20 @@ public JsonResult<PaginationResult<WindowPo>> list(HttpSession session,@RequestB
     @RequiresPermissions("add")
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     @ResponseBody
-    public JsonResult<WindowPo> create(HttpSession httpSession) {
+    public JsonResult<WindowPo> create(HttpSession httpSession) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        Date nowDate =simpleDateFormat.parse(simpleDateFormat.format(date));
+        nowDate = new Date((nowDate.getTime()/1000));
+
         UserBo userBo = (UserBo) httpSession.getAttribute(WebConst.SESSION_LOGINUSER);
         WindowPo windowPo = new WindowPo();
 //        创建人
         windowPo.setCreatedby(userBo.getId());
         windowPo.setUpdatedby(userBo.getId());
 //        创建时间
-        Date date = new Date();
-        windowPo.setUpdated(date);
-        windowPo.setCreated(date);
+        windowPo.setUpdated(nowDate);
+        windowPo.setCreated(nowDate);
         return JsonResult.success(windowPo);
     }
 

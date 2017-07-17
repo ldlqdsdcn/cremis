@@ -6,7 +6,7 @@
 <%@include file="/inc/taglib.jsp" %>
 <html>
 <head>
-    <title><%--区域--%><eidea:label key="apikey.title"/></title>
+    <title><%--区域--%><eidea:label key="userphone.title"/></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <%@include file="/inc/inc_ang_js_css.jsp" %>
 </head>
@@ -20,8 +20,8 @@
     var app = angular.module('myApp', ['ngRoute', 'ui.bootstrap', 'jcs-autoValidate'])
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider
-                .when('/list', {templateUrl: '<c:url value="/base/apikey/list.tpl.jsp"/>'})
-                .when('/edit', {templateUrl: '<c:url value="/base/apikey/edit.tpl.jsp"/>'})
+                .when('/list', {templateUrl: '<c:url value="/base/userphone/list.tpl.jsp"/>'})
+                .when('/edit', {templateUrl: '<c:url value="/base/userphone/edit.tpl.jsp"/>'})
                 .otherwise({redirectTo: '/list'});
         }]);
     app.controller('listCtrl', function ($scope, $rootScope, $http) {
@@ -48,20 +48,17 @@
             }
             return false;
         }
+
         $scope.pageChanged = function () {
-            $http.post("<c:url value="/base/apikey/list"/>", $scope.queryParams)
-                .success(function (response) {
-                    $scope.isLoading = false;
-                    if (response.success) {
-                        $scope.updateList(response.data);
-                    }
-                    else {
-                        bootbox.alert(response.message);
-                    }
-
-                });
+            $http.post("<c:url value="/base/userphone/list"/> ", $scope.queryParams).success(function (response) {
+                $scope.loading = false;
+                if (response.success) {
+                    $scope.updateList(response.data);
+                } else {
+                    bootbox.alert(response.message);
+                }
+            })
         }
-
 //批量删除
         $scope.deleteRecord = function () {
             bootbox.confirm({
@@ -80,12 +77,12 @@
                         var ids = [];
                         for (var i = 0; i < $scope.modelList.length; i++) {
                             if ($scope.modelList[i].delFlag) {
-                                ids.push($scope.modelList[i].id);
+                                ids.push($scope.modelList[i].userphoneCode);
                             }
                         }
                         $scope.queryParams.init = true;
                         var param = {"queryParams": $scope.queryParams, "ids": ids};
-                        $http.post("<c:url value="/base/apikey/deletes"/>", param).success(function (data) {
+                        $http.post("<c:url value="/base/userphone/deletes"/>", param).success(function (data) {
                             if (data.success) {
                                 $scope.updateList(data.data);
                                 bootbox.alert("<eidea:message key="module.deleted.success"/>");
@@ -145,17 +142,17 @@
         });
 
         $scope.message = '';
-        $scope.areaPo = {};
+        $scope.userphonePo = {};
         $scope.canAdd = PrivilegeService.hasPrivilege('add');
-        var url = "<c:url value="/base/apikey/create"/>";
+        var url = "<c:url value="/base/userphone/create"/>";
         if ($routeParams.id != null) {
-            url = "<c:url value="/base/apikey/get"/>" + "?id=" + $routeParams.id;
+            url = "<c:url value="/base/userphone/get"/>" + "?id=" + $routeParams.id;
         }
         $http.get(url)
             .success(function (response) {
                 if (response.success) {
-                    $scope.misApiKeyPo= response.data;
-                    $scope.canSave = (PrivilegeService.hasPrivilege('add') && $scope.areaPo.id == null) || PrivilegeService.hasPrivilege('update');
+                    $scope.userphonePo = response.data;
+                    $scope.canSave = (PrivilegeService.hasPrivilege('add') && $scope.userphonePo.id == null) || PrivilegeService.hasPrivilege('update');
                 }
                 else {
                     bootbox.alert(response.message);
@@ -163,16 +160,17 @@
             }).error(function (response) {
             bootbox.alert(response);
         });
+
         $scope.save = function () {
             if ($scope.editForm.$valid) {
-                var postUrl = '<c:url value="/base/apikey/saveForUpdated"/>';
-                if ($scope.misApiKeyPo.id == null) {
-                    postUrl = '<c:url value="/base/apikey/saveForCreated"/>';
+                var postUrl = '<c:url value="/base/userphone/saveForUpdated"/>';
+                if ($scope.userphonePo.id == null) {
+                    postUrl = '<c:url value="/base/userphone/saveForCreated"/>';
                 }
-                $http.post(postUrl, $scope.misApiKeyPo).success(function (data) {
+                $http.post(postUrl, $scope.userphonePo).success(function (data) {
                     if (data.success) {
                         $scope.message = "<eidea:label key="base.save.success"/>";
-                        $scope.misApiKeyPo = data.data;
+                        $scope.userphonePo = data.data;
                     }
                     else {
                         $scope.message = data.message;
@@ -183,15 +181,16 @@
                 });
             }
         }
+
         $scope.create = function () {
             $scope.message = "";
-            $scope.misApiKeyPo = {};
-            var url = "<c:url value="/base/apikey/create"/>";
+            $scope.userphonePo = {};
+            var url = "<c:url value="/base/userphone/create"/>";
             $http.get(url)
                 .success(function (response) {
                     if (response.success) {
-                        $scope.misApiKeyPo = response.data;
-                        $scope.canSave = (PrivilegeService.hasPrivilege('add') && $scope.misApiKeyPo.id == null) || PrivilegeService.hasPrivilege('update');
+                        $scope.userphonePo = response.data;
+                        $scope.canSave = (PrivilegeService.hasPrivilege('add') && $scope.userphonePo.id == null) || PrivilegeService.hasPrivilege('update');
                     }
                     else {
                         bootbox.alert(response.message);

@@ -1,6 +1,6 @@
 package cn.cityre.edi.mis.base.service.impl;
 
-import cn.cityre.edi.mis.base.entity.po.ProductPo;
+import cn.cityre.edi.mis.base.entity.po.MisProductPo;
 import cn.cityre.edi.mis.base.service.ProductService;
 import com.dsdl.eidea.core.dao.CommonDao;
 import com.dsdl.eidea.core.dto.PaginationResult;
@@ -17,27 +17,27 @@ import java.util.List;
  */
 @Service(value = "productService")
 public class ProductServiceImpl implements ProductService {
-    @DataAccess(entity = ProductPo.class)
-    private CommonDao<ProductPo, String> productDao;
+    @DataAccess(entity = MisProductPo.class)
+    private CommonDao<MisProductPo, String> productDao;
 
     @Override
-    public PaginationResult<ProductPo> getProductList(Search search, QueryParams queryParams) {
+    public PaginationResult<MisProductPo> getProductList(Search search, QueryParams queryParams) {
         search.setFirstResult(queryParams.getFirstResult());
-        search.setMaxResults(queryParams.getTotalRecords());
-        PaginationResult<ProductPo> paginationResult = null;
+        search.setMaxResults(queryParams.getPageSize());
+        PaginationResult<MisProductPo> paginationResult = null;
         if (queryParams.isInit()) {
-            SearchResult<ProductPo> searchResult = productDao.searchAndCount(search);
+            SearchResult<MisProductPo> searchResult = productDao.searchAndCount(search);
             paginationResult = PaginationResult.pagination(searchResult.getResult(), searchResult.getTotalCount(), queryParams.getPageNo(), queryParams.getPageSize());
         } else {
-            List<ProductPo> productPoList = productDao.search(search);
-            paginationResult = PaginationResult.pagination(productPoList, queryParams.getTotalRecords(), queryParams.getPageNo(), queryParams.getPageSize());
+            List<MisProductPo> misProductPoList = productDao.search(search);
+            paginationResult = PaginationResult.pagination(misProductPoList, queryParams.getTotalRecords(), queryParams.getPageNo(), queryParams.getPageSize());
         }
         return paginationResult;
     }
 
     @Override
-    public void saveProduct(ProductPo productPo) {
-        productDao.save(productPo);
+    public void saveProduct(MisProductPo misProductPo) {
+        productDao.save(misProductPo);
     }
 
     @Override
@@ -46,20 +46,21 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductPo getExistProduct(String productCode) {
-        ProductPo productPo = productDao.find(productCode);
-        return productPo;
+    public MisProductPo getExistProduct(String productCode) {
+        MisProductPo misProductPo = productDao.find(productCode);
+        return misProductPo;
     }
 
     @Override
     public boolean findExistProductByProductCode(String productCode) {
-        ProductPo productPo = productDao.find(productCode);
-        if (productPo == null) {
+        MisProductPo misProductPo = productDao.find(productCode);
+        if (misProductPo == null) {
             return false;
         } else {
             return true;
         }
     }
+
 
 
 }

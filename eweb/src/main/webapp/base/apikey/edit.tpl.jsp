@@ -21,26 +21,29 @@ Date: 2017-06-28 15:50:20
                         <td class="form-group">
                             <input type="text" class="form-control" id="apikeyId"
                                    placeholder="<eidea:message key="common.please.input"><eidea:param value="base.apikey.label.apikeyId" type="label"/></eidea:message>"
-                                   ng-model="apiKeyPo.id">
+                                   ng-model="misApiKeyPo.id">
                         </td>
                         <td class="control-label"><eidea:label key="base.apikey.label.scopeMask"/></td>
                         <td class="form-group"><input type="text" class="form-control" id="scopeMask"
                                                       placeholder="<eidea:message key="common.please.input"><eidea:param value="base.apikey.label.scopeMask" type="label"/></eidea:message>"
-                                                      ng-model="apiKeyPo.scopeMask"></td>
+                                                      ng-model="misApiKeyPo.scopeMask"></td>
                     </tr>
                     <tr>
                         <td class="control-label"><%--apiKey--%><eidea:label key="base.apikey.label.apikey"/></td>
-                        <td class="form-group" colspan="3"><input type="text" id="apiKey" class="form-control" ng-model="apiKeyPo.apiKey" ng-disabled="true" placeholder="<eidea:message key="common.please.input"><eidea:param value="base.apikey.label.apikey" type="label"/></eidea:message> "/> </td>
+                        <td class="form-group" colspan="3"><input type="text" id="apiKey" class="form-control"
+                                                                  ng-model="misApiKeyPo.apiKey" ng-disabled="true"
+                                                                  placeholder="<eidea:message key="common.please.input"><eidea:param value="base.apikey.label.apikey" type="label"/></eidea:message> "/>
+                        </td>
                     </tr>
                     <tr>
                         <td class="control-label"><eidea:label key="base.apikey.label.blackList"/></td>
                         <td class="form-group"><input type="text" class="form-control" id="blackList"
                                                       placeholder="<eidea:message key="common.please.input"><eidea:param value="base.apikey.label.blackList" type="label"/></eidea:message>"
-                                                      ng-model="apiKeyPo.blackList"></td>
+                                                      ng-model="misApiKeyPo.blackList"></td>
                         <td class="control-label"><%--whiteList--%><eidea:label key="base.apikey.label.whiteList"/></td>
                         <td class="form-group"><input type="text" class="form-control" id="whiteList"
                                                       placeholder="<eidea:message key="common.please.input"><eidea:param value="base.apikey.label.whiteList" type="label"/></eidea:message>"
-                                                      ng-model="apiKeyPo.whiteList">
+                                                      ng-model="misApiKeyPo.whiteList">
                         </td>
                     </tr>
                     <tr>
@@ -48,30 +51,31 @@ Date: 2017-06-28 15:50:20
                         <td class="form-group">
                             <input type="text" class="form-control" id="note"
                                    placeholder="<eidea:message key="common.please.input"><eidea:param value="base.apikey.label.note" type="label"/></eidea:message>"
-                                   ng-model="apiKeyPo.note">
+                                   ng-model="misApiKeyPo.note">
                         </td>
-                        <td class="control-label"><%--isValid--%><eidea:label key="base.apikey.label.isValid"/></td>
-                        <td class="form-group"><input type="text" class="form-control" id="isValid"
-                                                      placeholder="<eidea:message key="common.please.input"><eidea:param value="base.apikey.label.isValid" type="label"/></eidea:message>"
-                                                      ng-model="apiKeyPo.isValid"></td>
+                        <td class="control-label"><%--isValid--%><eidea:label
+                                key="base.apikey.label.isValid"/></td>
+                        <td>
+                        <input type="checkbox"  ng-model="misApiKeyPo.isValid" ng-true-value="1"
+                               ng-false-value="0"/></td>
                     </tr>
                     <tr>
                         <td class="control-label"><%--productCode--%><eidea:label
                                 key="base.apikey.label.productCode"/></td>
                         <td class="form-group"><input type="text" class="form-control" id="productCode"
                                                       placeholder="<eidea:message key="common.please.input"><eidea:param value="base.apikey.label.productCode" type="label"/></eidea:message>"
-                                                      ng-model="apiKeyPo.productCode">
+                                                      ng-model="misApiKeyPo.productCode">
                         </td>
                         <td class="control-label"><%--version--%><eidea:label key="base.apikey.label.version"/></td>
                         <td class="form-group"><input type="text" class="form-control" id="version"
                                                       placeholder="<eidea:message key="common.please.input"><eidea:param value="base.apikey.label.version" type="label"/></eidea:message>"
-                                                      ng-model="apiKeyPo.version" ng-disabled="true"></td>
+                                                      ng-model="misApiKeyPo.version" ng-disabled="true"></td>
                     </tr>
                     <tr>
                         <td class="control-label"><%--limitMap--%><eidea:label key="base.apikey.label.limitMap"/></td>
                         <td class="form-group" colspan="3"><input type="text" class="form-control" id="limitMap"
                                                                   placeholder="<eidea:message key="common.please.input"><eidea:param value="base.apikey.label.limitMap" type="label"/></eidea:message>"
-                                                                  ng-model="apiKeyPo.limitMap">
+                                                                  ng-model="misApiKeyPo.limitMap">
                         </td>
 
                     </tr>
@@ -81,7 +85,7 @@ Date: 2017-06-28 15:50:20
                         <td class="input-group date bootstrap-datetime"><input type="text" class="form-control"
                                                                                id="createTime"
                                                                                placeholder="<eidea:message key="common.please.input"><eidea:param value="base.apikey.label.createTime" type="label"/></eidea:message>"
-                                                                               ng-model="apiKeyPo.createTime"
+                                                                               ng-model="misApiKeyPo.createTime"
                                                                                uib-datepicker-popup="yyyy-MM-dd HH:mm:ss">
                             <span class="input-group-addon"><span
                                     class="glyphicon glyphicon-calendar"></span></span></td>
@@ -91,7 +95,7 @@ Date: 2017-06-28 15:50:20
                                                                                id="expireTime"
                                                                                placeholder="<eidea:message key="common.please.input">
                         <eidea:param value="base.apikey.label.expireTime" type="label"/></eidea:message>"
-                                                                               ng-model="apiKeyPo.expireTime"
+                                                                               ng-model="misApiKeyPo.expireTime"
                                                                                uib-datepicker-popup="yyyy-MM-dd HH:mm:ss">
                             <span class="input-group-addon"><span
                                     class="glyphicon glyphicon-calendar"></span></span></td>

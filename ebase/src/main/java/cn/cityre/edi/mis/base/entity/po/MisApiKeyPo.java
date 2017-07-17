@@ -2,6 +2,7 @@ package cn.cityre.edi.mis.base.entity.po;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -13,7 +14,7 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-public class ApiKeyPo implements java.io.Serializable{
+public class MisApiKeyPo implements java.io.Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id",unique = true,nullable = false,length = 10)

@@ -6,7 +6,7 @@
 <%@include file="/inc/taglib.jsp" %>
 <html>
 <head>
-    <title><%--区域--%><eidea:label key="apikey.title"/></title>
+    <title><%--区域--%><eidea:label key="area.title"/></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <%@include file="/inc/inc_ang_js_css.jsp" %>
 </head>
@@ -18,10 +18,10 @@
 </body>
 <script type="text/javascript">
     var app = angular.module('myApp', ['ngRoute', 'ui.bootstrap', 'jcs-autoValidate'])
-        .config(['$routeProvider', function ($routeProvider) {
+          .config(['$routeProvider', function ($routeProvider) {
             $routeProvider
-                .when('/list', {templateUrl: '<c:url value="/base/apikey/list.tpl.jsp"/>'})
-                .when('/edit', {templateUrl: '<c:url value="/base/apikey/edit.tpl.jsp"/>'})
+                .when('/list', {templateUrl: '<c:url value="/base/useremail/list.tpl.jsp"/>'})
+                .when('/edit', {templateUrl: '<c:url value="/base/useremail/edit.tpl.jsp"/>'})
                 .otherwise({redirectTo: '/list'});
         }]);
     app.controller('listCtrl', function ($scope, $rootScope, $http) {
@@ -49,7 +49,7 @@
             return false;
         }
         $scope.pageChanged = function () {
-            $http.post("<c:url value="/base/apikey/list"/>", $scope.queryParams)
+            $http.post("<c:url value="/base/useremail/list"/>", $scope.queryParams)
                 .success(function (response) {
                     $scope.isLoading = false;
                     if (response.success) {
@@ -58,10 +58,8 @@
                     else {
                         bootbox.alert(response.message);
                     }
-
                 });
         }
-
 //批量删除
         $scope.deleteRecord = function () {
             bootbox.confirm({
@@ -85,7 +83,7 @@
                         }
                         $scope.queryParams.init = true;
                         var param = {"queryParams": $scope.queryParams, "ids": ids};
-                        $http.post("<c:url value="/base/apikey/deletes"/>", param).success(function (data) {
+                        $http.post("<c:url value="/base/useremail/deletes"/>", param).success(function (data) {
                             if (data.success) {
                                 $scope.updateList(data.data);
                                 bootbox.alert("<eidea:message key="module.deleted.success"/>");
@@ -145,17 +143,17 @@
         });
 
         $scope.message = '';
-        $scope.areaPo = {};
+        $scope.useremailPo = {};
         $scope.canAdd = PrivilegeService.hasPrivilege('add');
-        var url = "<c:url value="/base/apikey/create"/>";
+        var url = "<c:url value="/base/useremail/create"/>";
         if ($routeParams.id != null) {
-            url = "<c:url value="/base/apikey/get"/>" + "?id=" + $routeParams.id;
+            url = "<c:url value="/base/useremail/get"/>" + "?id=" + $routeParams.id;
         }
         $http.get(url)
             .success(function (response) {
                 if (response.success) {
-                    $scope.misApiKeyPo= response.data;
-                    $scope.canSave = (PrivilegeService.hasPrivilege('add') && $scope.areaPo.id == null) || PrivilegeService.hasPrivilege('update');
+                    $scope.useremailPo = response.data;
+                    $scope.canSave = (PrivilegeService.hasPrivilege('add') && $scope.useremailPo.id == null) || PrivilegeService.hasPrivilege('update');
                 }
                 else {
                     bootbox.alert(response.message);
@@ -165,14 +163,14 @@
         });
         $scope.save = function () {
             if ($scope.editForm.$valid) {
-                var postUrl = '<c:url value="/base/apikey/saveForUpdated"/>';
-                if ($scope.misApiKeyPo.id == null) {
-                    postUrl = '<c:url value="/base/apikey/saveForCreated"/>';
+                var postUrl = '<c:url value="/base/useremail/saveForUpdated"/>';
+                if ($scope.useremailPo.id == null) {
+                    postUrl = '<c:url value="/base/useremail/saveForCreated"/>';
                 }
-                $http.post(postUrl, $scope.misApiKeyPo).success(function (data) {
+                $http.post(postUrl, $scope.useremailPo).success(function (data) {
                     if (data.success) {
                         $scope.message = "<eidea:label key="base.save.success"/>";
-                        $scope.misApiKeyPo = data.data;
+                        $scope.useremailPo = data.data;
                     }
                     else {
                         $scope.message = data.message;
@@ -185,13 +183,13 @@
         }
         $scope.create = function () {
             $scope.message = "";
-            $scope.misApiKeyPo = {};
-            var url = "<c:url value="/base/apikey/create"/>";
+            $scope.useremailPo = {};
+            var url = "<c:url value="/base/useremail/create"/>";
             $http.get(url)
                 .success(function (response) {
                     if (response.success) {
-                        $scope.misApiKeyPo = response.data;
-                        $scope.canSave = (PrivilegeService.hasPrivilege('add') && $scope.misApiKeyPo.id == null) || PrivilegeService.hasPrivilege('update');
+                        $scope.useremailPo = response.data;
+                        $scope.canSave = (PrivilegeService.hasPrivilege('add') && $scope.useremailPo.id == null) || PrivilegeService.hasPrivilege('update');
                     }
                     else {
                         bootbox.alert(response.message);
