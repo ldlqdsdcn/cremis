@@ -2,8 +2,11 @@ package cn.cityre.edi.mis.base.entity.po;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -20,14 +23,20 @@ public class MisUserEmailPo {
     private Integer id;
 
     @Column(name = "unionUid", nullable = false, length = 64, unique = true)
+    @Length(min = 1,max = 64,message = "base.v2017.email.unionUid.length")
+    @NotBlank(message = "error.v2017.user.unionUid.not_null")
     private String unionUid;
     @Column(name = "address", length = 128,nullable = false)
+    @NotBlank(message = "error.v2017.email.adderss.not_null")
+    @Length(min = 1,max = 128,message = "base.v2017.email.address.length")
     private String address;
     @Column(name = "isVerified", length = 4,nullable = false)
     private Byte isVerified;
     @Column(name = "isPrimary", length = 4,nullable = false)
     private Byte isPrimary;
     @Column(name = "pinToken", length = 64,nullable = false)
+    @Length(min = 1,max = 64,message = "base.v2017.email.pinToken.length")
+    @NotBlank(message = "error.v2017.email.pinToken.not_null")
     private String pinToken;
     @Column(name = "createTime",nullable = false)
     private Date createTime;
