@@ -11,7 +11,6 @@
         <module>eweb</module>
         <module>ecore</module>
         <module>eutil</module>
-        <module>ereport</module>
         <module>eapi</module>
         <module>ecomm</module>
     </modules>
@@ -26,12 +25,7 @@
         <slf4j.version>1.7.5</slf4j.version>
     </properties>
     <repositories>
-        <repository>
-            <id>nexus-in</id>
-            <name>鼎商动力私服-wms团队私服</name>
-            <url>http://dsdl.f3322.net:8181/nexus/content/groups/public/</url>
-        </repository>
-        <repository>
+       <repository>
             <id>spring-maven-release</id>
             <name>Spring Maven Release Repository</name>
             <url>http://maven.springframework.org/release</url>
@@ -47,18 +41,6 @@
             <url>http://maven.aliyun.com/nexus/content/groups/public</url>
         </repository>
     </repositories>
-    <distributionManagement>
-        <repository>
-            <id>nexus-releases</id>
-            <name>Nexus Release Repository</name>
-            <url>http://dsdl.f3322.net:8181/nexus/content/repositories/releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>nexus-snapshots</id>
-            <name>Nexus Snapshot Repository</name>
-            <url>http://dsdl.f3322.net:8181/nexus/content/repositories/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
     <dependencies>
         <!-- https://mvnrepository.com/artifact/junit/junit -->
         <dependency>
