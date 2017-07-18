@@ -15,7 +15,7 @@
         <module>ecomm</module>
     </modules>
     <groupId>com.dsdl</groupId>
-    <artifactId>eidea</artifactId>
+    <artifactId>cremis</artifactId>
     <version>1.0</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
