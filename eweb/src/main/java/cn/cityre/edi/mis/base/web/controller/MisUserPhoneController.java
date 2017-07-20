@@ -2,6 +2,7 @@ package cn.cityre.edi.mis.base.web.controller;
 
 import cn.cityre.edi.mis.base.entity.po.MisPhonePinPo;
 import cn.cityre.edi.mis.base.entity.po.MisUserPhonePo;
+import cn.cityre.edi.mis.base.service.MisPhoneService;
 import cn.cityre.edi.mis.base.service.MisUserPhoneService;
 import com.dsdl.eidea.base.web.vo.UserResource;
 import com.dsdl.eidea.core.dto.PaginationResult;
@@ -9,6 +10,7 @@ import com.dsdl.eidea.core.params.DeleteParams;
 import com.dsdl.eidea.core.params.QueryParams;
 import com.dsdl.eidea.core.web.def.WebConst;
 import com.dsdl.eidea.core.web.result.JsonResult;
+import com.dsdl.eidea.core.web.result.def.ErrorCodes;
 import com.dsdl.eidea.core.web.util.SearchHelper;
 import com.dsdl.eidea.core.web.vo.PagingSettingResult;
 import com.googlecode.genericdao.search.Search;
@@ -32,7 +34,7 @@ import javax.servlet.http.HttpSession;
 public class MisUserPhoneController {
     private final static String URL="user_phone";
     @Autowired
-    private MisUserPhoneService misUserPhoneService;
+    private MisPhoneService misPhoneService;
 
     @RequestMapping(value = "/showList",method = RequestMethod.GET)
     @RequiresPermissions("view")
@@ -47,14 +49,14 @@ public class MisUserPhoneController {
     @ResponseBody
     public JsonResult<PaginationResult<MisUserPhonePo>> list(HttpSession httpSession, @RequestBody QueryParams queryParams){
         Search search = SearchHelper.getSearchParam(URL,httpSession);
-        PaginationResult<MisUserPhonePo> paginationResult = misUserPhoneService.getUserPhoneList(search,queryParams);
+        PaginationResult<MisUserPhonePo> paginationResult = misPhoneService.getUserPhoneList(search,queryParams);
         return JsonResult.success(paginationResult);
     }
     @ResponseBody
     @RequiresPermissions("view")
     @RequestMapping(value = "/get",method = RequestMethod.GET)
     public JsonResult<MisUserPhonePo> get(Integer id){
-        MisUserPhonePo misUserPhonePo = misUserPhoneService.getUserPhone(id);
+        MisUserPhonePo misUserPhonePo = misPhoneService.getExistPhoneById(id);
         return JsonResult.success(misUserPhonePo);
     }
     @ResponseBody
@@ -69,7 +71,10 @@ public class MisUserPhoneController {
     @RequiresPermissions("add")
     public JsonResult<MisUserPhonePo> saveForCreated(HttpSession httpSession , @Validated@RequestBody MisUserPhonePo misUserPhonePo){
         UserResource userResource = (UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
-        misUserPhoneService.saveUserPhone(misUserPhonePo);
+        if (misPhoneService.getExistPrimaryPhoneByUid(misUserPhonePo)){
+            return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(),userResource.getMessage("error.user.phone.isPrimary.exist"));
+        }
+        misPhoneService.createPhone(misUserPhonePo);
         return JsonResult.success(misUserPhonePo);
     }
     @ResponseBody
@@ -77,7 +82,10 @@ public class MisUserPhoneController {
     @RequiresPermissions("add")
     public JsonResult<MisUserPhonePo> saveForUpdated(HttpSession httpSession , @Validated@RequestBody MisUserPhonePo misUserPhonePo){
         UserResource userResource = (UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
-        misUserPhoneService.saveUserPhone(misUserPhonePo);
+        if (misPhoneService.getExistPrimaryPhoneByUid(misUserPhonePo)){
+            return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(),userResource.getMessage("error.user.phone.isPrimary.exist"));
+        }
+        misPhoneService.updateById(misUserPhonePo);
         return JsonResult.success(misUserPhonePo);
     }
     @ResponseBody
@@ -85,7 +93,7 @@ public class MisUserPhoneController {
     @RequiresPermissions("delete")
     public JsonResult<PaginationResult<MisUserPhonePo>> deletes(HttpSession httpSession, @RequestBody DeleteParams<Integer> deleteParams){
         UserResource userResource = (UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
-        misUserPhoneService.deleteUserPhone(deleteParams.getIds());
+        misPhoneService.deleteById(deleteParams.getIds());
         return list(httpSession,deleteParams.getQueryParams());
     }
 }

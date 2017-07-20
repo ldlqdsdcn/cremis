@@ -6,7 +6,7 @@
 <%@include file="/inc/taglib.jsp" %>
 <html>
 <head>
-    <title><%--区域--%><eidea:label key="userphone.title"/></title>
+    <title><%--区域--%><eidea:label key="base.phone.title"/></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <%@include file="/inc/inc_ang_js_css.jsp" %>
 </head>
@@ -77,7 +77,7 @@
                         var ids = [];
                         for (var i = 0; i < $scope.modelList.length; i++) {
                             if ($scope.modelList[i].delFlag) {
-                                ids.push($scope.modelList[i].userphoneCode);
+                                ids.push($scope.modelList[i].id);
                             }
                         }
                         $scope.queryParams.init = true;
@@ -164,7 +164,8 @@
         $scope.save = function () {
             if ($scope.editForm.$valid) {
                 var postUrl = '<c:url value="/base/userphone/saveForUpdated"/>';
-                if ($scope.userphonePo.id == null) {
+                alert($routeParams.id);
+                if ($routeParams.id == null) {
                     postUrl = '<c:url value="/base/userphone/saveForCreated"/>';
                 }
                 $http.post(postUrl, $scope.userphonePo).success(function (data) {

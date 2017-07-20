@@ -11,8 +11,12 @@ import java.util.List;
  */
 @Repository
 public interface MisPhoneDao {
-    List<MisUserPhonePo> selectByUid(@Param(value = "unionUid")String unionUid,@Param(value = "isVerified") Byte isVerified,
-                               @Param(value = "isPrimary") Byte isPrimary);
+//    List<MisUserPhonePo> selectByUid(@Param(value = "unionUid")String unionUid,@Param(value = "isVerified") Byte isVerified,
+//                               @Param(value = "isPrimary") Byte isPrimary);
+
+    List<MisUserPhonePo> selectByUid(@Param(value = "unionUid") String unionUid);
+
+    MisUserPhonePo selectById(Integer id);
 
     void updateByUid(MisUserPhonePo misUserPhonePo);
 
