@@ -2,7 +2,8 @@ package cn.cityre.edi.mis.base.web.controller;
 
 import cn.cityre.edi.mis.base.def.ActionType;
 import cn.cityre.edi.mis.base.entity.po.MisPhonePinPo;
-import cn.cityre.edi.mis.base.service.MisPhonePinService;
+import cn.cityre.edi.mis.base.service.MisPhoneService;
+import cn.cityre.edi.mis.base.service.PhonePinService;
 import com.dsdl.eidea.base.web.vo.UserResource;
 import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.DeleteParams;
@@ -35,7 +36,7 @@ import java.util.Date;
 public class MisPhonePinController {
     private final static String URL="phone_pin";
     @Autowired
-    private MisPhonePinService misPhonePinService;
+    private PhonePinService misPhonePinService;
 
     @RequestMapping(value = "/showList",method = RequestMethod.GET)
     @RequiresPermissions(value = "view")
@@ -57,16 +58,14 @@ public class MisPhonePinController {
     @RequiresPermissions(value = "view")
     @RequestMapping(value = "/get",method = RequestMethod.GET)
     public JsonResult<MisPhonePinPo> get(Integer id){
-        MisPhonePinPo misPhonePinPo = misPhonePinService.getPhonePin(id);
+        MisPhonePinPo misPhonePinPo = misPhonePinService.getPhonePinById(id);
         return JsonResult.success(misPhonePinPo);
     }
     @RequestMapping(value = "/create",method = RequestMethod.GET)
     @RequiresPermissions("add")
     @ResponseBody
     public JsonResult<MisPhonePinPo> create(){
-        Date date = new Date();
         MisPhonePinPo misPhonePinPo = new MisPhonePinPo();
-        misPhonePinPo.setCreateTime(date);
         return JsonResult.success(misPhonePinPo);
     }
     @ResponseBody
@@ -74,7 +73,7 @@ public class MisPhonePinController {
     @RequestMapping(value = "/saveForCreated",method = RequestMethod.POST)
     public JsonResult<MisPhonePinPo> saveForCreated(HttpSession httpSession, @Validated @RequestBody MisPhonePinPo misPhonePinPo){
         UserResource userResource = (UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
-        misPhonePinService.savePhonePin(misPhonePinPo);
+        misPhonePinService.createPhonePin(misPhonePinPo);
         return JsonResult.success(misPhonePinPo);
     }
     @ResponseBody
@@ -82,7 +81,7 @@ public class MisPhonePinController {
     @RequestMapping(value = "/saveForUpdated",method = RequestMethod.POST)
     public JsonResult<MisPhonePinPo> saveForUpdated(HttpSession httpSession,@Validated @RequestBody MisPhonePinPo misPhonePinPo){
         UserResource userResource = (UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
-        misPhonePinService.savePhonePin(misPhonePinPo);
+        misPhonePinService.createPhonePin(misPhonePinPo);
         return JsonResult.success(misPhonePinPo);
     }
     @ResponseBody
@@ -90,7 +89,7 @@ public class MisPhonePinController {
     @RequestMapping(value = "/deletes",method = RequestMethod.POST)
     public JsonResult<PaginationResult<MisPhonePinPo>> deletes(HttpSession httpSession, @RequestBody DeleteParams<Integer> deleteParams){
         UserResource userResource = (UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
-        misPhonePinService.deletePhonePin(deleteParams.getIds());
+        misPhonePinService.deleteById(deleteParams.getIds());
         return list(httpSession,deleteParams.getQueryParams());
     }
     @ResponseBody

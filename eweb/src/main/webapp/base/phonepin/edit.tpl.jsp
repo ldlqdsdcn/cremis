@@ -46,14 +46,14 @@ Date: 2017-06-28 15:50:20
                             key="base.v2017.user.label.createTime"/></label>
                     <input type="datetime" class="form-control" id="createTime"
                            placeholder="<eidea:message key="common.please.input"><eidea:param value="base.v2017.user.label.createTime" type="label"/></eidea:message>"
-                           ng-model="phonepinPo.createTime" uib-datepicker-popup="yyyy-MM-dd HH:mm:ss">
+                           ng-model="phonepinPo.createTime" uib-datepicker-popup="yyyy-MM-dd HH:mm:ss" ng-disabled="true">
                     <div class="form-group">
 
                         <label for="expireTime"><%--expireTime--%><eidea:label
                                 key="base.apikey.label.expireTime"/></label>
                         <input type="datetime" class="form-control" id="expireTime"
                                placeholder="<eidea:message key="common.please.input"><eidea:param value="base.apikey.label.expireTime" type="label"/></eidea:message>"
-                               ng-model="phonepinPo.expireTime" uib-datepicker-popup="yyyy-MM-dd HH:mm:ss">
+                               ng-model="phonepinPo.expireTime" uib-datepicker-popup="yyyy-MM-dd HH:mm:ss" ng-disabled="true">
 
                         <div class="form-group">
                             <p class="text-right">
