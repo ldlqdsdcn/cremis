@@ -17,24 +17,17 @@ Date: 2017-06-28 15:50:20
                   class="form-horizontal form-label-left input_mask">
                 <table class="table table-borderless">
                     <tr>
-                        <%--<td class="control-label"><eidea:label key="base.apikey.label.apikeyId"/></td>--%>
-                        <%--<td class="form-group">--%>
-                            <%--<input type="text" class="form-control" id="apikeyId"--%>
-                                   <%--placeholder="<eidea:message key="common.please.input"><eidea:param value="base.apikey.label.apikeyId" type="label"/></eidea:message>"--%>
-                                   <%--ng-model="misApiKeyPo.apiKey">--%>
-                        <%--</td>--%>
-                        <td class="control-label"><eidea:label key="base.apikey.label.scopeMask"/></td>
-                        <td class="form-group" colspan="3"><input type="text" class="form-control" id="scopeMask"
-                                                      placeholder="<eidea:message key="common.please.input"><eidea:param value="base.apikey.label.scopeMask" type="label"/></eidea:message>"
-                                                      ng-model="misApiKeyPo.scopeMask"></td>
-                    </tr>
-                    <tr>
                         <td class="control-label"><%--apiKey--%><eidea:label key="base.apikey.label.apikey"/></td>
-                        <td class="form-group" colspan="3"><input type="text" id="apiKey" class="form-control"
+                        <td class="form-group" ><input type="text" id="apiKey" class="form-control"
                                                                   ng-model="misApiKeyPo.apiKey" ng-disabled="true"
                                                                   placeholder="<eidea:message key="common.please.input"><eidea:param value="base.apikey.label.apikey" type="label"/></eidea:message> "/>
                         </td>
+                        <td class="control-label"><eidea:label key="base.apikey.label.scopeMask"/></td>
+                        <td class="form-group" ><input type="number" class="form-control" id="scopeMask"
+                                                      placeholder="<eidea:message key="common.please.input"><eidea:param value="base.apikey.label.scopeMask" type="label"/></eidea:message>"
+                                                      ng-model="misApiKeyPo.scopeMask"></td>
                     </tr>
+
                     <tr>
                         <td class="control-label"><eidea:label key="base.apikey.label.blackList"/></td>
                         <td class="form-group"><input type="text" class="form-control" id="blackList"
@@ -86,7 +79,7 @@ Date: 2017-06-28 15:50:20
                                                                                id="createTime"
                                                                                placeholder="<eidea:message key="common.please.input"><eidea:param value="base.apikey.label.createTime" type="label"/></eidea:message>"
                                                                                ng-model="misApiKeyPo.createTime"
-                                                                               uib-datepicker-popup="yyyy-MM-dd HH:mm:ss">
+                                                                               uib-datepicker-popup="yyyy-MM-dd HH:mm:ss" ng-disabled="true">
                             <span class="input-group-addon"><span
                                     class="glyphicon glyphicon-calendar"></span></span></td>
                         <td class="control-label"><%--expireTime--%><eidea:label

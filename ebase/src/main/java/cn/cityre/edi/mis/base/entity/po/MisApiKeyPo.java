@@ -23,7 +23,6 @@ public class MisApiKeyPo implements java.io.Serializable {
     @Length(max = 64, message = "base.v2017.apikey.apikey.length")
     private String apiKey;
     @Column(name = "scopeMask", length = 10)
-    @Length(max = 10, message = "base.v2017.apikey.scopeMask.length")
     private Integer scopeMask;
     @Column(name = "limitMap", length = 1024)
     @Length(max = 1024, message = "base.v2017.apikey.limitMap.length")

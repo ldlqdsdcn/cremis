@@ -2,7 +2,7 @@
   Created by 刘大磊.
   Date: 2017-06-28 15:50:20
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="base.product.title" %>
 <%@include file="/inc/taglib.jsp" %>
 <html>
 <head>

@@ -7,7 +7,7 @@ Date: 2017-06-28 15:50:20
 <div class="container-fluid" ng-controller="editCtrl">
     <div class="page-header">
         <ol class="breadcrumb">
-            <li><a href="javascript:;"><i class="icon-fire"></i><eidea:label key="area.title"/></a></li>
+            <li><a href="javascript:;"><i class="icon-fire"></i><eidea:label key="base.email.title"/></a></li>
         </ol>
     </div>
     <div class="row-fluid">
@@ -48,20 +48,20 @@ Date: 2017-06-28 15:50:20
                         key="base.apikey.label.expireTime"/></label>
                 <input type="text" class="form-control" id="expireTime"
                        placeholder="<eidea:message key="common.please.input"><eidea:param value="base.apikey.label.expireTime" type="label"/></eidea:message>"
-                       ng-model="useremailPo.expireTime" uib-datepicker-popup="yyyy-MM-dd HH:mm:ss">
+                       ng-model="useremailPo.expireTime" uib-datepicker-popup="yyyy-MM-dd HH:mm:ss" ng-disabled="true">
                 <div class="form-group">
                     <label for="createTime"><%--createTime--%><eidea:label
                             key="base.v2017.user.label.createTime"/></label>
                     <input type="text" class="form-control" id="createTime"
                            placeholder="<eidea:message key="common.please.input"><eidea:param value="base.v2017.user.label.createTime" type="label"/></eidea:message>"
-                           ng-model="useremailPo.createTime" uib-datepicker-popup="yyyy-MM-dd HH:mm:ss">
+                           ng-model="useremailPo.createTime" uib-datepicker-popup="yyyy-MM-dd HH:mm:ss" ng-disabled="true">
                     <div class="form-group">
 
                         <label for="updateTime"><%--updateTime--%><eidea:label
                                 key="base.v2017.user.label.updateTime"/></label>
                         <input type="text" class="form-control" id="updateTime"
                                placeholder="<eidea:message key="common.please.input"><eidea:param value="base.v2017.user.label.updateTime" type="label"/></eidea:message>"
-                               ng-model="useremailPo.updateTime" uib-datepicker-popup="yyyy-MM-dd HH:mm:ss">
+                               ng-model="useremailPo.updateTime" uib-datepicker-popup="yyyy-MM-dd HH:mm:ss" ng-disabled="true">
 
                         <div class="form-group">
                             <p class="text-right">

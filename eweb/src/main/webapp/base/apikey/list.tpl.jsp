@@ -10,6 +10,8 @@
                 data-target="#searchModal"><eidea:label key="common.button.search"/></button>
         <button type="button" class="btn  btn-primary btn-sm" ng-disabled="!canDelete()"
                 ng-click="deleteRecord()" ng-show="canDel"><eidea:label key="common.button.delete"/></button>
+        <button type="button" class="btn btn-primary btn-sm" ng-disabled="!canDelete()"
+                ng-click="deleteLogic()" ng-show="canDel">逻辑删除</button>
     </div>
     <div class="row-fluid">
         <div class="span12">

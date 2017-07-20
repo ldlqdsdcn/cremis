@@ -80,12 +80,50 @@
                         var ids = [];
                         for (var i = 0; i < $scope.modelList.length; i++) {
                             if ($scope.modelList[i].delFlag) {
-                                ids.push($scope.modelList[i].id);
+                                if ($scope.modelList[i].isValid == 1) {
+                                    alert($scope.modelList[i].isValid)
+                                    ids.push($scope.modelList[i].id);
+                                }
                             }
                         }
                         $scope.queryParams.init = true;
                         var param = {"queryParams": $scope.queryParams, "ids": ids};
                         $http.post("<c:url value="/base/apikey/deletes"/>", param).success(function (data) {
+                            if (data.success) {
+                                $scope.updateList(data.data);
+                                bootbox.alert("<eidea:message key="module.deleted.success"/>");
+                            } else {
+                                bootbox.alert(data.message);
+                            }
+                        });
+                    }
+                }
+            });
+        };
+        //逻辑删除
+        $scope.deleteLogic = function () {
+            bootbox.confirm({
+                message: "<eidea:message key="common.warn.confirm.deletion"/>",
+                buttons: {
+                    confirm: {
+                        label: '<eidea:label key="common.button.yes"/>',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: '<eidea:label key="common.button.no"/>',
+                        className: 'btn-danger'
+                    }
+                }, callback: function (result) {
+                    if (result) {
+                        var ids = [];
+                        for (var i = 0; i < $scope.modelList.length; i++) {
+                            if ($scope.modelList[i].delFlag) {
+                                ids.push($scope.modelList[i].id);
+                            }
+                        }
+                        $scope.queryParams.init = true;
+                        var param = {"queryParams": $scope.queryParams, "ids": ids};
+                        $http.post("<c:url value="/base/apikey/logicDelete"/>", param).success(function (data) {
                             if (data.success) {
                                 $scope.updateList(data.data);
                                 bootbox.alert("<eidea:message key="module.deleted.success"/>");
@@ -154,7 +192,7 @@
         $http.get(url)
             .success(function (response) {
                 if (response.success) {
-                    $scope.misApiKeyPo= response.data;
+                    $scope.misApiKeyPo = response.data;
                     $scope.canSave = (PrivilegeService.hasPrivilege('add') && $scope.areaPo.id == null) || PrivilegeService.hasPrivilege('update');
                 }
                 else {

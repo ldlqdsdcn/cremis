@@ -1,7 +1,7 @@
 package cn.cityre.edi.mis.base.web.controller;
 
 import cn.cityre.edi.mis.base.entity.po.MisUserEmailPo;
-import cn.cityre.edi.mis.base.service.MisUserEmailService;
+import cn.cityre.edi.mis.base.service.MisEmailService;
 import com.dsdl.eidea.base.web.vo.UserResource;
 import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.DeleteParams;
@@ -31,7 +31,7 @@ import javax.servlet.http.HttpSession;
 public class MisUserEmailController {
     private final static String URL="user_email";
     @Autowired
-    private MisUserEmailService misUserEmailService;
+    private MisEmailService misEmailService;
 
     @RequestMapping(value = "/showList",method = RequestMethod.GET)
     @RequiresPermissions(value = "view")
@@ -46,14 +46,14 @@ public class MisUserEmailController {
     @RequestMapping(value = "/list",method = RequestMethod.POST)
     public JsonResult<PaginationResult<MisUserEmailPo>> list(HttpSession httpSession, @RequestBody QueryParams queryParams){
         Search search = SearchHelper.getSearchParam(URL,httpSession);
-        PaginationResult<MisUserEmailPo> paginationResult = misUserEmailService.getUserEmailList(search,queryParams);
+        PaginationResult<MisUserEmailPo> paginationResult = misEmailService.getUserEmailList(search,queryParams);
         return JsonResult.success(paginationResult);
     }
     @RequestMapping(value = "/get",method = RequestMethod.GET)
     @RequiresPermissions("view")
     @ResponseBody
     public JsonResult<MisUserEmailPo> get(Integer id){
-        MisUserEmailPo misUserEmailPo=misUserEmailService.getUserEmail(id);
+        MisUserEmailPo misUserEmailPo=misEmailService.getExistUserEmailById(id);
         return JsonResult.success(misUserEmailPo);
     }
     @ResponseBody
@@ -70,7 +70,7 @@ public class MisUserEmailController {
     @RequestMapping(value = "/saveForCreated",method = RequestMethod.POST)
     public JsonResult<MisUserEmailPo> saveForCreated(HttpSession httpSession, @Validated @RequestBody MisUserEmailPo misUserEmailPo){
         UserResource userResource = (UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
-        misUserEmailService.saveUserEmail(misUserEmailPo);
+        misEmailService.createEmail(misUserEmailPo);
         return get(misUserEmailPo.getId());
     }
     @ResponseBody
@@ -78,7 +78,7 @@ public class MisUserEmailController {
     @RequestMapping(value = "/saveForUpdated",method = RequestMethod.POST)
     public JsonResult<MisUserEmailPo> saveForUpdated(HttpSession httpSession, @Validated @RequestBody MisUserEmailPo misUserEmailPo){
         UserResource userResource = (UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
-        misUserEmailService.saveUserEmail(misUserEmailPo);
+        misEmailService.updateEmailById(misUserEmailPo);
         return get(misUserEmailPo.getId());
     }
     @ResponseBody
@@ -86,7 +86,7 @@ public class MisUserEmailController {
     @RequestMapping(value = "/deletes",method = RequestMethod.POST)
     public JsonResult<PaginationResult<MisUserEmailPo>> deletes(HttpSession httpSession, @RequestBody DeleteParams<Integer> deleteParams){
         UserResource userResource = (UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
-        misUserEmailService.deleteUserEmail(deleteParams.getIds());
+        misEmailService.deleteEmailById(deleteParams.getIds());
         return list(httpSession,deleteParams.getQueryParams());
     }
 }
