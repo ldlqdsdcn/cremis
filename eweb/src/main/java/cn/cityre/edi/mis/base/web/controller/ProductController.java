@@ -9,6 +9,7 @@ import com.dsdl.eidea.core.params.DeleteParams;
 import com.dsdl.eidea.core.params.QueryParams;
 import com.dsdl.eidea.core.web.def.WebConst;
 import com.dsdl.eidea.core.web.result.JsonResult;
+import com.dsdl.eidea.core.web.result.def.ErrorCodes;
 import com.dsdl.eidea.core.web.util.SearchHelper;
 import com.dsdl.eidea.core.web.vo.PagingSettingResult;
 import com.google.gson.JsonArray;
@@ -64,10 +65,7 @@ public class ProductController {
     @RequiresPermissions(value = "add")
     @RequestMapping(value = "create",method = RequestMethod.GET)
     public JsonResult<MisProductPo> create(){
-        Date date = new Date();
         MisProductPo misProductPo = new MisProductPo();
-        misProductPo.setCreateTime(date);
-        misProductPo.setUpdateTime(date);
         return JsonResult.success(misProductPo);
     }
     @RequestMapping(value = "/saveForCreated",method = RequestMethod.POST)
@@ -75,16 +73,17 @@ public class ProductController {
     @ResponseBody
     public JsonResult<MisProductPo> saveForCreated(HttpSession httpSession, @Validated @RequestBody MisProductPo misProductPo){
         UserResource userResource = (UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
-        productService.saveProduct(misProductPo);
+        if (productService.findExistProductByProductCode(misProductPo.getProductCode())){
+            return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(),userResource.getMessage("error.v2017.product.name.exist"));
+        }
+        productService.createProduct(misProductPo);
         return  JsonResult.success(misProductPo);
     }
     @ResponseBody
     @RequiresPermissions("update")
     @RequestMapping(value = "/saveForUpdated",method = RequestMethod.POST)
     public JsonResult<MisProductPo> saveForUpdated(HttpSession httpSession, @Validated @RequestBody MisProductPo misProductPo){
-        Date date = new Date();
-        misProductPo.setUpdateTime(date);
-        productService.saveProduct(misProductPo);
+        productService.updateProduct(misProductPo);
         return JsonResult.success(misProductPo);
     }
     @ResponseBody

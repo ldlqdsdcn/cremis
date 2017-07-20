@@ -168,29 +168,29 @@
             }).error(function (response) {
             bootbox.alert(response);
         });
-        <%--//验证产品是否存在--%>
-        <%--var isExist = true;--%>
-        <%--$scope.getExistProduct = function () {--%>
-            <%--$http.post("<c:url value="/base/product/getExistProductList"/> ", $scope.misProductPo).success(function (response) {--%>
-                <%--if (response.success) {--%>
-                    <%--if (response.data) {--%>
-                        <%--$scope.message = "<eidea:message key="error.v2017.product.exist"/>";--%>
-                    <%--}else {--%>
-                        <%--isExist = false;--%>
-                    <%--}--%>
-                <%--}else{--%>
-                    <%--bootbox.alert(response.message);--%>
-                <%--}--%>
-            <%--})--%>
-        <%--}--%>
+        //验证产品是否存在
+        var isExist = true;
+        $scope.getExistProduct = function () {
+            $http.post("<c:url value="/base/product/getExistProductList"/> ", $scope.misProductPo).success(function (response) {
+                if (response.success) {
+                    if (response.data) {
+                        $scope.message = "<eidea:message key="error.v2017.product.exist"/>";
+                    }else {
+                        isExist = false;
+                    }
+                }else{
+                    bootbox.alert(response.message);
+                }
+            })
+        }
         $scope.save = function () {
-            <%--if(isExist){--%>
-                <%--$scope.message = "<eidea:message key="error.v2017.product.exist"/>";--%>
-                <%--return false;--%>
-            <%--}--%>
+            if(isExist){
+                $scope.message = "<eidea:message key="error.v2017.product.exist"/>";
+                return false;
+            }
             if ($scope.editForm.$valid) {
                 var postUrl = '<c:url value="/base/product/saveForUpdated"/>';
-                if ($scope.misProductPo.productCode == null) {
+                if ($scope.misProductPo.updateTime == null) {
                     postUrl = '<c:url value="/base/product/saveForCreated"/>';
                 }
                 $http.post(postUrl, $scope.misProductPo).success(function (data) {

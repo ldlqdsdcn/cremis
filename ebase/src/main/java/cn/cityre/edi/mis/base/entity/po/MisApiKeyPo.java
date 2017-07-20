@@ -49,5 +49,4 @@ public class MisApiKeyPo implements java.io.Serializable {
     private Date createTime;
     @Column(name = "expireTime")
     private Date expireTime;
-
 }

@@ -8,10 +8,12 @@ import com.googlecode.genericdao.search.Search;
 /**
  * Created by cityre on 2017/7/11.
  */
-public interface ProductService {
+public interface  ProductService {
     PaginationResult<MisProductPo> getProductList(Search search, QueryParams queryParams);
 
-    void saveProduct(MisProductPo misProductPo);
+    void updateProduct(MisProductPo misProductPo);
+
+    void createProduct(MisProductPo misProductPo);
 
     void deleteProducts(String[] productCode);
 

@@ -26,8 +26,8 @@ public class MisProductPo implements java.io.Serializable {
     @Column(name = "platform",nullable = false,length = 16)
     @Length(min = 2,max = 16,message = "base.v2017.product.platform.length")
     private String platform;
-    @Column(name = "createTime",nullable = false)
+    @Column(name = "createTime")
     private Date createTime;
-    @Column(name="updateTime",nullable = false)
+    @Column(name="updateTime")
     private Date updateTime;
 }

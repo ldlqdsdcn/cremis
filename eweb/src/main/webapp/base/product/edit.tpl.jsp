@@ -7,7 +7,7 @@ Date: 2017-06-28 15:50:20
 <div class="container-fluid" ng-controller="editCtrl">
     <div class="page-header">
         <ol class="breadcrumb">
-            <li><a href="javascript:;"><i class="icon-fire"></i><eidea:label key="apikey.title"/></a></li>
+            <li><a href="javascript:;"><i class="icon-fire"></i><eidea:label key="base.product.title"/></a></li>
         </ol>
     </div>
     <form role="form" name="editForm" novalidate ng-submit="save()">
@@ -31,15 +31,12 @@ Date: 2017-06-28 15:50:20
                 <div class="form-group">
                     <label for="platform"><%--platform--%><eidea:label key="base.product.label.platform"/></label>
                     <select id="platform" class="form-control" ng-model="misProductPo.platform" ng-options="option.key as option.value for option in platformTypeList"></select>
-                    <%--<input class="form-control" id="platform" type="text" ng-model="misProductPo.platform"--%>
-                           <%--placeholder="<eidea:message key="common.please.input">--%>
-                    <%--<eidea:param value="base.product.label.platform" type="label"/></eidea:message> " required/>--%>
                 </div>
                 <div class="form-group">
                     <label for="createTime"><%--createTime--%><eidea:label key="base.product.label.createTime"/></label>
                     <input class="form-control" id="createTime" type="text" ng-model="misProductPo.createTime"
                            placeholder="<eidea:message key="common.please.input">
-                    <eidea:param value="base.product.label.createTime" type="label"/></eidea:message> " required
+                    <eidea:param value="base.product.label.createTime" type="label"/></eidea:message> "
                            uib-datepicker-popup="yyyy-MM-dd HH:mm:ss" ng-disabled="true"/>
                     <%--<span class="input-group-addon"><span--%>
                     <%--class="glyphicon glyphicon-calendar"></span></span>--%>
@@ -48,7 +45,7 @@ Date: 2017-06-28 15:50:20
                     <label for="updateTime"><%--createTime--%><eidea:label key="base.product.label.updateTime"/></label>
                     <input class="form-control" id="updateTime" type="text" ng-model="misProductPo.updateTime"
                            placeholder="<eidea:message key="common.please.input">
-                    <eidea:param value="base.product.label.updateTime " type="label"/></eidea:message> " required
+                    <eidea:param value="base.product.label.updateTime " type="label"/></eidea:message> "
                            uib-datepicker-popup="yyyy-MM-dd HH:mm:ss" ng-disabled="true"/>
                     <%--<span class="input-group-addon"><span--%>
                     <%--class="glyphicon glyphicon-calendar"></span></span>--%>
