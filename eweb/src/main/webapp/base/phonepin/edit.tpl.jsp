@@ -7,7 +7,7 @@ Date: 2017-06-28 15:50:20
 <div class="container-fluid" ng-controller="editCtrl">
     <div class="page-header">
         <ol class="breadcrumb">
-            <li><a href="javascript:;"><i class="icon-fire"></i><eidea:label key="area.title"/></a></li>
+            <li><a href="javascript:;"><i class="icon-fire"></i><eidea:label key="base.phonePin.title"/></a></li>
         </ol>
     </div>
     <div class="row-fluid">

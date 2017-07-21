@@ -3,7 +3,7 @@ package cn.cityre.edi.mis.base.web.controller;
 import cn.cityre.edi.mis.base.def.SexType;
 import cn.cityre.edi.mis.base.def.VerifiedType;
 import cn.cityre.edi.mis.base.entity.po.MisUserPo;
-import cn.cityre.edi.mis.base.service.UserService;
+import cn.cityre.edi.mis.base.service.MisUserService;
 import com.dsdl.eidea.base.web.vo.UserResource;
 import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.DeleteParams;
@@ -29,12 +29,12 @@ import javax.servlet.http.HttpSession;
 /**
  * Created by cityre on 2017/7/11.
  */
-@Controller(value = "v2017UserController")
+@Controller(value = "misUserController")
 @RequestMapping(value = "/base/v2017User")
-public class UserController {
+public class MisUserController {
     private final static String URL="v2017User";
     @Autowired
-    private UserService userService;
+    private MisUserService misUserService;
 
 
     @RequestMapping(value = "/showList",method = RequestMethod.GET)
@@ -49,7 +49,7 @@ public class UserController {
     @ResponseBody
     @RequiresPermissions(value = "view")
     public JsonResult<PaginationResult<MisUserPo>> list(HttpSession httpSession , @RequestBody QueryParams queryParams){
-        PaginationResult<MisUserPo> paginationResult = userService.getExistUserList(SearchHelper.getSearchParam(URL,httpSession),queryParams);
+        PaginationResult<MisUserPo> paginationResult = misUserService.getExistUserList(SearchHelper.getSearchParam(URL,httpSession),queryParams);
         return JsonResult.success(paginationResult);
     }
     @RequiresPermissions("view")
@@ -57,7 +57,7 @@ public class UserController {
     @RequestMapping(value = "/get",method = RequestMethod.GET)
     public JsonResult<MisUserPo> get(HttpSession httpSession, Integer id){
         UserResource userResource = (UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
-        MisUserPo misUserPo = userService.getUser(id);
+        MisUserPo misUserPo = misUserService.getExistUserById(id);
         return JsonResult.success(misUserPo);
     }
     @RequiresPermissions("add")
@@ -67,29 +67,29 @@ public class UserController {
         MisUserPo misUserPo = new MisUserPo();
         return JsonResult.success(misUserPo);
     }
-    @RequestMapping(value = "/saveForCreated",method = RequestMethod.POST)
-    @ResponseBody
-    @RequiresPermissions("add")
-    public JsonResult<MisUserPo> saveForCreated(HttpSession httpSession , @Validated @RequestBody MisUserPo misUserPo){
-        UserResource userResource = (UserResource) httpSession.getAttribute(WebConst.SESSION_RESOURCE);
-        userService.saveUser(misUserPo);
-        return  JsonResult.success(misUserPo);
-    }
-    @RequiresPermissions("update")
-    @ResponseBody
-    @RequestMapping(value = "/saveForUpdated",method = RequestMethod.POST)
-    public JsonResult<MisUserPo> saveForUpdated(HttpSession httpSession, @Validated@RequestBody MisUserPo misUserPo){
-        UserResource userResource = (UserResource) httpSession.getAttribute(WebConst.SESSION_RESOURCE);
-        userService.saveUser(misUserPo);
-        return JsonResult.success(misUserPo);
-    }
-    @ResponseBody
-    @RequiresPermissions("delete")
-    @RequestMapping(value = "/deletes",method = RequestMethod.POST)
-    public JsonResult<PaginationResult<MisUserPo>> deletes(HttpSession httpSession, @RequestBody DeleteParams<Integer>deleteParams){
-        userService.deleteUser(deleteParams.getIds());
-        return list(httpSession,deleteParams.getQueryParams());
-    }
+//    @RequestMapping(value = "/saveForCreated",method = RequestMethod.POST)
+//    @ResponseBody
+//    @RequiresPermissions("add")
+//    public JsonResult<MisUserPo> saveForCreated(HttpSession httpSession , @Validated @RequestBody MisUserPo misUserPo){
+//        UserResource userResource = (UserResource) httpSession.getAttribute(WebConst.SESSION_RESOURCE);
+//        misUserService.c(misUserPo);
+//        return  JsonResult.success(misUserPo);
+//    }
+//    @RequiresPermissions("update")
+//    @ResponseBody
+//    @RequestMapping(value = "/saveForUpdated",method = RequestMethod.POST)
+//    public JsonResult<MisUserPo> saveForUpdated(HttpSession httpSession, @Validated@RequestBody MisUserPo misUserPo){
+//        UserResource userResource = (UserResource) httpSession.getAttribute(WebConst.SESSION_RESOURCE);
+//        userService.saveUser(misUserPo);
+//        return JsonResult.success(misUserPo);
+//    }
+//    @ResponseBody
+//    @RequiresPermissions("delete")
+//    @RequestMapping(value = "/deletes",method = RequestMethod.POST)
+//    public JsonResult<PaginationResult<MisUserPo>> deletes(HttpSession httpSession, @RequestBody DeleteParams<Integer>deleteParams){
+//        userService.deleteUser(deleteParams.getIds());
+//        return list(httpSession,deleteParams.getQueryParams());
+//    }
     @RequestMapping(value = "/getVerifiedType",method = RequestMethod.GET)
     @RequiresPermissions("view")
     @ResponseBody

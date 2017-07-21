@@ -2,11 +2,11 @@
   Created by 刘大磊.
   Date: 2017-06-28 15:50:20
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="base.product.title" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/inc/taglib.jsp" %>
 <html>
 <head>
-    <title><%--区域--%><eidea:label key="product.title"/></title>
+    <title><%--区域--%><eidea:label key="base.product.title"/></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <%@include file="/inc/inc_ang_js_css.jsp" %>
 </head>

@@ -1,23 +1,26 @@
 package cn.cityre.edi.mis.base.service.impl;
 
+import cn.cityre.edi.mis.base.dao.MisUserDao;
 import cn.cityre.edi.mis.base.entity.po.MisUserPo;
-import cn.cityre.edi.mis.base.service.UserService;
+import cn.cityre.edi.mis.base.service.MisUserService;
 import com.dsdl.eidea.core.dao.CommonDao;
 import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.QueryParams;
 import com.dsdl.eidea.core.spring.annotation.DataAccess;
 import com.googlecode.genericdao.search.Search;
 import com.googlecode.genericdao.search.SearchResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
- * Created by cityre on 2017/7/11.
+ * Created by cityre on 2017/7/19.
  */
-@Service(value = "v2017userService")
-//默认是首字母小写自动命名，value定义后按照value的值命名
-public class UserServiceImpl implements UserService{
+@Service
+public class MisUserServiceImpl implements MisUserService {
+    @Autowired
+    private MisUserDao misUserDao;
     @DataAccess(entity = MisUserPo.class)
     private CommonDao<MisUserPo,Integer> userDao;
     @Override
@@ -37,21 +40,32 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public MisUserPo getUser(Integer id) {
-        MisUserPo misUserPo = userDao.find(id);
-        return misUserPo;
+    public MisUserPo selectByUserId(String userId) {
+        return misUserDao.selectByUserId(userId);
     }
 
     @Override
-    public void deleteUser(Integer[] ids) {
-        MisUserPo[] misUserPos = userDao.find(ids);
-        for (int i = 0; i<= misUserPos.length; i++){
-            misUserPos[i].setIsValid((byte) 0);
-        }
+    public MisUserPo selectByUid(String uid) {
+        return misUserDao.selectByUid(uid);
     }
 
     @Override
-    public void saveUser(MisUserPo misUserPo) {
-        userDao.save(misUserPo);
+    public List<MisUserPo> selectByRealName(String RealName) {
+        return misUserDao.selectByRealName(RealName);
+    }
+
+    @Override
+    public List<MisUserPo> selectByTime(String creatStartTime, String createEndTime) {
+        return misUserDao.selectByCreateTime(creatStartTime, createEndTime);
+    }
+
+    @Override
+    public void updateById(MisUserPo misUserPo) {
+        misUserDao.updateById(misUserPo);
+    }
+
+    @Override
+    public MisUserPo getExistUserById(Integer id) {
+        return misUserDao.selectById(id);
     }
 }

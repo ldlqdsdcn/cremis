@@ -1,13 +1,16 @@
 package cn.cityre.edi.mis.base.service.impl;
 
+import cn.cityre.edi.mis.base.dao.ApiKeyDao;
 import cn.cityre.edi.mis.base.entity.po.MisApiKeyPo;
 import cn.cityre.edi.mis.base.service.ApiKeyService;
+import cn.cityre.edi.mis.base.util.RandomUtil;
 import com.dsdl.eidea.core.dao.CommonDao;
 import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.QueryParams;
 import com.dsdl.eidea.core.spring.annotation.DataAccess;
 import com.googlecode.genericdao.search.Search;
 import com.googlecode.genericdao.search.SearchResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,13 +20,16 @@ import java.util.List;
  */
 @Service
 public class ApiKeyServiceImpl implements ApiKeyService {
+    //HibernateDao
     @DataAccess(entity = MisApiKeyPo.class)
     private CommonDao<MisApiKeyPo,Integer> apiKeyDao;
+    //MybatisDao
+    @Autowired
+    private ApiKeyDao apiKeyMapper;
     @Override
     public PaginationResult<MisApiKeyPo> getApiKeyList(Search search, QueryParams queryParams) {
         search.setFirstResult(queryParams.getFirstResult());
         search.setMaxResults(queryParams.getPageSize());
-        search.addFilterEqual("isValid","1");
         PaginationResult<MisApiKeyPo> paginationResult = null;
         if (queryParams.isInit()){
             SearchResult<MisApiKeyPo> searchResult = apiKeyDao.searchAndCount(search);
@@ -36,23 +42,32 @@ public class ApiKeyServiceImpl implements ApiKeyService {
     }
 
     @Override
-    public void saveApiKey(MisApiKeyPo misApiKeyPo) {
-        apiKeyDao.save(misApiKeyPo);
+    public void createApiKey(MisApiKeyPo misApiKeyPo) {
+        misApiKeyPo.setApiKey(RandomUtil.base62UUID());
+        apiKeyMapper.createApiKey(misApiKeyPo);
     }
 
     @Override
-    public void deleteApiKey(Integer[] ids) {
-        Search search = new Search();
-        search.addFilterIn("id",ids);
-        List<MisApiKeyPo> misApiKeyPoList = apiKeyDao.search(search);
-        misApiKeyPoList.forEach(e->{
-            e.setIsValid((byte) 0);
-        });
+    public void updateApikey(MisApiKeyPo misApiKeyPo) {
+        apiKeyMapper.updateByKey(misApiKeyPo);
     }
 
     @Override
-    public MisApiKeyPo getApiKey(Integer id) {
-        MisApiKeyPo misApiKeyPo = apiKeyDao.find(id);
+    public void logicDeleteApiKey(Integer[] ids) {
+       for (int i=0;i<ids.length;i++){
+           apiKeyMapper.logicDeleteById(ids[i]);
+       }
+    }
+
+    @Override
+    public MisApiKeyPo getApiKey(String apiKey) {
+        MisApiKeyPo misApiKeyPo = apiKeyMapper.selectByKey(apiKey);
         return misApiKeyPo;
     }
+
+    @Override
+    public void deleteById(Integer[] ids) {
+        apiKeyDao.removeByIds(ids);
+    }
+
 }

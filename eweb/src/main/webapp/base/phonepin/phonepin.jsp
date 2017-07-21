@@ -6,7 +6,7 @@
 <%@include file="/inc/taglib.jsp" %>
 <html>
 <head>
-    <title><%--区域--%><eidea:label key="phonepin.title"/></title>
+    <title><%--区域--%><eidea:label key="base.phonePin.title"/></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <%@include file="/inc/inc_ang_js_css.jsp" %>
 </head>

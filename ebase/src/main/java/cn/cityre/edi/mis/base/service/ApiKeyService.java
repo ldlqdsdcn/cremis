@@ -12,9 +12,14 @@ public interface ApiKeyService {
 //    v2017_api_key：增改查删（逻辑删）
     PaginationResult<MisApiKeyPo> getApiKeyList(Search search, QueryParams queryParams);
 
-    void saveApiKey(MisApiKeyPo misApiKeyPo);
-    //逻辑删
-    void deleteApiKey(Integer[] ids);
+    void createApiKey(MisApiKeyPo misApiKeyPo);
 
-    MisApiKeyPo getApiKey(Integer id);
+    void updateApikey(MisApiKeyPo misApiKeyPo);
+    //删除
+    void logicDeleteApiKey(Integer[] ids);
+
+    MisApiKeyPo getApiKey(String  apiKey);
+
+//    逻辑删除
+    void deleteById(Integer[] ids);
 }

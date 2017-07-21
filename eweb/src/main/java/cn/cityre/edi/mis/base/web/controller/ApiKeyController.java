@@ -53,7 +53,7 @@ public class ApiKeyController {
     @ResponseBody
     @RequiresPermissions("view")
     @RequestMapping(value = "/get",method = RequestMethod.GET)
-    public JsonResult<MisApiKeyPo> get(HttpSession httpSession, Integer id){
+    public JsonResult<MisApiKeyPo> get(HttpSession httpSession, String id){
         UserResource userResource = (UserResource) httpSession.getAttribute(WebConst.SESSION_RESOURCE);
         MisApiKeyPo misApiKeyPo = apiKeyService.getApiKey(id);
         return  JsonResult.success(misApiKeyPo);
@@ -70,7 +70,7 @@ public class ApiKeyController {
     @RequestMapping(value = "/saveForCreated",method = RequestMethod.POST)
     public JsonResult<MisApiKeyPo> saveForCreated(HttpSession httpSession, @Validated @RequestBody MisApiKeyPo misApiKeyPo){
         UserResource userResource = (UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
-        apiKeyService.saveApiKey(misApiKeyPo);
+        apiKeyService.createApiKey(misApiKeyPo);
         return JsonResult.success(misApiKeyPo);
     }
     @ResponseBody
@@ -78,7 +78,7 @@ public class ApiKeyController {
     @RequestMapping(value = "/saveForUpdated",method = RequestMethod.POST)
     public JsonResult<MisApiKeyPo> saveForUpdated(HttpSession httpSession , @Validated @RequestBody MisApiKeyPo misApiKeyPo){
         UserResource userResource =(UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
-        apiKeyService.saveApiKey(misApiKeyPo);
+        apiKeyService.updateApikey(misApiKeyPo);
         return JsonResult.success(misApiKeyPo);
     }
     @ResponseBody
@@ -86,7 +86,15 @@ public class ApiKeyController {
     @RequiresPermissions(value = "delete")
     public JsonResult<PaginationResult<MisApiKeyPo>> deletes(HttpSession httpSession, @RequestBody DeleteParams<Integer> deleteParams){
         UserResource userResource = (UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
-        apiKeyService.deleteApiKey(deleteParams.getIds());
+        apiKeyService.deleteById(deleteParams.getIds());
+        return list(httpSession,deleteParams.getQueryParams());
+    }
+    @ResponseBody
+    @RequestMapping(value = "/logicDelete",method = RequestMethod.POST)
+    @RequiresPermissions(value = "delete")
+    public JsonResult<PaginationResult<MisApiKeyPo>> logicDelete(HttpSession httpSession, @RequestBody DeleteParams<Integer> deleteParams){
+        UserResource userResource = (UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
+        apiKeyService.logicDeleteApiKey(deleteParams.getIds());
         return list(httpSession,deleteParams.getQueryParams());
     }
 }

@@ -164,7 +164,6 @@
         $scope.save = function () {
             if ($scope.editForm.$valid) {
                 var postUrl = '<c:url value="/base/userphone/saveForUpdated"/>';
-                alert($routeParams.id);
                 if ($routeParams.id == null) {
                     postUrl = '<c:url value="/base/userphone/saveForCreated"/>';
                 }
