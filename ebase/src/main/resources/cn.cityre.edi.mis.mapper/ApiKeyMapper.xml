@@ -5,9 +5,9 @@
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="apiKey" property="apiKey" jdbcType="VARCHAR"/>
         <result column="scopeMask" property="scopeMask" jdbcType="INTEGER"/>
-        <!--<result column="limitMap" property="limitMap" javaType="java.util.HashMap" jdbcType="VARCHAR"/>-->
-        <!--<result column="blackList" property="blackList" javaType="java.util.List" jdbcType="VARCHAR"/>-->
-        <!--<result column="whiteList" property="whiteList" javaType="java.util.List" jdbcType="VARCHAR" typeHandler="StringListHandler"/>-->
+        <result column="limitMap" property="limitMap"  jdbcType="VARCHAR"/>
+        <result column="blackList" property="blackList" jdbcType="VARCHAR"/>
+        <result column="whiteList" property="whiteList"  jdbcType="VARCHAR" />
         <result column="note" property="note" jdbcType="VARCHAR"/>
         <result column="productCode" property="productCode" jdbcType="VARCHAR"/>
         <result column="version" property="version" jdbcType="VARCHAR"/>
@@ -38,15 +38,15 @@
             <if test="scopeMask!=null">
                 scopeMask = #{scopeMask,jdbcType=INTEGER},
             </if>
-            <!--<if test="limitMap!=null">-->
-            <!--limitMap = #{limitMap,javaType=java.util.List,jdbcType=VARCHAR},-->
-            <!--</if>-->
-            <!--<if test="blackList!=null">-->
-            <!--blackList=#{blackList,jdbcType=java.util.List,jdbcType=VARCHAR},-->
-            <!--</if>-->
-            <!--<if test="whiteList!=null">-->
-            <!--whiteList=#{whiteList,jdbcType=java.util.List,jdbcType=VARCHAR},-->
-            <!--</if>-->
+            <if test="limitMap!=null">
+            limitMap = #{limitMap,jdbcType=VARCHAR},
+            </if>
+            <if test="blackList!=null">
+            blackList=#{blackList,jdbcType=VARCHAR},
+            </if>
+            <if test="whiteList!=null">
+            whiteList=#{whiteList,jdbcType=VARCHAR},
+            </if>
             <if test="note!=null">
                 note = #{note,jdbcType=VARCHAR},
             </if>
@@ -56,9 +56,9 @@
             <if test="isValid!=null">
                 isValid = #{isValid,jdbcType=TINYINT},
             </if>
-            <!--<if test="expireTime!=null">-->
-                <!--expireTime = #{expireTime},-->
-            <!--</if>-->
+            <if test="expireTime!=null">
+                expireTime = #{expireTime,jdbcType = TIMESTAMP},
+            </if>
 
         </set>
         WHERE apiKey = #{apiKey,jdbcType=VARCHAR}

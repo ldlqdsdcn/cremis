@@ -204,7 +204,7 @@
         $scope.save = function () {
             if ($scope.editForm.$valid) {
                 var postUrl = '<c:url value="/base/apikey/saveForUpdated"/>';
-                if ($scope.misApiKeyPo.id == null) {
+                if ($routeParams.id == null) {
                     postUrl = '<c:url value="/base/apikey/saveForCreated"/>';
                 }
                 $http.post(postUrl, $scope.misApiKeyPo).success(function (data) {

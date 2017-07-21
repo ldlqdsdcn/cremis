@@ -81,7 +81,7 @@ public class MisPhonePinController {
     @RequestMapping(value = "/saveForUpdated",method = RequestMethod.POST)
     public JsonResult<MisPhonePinPo> saveForUpdated(HttpSession httpSession,@Validated @RequestBody MisPhonePinPo misPhonePinPo){
         UserResource userResource = (UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
-        misPhonePinService.createPhonePin(misPhonePinPo);
+        misPhonePinService.updatePhonePin(misPhonePinPo);
         return JsonResult.success(misPhonePinPo);
     }
     @ResponseBody

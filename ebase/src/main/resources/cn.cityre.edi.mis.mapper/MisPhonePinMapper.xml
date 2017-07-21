@@ -99,6 +99,7 @@
                 expireTime = #{expireTime,jdbcType=TIMESTAMP},
             </if>
         </set>
+        WHERE id = #{id,jdbcType=INTEGER}
     </update>
 
     <delete id="deleteById" parameterType="java.lang.Integer">
