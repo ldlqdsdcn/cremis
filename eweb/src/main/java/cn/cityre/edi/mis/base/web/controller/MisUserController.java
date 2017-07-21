@@ -1,12 +1,11 @@
 package cn.cityre.edi.mis.base.web.controller;
 
-import cn.cityre.edi.mis.base.def.SexType;
-import cn.cityre.edi.mis.base.def.VerifiedType;
-import cn.cityre.edi.mis.base.entity.po.MisUserPo;
-import cn.cityre.edi.mis.base.service.MisUserService;
+import cn.cityre.mis.account.def.SexType;
+import cn.cityre.mis.account.def.VerifiedType;
+import cn.cityre.mis.account.entity.po.MisUserPo;
+import cn.cityre.mis.account.service.MisUserService;
 import com.dsdl.eidea.base.web.vo.UserResource;
 import com.dsdl.eidea.core.dto.PaginationResult;
-import com.dsdl.eidea.core.params.DeleteParams;
 import com.dsdl.eidea.core.params.QueryParams;
 import com.dsdl.eidea.core.web.def.WebConst;
 import com.dsdl.eidea.core.web.result.JsonResult;
@@ -17,7 +16,6 @@ import com.google.gson.JsonObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

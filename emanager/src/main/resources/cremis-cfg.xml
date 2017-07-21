@@ -15,6 +15,12 @@
     <context:component-scan base-package="cn.cityre.mis.**.service"/>
     <context:component-scan base-package="cn.cityre.mis.**.dao"/>
 
+    <!--自动扫描了所有的XxxxMapper.xml对应的mapper接口文件，这样就不用一个一个手动配置Mpper的映射了，只要Mapper接口类和Mapper映射文件对应起来就可以了。 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="cn.cityre.mis.account.dao"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
 
 
 </beans>

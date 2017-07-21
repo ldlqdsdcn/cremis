@@ -1,8 +1,8 @@
 package cn.cityre.edi.mis.base.web.controller;
 
-import cn.cityre.edi.mis.base.def.PlatformType;
-import cn.cityre.edi.mis.base.entity.po.MisProductPo;
-import cn.cityre.edi.mis.base.service.ProductService;
+import cn.cityre.mis.account.def.PlatformType;
+import cn.cityre.mis.account.entity.po.MisProductPo;
+import cn.cityre.mis.account.service.ProductService;
 import com.dsdl.eidea.base.web.vo.UserResource;
 import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.DeleteParams;
@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.util.Date;
 
 /**
  * Created by cityre on 2017/7/11.
