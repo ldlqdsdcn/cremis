@@ -11,7 +11,7 @@ import java.util.List;
  * SysRole entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "sys_role", catalog = "cre_mis", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
+@Table(name = "sys_role", catalog = "cityre_mis", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 @Getter
 @Setter
 @org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)

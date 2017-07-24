@@ -19,7 +19,7 @@ import javax.persistence.Table;
  * CoreMessage entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "core_message", catalog = "cre_mis")
+@Table(name = "core_message", catalog = "cityre_mis")
 @Getter
 @Setter
 public class MessagePo implements java.io.Serializable {

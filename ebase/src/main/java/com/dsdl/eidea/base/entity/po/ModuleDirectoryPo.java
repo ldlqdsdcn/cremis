@@ -9,7 +9,7 @@ import javax.persistence.*;
  * SysModuleDirectory entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "sys_module_directory", catalog = "cre_mis")
+@Table(name = "sys_module_directory", catalog = "cityre_mis")
 @Getter
 @Setter
 public class ModuleDirectoryPo implements java.io.Serializable {

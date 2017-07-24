@@ -17,7 +17,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "sys_changelog", catalog = "cre_mis")
+@Table(name = "sys_changelog", catalog = "cityre_mis")
 public class ChangelogPo implements java.io.Serializable {
 
 	// Fields

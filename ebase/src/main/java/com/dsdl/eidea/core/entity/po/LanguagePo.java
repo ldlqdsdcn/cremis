@@ -13,7 +13,7 @@ import java.util.Set;
  * CoreLanguage entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "core_language", catalog = "cre_mis", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
+@Table(name = "core_language", catalog = "cityre_mis", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 @org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
 @Setter
 @Getter

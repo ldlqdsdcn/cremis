@@ -13,7 +13,7 @@ import java.util.Set;
  * SysPageMenu entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "sys_page_menu", catalog = "cre_mis")
+@Table(name = "sys_page_menu", catalog = "cityre_mis")
 @Getter
 @Setter
 public class PageMenuPo implements java.io.Serializable {

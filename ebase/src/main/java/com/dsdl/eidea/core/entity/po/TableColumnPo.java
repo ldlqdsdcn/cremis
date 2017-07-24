@@ -10,7 +10,7 @@ import javax.persistence.*;
  * CoreTableColumn entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "core_table_column", catalog = "cre_mis")
+@Table(name = "core_table_column", catalog = "cityre_mis")
 @Getter
 @Setter
 @org.hibernate.annotations.Cache(usage= CacheConcurrencyStrategy.READ_WRITE)

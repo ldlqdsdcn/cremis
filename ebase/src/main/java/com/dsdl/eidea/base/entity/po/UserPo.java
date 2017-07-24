@@ -16,7 +16,7 @@ import java.util.Set;
  * SysUser entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "sys_user", catalog = "cre_mis")
+@Table(name = "sys_user", catalog = "cityre_mis")
 @Data
 public class UserPo implements java.io.Serializable {
 

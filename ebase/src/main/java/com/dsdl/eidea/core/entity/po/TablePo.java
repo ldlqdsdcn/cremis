@@ -12,7 +12,7 @@ import java.util.List;
  * CoreTable entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "core_table", catalog = "cre_mis")
+@Table(name = "core_table", catalog = "cityre_mis")
 @Getter
 @Setter
 @org.hibernate.annotations.Cache(usage=CacheConcurrencyStrategy.READ_WRITE)

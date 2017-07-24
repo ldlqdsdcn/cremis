@@ -9,7 +9,7 @@ import javax.persistence.*;
  * CoreSearchColumn entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "core_search_column", catalog = "cre_mis")
+@Table(name = "core_search_column", catalog = "cityre_mis")
 @Setter
 @Getter
 public class SearchColumnPo implements java.io.Serializable {

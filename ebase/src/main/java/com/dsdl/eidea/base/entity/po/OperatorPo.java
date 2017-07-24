@@ -11,7 +11,7 @@ import javax.persistence.*;
  * SysOperator entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "sys_operator", catalog = "cre_mis", uniqueConstraints = @UniqueConstraint(columnNames = "no"))
+@Table(name = "sys_operator", catalog = "cityre_mis", uniqueConstraints = @UniqueConstraint(columnNames = "no"))
 @Getter
 @Setter
 public class OperatorPo implements java.io.Serializable {

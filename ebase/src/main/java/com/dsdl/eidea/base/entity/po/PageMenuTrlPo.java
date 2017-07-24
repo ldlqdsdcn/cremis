@@ -10,7 +10,7 @@ import javax.persistence.*;
  * Created by 刘大磊 on 2017/1/12 13:24.
  */
 @Entity
-@Table(name = "sys_page_menu_trl", catalog = "cre_mis")
+@Table(name = "sys_page_menu_trl", catalog = "cityre_mis")
 @Getter
 @Setter
 public class PageMenuTrlPo {

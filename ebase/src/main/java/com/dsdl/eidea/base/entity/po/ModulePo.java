@@ -13,7 +13,7 @@ import javax.persistence.*;
  * SysModule entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "sys_module", catalog = "cre_mis")
+@Table(name = "sys_module", catalog = "cityre_mis")
 @Getter
 @Setter
 public class ModulePo implements java.io.Serializable {

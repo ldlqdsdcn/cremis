@@ -9,7 +9,7 @@ import javax.persistence.*;
  * CoreLanguageTrl entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "core_language_trl", catalog = "cre_mis")
+@Table(name = "core_language_trl", catalog = "cityre_mis")
 @org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
 @Getter
 @Setter

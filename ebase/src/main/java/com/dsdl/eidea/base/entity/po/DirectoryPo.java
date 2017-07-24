@@ -11,7 +11,7 @@ import javax.persistence.*;
  * SysDirectory entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "sys_directory", catalog = "cre_mis")
+@Table(name = "sys_directory", catalog = "cityre_mis")
 @Getter
 @Setter
 public class DirectoryPo implements java.io.Serializable {

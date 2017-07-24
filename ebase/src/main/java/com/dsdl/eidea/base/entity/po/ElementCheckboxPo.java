@@ -9,7 +9,7 @@ import javax.persistence.*;
  * Created by 刘大磊 on 2017/5/29.
  */
 @Entity
-@Table(name = "core_element_checkbox", catalog = "cre_mis")
+@Table(name = "core_element_checkbox", catalog = "cityre_mis")
 @Getter
 @Setter
 public class ElementCheckboxPo {
