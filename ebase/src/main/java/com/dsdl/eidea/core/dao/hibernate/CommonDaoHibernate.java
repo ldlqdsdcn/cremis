@@ -3,9 +3,6 @@ package com.dsdl.eidea.core.dao.hibernate;
 import com.dsdl.eidea.core.dao.CommonDao;
 import com.dsdl.eidea.core.dao.aop.PersistentClassInjection;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 

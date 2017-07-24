@@ -68,12 +68,11 @@ Date: 2017-05-02 15:49:09
         </table>
         <div class="form-group">
             <p class="text-right">
-                <button type="reset" ng-click="create()" class="btn btn-default btn-sm" ng-show="canAdd"><%--新建--%>
-                    <eidea:label key="common.button.create"/></button>
+                <a ui-sref="editFieldValidator({fieldValidatorId:null})" ui-sref-active="active" class="btn btn-default btn-sm" ng-show="canAdd">
+                    <eidea:label key="common.button.create"/> </a>
                 <button type="submit" class="btn btn-default btn-sm" ng-show="canSave"><%--保存--%><eidea:label
                         key="common.button.save"/></button>
-                <button type="button" class="btn btn-default btn-sm" ng-show="canSave"
-                        ng-click="back()"><eidea:label key="common.button.back"/></button>
+                <a ui-sref="listFieldValidator" ui-sref-acitve="active" class="btn btn-default btn-sm"><eidea:label key="common.button.back"/></a>
             </p>
         </div>
         <div class="form-group">

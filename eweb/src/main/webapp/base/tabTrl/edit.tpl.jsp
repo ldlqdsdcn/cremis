@@ -18,10 +18,8 @@ Date: 2017-05-02 15:43:44
                 </div>
                 <div class="form-group">
                     <label for="lang"><%--lang--%><eidea:label key="base.tabTrl.label.lang"/></label>
-                    <input type="text" class="form-control" id="lang"
-                           placeholder="<eidea:message key="common.please.input"><eidea:param value="base.tabTrl.label.lang" type="label"/></eidea:message>"
-                           ng-model="tabTrlPo.lang" ng-minLength="1" ng-maxLength="10" required>
-
+                    <select id="lang" required class="form-control" ng-model="tabTrlPo.lang"
+                            ng-options="languageBo.code as languageBo.name for languageBo in languageList"/>
                 </div>
                 <div class="form-group">
                     <label for="name"><%--名称--%><eidea:label key="base.tabTrl.label.name"/></label>
@@ -49,11 +47,10 @@ Date: 2017-05-02 15:43:44
 
                 <div class="form-group">
                     <p class="text-right">
-                        <button type="reset" ng-click="create()" class="btn btn-default btn-sm" ng-show="canAdd"><%--新建--%>
-                        <eidea:label key="common.button.create"/></button>
+                        <a ui-sref="editTabTrl({tabTrlId:null})" ui-sref-active="active" class="btn btn-default btn-sm"><eidea:label key="common.button.create"/> </a>
                         <button type="submit" class="btn btn-default btn-sm" ng-show="canSave"><%--保存--%><eidea:label
                                 key="common.button.save"/></button>
-                        <button type="button" class="btn btn-default btn-sm" ng-click="back()"><eidea:label key="common.button.back"/></button>
+                    <a ui-sref = "listTabTrl" ui-sref-active="active" class="btn btn-default btn-sm"><%--返回--%><eidea:label key="common.button.back"/></a>
                     </p>
                 </div>
                 <div class="form-group">

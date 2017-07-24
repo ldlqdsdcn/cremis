@@ -106,14 +106,19 @@ public class TableServiceImpl implements TableService {
 
     @Override
     public boolean findExistTableByName(String tableName) {
-        Search search = new Search();
-        search.addFilterEqual("tableName", tableName);
-        List<TablePo> tablePoList = tableDao.search(search);
-        if (tablePoList!=null&&tablePoList.size() > 0) {
+
+        if (tableDao.getCommentByTableName(tableName)!=null) {
             return true;
         } else {
             return false;
         }
+    }
+    @Override
+    public TablePo getExistTableByName(String tableName){
+        Search search = new Search();
+        search.addFilterEqual("name",tableName);
+        TablePo  tablePo = tableDao.searchUnique(search);
+        return tablePo;
     }
 
     @Override

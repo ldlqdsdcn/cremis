@@ -18,10 +18,11 @@ Date: 2017-05-02 15:42:28
                 </div>
                 <div class="form-group">
                     <label for="lang"><%--lang--%><eidea:label key="base.windowTrl.label.lang"/></label>
-                    <input type="text" class="form-control" id="lang"
-                           placeholder="<eidea:message key="common.please.input"><eidea:param value="base.windowTrl.label.lang" type="label"/></eidea:message>"
-                           ng-model="windowTrlPo.lang" required ng-minLength="1" ng-maxLength="10">
-
+                    <%--<input type="text" class="form-control" id="lang"--%>
+                           <%--placeholder="<eidea:message key="common.please.input"><eidea:param value="base.windowTrl.label.lang" type="label"/></eidea:message>"--%>
+                           <%--ng-model="windowTrlPo.lang" required ng-minLength="1" ng-maxLength="10">--%>
+                    <select class="form-control" id="lang" ng-model="windowTrlPo.lang" required
+                            ng-options="languageBo.code as languageBo.name for languageBo in languageList"/>
                 </div>
                 <div class="form-group">
                     <label for="name"><%--名称--%><eidea:label key="base.windowTrl.label.name"/></label>
@@ -43,17 +44,13 @@ Date: 2017-05-02 15:42:28
                     <input type="text" class="form-control" id="help"
                            placeholder="<eidea:message key="common.please.input"><eidea:param value="base.windowTrl.label.help" type="label"/></eidea:message>"
                            ng-model="windowTrlPo.help" ng-maxLength="500">
-
                 </div>
-
-
                 <div class="form-group">
                     <p class="text-right">
-                        <button type="reset" ng-click="create()" class="btn btn-default btn-sm" ng-show="canAdd"><%--新建--%>
-                        <eidea:label key="common.button.create"/></button>
+                        <a ui-sref="windowTrlEdit({windowTrlId:model.id})" ui-sref-active="active" class="btn btn-default btn-sm" ng-show="canAdd"><eidea:label key="common.button.create"/> </a>
                         <button type="submit" class="btn btn-default btn-sm" ng-show="canSave"><%--保存--%><eidea:label
                                 key="common.button.save"/></button>
-                        <button type="button" ng-click="back()" class="btn btn-default btn-sm"><eidea:label key="common.button.back"/></button>
+                        <a ui-sref="windowTrlList" ui-sref-active="active" class="btn btn-default btn-sm"><eidea:label key="common.button.back"/></a>
                     </p>
                 </div>
                 <div class="form-group">

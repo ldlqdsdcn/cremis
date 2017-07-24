@@ -139,6 +139,13 @@ public class LanguageController {
         languageService.deletes(deleteParams.getIds());
         return list(session,deleteParams.getQueryParams());
     }
+    @RequestMapping(value = "/getLanguageList",method = RequestMethod.GET)
+    @ResponseBody
+    @RequiresPermissions(value = "view")
+    public JsonResult<List<LanguageBo>> getLanguageList(){
+        List<LanguageBo> languageBoList = languageService.getLanguageForActivated();
+        return JsonResult.success(languageBoList);
+    }
 }
 
 

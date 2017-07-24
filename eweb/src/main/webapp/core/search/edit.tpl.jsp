@@ -18,7 +18,7 @@
                         <input type="text" class="form-control" id="name" name="value" ng-model="searchBo.name" placeholder="<eidea:message key="login.input.name"/>" required ng-minlength="2" ng-maxlength="50">
                     </div>
                     <div class="form-group">
-                        <label for="uri"><%--标识符--%><eidea:label key="base.identifier"/></label>
+                        <label for="uri"><%--标识符--%><eidea:label key="base.search.label.url"/></label>
                         <input type="text" class="form-control" id="uri" placeholder="<eidea:message key="search.table.name"/>" ng-model="searchBo.uri" required ng-maxlength="100" >
                     </div>
                     <div class="form-group">

@@ -5,8 +5,7 @@ Date: 2017-05-02 15:43:14
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/inc/taglib.jsp" %>
 <div class="container-fluid" ng-controller="editTabCtrl">
-    <div ui-view ng-show="tabTrlListShow||fieldListShow||fieldTrlListShow||fieldValidatorListShow"></div>
-    <form role="form" name="editForm" novalidate ng-submit="save()" ng-show="tabEditShow"
+    <form role="form" name="editForm" novalidate ng-submit="save()"
           class="form-horizontal form-label-left input_mask">
         <table class="table table-borderless">
             <tr>
@@ -59,40 +58,38 @@ Date: 2017-05-02 15:43:14
                 <td class="control-label"><%--创建人--%><eidea:label key="base.tab.label.createdby"/></td>
                 <td class="form-group"><input type="text" class="form-control" id="createdby"
                                               placeholder="<eidea:message key="common.please.input"><eidea:param value="base.tab.label.createdby" type="label"/></eidea:message>"
-                                              ng-model="tabPo.createdby" required ng-minLength="1" ng-maxLength="11">
+                                              ng-model="tabPo.createdby" required ng-minLength="1" ng-maxLength="11" ng-disabled="true">
                 </td>
                 <td class="control-label"><%--创建时间--%><eidea:label key="base.tab.label.created"/></td>
                 <td class="input-group date bootstrap-datetime"><input type="text" class="form-control" id="created"
                                                                        placeholder="<eidea:message key="common.please.input"><eidea:param value="base.tab.label.created" type="label"/></eidea:message>"
                                                                        ng-model="tabPo.created"
                                                                        uib-datepicker-popup="yyyy-MM-dd HH:mm:ss"
-                                                                       required>
+                                                                       required ng-disabled="true">
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></td>
             </tr>
             <tr>
                 <td class="control-label"><%--修改人--%><eidea:label key="base.tab.label.updatedby"/></td>
                 <td class="form-group"><input type="text" class="form-control" id="updatedby"
                                               placeholder="<eidea:message key="common.please.input"><eidea:param value="base.tab.label.updatedby" type="label"/></eidea:message>"
-                                              ng-model="tabPo.updatedby" ng-minLength="1" ng-maxLength="11" required>
+                                              ng-model="tabPo.updatedby" ng-minLength="1" ng-maxLength="11" required ng-disabled="true">
                 </td>
                 <td class="control-label"><%--修改时间--%><eidea:label key="base.tab.label.updated"/></td>
                 <td class="input-group date bootstrap-datetime"><input type="text" class="form-control" id="updated"
                                                                        placeholder="<eidea:message key="common.please.input"><eidea:param value="base.tab.label.updated" type="label"/></eidea:message>"
                                                                        ng-model="tabPo.updated"
                                                                        uib-datepicker-popup="yyyy-MM-dd HH:mm:ss"
-                                                                       required>
+                                                                       required ng-disabled="true">
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></td>
             </tr>
 
         </table>
         <div class="form-group">
             <p class="text-right">
-                <button type="reset" ng-click="create()" class="btn btn-default btn-sm" ng-show="canAdd"><%--新建--%>
-                    <eidea:label key="common.button.create"/></button>
+                <a ui-sref="editTab({tabId:null})" ui-sref-active="active" class="btn btn-default btn-sm"><%--新建--%><eidea:label key="common.button.create"/> </a>
                 <button type="submit" class="btn btn-default btn-sm" ng-show="canSave"><%--保存--%><eidea:label
                         key="common.button.save"/></button>
-                <button class="btn btn-default btn-sm" ng-click="back()"><eidea:label
-                        key="common.button.back"/></button>
+                <a ui-sref="listTab" ui-sref-active="active" class="btn btn-primary btn-sm"><%--返回--%><eidea:label key="common.button.back"/></a>
             </p>
         </div>
         <div class="form-group">

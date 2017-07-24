@@ -30,6 +30,7 @@ public class CityAreaDaoTest {
     @Before
     public void setUp()
     {
+
         CityPo cityPo=new CityPo();
         cityPo.setCityid("370200");
         MockitoAnnotations.initMocks(this);

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cityre.mis.account.dao.MisPhoneDao">
+    <resultMap id="BaseResultMap" type="cn.cityre.mis.account.entity.po.MisUserPhonePo">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="unionUid" property="unionUid" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="isVerified" property="isVerified" jdbcType="TINYINT"/>
+        <result column="isPrimary" property="isPrimary" jdbcType="TINYINT"/>
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column">
+        id,unionUid,phone,isVerified,isPrimary,createTime,updateTime
+    </sql>
+
+    <!--v2017_user_phone：查，条件：用户全局唯一ID，暂定这些-->
+    <select id="selectByUid" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column"/>
+        FROM v2017_user_phone
+        WHERE unionUid = #{unionUid}
+        <!--<if test="isVerified!=null">-->
+            <!--AND isVerified = #{isVerified}-->
+        <!--</if>-->
+        <!--<if test="isPrimary !=null">-->
+            <!--AND isPrimary = #{isPrimary}-->
+        <!--</if>-->
+        ORDER BY  isVerified DESC ,isPrimary DESC ,id
+    </select>
+
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column"/>
+        FROM v2017_user_phone
+        WHERE  id =#{id,jdbcType=INTEGER}
+    </select>
+
+    <update id="updateByUid" parameterType="cn.cityre.mis.account.entity.po.MisUserPhonePo">
+        UPDATE v2017_user_phone
+        <set>
+            <if test="isVerified != null">
+                isVerified = #{isVerified},
+            </if>
+            <if test="isPrimary!=null">
+                isPrimary = #{isPrimary},
+            </if>
+        </set>
+        WHERE  unionUid = #{unionUid}
+    </update>
+
+    <select id="selectPhoneList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column"/>
+        FROM v2017_user_phone
+    </select>
+
+    <insert id="createPhone" parameterType="cn.cityre.mis.account.entity.po.MisUserPhonePo"
+        useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO v2017_user_phone
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="unionUid!=null">
+                unionUid,
+            </if>
+            <if test="phone!=null">
+                phone,
+            </if>
+            <if test="isVerified!=null">
+                isVerified,
+            </if>
+            <if test="isPrimary!=null">
+                isPrimary,
+            </if>
+                createTime,
+                updateTime,
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="unionUid!=null">
+                #{unionUid,jdbcType=VARCHAR},
+            </if>
+            <if test="phone!=null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="isVerified!=null">
+                #{isVerified,jdbcType = TINYINT},
+            </if>
+            <if test="isPrimary!=null">
+               #{isPrimary,jdbcType=TINYINT},
+            </if>
+            <choose>
+                <when test="createTime!=null">
+                    #{createTime,jdbcType=TIMESTAMP},
+                </when>
+                <otherwise>
+                    now(),
+                </otherwise>
+            </choose>
+            <choose>
+                <when test="updateTime!=null">
+                    #{updateTime,jdbcType=TIMESTAMP},
+                </when>
+                <otherwise>now(),</otherwise>
+            </choose>
+        </trim>
+    </insert>
+
+    <update id="updateById" parameterType="cn.cityre.mis.account.entity.po.MisUserPhonePo">
+        UPDATE v2017_user_phone
+        <set>
+            <if test="unionUid!=null">
+                unionUid = #{unionUid,jdbcType=VARCHAR},
+            </if>
+            <if test="phone!=null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="isVerified!=null">
+                isVerified = #{isVerified,jdbcType=TINYINT},
+            </if>
+            <if test="isPrimary!=null">
+                isPrimary = #{isPrimary,jdbcType=TINYINT},
+            </if>
+            <choose>
+                <when test="updateTime!=null">
+                    updateTime = #{updateTime,jdbcType=TIMESTAMP}
+                </when>
+                <otherwise> updateTime = now()</otherwise>
+            </choose>
+        </set>
+        WHERE id = #{id,jdbcType = INTEGER}
+    </update>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from v2017_user_phone WHERE  id = #{id}
+    </delete>
+</mapper>

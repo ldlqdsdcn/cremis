@@ -25,7 +25,7 @@ import org.hibernate.validator.constraints.NotBlank;
 @Getter
 @Setter
 @Entity(name = "core_window")
-@org.hibernate.annotations.Cache(usage= CacheConcurrencyStrategy.READ_ONLY)
+@org.hibernate.annotations.Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class WindowPo implements java.io.Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "[id]",nullable = false,unique = true,length = 11)

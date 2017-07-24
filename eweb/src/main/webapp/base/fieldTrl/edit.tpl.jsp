@@ -12,10 +12,8 @@ Date: 2017-05-02 15:46:44
             <form role="form" name="editForm" novalidate ng-submit="save()">
                 <div class="form-group">
                     <label for="lang"><%--lang--%><eidea:label key="base.fieldTrl.label.lang"/></label>
-                    <input type="text" class="form-control" id="lang"
-                           placeholder="<eidea:message key="common.please.input"><eidea:param value="base.fieldTrl.label.lang" type="label"/></eidea:message>"
-                           ng-model="fieldTrlPo.lang" required ng-minLength="1" ng-maxLength="10">
-
+                    <select id="lang" required class="form-control" ng-model="fieldTrlPo.lang"
+                            ng-options="languageBo.code as languageBo.name for languageBo in languageList"/>
                 </div>
                 <div class="form-group">
                     <label for="fieldId"><%--fieldId--%><eidea:label key="base.fieldTrl.label.fieldId"/></label>
@@ -50,11 +48,11 @@ Date: 2017-05-02 15:46:44
 
                 <div class="form-group">
                     <p class="text-right">
-                        <button type="reset" ng-click="create()" class="btn btn-default btn-sm" ng-show="canAdd"><%--新建--%>
-                        <eidea:label key="common.button.create"/></button>
+                        <a ui-sref="editFieldTrl({fieldTrlId:model.id})"  ui-sref-active="active" class="btn btn-default btn-sm" ng-show="canAdd">
+                            <eidea:label key="common.button.create"/> </a>
                         <button type="submit" class="btn btn-default btn-sm" ng-show="canSave"><%--保存--%><eidea:label
                                 key="common.button.save"/></button>
-                        <button type="button" class="btn btn-default btn-sm" ng-click="back()"><eidea:label key="common.button.back"/></button>
+                        <a ui-sref="listFieldTrl" ui-sref-active="active" class="btn btn-default btn-sm"><%--返回--%><eidea:label key="common.button.back"/></a>
                     </p>
                 </div>
                 <div class="form-group">

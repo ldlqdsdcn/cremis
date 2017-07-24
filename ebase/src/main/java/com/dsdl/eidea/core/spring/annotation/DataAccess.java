@@ -20,4 +20,5 @@ public @interface DataAccess {
      * @return
      */
     Class<?> instanceDaoClass() default CommonDaoHibernate.class;
+
 }

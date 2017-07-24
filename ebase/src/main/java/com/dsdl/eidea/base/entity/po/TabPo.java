@@ -24,7 +24,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity(name = "core_tab")
-@org.hibernate.annotations.Cache(usage= CacheConcurrencyStrategy.READ_ONLY)
+@org.hibernate.annotations.Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public class TabPo implements java.io.Serializable {
     @Id
     @Column(name = "id", nullable = false, unique = true, length = 11)
