@@ -2,7 +2,10 @@
 <beans
 	xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/data/mongo
+        http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
 
 
 	<!-- 采用druid作为连接池 -->
@@ -47,7 +50,24 @@
 		<property name="password" value="${jdbc.account.connection.password}"/>
 	</bean>
 
-	<bean id="dataSource" class="com.dsdl.eidea.core.util.DynamicDataSource">
+	<mongo:mongo id="mongo" replica-set="${mongo.hostport}">
+		<mongo:options connections-per-host="8"
+					   threads-allowed-to-block-for-connection-multiplier="4"
+					   connect-timeout="1000" max-wait-time="1500" auto-connect-retry="true"
+					   socket-keep-alive="true" socket-timeout="1500" slave-ok="true"
+					   write-number="1" write-timeout="0" write-fsync="true" />
+	</mongo:mongo>
+	<mongo:db-factory id="mongoDbFactory" dbname="${mongo.dbname}"
+					  mongo-ref="mongo" />
+
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg ref="mongoDbFactory" />
+	</bean>
+
+
+
+
+	<bean id="dynamicDataSource" class="cn.cityre.edi.mis.base.util.DynamicDataSource">
 		<property name="defaultTargetDataSource" ref="dataSourceCore"/>
 		<property name="targetDataSources">
 			<map>
@@ -56,5 +76,7 @@
 			</map>
 		</property>
 	</bean>
-
+	<bean id="applicationEventListener" class="cn.cityre.edi.mis.base.util.DynamicCreateDataSourceBean">
+		<property name="dynamicDataSource" ref="dynamicDataSource"></property>
+	</bean>
 	</beans>

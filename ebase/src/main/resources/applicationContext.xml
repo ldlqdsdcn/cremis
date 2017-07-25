@@ -31,6 +31,7 @@
                 <value>classpath:database.properties</value>
                 <value>classpath:mail.properties</value>
                 <value>classpath:account_centerdatabase.properties</value>
+                <value>classpath:mongodb-config.properties</value>
             </list>
         </property>
     </bean>

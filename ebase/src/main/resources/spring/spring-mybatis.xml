@@ -15,14 +15,14 @@
  -->
     <!-- Session工厂 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
+        <property name="dataSource" ref="dynamicDataSource"/>
         <!-- mybatis配置文件 -->
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
         <!--<property name="mapperLocations" value="classpath*:com/dsdl/**/*Mapper.xml"/>-->
         <property name="mapperLocations">
             <list>
                 <value>classpath*:com/dsdl/**/*Mapper.xml</value>
-                <value>classpath*:cn.cityre.mis.account.mapper/*Mapper.xml</value>
+                <value>classpath*:cn.cityre.mis.*.mapper/*Mapper.xml</value>
             </list>
         </property>
     </bean>
