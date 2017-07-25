@@ -10,7 +10,7 @@
     <context:component-scan base-package="cn.cityre.mis.**.service"/>
     <context:component-scan base-package="cn.cityre.mis.**.dao"/>
 
-    <!--dao与Mapper文件映射-->
+    <!--dao与Mapper文件映射，，，-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="cn.cityre.mis.account.dao"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
