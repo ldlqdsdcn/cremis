@@ -30,6 +30,7 @@
             <list>
                 <value>classpath:database.properties</value>
                 <value>classpath:mail.properties</value>
+                <value>classpath:account_centerdatabase.properties</value>
             </list>
         </property>
     </bean>
