@@ -3,7 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
     <bean id="processEngineConfiguration" class="org.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration">
-        <property name="dataSource" ref="dataSourceCore" />
+        <property name="dataSource" ref="dataSource_core" />
         <property name="databaseType" value="mysql"/>
         <!--databaseSchemaUpdate设置为true， Activiti会自动将数据库表升级到新版本， 当发现依赖和数据库表版本不通过时  -->
         <property name="databaseSchemaUpdate" value="true"/>

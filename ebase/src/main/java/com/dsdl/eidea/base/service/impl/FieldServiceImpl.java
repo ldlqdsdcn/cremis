@@ -30,7 +30,6 @@ import com.dsdl.eidea.general.bo.TabFormStructureBo;
 import com.googlecode.genericdao.search.Search;
 import com.googlecode.genericdao.search.SearchResult;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -84,7 +83,7 @@ public class FieldServiceImpl implements FieldService {
     private CommonDao<ElementCheckboxPo, Integer> elementCheckboxDao;
     @DataAccess(entity = ElementSelectPo.class)
     private CommonDao<ElementSelectPo, Integer> elementSelectDao;
-   @Resource(name = "dataSourceCore")
+   @Resource(name = "dataSource_core")
     private DataSource dataSource;
 
     public PaginationResult<FieldPo> getFieldListByPaging(Search search, QueryParams queryParams) {

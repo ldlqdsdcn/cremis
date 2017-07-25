@@ -41,8 +41,7 @@ public class DynamicCreateDataSourceBean implements ApplicationContextAware,Appl
                 regDynamicBean();  
             } catch (IOException e) {  
                 e.printStackTrace();  
-            }  
-            //System.out.println(event.getClass().getSimpleName()+" 事件已发生！");  
+            }
         }  
           
     }  
@@ -62,11 +61,7 @@ public class DynamicCreateDataSourceBean implements ApplicationContextAware,Appl
      */  
     private void addSourceBeanToApp(Map<String, DataSourceInfo> mapCustom) {  
         DefaultListableBeanFactory acf = (DefaultListableBeanFactory) app  
-                .getAutowireCapableBeanFactory();  
-  
-        //String DATASOURCE_BEAN_CLASS = "org.apache.tomcat.jdbc.pool.DataSource";  
-       // BeanDefinitionBuilder bdb;  
-          
+                .getAutowireCapableBeanFactory();
         Iterator<String> iter = mapCustom.keySet().iterator();  
           
         Map<Object,Object> targetDataSources = new LinkedHashMap<Object, Object>();  
@@ -133,23 +128,25 @@ public class DynamicCreateDataSourceBean implements ApplicationContextAware,Appl
         Map<String, DataSourceInfo> mds = new HashMap<String, DataSourceInfo>();  
         String path = Thread.currentThread().getContextClassLoader().getResource("").getPath();
         InputStream in  = new FileInputStream(path+filename);
-//        InputStream in =Enumeration.class.getResourceAsStream(filename);
         Properties p = new Properties();
         p.load(in);
         Iterator<Entry<Object, Object>> it = p.entrySet().iterator();  
         while (it.hasNext()) {  
             Entry<Object, Object> entry = it.next();  
             Object key = entry.getKey();  
-            Object value = entry.getValue(); 
-//           String[] array = key.toString().split(".");
-//           String dbname = "dataSource_"+array[array.length-1];
+            Object value = entry.getValue();
             String dbname = (String)key;
+            String[] dbArray = dbname.split("\\.");
+            dbname = "dataSource_"+dbArray[0];
             DataSourceInfo dsi = new DataSourceInfo();
-            String[] sdiArray = value.toString().split("`");
-         
-            dsi.connUrl=sdiArray[0];
-            dsi.userName=sdiArray[1].split("=")[1];
-            dsi.password=sdiArray[2].split("=")[1];            
+            String[] sdiArray = value.toString().split("&");
+            String url = sdiArray[0];
+            String uarray[] = url.split("\\?");
+            String str1 = uarray[0];
+            String str2 = uarray[1];
+            dsi.userName=str2.split("=")[1];
+            dsi.connUrl=str1+"?"+sdiArray[2]+"&"+sdiArray[3];
+            dsi.password=sdiArray[1].split("=")[1];
             mds.put(dbname, dsi);
         }  
        

@@ -9,5 +9,5 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD,ElementType.FIELD,ElementType.PARAMETER})
 @Documented
 public @interface DataSourceName {
-    public String dataSourceName() default "dataSourceCore";
+    public String dataSourceName() default "dataSource_core";
 }
