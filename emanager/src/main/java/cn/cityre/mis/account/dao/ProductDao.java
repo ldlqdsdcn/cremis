@@ -11,8 +11,12 @@ import java.util.List;
 @Repository
 public interface ProductDao {
     MisProductPo selectProductByCode(String productCode);
+
     void updateProduct(MisProductPo misProductPo);
+
     void deleteByProductCode(String productCode);
+
     void createProduct(MisProductPo misProductPo);
+
     List<MisProductPo> selectAllProducts();
 }

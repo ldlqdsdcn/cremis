@@ -1,5 +1,7 @@
 package cn.cityre.mis.account.service.Impl;
 
+import cn.cityre.edi.mis.base.util.DataSourceContextHolder;
+import cn.cityre.edi.mis.base.util.DataSourceEnum;
 import cn.cityre.mis.account.dao.MisEmailDao;
 import cn.cityre.mis.account.entity.po.MisUserEmailPo;
 import cn.cityre.mis.account.service.MisEmailService;
@@ -28,6 +30,7 @@ public class MisEmailServiceImpl implements MisEmailService {
 
     @Override
     public PaginationResult<MisUserEmailPo> getUserEmailList(Search search, QueryParams queryParams) {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         search.setFirstResult(queryParams.getFirstResult());
         search.setMaxResults(queryParams.getPageSize());
         PaginationResult<MisUserEmailPo> paginationResult = null;
@@ -43,31 +46,37 @@ public class MisEmailServiceImpl implements MisEmailService {
 
     @Override
     public MisUserEmailPo getExistEmailByUid(String unionUid, Byte isVerified, Byte isPrimary) {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         return misEmailMapper.selectByUid(unionUid, isVerified, isPrimary);
     }
 
     @Override
     public void updateEmailByUid(MisUserEmailPo misUserEmailPo) {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         misEmailMapper.updateByUid(misUserEmailPo);
     }
 
     @Override
     public List<MisUserEmailPo> getEmaliList() {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         return misEmailMapper.selectEmailList();
     }
 
     @Override
     public void createEmail(MisUserEmailPo misUserEmailPo) {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         misEmailMapper.createEmail(misUserEmailPo);
     }
 
     @Override
     public void updateEmailById(MisUserEmailPo misUserEmailPo) {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         misEmailMapper.updateById(misUserEmailPo);
     }
 
     @Override
     public void deleteEmailById(Integer[] ids) {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         for (int i = 0; i < ids.length; i++) {
             misEmailMapper.deleteById(ids[i]);
         }
@@ -75,6 +84,7 @@ public class MisEmailServiceImpl implements MisEmailService {
 
     @Override
     public MisUserEmailPo getExistUserEmailById(Integer id) {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         return misEmailMapper.selectById(id);
     }
 }

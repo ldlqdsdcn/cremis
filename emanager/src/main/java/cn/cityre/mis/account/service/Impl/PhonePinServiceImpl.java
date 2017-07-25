@@ -1,5 +1,7 @@
 package cn.cityre.mis.account.service.Impl;
 
+import cn.cityre.edi.mis.base.util.DataSourceContextHolder;
+import cn.cityre.edi.mis.base.util.DataSourceEnum;
 import cn.cityre.mis.account.dao.MisPhonePinDao;
 import cn.cityre.mis.account.entity.po.MisPhonePinPo;
 import cn.cityre.mis.account.service.PhonePinService;
@@ -26,6 +28,7 @@ public class PhonePinServiceImpl implements PhonePinService {
 
     @Override
     public PaginationResult<MisPhonePinPo> getMisPhonePinList(Search search, QueryParams queryParams) {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         search.setFirstResult(queryParams.getFirstResult());
         search.setMaxResults(queryParams.getPageSize());
         PaginationResult<MisPhonePinPo> paginationResult = null;
@@ -41,31 +44,37 @@ public class PhonePinServiceImpl implements PhonePinService {
 
     @Override
     public List<MisPhonePinPo> getExistPhonePinByPhone(String phone) {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         return misPhonePinMapper.selectByPhone(phone);
     }
 
     @Override
     public List<MisPhonePinPo> getExistPhonePinList() {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         return misPhonePinMapper.selectAllList();
     }
 
     @Override
     public MisPhonePinPo getPhonePinById(Integer id) {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         return misPhonePinMapper.selectById(id);
     }
 
     @Override
     public void createPhonePin(MisPhonePinPo misPhonePinPo) {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         misPhonePinMapper.createPhonePin(misPhonePinPo);
     }
 
     @Override
     public void updatePhonePin(MisPhonePinPo misPhonePinPo) {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         misPhonePinMapper.updateById(misPhonePinPo);
     }
 
     @Override
     public void deleteById(Integer[] ids) {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         for (int i = 0; i < ids.length; i++) {
             misPhonePinMapper.deleteById(ids[i]);
         }

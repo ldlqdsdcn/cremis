@@ -1,6 +1,8 @@
 package cn.cityre.mis.account.service.Impl;
 
 
+import cn.cityre.edi.mis.base.util.DataSourceContextHolder;
+import cn.cityre.edi.mis.base.util.DataSourceEnum;
 import cn.cityre.mis.account.dao.ProductDao;
 import cn.cityre.mis.account.entity.po.MisProductPo;
 import cn.cityre.mis.account.service.ProductService;
@@ -27,6 +29,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public PaginationResult<MisProductPo> getProductList(Search search, QueryParams queryParams) {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         search.setFirstResult(queryParams.getFirstResult());
         search.setMaxResults(queryParams.getPageSize());
         PaginationResult<MisProductPo> paginationResult = null;
@@ -42,26 +45,31 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void updateProduct(MisProductPo misProductPo) {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         productMapper.updateProduct(misProductPo);
     }
     @Override
     public void createProduct(MisProductPo misProductPo){
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         productMapper.createProduct(misProductPo);
     }
 
     @Override
     public void deleteProducts(String[] productCode) {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         productDao.removeByIds(productCode);
     }
 
     @Override
     public MisProductPo getExistProduct(String productCode) {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         MisProductPo misProductPo = productMapper.selectProductByCode(productCode);
         return misProductPo;
     }
 
     @Override
     public boolean findExistProductByProductCode(String productCode) {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         MisProductPo misProductPo = productMapper.selectProductByCode(productCode);
         if (misProductPo == null) {
             return false;

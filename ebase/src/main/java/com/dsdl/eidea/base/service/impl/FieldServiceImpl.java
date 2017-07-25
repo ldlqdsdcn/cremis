@@ -84,7 +84,7 @@ public class FieldServiceImpl implements FieldService {
     private CommonDao<ElementCheckboxPo, Integer> elementCheckboxDao;
     @DataAccess(entity = ElementSelectPo.class)
     private CommonDao<ElementSelectPo, Integer> elementSelectDao;
-   @Resource(name = "dataSourceCore")
+   @Resource(name = "dataSource_core")
     private DataSource dataSource;
 
     public PaginationResult<FieldPo> getFieldListByPaging(Search search, QueryParams queryParams) {

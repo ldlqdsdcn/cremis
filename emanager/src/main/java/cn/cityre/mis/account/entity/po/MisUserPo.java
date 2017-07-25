@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * Created by cityre on 2017/7/11.
  */
-@Table(name = "v2017_user",catalog = "cityre_mis")
+@Table(name = "v2017_user")
 @Entity
 @Getter
 @Setter
