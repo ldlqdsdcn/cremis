@@ -110,12 +110,15 @@
             <if test="accountSecret!=null">
                 accountSecret = #{accountSecret,jdbcType=VARCHAR},
             </if>
-            <choose>
-                <when test="updateTime !=null">
-                    updateTime = #{updateTime,jdbcType=TIMESTAMP},
-                </when>
-                <otherwise>updateTime=now(),</otherwise>
-            </choose>
+            <if test="updateTime!=null">
+                updateTime=now()
+            </if>
+            <!--<choose>-->
+                <!--<when test="updateTime !=null">-->
+                    <!--updateTime = #{updateTime,jdbcType=TIMESTAMP},-->
+                <!--</when>-->
+                <!--<otherwise>updateTime=now(),</otherwise>-->
+            <!--</choose>-->
         </set>
         <where>
             id = #{id,jdbcType=INTEGER}

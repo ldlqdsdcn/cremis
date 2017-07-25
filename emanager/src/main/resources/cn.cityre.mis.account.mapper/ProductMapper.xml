@@ -40,12 +40,15 @@
             <if test="platform!=null">
                 platform = #{platform,jdbcType = VARCHAR},
             </if>
-            <choose>
-                <when test="updateTime!=null">
-                    updateTime= #{updateTime,jdbcType=TIMESTAMP},
-                </when>
-                <otherwise>updateTime = now(),</otherwise>
-            </choose>
+            <if test="updateTime!=null">
+                updateTime = now()
+            </if>
+            <!--<choose>-->
+                <!--<when test="updateTime!=null">-->
+                    <!--updateTime= #{updateTime,jdbcType=TIMESTAMP},-->
+                <!--</when>-->
+                <!--<otherwise>updateTime = now(),</otherwise>-->
+            <!--</choose>-->
         </set>
         WHERE productCode = #{productCode,jdbcType=VARCHAR}
     </update>

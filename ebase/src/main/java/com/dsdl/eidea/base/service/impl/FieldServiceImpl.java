@@ -30,7 +30,6 @@ import com.dsdl.eidea.general.bo.TabFormStructureBo;
 import com.googlecode.genericdao.search.Search;
 import com.googlecode.genericdao.search.SearchResult;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
