@@ -9,7 +9,7 @@
 
 
 	<!-- 采用druid作为连接池 -->
-	<bean id="dataSourceCore" class="com.alibaba.druid.pool.DruidDataSource"
+	<bean id="dataSource_core" class="com.alibaba.druid.pool.DruidDataSource"
 		  init-method="init" destroy-method="close">
 		<!-- 基本属性 url、user、password -->
 		<property name="url" value="${jdbc.core.connection.url}"/>
@@ -43,12 +43,12 @@
 		<property name="filters" value="stat"/>
 	</bean>
 <!--账号中心数据库信息-->
-	<bean id="dataSourceAccount" class="com.alibaba.druid.pool.DruidDataSource">
+	<!--<bean id="dataSourceAccount" class="com.alibaba.druid.pool.DruidDataSource">
 		<property name="driverClassName" value="${jdbc.account.connection.driver_name}"/>
 		<property name="url" value="${jdbc.account.connection.url}"/>
 		<property name="username" value="${jdbc.account.connection.username}"/>
 		<property name="password" value="${jdbc.account.connection.password}"/>
-	</bean>
+	</bean>-->
 
 	<mongo:mongo id="mongo" replica-set="${mongo.hostport}">
 		<mongo:options connections-per-host="8"
@@ -68,11 +68,10 @@
 
 
 	<bean id="dynamicDataSource" class="cn.cityre.edi.mis.base.util.DynamicDataSource">
-		<property name="defaultTargetDataSource" ref="dataSourceCore"/>
+		<property name="defaultTargetDataSource" ref="dataSource_core"/>
 		<property name="targetDataSources">
 			<map>
-				<entry key="dataSourceCore" value-ref="dataSourceCore"/>
-				<entry key="dataSourceAccount" value-ref="dataSourceAccount"/>
+				<entry key="dataSource_core" value-ref="dataSource_core"/>
 			</map>
 		</property>
 	</bean>

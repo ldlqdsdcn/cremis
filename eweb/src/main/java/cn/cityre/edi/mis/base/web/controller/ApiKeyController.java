@@ -45,6 +45,7 @@ public class ApiKeyController {
     @ResponseBody
     @RequestMapping(value = "/list",method = RequestMethod.POST)
     public JsonResult<PaginationResult<MisApiKeyPo>> list(HttpSession httpSession, @RequestBody QueryParams queryParams){
+//        DataSourceContextHolder.setDbType("dataSource_account");
         UserResource userResource = (UserResource) httpSession.getAttribute(WebConst.SESSION_RESOURCE);
         Search search = SearchHelper.getSearchParam(URL,httpSession);
         PaginationResult<MisApiKeyPo> paginationResult = apiKeyService.getApiKeyList(search,queryParams);

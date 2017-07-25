@@ -29,7 +29,7 @@ public class ApiKeyServiceImpl implements ApiKeyService {
     private ApiKeyDao apiKeyMapper;
     @Override
     public PaginationResult<MisApiKeyPo> getApiKeyList(Search search, QueryParams queryParams) {
-        DataSourceContextHolder.setDbType("dataSourceAccount");
+        DataSourceContextHolder.setDbType("dataSource_account");
         search.setFirstResult(queryParams.getFirstResult());
         search.setMaxResults(queryParams.getPageSize());
         PaginationResult<MisApiKeyPo> paginationResult = null;
