@@ -1,6 +1,7 @@
 package cn.cityre.mis.account.service.Impl;
 
 import cn.cityre.edi.mis.base.util.DataSourceContextHolder;
+import cn.cityre.edi.mis.base.util.DataSourceEnum;
 import cn.cityre.edi.mis.base.util.RandomUtil;
 import cn.cityre.mis.account.dao.ApiKeyDao;
 import cn.cityre.mis.account.entity.po.MisApiKeyPo;
@@ -29,7 +30,7 @@ public class ApiKeyServiceImpl implements ApiKeyService {
     private ApiKeyDao apiKeyMapper;
     @Override
     public PaginationResult<MisApiKeyPo> getApiKeyList(Search search, QueryParams queryParams) {
-        DataSourceContextHolder.setDbType("dataSource_account");
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         search.setFirstResult(queryParams.getFirstResult());
         search.setMaxResults(queryParams.getPageSize());
         PaginationResult<MisApiKeyPo> paginationResult = null;
