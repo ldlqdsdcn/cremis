@@ -12,7 +12,7 @@ import java.util.Date;
 /**
  * Created by cityre on 2017/7/12.
  */
-@Table(name = "v2017_user_email",catalog = "cre_mis")
+@Table(name = "v2017_user_email",catalog = "cityre_mis")
 @Entity
 @Getter
 @Setter

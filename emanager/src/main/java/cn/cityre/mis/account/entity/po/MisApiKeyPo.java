@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * Created by cityre on 2017/7/10.
  */
-@Table(name = "v2017_api_key", catalog = "cre_mis")
+@Table(name = "v2017_api_key")
 @Entity
 @Getter
 @Setter

@@ -8,6 +8,7 @@ import com.dsdl.eidea.core.dao.CommonDao;
 import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.QueryParams;
 import com.dsdl.eidea.core.spring.annotation.DataAccess;
+import com.dsdl.eidea.core.util.DataSourceHolder;
 import com.googlecode.genericdao.search.Search;
 import com.googlecode.genericdao.search.SearchResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ public class ApiKeyServiceImpl implements ApiKeyService {
     private ApiKeyDao apiKeyMapper;
     @Override
     public PaginationResult<MisApiKeyPo> getApiKeyList(Search search, QueryParams queryParams) {
+        DataSourceHolder.setDataSourceType("dataSourceAccount");
         search.setFirstResult(queryParams.getFirstResult());
         search.setMaxResults(queryParams.getPageSize());
         PaginationResult<MisApiKeyPo> paginationResult = null;

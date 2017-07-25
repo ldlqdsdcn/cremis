@@ -39,6 +39,22 @@
 		<!-- 配置监控统计拦截的filters -->
 		<property name="filters" value="stat"/>
 	</bean>
-   
+<!--账号中心数据库信息-->
+	<bean id="dataSourceAccount" class="com.alibaba.druid.pool.DruidDataSource">
+		<property name="driverClassName" value="${jdbc.account.connection.driver_name}"/>
+		<property name="url" value="${jdbc.account.connection.url}"/>
+		<property name="username" value="${jdbc.account.connection.username}"/>
+		<property name="password" value="${jdbc.account.connection.password}"/>
+	</bean>
+
+	<bean id="dataSource" class="com.dsdl.eidea.core.util.DynamicDataSource">
+		<property name="defaultTargetDataSource" ref="dataSourceCore"/>
+		<property name="targetDataSources">
+			<map>
+				<entry key="dataSourceCore" value-ref="dataSourceCore"/>
+				<entry key="dataSourceAccount" value-ref="dataSourceAccount"/>
+			</map>
+		</property>
+	</bean>
 
 	</beans>
