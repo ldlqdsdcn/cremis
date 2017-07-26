@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cityre.mis.account.dao.TestDao">
+    <!--//根据key查-->
+    <select id="selectCity" resultType="java.lang.String">
+      SELECT  ItemID FROM AD_Info where id = 1
+    </select>
+    <select id="selectCenter" resultType="java.lang.String">
+      SELECT  PageCode from AD_Info where id = 8
+    </select>
+</mapper>
