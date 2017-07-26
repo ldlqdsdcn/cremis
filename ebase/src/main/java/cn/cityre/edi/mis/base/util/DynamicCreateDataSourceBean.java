@@ -7,7 +7,6 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.*;
 import org.springframework.context.event.ContextRefreshedEvent;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
@@ -20,7 +19,7 @@ import java.util.Map.Entry;
  * 
  */  
 public class DynamicCreateDataSourceBean implements ApplicationContextAware,ApplicationListener{  
-	private String filename= "db-config.properties";
+	private String filename= "/db-config.properties";
     private ConfigurableApplicationContext app;  
   
     private DynamicDataSource dynamicDataSource;
@@ -126,8 +125,9 @@ public class DynamicCreateDataSourceBean implements ApplicationContextAware,Appl
           
          
         Map<String, DataSourceInfo> mds = new HashMap<String, DataSourceInfo>();  
-        String path = Thread.currentThread().getContextClassLoader().getResource("").getPath();
-        InputStream in  = new FileInputStream(path+filename);
+//        String path = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+        InputStream in = this.getClass().getResourceAsStream(filename);
+//        InputStream in  = new FileInputStream(path+filename);
         Properties p = new Properties();
         p.load(in);
         Iterator<Entry<Object, Object>> it = p.entrySet().iterator();  
