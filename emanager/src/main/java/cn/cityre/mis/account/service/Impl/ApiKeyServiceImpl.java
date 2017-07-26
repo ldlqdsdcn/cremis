@@ -46,17 +46,20 @@ public class ApiKeyServiceImpl implements ApiKeyService {
 
     @Override
     public void createApiKey(MisApiKeyPo misApiKeyPo) {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         misApiKeyPo.setApiKey(RandomUtil.base62UUID());
         apiKeyMapper.createApiKey(misApiKeyPo);
     }
 
     @Override
     public void updateApikey(MisApiKeyPo misApiKeyPo) {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         apiKeyMapper.updateByKey(misApiKeyPo);
     }
 
     @Override
     public void logicDeleteApiKey(Integer[] ids) {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
        for (int i=0;i<ids.length;i++){
            apiKeyMapper.logicDeleteById(ids[i]);
        }
@@ -64,12 +67,14 @@ public class ApiKeyServiceImpl implements ApiKeyService {
 
     @Override
     public MisApiKeyPo getApiKey(String apiKey) {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         MisApiKeyPo misApiKeyPo = apiKeyMapper.selectByKey(apiKey);
         return misApiKeyPo;
     }
 
     @Override
     public void deleteById(Integer[] ids) {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         apiKeyDao.removeByIds(ids);
     }
 

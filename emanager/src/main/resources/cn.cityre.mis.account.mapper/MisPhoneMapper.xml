@@ -121,12 +121,15 @@
             <if test="isPrimary!=null">
                 isPrimary = #{isPrimary,jdbcType=TINYINT},
             </if>
-            <choose>
-                <when test="updateTime!=null">
-                    updateTime = #{updateTime,jdbcType=TIMESTAMP}
-                </when>
-                <otherwise> updateTime = now()</otherwise>
-            </choose>
+            <if test="updateTime!=null">
+                updateTime=now()
+            </if>
+            <!--<choose>-->
+                <!--<when test="updateTime!=null">-->
+                    <!--updateTime = #{updateTime,jdbcType=TIMESTAMP}-->
+                <!--</when>-->
+                <!--<otherwise> updateTime = now()</otherwise>-->
+            <!--</choose>-->
         </set>
         WHERE id = #{id,jdbcType = INTEGER}
     </update>

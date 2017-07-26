@@ -46,13 +46,16 @@
             <if test="isPrimary !=null">
                 isPrimary = #{isPrimary}
             </if>
-            <choose>
-                <when test="updateTime!=null">
-                    updateTime = #{updateTime}
-                </when>
-                <otherwise>updateTime = now()</otherwise>
-            </choose>
-        </set>
+            <if test="updateTime!=null">
+                updateTime = now()
+            </if>
+            <!--<choose>-->
+                <!--<when test="updateTime!=null">-->
+                    <!--updateTime = #{updateTime}-->
+                <!--</when>-->
+                <!--<otherwise>updateTime = now()</otherwise>-->
+            <!--</choose>-->
+    </set>
         WHERE unionUid = #{unionUid}
     </update>
 
@@ -152,12 +155,15 @@
             <if test="expireTime!=null">
                 expireTime = #{expireTime,jdbcType=TIMESTAMP},
             </if>
-            <choose>
-                <when test="updateTime!=null">
-                    updateTime = #{updateTime,jdbcType=TIMESTAMP},
-                </when>
-                <otherwise>updateTime = now(),</otherwise>
-            </choose>
+            <if test="updateTime!=null">
+                updateTime = now()
+            </if>
+            <!--<choose>-->
+                <!--<when test="updateTime!=null">-->
+                    <!--updateTime = #{updateTime,jdbcType=TIMESTAMP},-->
+                <!--</when>-->
+                <!--<otherwise>updateTime = now(),</otherwise>-->
+            <!--</choose>-->
         </set>
         WHERE  id = #{id,jdbcType=INTEGER}
     </update>
