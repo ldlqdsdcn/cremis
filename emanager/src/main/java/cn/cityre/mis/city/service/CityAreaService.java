@@ -2,9 +2,6 @@ package cn.cityre.mis.city.service;
 
 import cn.cityre.edi.mis.base.entity.po.AreaPo;
 import cn.cityre.mis.city.entity.po.CityAreaPo;
-import com.dsdl.eidea.core.dto.PaginationResult;
-import com.dsdl.eidea.core.params.QueryParams;
-import com.googlecode.genericdao.search.Search;
 
 import java.util.List;
 

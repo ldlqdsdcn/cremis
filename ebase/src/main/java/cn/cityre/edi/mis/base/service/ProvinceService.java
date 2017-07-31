@@ -5,8 +5,9 @@
 * email:ldlqdsd@126.com
 */
 package cn.cityre.edi.mis.base.service;
-import cn.cityre.edi.mis.base.entity.po.CityPo;
-import cn.cityre.edi.mis.base.entity.po.ProvincePo;
+
+import cn.cityre.edi.mis.base.entity.cpo.CityPo;
+import cn.cityre.edi.mis.base.entity.cpo.ProvincePo;
 import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.QueryParams;
 import com.googlecode.genericdao.search.Search;

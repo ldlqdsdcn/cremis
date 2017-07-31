@@ -6,10 +6,11 @@
 */
 package cn.cityre.edi.mis.base.service.impl;
 
+import cn.cityre.edi.mis.base.dao.CityDao;
 import com.dsdl.eidea.core.spring.annotation.DataAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import cn.cityre.edi.mis.base.entity.po.CityPo;
+import cn.cityre.edi.mis.base.entity.cpo.CityPo;
 import cn.cityre.edi.mis.base.service.CityService;
 import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.QueryParams;
@@ -22,8 +23,8 @@ import java.util.List;
  */
 @Service("cityService")
 public class CityServiceImpl  implements	CityService {
-	@DataAccess(entity =CityPo.class)
-	private CommonDao<CityPo,Integer> cityDao;
+	@Autowired
+	private CityDao cityDao;
 	public PaginationResult<CityPo> getCityListByPaging(Search search,QueryParams queryParams)
     {
 		search.setFirstResult(queryParams.getFirstResult());

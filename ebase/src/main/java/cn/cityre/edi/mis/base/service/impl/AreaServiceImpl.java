@@ -7,7 +7,6 @@
 package cn.cityre.edi.mis.base.service.impl;
 
 import com.dsdl.eidea.core.spring.annotation.DataAccess;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import cn.cityre.edi.mis.base.entity.po.AreaPo;
 import cn.cityre.edi.mis.base.service.AreaService;

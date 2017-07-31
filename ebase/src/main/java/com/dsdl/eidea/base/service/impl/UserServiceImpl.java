@@ -1,7 +1,9 @@
 package com.dsdl.eidea.base.service.impl;
 
-import cn.cityre.edi.mis.base.entity.po.CityPo;
-import cn.cityre.edi.mis.base.entity.po.ProvincePo;
+import cn.cityre.edi.mis.base.dao.CityDao;
+import cn.cityre.edi.mis.base.dao.ProvinceDao;
+import cn.cityre.edi.mis.base.entity.cpo.CityPo;
+import cn.cityre.edi.mis.base.entity.cpo.ProvincePo;
 import cn.cityre.edi.mis.sys.entity.bo.CityCanAccessedBo;
 import cn.cityre.edi.mis.sys.entity.bo.LetterBo;
 import cn.cityre.edi.mis.sys.entity.bo.ProvinceAccessBo;
@@ -32,7 +34,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -50,10 +51,10 @@ public class UserServiceImpl implements UserService {
     private CommonDao<UserSessionPo, Integer> userSessionDao;
     @DataAccess(entity = UserCityAccessPo.class)
     private CommonDao<UserCityAccessPo, Integer> userCityAccessDao;
-    @DataAccess(entity = CityPo.class)
-    private CommonDao<CityPo, Integer> cityDao;
-    @DataAccess(entity = ProvincePo.class)
-    private CommonDao<ProvincePo, Integer> provinceDao;
+    @Autowired
+    private CityDao cityDao;
+    @Autowired
+    private ProvinceDao provinceDao;
     @Autowired
     private AccountService accountService;
     private ModelMapper modelMapper = new ModelMapper();
@@ -344,7 +345,7 @@ public class UserServiceImpl implements UserService {
         search.addFilterEqual("userId", userId);
         List<UserCityAccessPo> userCityAccessPoList = userCityAccessDao.search(search);
         Search provinceSearch = new Search();
-        provinceSearch.addFilterEqual("isactive", "Y");
+        //provinceSearch.addFilterEqual("isactive", "Y");
         List<ProvincePo> provincePoList = provinceDao.search(provinceSearch);
         Map<String, LetterBo> letterBoMap = new HashMap<>();
         List<ProvinceAccessBo> provinceAccessBoList = new ArrayList<>();
@@ -364,16 +365,19 @@ public class UserServiceImpl implements UserService {
             provinceAccessBoList.add(provinceAccessBo);
         }
         Search citySearch = new Search();
-        citySearch.addFilterEqual("isactive", "Y");
+        //citySearch.addFilterEqual("isactive", "Y");
         List<CityPo> cityPoList = cityDao.search(citySearch);
 
         cityPoList.forEach(cityPo -> {
             ProvinceAccessBo provinceAccessBo = getProvinceAccessBo(provinceAccessBoList, cityPo.getProvinceid());
-            CityCanAccessedBo cityCanAccessedBo = new CityCanAccessedBo();
-            cityCanAccessedBo.setSelected(isSelected(userCityAccessPoList, cityPo.getId()));
-            cityCanAccessedBo.setCityId(cityPo.getId());
-            cityCanAccessedBo.setCityName(cityPo.getCity());
-            provinceAccessBo.addCityCanAccessedBo(cityCanAccessedBo);
+            if (provinceAccessBo != null) {
+                CityCanAccessedBo cityCanAccessedBo = new CityCanAccessedBo();
+                cityCanAccessedBo.setSelected(isSelected(userCityAccessPoList, cityPo.getId()));
+                cityCanAccessedBo.setCityId(cityPo.getId());
+                cityCanAccessedBo.setCityName(cityPo.getCity());
+                provinceAccessBo.addCityCanAccessedBo(cityCanAccessedBo);
+            }
+
         });
         List<LetterBo> letterBoList = letterBoMap.values().stream().sorted((LetterBo letterBo1, LetterBo letterBo2) -> letterBo1.getFirstLetter().compareTo(letterBo2.getFirstLetter())).collect(Collectors.toList());
         return letterBoList;
@@ -408,6 +412,11 @@ public class UserServiceImpl implements UserService {
     }
 
     private ProvinceAccessBo getProvinceAccessBo(List<ProvinceAccessBo> provinceAccessBoList, String provinceNo) {
-        return provinceAccessBoList.stream().filter(e -> e.getProvinceNo().equals(provinceNo)).findFirst().orElseThrow(() -> new NullPointerException("找不到" + provinceNo + "对应的城市"));
+        for (ProvinceAccessBo provinceAccessBo : provinceAccessBoList) {
+            if (provinceAccessBo.getProvinceNo().equals(provinceNo)) {
+                return provinceAccessBo;
+            }
+        }
+        return null;
     }
 }

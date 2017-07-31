@@ -9,7 +9,6 @@ import cn.cityre.edi.mis.base.entity.po.AreaPo;
 import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.QueryParams;
 import com.googlecode.genericdao.search.Search;
-import java.util.List;
 
 /**
  * @author 刘大磊 2017-06-28 15:50:20

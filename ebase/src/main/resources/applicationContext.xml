@@ -1,9 +1,9 @@
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:context="http://www.springframework.org/schema/context"
+<beans xmlns:context="http://www.springframework.org/schema/context"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:task="http://www.springframework.org/schema/task" xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:cache="http://www.springframework.org/schema/cache" xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
@@ -25,17 +25,18 @@
     <context:component-scan base-package="cn.cityre.edi.**.dao"/>
     <context:component-scan base-package="com.dsdl.eidea.core.web.converter"/>
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="order" value="1" />
+        <property name="order" value="1"/>
         <property name="locations">
             <list>
                 <value>classpath:database.properties</value>
+                <value>classpath:cityre_center_database.properties</value>
                 <value>classpath:mail.properties</value>
                 <value>classpath:mongodb-config.properties</value>
             </list>
         </property>
     </bean>
     <!-- 启用缓存注解功能，这个是必须的，否则注解不会生效，另外，该注解一定要声明在spring主配置文件中才会生效 -->
-    <cache:annotation-driven cache-manager="cacheManager" />
+    <cache:annotation-driven cache-manager="cacheManager"/>
 
     <!-- 系统日志 -->
     <!--datasource-->
@@ -50,4 +51,7 @@
     <import resource="classpath:spring/spirng-jms.xml"/>
     <!--activiti 工作流-->
     <import resource="classpath:spring/spring-activiti.cfg.xml"/>
+    <!--中心用户库数据源-->
+    <import resource="classpath:spring/spring-database-cityre-center.xml"/>
+    <import resource="classpath:spring/spring-hibernate-cityre-center.xml"/>
 </beans>

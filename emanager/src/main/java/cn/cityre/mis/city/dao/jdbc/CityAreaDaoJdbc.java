@@ -1,6 +1,6 @@
 package cn.cityre.mis.city.dao.jdbc;
 
-import cn.cityre.edi.mis.base.entity.po.CityPo;
+import cn.cityre.edi.mis.base.entity.cpo.CityPo;
 import cn.cityre.mis.city.dao.CityAreaDao;
 import cn.cityre.mis.city.entity.po.CityAreaPo;
 import com.dsdl.eidea.base.service.SpringContextHolder;

@@ -1,7 +1,7 @@
 package com.dsdl.eidea.common.web.controller;
 
-import cn.cityre.edi.mis.base.entity.po.CityPo;
-import cn.cityre.edi.mis.base.entity.po.ProvincePo;
+import cn.cityre.edi.mis.base.entity.cpo.CityPo;
+import cn.cityre.edi.mis.base.entity.cpo.ProvincePo;
 import cn.cityre.edi.mis.base.service.CityService;
 import cn.cityre.edi.mis.base.service.ProvinceService;
 import com.dsdl.eidea.base.entity.bo.ChangePasswordBo;

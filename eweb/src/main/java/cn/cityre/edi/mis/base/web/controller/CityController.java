@@ -6,7 +6,7 @@
 */
 package cn.cityre.edi.mis.base.web.controller;
 
-import cn.cityre.edi.mis.base.entity.po.CityPo;
+import cn.cityre.edi.mis.base.entity.cpo.CityPo;
 import cn.cityre.edi.mis.base.service.CityService;
 import com.dsdl.eidea.core.web.controller.BaseController;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -28,7 +28,6 @@ import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.QueryParams;
 import com.dsdl.eidea.core.params.DeleteParams;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 /**
 * Created by 刘大磊 on 2017-06-28 15:47:46.
