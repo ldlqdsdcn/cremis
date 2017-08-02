@@ -19,7 +19,7 @@ import java.util.Map.Entry;
  * 
  */  
 public class DynamicCreateDataSourceBean implements ApplicationContextAware,ApplicationListener{  
-	private String filename= "/db-config.properties";
+	private String filename= "/datasource/db-config.properties";
     private ConfigurableApplicationContext app;  
   
     private DynamicDataSource dynamicDataSource;
