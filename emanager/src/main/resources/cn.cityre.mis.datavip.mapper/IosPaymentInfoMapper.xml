@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cityre.mis.datavip.dao.IosPaymentInfoMapper">
+  <resultMap id="BaseResultMap" type="cn.cityre.mis.datavip.entity.IosPaymentInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="app" jdbcType="INTEGER" property="app" />
+    <result column="pkey" jdbcType="VARCHAR" property="pKey" />
+    <result column="pid" jdbcType="VARCHAR" property="pId" />
+    <result column="billcode" jdbcType="VARCHAR" property="billCode" />
+    <result column="passwd" jdbcType="VARCHAR" property="passwd" />
+    <result column="enrdata" jdbcType="VARCHAR" property="enrData" />
+    <result column="istatus" jdbcType="INTEGER" property="istatus" />
+    <result column="buyuid" jdbcType="VARCHAR" property="buyUid" />
+    <result column="buytime" jdbcType="TIMESTAMP" property="buyTime" />
+    <result column="usetime" jdbcType="DOUBLE" property="useTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.cityre.mis.datavip.entity.IosPaymentInfo">
+    <result column="receiptdata" jdbcType="LONGVARCHAR" property="receiptdata" />
+    <result column="receipt" jdbcType="LONGVARCHAR" property="receipt" />
+    <result column="latest_receipt" jdbcType="LONGVARCHAR" property="latestReceipt" />
+    <result column="latest_receipt_info" jdbcType="LONGVARCHAR" property="latestReceiptInfo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, app, pkey, pid, billcode, passwd, enrdata, istatus, buyuid, buytime, usetime
+  </sql>
+  <sql id="Blob_Column_List">
+    receiptdata, receipt, latest_receipt, latest_receipt_info
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ios_payment_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ios_payment_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.cityre.mis.datavip.entity.IosPaymentInfo">
+    insert into ios_payment_info (id, app, pkey, 
+      pid, billcode, passwd, 
+      enrdata, istatus, buyuid, 
+      buytime, usetime, receiptdata, 
+      receipt, latest_receipt, latest_receipt_info
+      )
+    values (#{id,jdbcType=INTEGER}, #{app,jdbcType=INTEGER}, #{pkey,jdbcType=VARCHAR}, 
+      #{pid,jdbcType=VARCHAR}, #{billcode,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}, 
+      #{enrdata,jdbcType=VARCHAR}, #{istatus,jdbcType=INTEGER}, #{buyuid,jdbcType=VARCHAR}, 
+      #{buytime,jdbcType=TIMESTAMP}, #{usetime,jdbcType=DOUBLE}, #{receiptdata,jdbcType=LONGVARCHAR}, 
+      #{receipt,jdbcType=LONGVARCHAR}, #{latestReceipt,jdbcType=LONGVARCHAR}, #{latestReceiptInfo,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cityre.mis.datavip.entity.IosPaymentInfo">
+    insert into ios_payment_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="app != null">
+        app,
+      </if>
+      <if test="pkey != null">
+        pkey,
+      </if>
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="billcode != null">
+        billcode,
+      </if>
+      <if test="passwd != null">
+        passwd,
+      </if>
+      <if test="enrdata != null">
+        enrdata,
+      </if>
+      <if test="istatus != null">
+        istatus,
+      </if>
+      <if test="buyuid != null">
+        buyuid,
+      </if>
+      <if test="buytime != null">
+        buytime,
+      </if>
+      <if test="usetime != null">
+        usetime,
+      </if>
+      <if test="receiptdata != null">
+        receiptdata,
+      </if>
+      <if test="receipt != null">
+        receipt,
+      </if>
+      <if test="latestReceipt != null">
+        latest_receipt,
+      </if>
+      <if test="latestReceiptInfo != null">
+        latest_receipt_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="app != null">
+        #{app,jdbcType=INTEGER},
+      </if>
+      <if test="pkey != null">
+        #{pkey,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="billcode != null">
+        #{billcode,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null">
+        #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="enrdata != null">
+        #{enrdata,jdbcType=VARCHAR},
+      </if>
+      <if test="istatus != null">
+        #{istatus,jdbcType=INTEGER},
+      </if>
+      <if test="buyuid != null">
+        #{buyuid,jdbcType=VARCHAR},
+      </if>
+      <if test="buytime != null">
+        #{buytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usetime != null">
+        #{usetime,jdbcType=DOUBLE},
+      </if>
+      <if test="receiptdata != null">
+        #{receiptdata,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="receipt != null">
+        #{receipt,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="latestReceipt != null">
+        #{latestReceipt,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="latestReceiptInfo != null">
+        #{latestReceiptInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cityre.mis.datavip.entity.IosPaymentInfo">
+    update ios_payment_info
+    <set>
+      <if test="app != null">
+        app = #{app,jdbcType=INTEGER},
+      </if>
+      <if test="pkey != null">
+        pkey = #{pkey,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null">
+        pid = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="billcode != null">
+        billcode = #{billcode,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null">
+        passwd = #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="enrdata != null">
+        enrdata = #{enrdata,jdbcType=VARCHAR},
+      </if>
+      <if test="istatus != null">
+        istatus = #{istatus,jdbcType=INTEGER},
+      </if>
+      <if test="buyuid != null">
+        buyuid = #{buyuid,jdbcType=VARCHAR},
+      </if>
+      <if test="buytime != null">
+        buytime = #{buytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usetime != null">
+        usetime = #{usetime,jdbcType=DOUBLE},
+      </if>
+      <if test="receiptdata != null">
+        receiptdata = #{receiptdata,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="receipt != null">
+        receipt = #{receipt,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="latestReceipt != null">
+        latest_receipt = #{latestReceipt,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="latestReceiptInfo != null">
+        latest_receipt_info = #{latestReceiptInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.cityre.mis.datavip.entity.IosPaymentInfo">
+    update ios_payment_info
+    set app = #{app,jdbcType=INTEGER},
+      pkey = #{pkey,jdbcType=VARCHAR},
+      pid = #{pid,jdbcType=VARCHAR},
+      billcode = #{billcode,jdbcType=VARCHAR},
+      passwd = #{passwd,jdbcType=VARCHAR},
+      enrdata = #{enrdata,jdbcType=VARCHAR},
+      istatus = #{istatus,jdbcType=INTEGER},
+      buyuid = #{buyuid,jdbcType=VARCHAR},
+      buytime = #{buytime,jdbcType=TIMESTAMP},
+      usetime = #{usetime,jdbcType=DOUBLE},
+      receiptdata = #{receiptdata,jdbcType=LONGVARCHAR},
+      receipt = #{receipt,jdbcType=LONGVARCHAR},
+      latest_receipt = #{latestReceipt,jdbcType=LONGVARCHAR},
+      latest_receipt_info = #{latestReceiptInfo,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cityre.mis.datavip.entity.IosPaymentInfo">
+    update ios_payment_info
+    set app = #{app,jdbcType=INTEGER},
+      pkey = #{pkey,jdbcType=VARCHAR},
+      pid = #{pid,jdbcType=VARCHAR},
+      billcode = #{billcode,jdbcType=VARCHAR},
+      passwd = #{passwd,jdbcType=VARCHAR},
+      enrdata = #{enrdata,jdbcType=VARCHAR},
+      istatus = #{istatus,jdbcType=INTEGER},
+      buyuid = #{buyuid,jdbcType=VARCHAR},
+      buytime = #{buytime,jdbcType=TIMESTAMP},
+      usetime = #{usetime,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cityre.mis.datavip.dao.UserAvmserMapper">
+  <resultMap id="BaseResultMap" type="cn.cityre.mis.datavip.entity.UserAvmser">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="apikey" jdbcType="VARCHAR" property="apikey" />
+    <result column="usercode" jdbcType="VARCHAR" property="userCode" />
+    <result column="goodsid" jdbcType="VARCHAR" property="goodsId" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="begindate" jdbcType="TIMESTAMP" property="beginDate" />
+    <result column="enddate" jdbcType="TIMESTAMP" property="endDate" />
+    <result column="numtimes" jdbcType="INTEGER" property="numTimes" />
+    <result column="numbalance" jdbcType="INTEGER" property="numBalance" />
+    <result column="createdate" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="adduid" jdbcType="VARCHAR" property="addUid" />
+    <result column="updatedate" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="updateuid" jdbcType="VARCHAR" property="updateUid" />
+    <result column="vcdesc" jdbcType="VARCHAR" property="vcDesc" />
+    <result column="flag" jdbcType="INTEGER" property="flag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, apikey, usercode, goodsid, city, begindate, enddate, numtimes, numbalance, createdate, 
+    adduid, updatedate, updateuid, vcdesc, flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_avmser
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_avmser
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.cityre.mis.datavip.entity.UserAvmser">
+    insert into user_avmser (id, apikey, usercode, 
+      goodsid, city, begindate, 
+      enddate, numtimes, numbalance, 
+      createdate, adduid, updatedate, 
+      updateuid, vcdesc, flag
+      )
+    values (#{id,jdbcType=INTEGER}, #{apikey,jdbcType=VARCHAR}, #{usercode,jdbcType=VARCHAR}, 
+      #{goodsid,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{begindate,jdbcType=TIMESTAMP}, 
+      #{enddate,jdbcType=TIMESTAMP}, #{numtimes,jdbcType=INTEGER}, #{numbalance,jdbcType=INTEGER}, 
+      #{createdate,jdbcType=TIMESTAMP}, #{adduid,jdbcType=VARCHAR}, #{updatedate,jdbcType=TIMESTAMP}, 
+      #{updateuid,jdbcType=VARCHAR}, #{vcdesc,jdbcType=VARCHAR}, #{flag,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cityre.mis.datavip.entity.UserAvmser">
+    insert into user_avmser
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="apikey != null">
+        apikey,
+      </if>
+      <if test="usercode != null">
+        usercode,
+      </if>
+      <if test="goodsid != null">
+        goodsid,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="begindate != null">
+        begindate,
+      </if>
+      <if test="enddate != null">
+        enddate,
+      </if>
+      <if test="numtimes != null">
+        numtimes,
+      </if>
+      <if test="numbalance != null">
+        numbalance,
+      </if>
+      <if test="createdate != null">
+        createdate,
+      </if>
+      <if test="adduid != null">
+        adduid,
+      </if>
+      <if test="updatedate != null">
+        updatedate,
+      </if>
+      <if test="updateuid != null">
+        updateuid,
+      </if>
+      <if test="vcdesc != null">
+        vcdesc,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="apikey != null">
+        #{apikey,jdbcType=VARCHAR},
+      </if>
+      <if test="usercode != null">
+        #{usercode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsid != null">
+        #{goodsid,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="begindate != null">
+        #{begindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enddate != null">
+        #{enddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="numtimes != null">
+        #{numtimes,jdbcType=INTEGER},
+      </if>
+      <if test="numbalance != null">
+        #{numbalance,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null">
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adduid != null">
+        #{adduid,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedate != null">
+        #{updatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuid != null">
+        #{updateuid,jdbcType=VARCHAR},
+      </if>
+      <if test="vcdesc != null">
+        #{vcdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cityre.mis.datavip.entity.UserAvmser">
+    update user_avmser
+    <set>
+      <if test="apikey != null">
+        apikey = #{apikey,jdbcType=VARCHAR},
+      </if>
+      <if test="usercode != null">
+        usercode = #{usercode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsid != null">
+        goodsid = #{goodsid,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="begindate != null">
+        begindate = #{begindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enddate != null">
+        enddate = #{enddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="numtimes != null">
+        numtimes = #{numtimes,jdbcType=INTEGER},
+      </if>
+      <if test="numbalance != null">
+        numbalance = #{numbalance,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null">
+        createdate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adduid != null">
+        adduid = #{adduid,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedate != null">
+        updatedate = #{updatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuid != null">
+        updateuid = #{updateuid,jdbcType=VARCHAR},
+      </if>
+      <if test="vcdesc != null">
+        vcdesc = #{vcdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cityre.mis.datavip.entity.UserAvmser">
+    update user_avmser
+    set apikey = #{apikey,jdbcType=VARCHAR},
+      usercode = #{usercode,jdbcType=VARCHAR},
+      goodsid = #{goodsid,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      begindate = #{begindate,jdbcType=TIMESTAMP},
+      enddate = #{enddate,jdbcType=TIMESTAMP},
+      numtimes = #{numtimes,jdbcType=INTEGER},
+      numbalance = #{numbalance,jdbcType=INTEGER},
+      createdate = #{createdate,jdbcType=TIMESTAMP},
+      adduid = #{adduid,jdbcType=VARCHAR},
+      updatedate = #{updatedate,jdbcType=TIMESTAMP},
+      updateuid = #{updateuid,jdbcType=VARCHAR},
+      vcdesc = #{vcdesc,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cityre.mis.datavip.dao.CompanyCertMapper">
+  <resultMap id="BaseResultMap" type="cn.cityre.mis.datavip.entity.CompanyCert">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="cmcertcode" jdbcType="VARCHAR" property="companyCertCode" />
+    <result column="company_code" jdbcType="VARCHAR" property="companyCode" />
+    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+    <result column="company_desc" jdbcType="VARCHAR" property="companyDesc" />
+    <result column="legal_person" jdbcType="VARCHAR" property="legalPerson" />
+    <result column="industry" jdbcType="VARCHAR" property="industry" />
+    <result column="linkman" jdbcType="VARCHAR" property="linkMan" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="department" jdbcType="VARCHAR" property="department" />
+    <result column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="siteurl" jdbcType="VARCHAR" property="siteUrl" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="company_type" jdbcType="INTEGER" property="companyType" />
+    <result column="salestatus" jdbcType="INTEGER" property="saleStatus" />
+    <result column="auditstatus" jdbcType="INTEGER" property="auditStatus" />
+    <result column="audit_opinion" jdbcType="VARCHAR" property="auditOpinion" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updateuid" jdbcType="VARCHAR" property="updateUid" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="reviewer" jdbcType="VARCHAR" property="reviewer" />
+    <result column="audittime" jdbcType="TIMESTAMP" property="auditTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, cmcertcode, company_code, company_name, company_desc, legal_person, industry, 
+    linkman, mobile, email, department, uid, siteurl, address, company_type, salestatus, 
+    auditstatus, audit_opinion, createtime, updateuid, updatetime, reviewer, audittime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from company_cert
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from company_cert
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.cityre.mis.datavip.entity.CompanyCert">
+    insert into company_cert (id, cmcertcode, company_code, 
+      company_name, company_desc, legal_person, 
+      industry, linkman, mobile, 
+      email, department, uid, 
+      siteurl, address, company_type, 
+      salestatus, auditstatus, audit_opinion, 
+      createtime, updateuid, updatetime, 
+      reviewer, audittime)
+    values (#{id,jdbcType=INTEGER}, #{cmcertcode,jdbcType=VARCHAR}, #{companyCode,jdbcType=VARCHAR}, 
+      #{companyName,jdbcType=VARCHAR}, #{companyDesc,jdbcType=VARCHAR}, #{legalPerson,jdbcType=VARCHAR}, 
+      #{industry,jdbcType=VARCHAR}, #{linkman,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, 
+      #{siteurl,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{companyType,jdbcType=INTEGER}, 
+      #{salestatus,jdbcType=INTEGER}, #{auditstatus,jdbcType=INTEGER}, #{auditOpinion,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{updateuid,jdbcType=VARCHAR}, #{updatetime,jdbcType=TIMESTAMP}, 
+      #{reviewer,jdbcType=VARCHAR}, #{audittime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cityre.mis.datavip.entity.CompanyCert">
+    insert into company_cert
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="cmcertcode != null">
+        cmcertcode,
+      </if>
+      <if test="companyCode != null">
+        company_code,
+      </if>
+      <if test="companyName != null">
+        company_name,
+      </if>
+      <if test="companyDesc != null">
+        company_desc,
+      </if>
+      <if test="legalPerson != null">
+        legal_person,
+      </if>
+      <if test="industry != null">
+        industry,
+      </if>
+      <if test="linkman != null">
+        linkman,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="department != null">
+        department,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="siteurl != null">
+        siteurl,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="companyType != null">
+        company_type,
+      </if>
+      <if test="salestatus != null">
+        salestatus,
+      </if>
+      <if test="auditstatus != null">
+        auditstatus,
+      </if>
+      <if test="auditOpinion != null">
+        audit_opinion,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="updateuid != null">
+        updateuid,
+      </if>
+      <if test="updatetime != null">
+        updatetime,
+      </if>
+      <if test="reviewer != null">
+        reviewer,
+      </if>
+      <if test="audittime != null">
+        audittime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cmcertcode != null">
+        #{cmcertcode,jdbcType=VARCHAR},
+      </if>
+      <if test="companyCode != null">
+        #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null">
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyDesc != null">
+        #{companyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPerson != null">
+        #{legalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="industry != null">
+        #{industry,jdbcType=VARCHAR},
+      </if>
+      <if test="linkman != null">
+        #{linkman,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="siteurl != null">
+        #{siteurl,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="companyType != null">
+        #{companyType,jdbcType=INTEGER},
+      </if>
+      <if test="salestatus != null">
+        #{salestatus,jdbcType=INTEGER},
+      </if>
+      <if test="auditstatus != null">
+        #{auditstatus,jdbcType=INTEGER},
+      </if>
+      <if test="auditOpinion != null">
+        #{auditOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuid != null">
+        #{updateuid,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reviewer != null">
+        #{reviewer,jdbcType=VARCHAR},
+      </if>
+      <if test="audittime != null">
+        #{audittime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cityre.mis.datavip.entity.CompanyCert">
+    update company_cert
+    <set>
+      <if test="cmcertcode != null">
+        cmcertcode = #{cmcertcode,jdbcType=VARCHAR},
+      </if>
+      <if test="companyCode != null">
+        company_code = #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null">
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyDesc != null">
+        company_desc = #{companyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPerson != null">
+        legal_person = #{legalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="industry != null">
+        industry = #{industry,jdbcType=VARCHAR},
+      </if>
+      <if test="linkman != null">
+        linkman = #{linkman,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="siteurl != null">
+        siteurl = #{siteurl,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="companyType != null">
+        company_type = #{companyType,jdbcType=INTEGER},
+      </if>
+      <if test="salestatus != null">
+        salestatus = #{salestatus,jdbcType=INTEGER},
+      </if>
+      <if test="auditstatus != null">
+        auditstatus = #{auditstatus,jdbcType=INTEGER},
+      </if>
+      <if test="auditOpinion != null">
+        audit_opinion = #{auditOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuid != null">
+        updateuid = #{updateuid,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reviewer != null">
+        reviewer = #{reviewer,jdbcType=VARCHAR},
+      </if>
+      <if test="audittime != null">
+        audittime = #{audittime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cityre.mis.datavip.entity.CompanyCert">
+    update company_cert
+    set cmcertcode = #{cmcertcode,jdbcType=VARCHAR},
+      company_code = #{companyCode,jdbcType=VARCHAR},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      company_desc = #{companyDesc,jdbcType=VARCHAR},
+      legal_person = #{legalPerson,jdbcType=VARCHAR},
+      industry = #{industry,jdbcType=VARCHAR},
+      linkman = #{linkman,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      uid = #{uid,jdbcType=VARCHAR},
+      siteurl = #{siteurl,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      company_type = #{companyType,jdbcType=INTEGER},
+      salestatus = #{salestatus,jdbcType=INTEGER},
+      auditstatus = #{auditstatus,jdbcType=INTEGER},
+      audit_opinion = #{auditOpinion,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      updateuid = #{updateuid,jdbcType=VARCHAR},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      reviewer = #{reviewer,jdbcType=VARCHAR},
+      audittime = #{audittime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

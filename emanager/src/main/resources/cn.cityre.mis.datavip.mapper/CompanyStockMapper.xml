@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cityre.mis.datavip.dao.CompanyStockMapper">
+  <resultMap id="BaseResultMap" type="cn.cityre.mis.datavip.entity.CompanyStock">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="company_code" jdbcType="VARCHAR" property="companyCode" />
+    <result column="numamount" jdbcType="INTEGER" property="numAmount" />
+    <result column="numbalance" jdbcType="INTEGER" property="numBalance" />
+    <result column="datestart" jdbcType="TIMESTAMP" property="dateStart" />
+    <result column="dateend" jdbcType="TIMESTAMP" property="dateEnd" />
+    <result column="offeruid" jdbcType="VARCHAR" property="offerUid" />
+    <result column="offertime" jdbcType="TIMESTAMP" property="offerTime" />
+    <result column="updateuid" jdbcType="VARCHAR" property="updateUid" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, company_code, numamount, numbalance, datestart, dateend, offeruid, offertime, 
+    updateuid, updatetime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from company_stock
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from company_stock
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.cityre.mis.datavip.entity.CompanyStock">
+    insert into company_stock (id, company_code, numamount, 
+      numbalance, datestart, dateend, 
+      offeruid, offertime, updateuid, 
+      updatetime)
+    values (#{id,jdbcType=INTEGER}, #{companyCode,jdbcType=VARCHAR}, #{numamount,jdbcType=INTEGER}, 
+      #{numbalance,jdbcType=INTEGER}, #{datestart,jdbcType=TIMESTAMP}, #{dateend,jdbcType=TIMESTAMP}, 
+      #{offeruid,jdbcType=VARCHAR}, #{offertime,jdbcType=TIMESTAMP}, #{updateuid,jdbcType=VARCHAR}, 
+      #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cityre.mis.datavip.entity.CompanyStock">
+    insert into company_stock
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="companyCode != null">
+        company_code,
+      </if>
+      <if test="numamount != null">
+        numamount,
+      </if>
+      <if test="numbalance != null">
+        numbalance,
+      </if>
+      <if test="datestart != null">
+        datestart,
+      </if>
+      <if test="dateend != null">
+        dateend,
+      </if>
+      <if test="offeruid != null">
+        offeruid,
+      </if>
+      <if test="offertime != null">
+        offertime,
+      </if>
+      <if test="updateuid != null">
+        updateuid,
+      </if>
+      <if test="updatetime != null">
+        updatetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="companyCode != null">
+        #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="numamount != null">
+        #{numamount,jdbcType=INTEGER},
+      </if>
+      <if test="numbalance != null">
+        #{numbalance,jdbcType=INTEGER},
+      </if>
+      <if test="datestart != null">
+        #{datestart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dateend != null">
+        #{dateend,jdbcType=TIMESTAMP},
+      </if>
+      <if test="offeruid != null">
+        #{offeruid,jdbcType=VARCHAR},
+      </if>
+      <if test="offertime != null">
+        #{offertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuid != null">
+        #{updateuid,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cityre.mis.datavip.entity.CompanyStock">
+    update company_stock
+    <set>
+      <if test="companyCode != null">
+        company_code = #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="numamount != null">
+        numamount = #{numamount,jdbcType=INTEGER},
+      </if>
+      <if test="numbalance != null">
+        numbalance = #{numbalance,jdbcType=INTEGER},
+      </if>
+      <if test="datestart != null">
+        datestart = #{datestart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dateend != null">
+        dateend = #{dateend,jdbcType=TIMESTAMP},
+      </if>
+      <if test="offeruid != null">
+        offeruid = #{offeruid,jdbcType=VARCHAR},
+      </if>
+      <if test="offertime != null">
+        offertime = #{offertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuid != null">
+        updateuid = #{updateuid,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cityre.mis.datavip.entity.CompanyStock">
+    update company_stock
+    set company_code = #{companyCode,jdbcType=VARCHAR},
+      numamount = #{numamount,jdbcType=INTEGER},
+      numbalance = #{numbalance,jdbcType=INTEGER},
+      datestart = #{datestart,jdbcType=TIMESTAMP},
+      dateend = #{dateend,jdbcType=TIMESTAMP},
+      offeruid = #{offeruid,jdbcType=VARCHAR},
+      offertime = #{offertime,jdbcType=TIMESTAMP},
+      updateuid = #{updateuid,jdbcType=VARCHAR},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

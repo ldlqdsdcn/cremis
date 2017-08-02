@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cityre.mis.datavip.dao.DicAvmgoodsMapper">
+  <resultMap id="BaseResultMap" type="cn.cityre.mis.datavip.entity.DicAvmGoods">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="goodsid" jdbcType="VARCHAR" property="goodsId" />
+    <result column="goodsname" jdbcType="VARCHAR" property="goodsName" />
+    <result column="goodstype" jdbcType="INTEGER" property="goodsType" />
+    <result column="scopeflag" jdbcType="VARCHAR" property="scopeFlag" />
+    <result column="rewardtype" jdbcType="VARCHAR" property="rewardType" />
+    <result column="numtimes" jdbcType="INTEGER" property="numTimes" />
+    <result column="adduid" jdbcType="VARCHAR" property="addUid" />
+    <result column="createdate" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="updatedate" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="enabledflag" jdbcType="VARCHAR" property="enabledFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, goodsid, goodsname, goodstype, scopeflag, rewardtype, numtimes, adduid, createdate, 
+    updatedate, enabledflag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dic_avmgoods
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from dic_avmgoods
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.cityre.mis.datavip.entity.DicAvmGoods">
+    insert into dic_avmgoods (id, goodsid, goodsname, 
+      goodstype, scopeflag, rewardtype, 
+      numtimes, adduid, createdate, 
+      updatedate, enabledflag)
+    values (#{id,jdbcType=INTEGER}, #{goodsid,jdbcType=VARCHAR}, #{goodsname,jdbcType=VARCHAR}, 
+      #{goodstype,jdbcType=INTEGER}, #{scopeflag,jdbcType=VARCHAR}, #{rewardtype,jdbcType=VARCHAR}, 
+      #{numtimes,jdbcType=INTEGER}, #{adduid,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, 
+      #{updatedate,jdbcType=TIMESTAMP}, #{enabledflag,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cityre.mis.datavip.entity.DicAvmGoods">
+    insert into dic_avmgoods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="goodsid != null">
+        goodsid,
+      </if>
+      <if test="goodsname != null">
+        goodsname,
+      </if>
+      <if test="goodstype != null">
+        goodstype,
+      </if>
+      <if test="scopeflag != null">
+        scopeflag,
+      </if>
+      <if test="rewardtype != null">
+        rewardtype,
+      </if>
+      <if test="numtimes != null">
+        numtimes,
+      </if>
+      <if test="adduid != null">
+        adduid,
+      </if>
+      <if test="createdate != null">
+        createdate,
+      </if>
+      <if test="updatedate != null">
+        updatedate,
+      </if>
+      <if test="enabledflag != null">
+        enabledflag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="goodsid != null">
+        #{goodsid,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsname != null">
+        #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodstype != null">
+        #{goodstype,jdbcType=INTEGER},
+      </if>
+      <if test="scopeflag != null">
+        #{scopeflag,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardtype != null">
+        #{rewardtype,jdbcType=VARCHAR},
+      </if>
+      <if test="numtimes != null">
+        #{numtimes,jdbcType=INTEGER},
+      </if>
+      <if test="adduid != null">
+        #{adduid,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null">
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedate != null">
+        #{updatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enabledflag != null">
+        #{enabledflag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cityre.mis.datavip.entity.DicAvmGoods">
+    update dic_avmgoods
+    <set>
+      <if test="goodsid != null">
+        goodsid = #{goodsid,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsname != null">
+        goodsname = #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodstype != null">
+        goodstype = #{goodstype,jdbcType=INTEGER},
+      </if>
+      <if test="scopeflag != null">
+        scopeflag = #{scopeflag,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardtype != null">
+        rewardtype = #{rewardtype,jdbcType=VARCHAR},
+      </if>
+      <if test="numtimes != null">
+        numtimes = #{numtimes,jdbcType=INTEGER},
+      </if>
+      <if test="adduid != null">
+        adduid = #{adduid,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null">
+        createdate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedate != null">
+        updatedate = #{updatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enabledflag != null">
+        enabledflag = #{enabledflag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cityre.mis.datavip.entity.DicAvmGoods">
+    update dic_avmgoods
+    set goodsid = #{goodsid,jdbcType=VARCHAR},
+      goodsname = #{goodsname,jdbcType=VARCHAR},
+      goodstype = #{goodstype,jdbcType=INTEGER},
+      scopeflag = #{scopeflag,jdbcType=VARCHAR},
+      rewardtype = #{rewardtype,jdbcType=VARCHAR},
+      numtimes = #{numtimes,jdbcType=INTEGER},
+      adduid = #{adduid,jdbcType=VARCHAR},
+      createdate = #{createdate,jdbcType=TIMESTAMP},
+      updatedate = #{updatedate,jdbcType=TIMESTAMP},
+      enabledflag = #{enabledflag,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cityre.mis.datavip.dao.UidTokenMapper">
+  <resultMap id="BaseResultMap" type="cn.cityre.mis.datavip.entity.UidToken">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sn" jdbcType="VARCHAR" property="sn" />
+    <result column="token" jdbcType="VARCHAR" property="token" />
+    <result column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="suid" jdbcType="VARCHAR" property="suid" />
+    <result column="pkey" jdbcType="VARCHAR" property="pkey" />
+    <result column="versionname" jdbcType="VARCHAR" property="versionName" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
+    <result column="flag" jdbcType="INTEGER" property="flag" />
+    <result column="app" jdbcType="INTEGER" property="app" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="adduid" jdbcType="VARCHAR" property="addUid" />
+    <result column="addtime" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="updateuid" jdbcType="VARCHAR" property="updateUid" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, sn, token, uid, suid, pkey, versionname, version, flag, app, remark, adduid, 
+    addtime, updateuid, updatetime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from uid_token
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from uid_token
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.cityre.mis.datavip.entity.UidToken">
+    insert into uid_token (id, sn, token, 
+      uid, suid, pkey, versionname, 
+      version, flag, app, 
+      remark, adduid, addtime, 
+      updateuid, updatetime)
+    values (#{id,jdbcType=INTEGER}, #{sn,jdbcType=VARCHAR}, #{token,jdbcType=VARCHAR}, 
+      #{uid,jdbcType=VARCHAR}, #{suid,jdbcType=VARCHAR}, #{pkey,jdbcType=VARCHAR}, #{versionname,jdbcType=VARCHAR}, 
+      #{version,jdbcType=VARCHAR}, #{flag,jdbcType=INTEGER}, #{app,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR}, #{adduid,jdbcType=VARCHAR}, #{addtime,jdbcType=TIMESTAMP}, 
+      #{updateuid,jdbcType=VARCHAR}, #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cityre.mis.datavip.entity.UidToken">
+    insert into uid_token
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="sn != null">
+        sn,
+      </if>
+      <if test="token != null">
+        token,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="suid != null">
+        suid,
+      </if>
+      <if test="pkey != null">
+        pkey,
+      </if>
+      <if test="versionname != null">
+        versionname,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+      <if test="app != null">
+        app,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="adduid != null">
+        adduid,
+      </if>
+      <if test="addtime != null">
+        addtime,
+      </if>
+      <if test="updateuid != null">
+        updateuid,
+      </if>
+      <if test="updatetime != null">
+        updatetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sn != null">
+        #{sn,jdbcType=VARCHAR},
+      </if>
+      <if test="token != null">
+        #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="suid != null">
+        #{suid,jdbcType=VARCHAR},
+      </if>
+      <if test="pkey != null">
+        #{pkey,jdbcType=VARCHAR},
+      </if>
+      <if test="versionname != null">
+        #{versionname,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="app != null">
+        #{app,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="adduid != null">
+        #{adduid,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null">
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuid != null">
+        #{updateuid,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cityre.mis.datavip.entity.UidToken">
+    update uid_token
+    <set>
+      <if test="sn != null">
+        sn = #{sn,jdbcType=VARCHAR},
+      </if>
+      <if test="token != null">
+        token = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="suid != null">
+        suid = #{suid,jdbcType=VARCHAR},
+      </if>
+      <if test="pkey != null">
+        pkey = #{pkey,jdbcType=VARCHAR},
+      </if>
+      <if test="versionname != null">
+        versionname = #{versionname,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="app != null">
+        app = #{app,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="adduid != null">
+        adduid = #{adduid,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null">
+        addtime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuid != null">
+        updateuid = #{updateuid,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cityre.mis.datavip.entity.UidToken">
+    update uid_token
+    set sn = #{sn,jdbcType=VARCHAR},
+      token = #{token,jdbcType=VARCHAR},
+      uid = #{uid,jdbcType=VARCHAR},
+      suid = #{suid,jdbcType=VARCHAR},
+      pkey = #{pkey,jdbcType=VARCHAR},
+      versionname = #{versionname,jdbcType=VARCHAR},
+      version = #{version,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=INTEGER},
+      app = #{app,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      adduid = #{adduid,jdbcType=VARCHAR},
+      addtime = #{addtime,jdbcType=TIMESTAMP},
+      updateuid = #{updateuid,jdbcType=VARCHAR},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

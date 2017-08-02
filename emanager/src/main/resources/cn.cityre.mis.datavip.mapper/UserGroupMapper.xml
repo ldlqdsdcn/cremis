@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cityre.mis.datavip.dao.UserGroupMapper">
+  <resultMap id="BaseResultMap" type="cn.cityre.mis.datavip.entity.UserGroup">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="usergid" jdbcType="VARCHAR" property="userGid" />
+    <result column="company_code" jdbcType="VARCHAR" property="companyCode" />
+    <result column="usergname" jdbcType="VARCHAR" property="usergName" />
+    <result column="usergdesc" jdbcType="VARCHAR" property="usergDesc" />
+    <result column="numorder" jdbcType="INTEGER" property="numOrder" />
+    <result column="createuid" jdbcType="VARCHAR" property="createUid" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updateuid" jdbcType="VARCHAR" property="updateUid" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="enabledflag" jdbcType="VARCHAR" property="enabledFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, usergid, company_code, usergname, usergdesc, numorder, createuid, createtime, 
+    updateuid, updatetime, enabledflag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_group
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_group
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.cityre.mis.datavip.entity.UserGroup">
+    insert into user_group (id, usergid, company_code, 
+      usergname, usergdesc, numorder, 
+      createuid, createtime, updateuid, 
+      updatetime, enabledflag)
+    values (#{id,jdbcType=INTEGER}, #{usergid,jdbcType=VARCHAR}, #{companyCode,jdbcType=VARCHAR}, 
+      #{usergname,jdbcType=VARCHAR}, #{usergdesc,jdbcType=VARCHAR}, #{numorder,jdbcType=INTEGER}, 
+      #{createuid,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{updateuid,jdbcType=VARCHAR}, 
+      #{updatetime,jdbcType=TIMESTAMP}, #{enabledflag,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cityre.mis.datavip.entity.UserGroup">
+    insert into user_group
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="usergid != null">
+        usergid,
+      </if>
+      <if test="companyCode != null">
+        company_code,
+      </if>
+      <if test="usergname != null">
+        usergname,
+      </if>
+      <if test="usergdesc != null">
+        usergdesc,
+      </if>
+      <if test="numorder != null">
+        numorder,
+      </if>
+      <if test="createuid != null">
+        createuid,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="updateuid != null">
+        updateuid,
+      </if>
+      <if test="updatetime != null">
+        updatetime,
+      </if>
+      <if test="enabledflag != null">
+        enabledflag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="usergid != null">
+        #{usergid,jdbcType=VARCHAR},
+      </if>
+      <if test="companyCode != null">
+        #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="usergname != null">
+        #{usergname,jdbcType=VARCHAR},
+      </if>
+      <if test="usergdesc != null">
+        #{usergdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="numorder != null">
+        #{numorder,jdbcType=INTEGER},
+      </if>
+      <if test="createuid != null">
+        #{createuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuid != null">
+        #{updateuid,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enabledflag != null">
+        #{enabledflag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cityre.mis.datavip.entity.UserGroup">
+    update user_group
+    <set>
+      <if test="usergid != null">
+        usergid = #{usergid,jdbcType=VARCHAR},
+      </if>
+      <if test="companyCode != null">
+        company_code = #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="usergname != null">
+        usergname = #{usergname,jdbcType=VARCHAR},
+      </if>
+      <if test="usergdesc != null">
+        usergdesc = #{usergdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="numorder != null">
+        numorder = #{numorder,jdbcType=INTEGER},
+      </if>
+      <if test="createuid != null">
+        createuid = #{createuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuid != null">
+        updateuid = #{updateuid,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enabledflag != null">
+        enabledflag = #{enabledflag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cityre.mis.datavip.entity.UserGroup">
+    update user_group
+    set usergid = #{usergid,jdbcType=VARCHAR},
+      company_code = #{companyCode,jdbcType=VARCHAR},
+      usergname = #{usergname,jdbcType=VARCHAR},
+      usergdesc = #{usergdesc,jdbcType=VARCHAR},
+      numorder = #{numorder,jdbcType=INTEGER},
+      createuid = #{createuid,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      updateuid = #{updateuid,jdbcType=VARCHAR},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      enabledflag = #{enabledflag,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cityre.mis.datavip.dao.UsergroupModuleMapper">
+  <resultMap id="BaseResultMap" type="cn.cityre.mis.datavip.entity.UserGroupModule">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="usergid" jdbcType="VARCHAR" property="userGid" />
+    <result column="amcode" jdbcType="VARCHAR" property="amCode" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="createuid" jdbcType="VARCHAR" property="createUid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, usergid, amcode, createtime, createuid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from usergroup_module
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from usergroup_module
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.cityre.mis.datavip.entity.UserGroupModule">
+    insert into usergroup_module (id, usergid, amcode, 
+      createtime, createuid)
+    values (#{id,jdbcType=INTEGER}, #{usergid,jdbcType=VARCHAR}, #{amcode,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{createuid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cityre.mis.datavip.entity.UserGroupModule">
+    insert into usergroup_module
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="usergid != null">
+        usergid,
+      </if>
+      <if test="amcode != null">
+        amcode,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="createuid != null">
+        createuid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="usergid != null">
+        #{usergid,jdbcType=VARCHAR},
+      </if>
+      <if test="amcode != null">
+        #{amcode,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createuid != null">
+        #{createuid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cityre.mis.datavip.entity.UserGroupModule">
+    update usergroup_module
+    <set>
+      <if test="usergid != null">
+        usergid = #{usergid,jdbcType=VARCHAR},
+      </if>
+      <if test="amcode != null">
+        amcode = #{amcode,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createuid != null">
+        createuid = #{createuid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cityre.mis.datavip.entity.UserGroupModule">
+    update usergroup_module
+    set usergid = #{usergid,jdbcType=VARCHAR},
+      amcode = #{amcode,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      createuid = #{createuid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
