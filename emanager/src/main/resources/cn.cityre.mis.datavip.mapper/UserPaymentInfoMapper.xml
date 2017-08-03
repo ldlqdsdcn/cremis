@@ -31,6 +31,24 @@
     start_time, end_time, add_time, remark, flag, confirm_uid, confirm_time, isource, 
     plevel, dist_code, ha_code, pgps, dealtype, contentname
   </sql>
+
+  <!--关闭服务需要-->
+  <select id="selectByBillCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT start_time,end_time FROM user_payment_info WHERE user_payment_info.billcode = #{billCode,jdbcType=VARCHAR}
+  </select>
+
+  <update id="updateByBillCode" parameterType="java.lang.String">
+    UPDATE user_payment_info SET end_time=now() WHERE billcode = #{billCode,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectBySuid" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM user_payment_info
+    WHERE suid = #{suid,jdbcType=VARCHAR}
+  </select>
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -41,30 +59,10 @@
     delete from user_payment_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.cityre.mis.datavip.entity.UserPaymentInfo">
-    insert into user_payment_info (id, suid, billcode, 
-      account_name, account_no, city_code, 
-      pay_type, pay_amount, pay_time, 
-      start_time, end_time, add_time, 
-      remark, flag, confirm_uid, 
-      confirm_time, isource, plevel, 
-      dist_code, ha_code, pgps, 
-      dealtype, contentname)
-    values (#{id,jdbcType=INTEGER}, #{suid,jdbcType=VARCHAR}, #{billcode,jdbcType=VARCHAR}, 
-      #{accountName,jdbcType=VARCHAR}, #{accountNo,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, 
-      #{payType,jdbcType=VARCHAR}, #{payAmount,jdbcType=DOUBLE}, #{payTime,jdbcType=TIMESTAMP}, 
-      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{addTime,jdbcType=TIMESTAMP}, 
-      #{remark,jdbcType=VARCHAR}, #{flag,jdbcType=INTEGER}, #{confirmUid,jdbcType=VARCHAR}, 
-      #{confirmTime,jdbcType=TIMESTAMP}, #{isource,jdbcType=VARCHAR}, #{plevel,jdbcType=INTEGER}, 
-      #{distCode,jdbcType=VARCHAR}, #{haCode,jdbcType=VARCHAR}, #{pgps,jdbcType=VARCHAR}, 
-      #{dealtype,jdbcType=INTEGER}, #{contentname,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="cn.cityre.mis.datavip.entity.UserPaymentInfo">
+  <insert id="insertSelective" parameterType="cn.cityre.mis.datavip.entity.UserPaymentInfo" useGeneratedKeys="true"
+    keyColumn="id" keyProperty="id">
     insert into user_payment_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="suid != null">
         suid,
       </if>
@@ -89,15 +87,9 @@
       <if test="payTime != null">
         pay_time,
       </if>
-      <if test="startTime != null">
         start_time,
-      </if>
-      <if test="endTime != null">
         end_time,
-      </if>
-      <if test="addTime != null">
         add_time,
-      </if>
       <if test="remark != null">
         remark,
       </if>
@@ -133,9 +125,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="suid != null">
         #{suid,jdbcType=VARCHAR},
       </if>
@@ -231,15 +220,19 @@
       <if test="payTime != null">
         pay_time = #{payTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="startTime != null">
-        start_time = #{startTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endTime != null">
-        end_time = #{endTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="addTime != null">
-        add_time = #{addTime,jdbcType=TIMESTAMP},
-      </if>
+      <choose>
+        <when test="startTime!=null">
+          #{startTime.jdbcType=TIMESTAMP},
+        </when>
+        <otherwise>now(),</otherwise>
+      </choose>
+      <choose>
+        <when test="endTime!=null">
+          #{endTime,jdbcType=TIMESTAMP},
+        </when>
+        <otherwise>ADDDATE(now(),INTERVAL 1 YEAR )</otherwise>
+      </choose>
+      now(),
       <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
       </if>

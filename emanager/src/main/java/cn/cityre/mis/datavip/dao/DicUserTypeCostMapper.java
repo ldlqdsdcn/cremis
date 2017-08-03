@@ -1,19 +1,17 @@
 package cn.cityre.mis.datavip.dao;
 
 import cn.cityre.mis.datavip.entity.DicUserTypeCost;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface DicUserTypeCostMapper {
-    int deleteByPrimaryKey(Integer id);
+    DicUserTypeCost selectByUserType(String userType);
 
-    int insert(DicUserTypeCost record);
+    int deleteByPrimaryKey(Integer id);
 
     int insertSelective(DicUserTypeCost record);
 
     DicUserTypeCost selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(DicUserTypeCost record);
-
-    int updateByPrimaryKeyWithBLOBs(DicUserTypeCost record);
-
-    int updateByPrimaryKey(DicUserTypeCost record);
 }

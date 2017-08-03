@@ -3,7 +3,9 @@ package cn.cityre.mis.datavip.service;
 import cn.cityre.mis.datavip.entity.Bills;
 import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.QueryParams;
+import org.mybatis.pagination.dto.datatables.SearchField;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -12,6 +14,8 @@ import java.util.List;
 public interface BillsService {
 
     PaginationResult<Bills> getBillsListByOthers(QueryParams queryParams);
+
+    void addInvoice(Bills bills);
 
     Bills getExistBillsById(Integer id);
 }

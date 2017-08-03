@@ -8,9 +8,11 @@ import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.QueryParams;
 import org.mybatis.pagination.dto.PageMyBatis;
 import org.mybatis.pagination.dto.datatables.PagingCriteria;
+import org.mybatis.pagination.dto.datatables.SearchField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,6 +29,12 @@ public class BillsServiceImpl implements BillsService {
         PageMyBatis<Bills> pageMyBatis = billsMapper.selectDefaultByPage(pagingCriteria);
         PaginationResult<Bills> paginationResult = PaginationResult.pagination(pageMyBatis,(int)pageMyBatis.getTotal(),pagingCriteria.getPageNumber(),pagingCriteria.getDisplaySize());
         return paginationResult;
+    }
+
+    @Override
+    public void addInvoice(Bills bills) {
+        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
+        billsMapper.updateInvoice(bills);
     }
 
     @Override

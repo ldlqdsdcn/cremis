@@ -18,6 +18,14 @@
   <sql id="Base_Column_List">
     id, user_type, cost, cycle, remark, adduid, addtime, updateuid, updatetime
   </sql>
+
+  <select id="selectByUserType" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM dic_user_type_cost
+    WHERE user_type =#{userType,jdbcType=VARCHAR}
+  </select>
+
   <sql id="Blob_Column_List">
     note
   </sql>
@@ -33,16 +41,7 @@
     delete from dic_user_type_cost
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.cityre.mis.datavip.entity.DicUserTypeCost">
-    insert into dic_user_type_cost (id, user_type, cost, 
-      cycle, remark, adduid, 
-      addtime, updateuid, updatetime, 
-      note)
-    values (#{id,jdbcType=INTEGER}, #{userType,jdbcType=VARCHAR}, #{cost,jdbcType=VARCHAR}, 
-      #{cycle,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{adduid,jdbcType=VARCHAR}, 
-      #{addtime,jdbcType=TIMESTAMP}, #{updateuid,jdbcType=VARCHAR}, #{updatetime,jdbcType=TIMESTAMP}, 
-      #{note,jdbcType=LONGVARCHAR})
-  </insert>
+
   <insert id="insertSelective" parameterType="cn.cityre.mis.datavip.entity.DicUserTypeCost">
     insert into dic_user_type_cost
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -143,29 +142,5 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.cityre.mis.datavip.entity.DicUserTypeCost">
-    update dic_user_type_cost
-    set user_type = #{userType,jdbcType=VARCHAR},
-      cost = #{cost,jdbcType=VARCHAR},
-      cycle = #{cycle,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR},
-      adduid = #{adduid,jdbcType=VARCHAR},
-      addtime = #{addtime,jdbcType=TIMESTAMP},
-      updateuid = #{updateuid,jdbcType=VARCHAR},
-      updatetime = #{updatetime,jdbcType=TIMESTAMP},
-      note = #{note,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.cityre.mis.datavip.entity.DicUserTypeCost">
-    update dic_user_type_cost
-    set user_type = #{userType,jdbcType=VARCHAR},
-      cost = #{cost,jdbcType=VARCHAR},
-      cycle = #{cycle,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR},
-      adduid = #{adduid,jdbcType=VARCHAR},
-      addtime = #{addtime,jdbcType=TIMESTAMP},
-      updateuid = #{updateuid,jdbcType=VARCHAR},
-      updatetime = #{updatetime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+
 </mapper>

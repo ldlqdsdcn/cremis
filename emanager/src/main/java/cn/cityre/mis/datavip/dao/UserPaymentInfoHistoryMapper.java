@@ -1,11 +1,14 @@
 package cn.cityre.mis.datavip.dao;
 
 import cn.cityre.mis.datavip.entity.UserPaymentInfoHistory;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface UserPaymentInfoHistoryMapper {
-    int deleteByPrimaryKey(Integer id);
 
-    int insert(UserPaymentInfoHistory record);
+    UserPaymentInfoHistory selectByBillCode(String billCode);
+
+    void deleteByPrimaryKey(Integer id);
 
     int insertSelective(UserPaymentInfoHistory record);
 
@@ -13,5 +16,4 @@ public interface UserPaymentInfoHistoryMapper {
 
     int updateByPrimaryKeySelective(UserPaymentInfoHistory record);
 
-    int updateByPrimaryKey(UserPaymentInfoHistory record);
 }

@@ -31,6 +31,15 @@
     start_time, end_time, add_time, remark, flag, confirm_uid, confirm_time, isource, 
     plevel, dist_code, ha_code, pgps, dealtype, contentname
   </sql>
+  
+  
+  <select id="selectByBillCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM user_payment_info_history
+    WHERE user_payment_info_history.billcode = #{billCode,jdbcType=VARCHAR}
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -41,24 +50,7 @@
     delete from user_payment_info_history
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.cityre.mis.datavip.entity.UserPaymentInfoHistory">
-    insert into user_payment_info_history (id, suid, billcode, 
-      account_name, account_no, city_code, 
-      pay_type, pay_amount, pay_time, 
-      start_time, end_time, add_time, 
-      remark, flag, confirm_uid, 
-      confirm_time, isource, plevel, 
-      dist_code, ha_code, pgps, 
-      dealtype, contentname)
-    values (#{id,jdbcType=INTEGER}, #{suid,jdbcType=VARCHAR}, #{billcode,jdbcType=VARCHAR}, 
-      #{accountName,jdbcType=VARCHAR}, #{accountNo,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, 
-      #{payType,jdbcType=VARCHAR}, #{payAmount,jdbcType=DOUBLE}, #{payTime,jdbcType=TIMESTAMP}, 
-      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{addTime,jdbcType=TIMESTAMP}, 
-      #{remark,jdbcType=VARCHAR}, #{flag,jdbcType=INTEGER}, #{confirmUid,jdbcType=VARCHAR}, 
-      #{confirmTime,jdbcType=TIMESTAMP}, #{isource,jdbcType=VARCHAR}, #{plevel,jdbcType=INTEGER}, 
-      #{distCode,jdbcType=VARCHAR}, #{haCode,jdbcType=VARCHAR}, #{pgps,jdbcType=VARCHAR}, 
-      #{dealtype,jdbcType=INTEGER}, #{contentname,jdbcType=VARCHAR})
-  </insert>
+
   <insert id="insertSelective" parameterType="cn.cityre.mis.datavip.entity.UserPaymentInfoHistory">
     insert into user_payment_info_history
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -274,32 +266,6 @@
         contentname = #{contentname,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.cityre.mis.datavip.entity.UserPaymentInfoHistory">
-    update user_payment_info_history
-    set suid = #{suid,jdbcType=VARCHAR},
-      billcode = #{billcode,jdbcType=VARCHAR},
-      account_name = #{accountName,jdbcType=VARCHAR},
-      account_no = #{accountNo,jdbcType=VARCHAR},
-      city_code = #{cityCode,jdbcType=VARCHAR},
-      pay_type = #{payType,jdbcType=VARCHAR},
-      pay_amount = #{payAmount,jdbcType=DOUBLE},
-      pay_time = #{payTime,jdbcType=TIMESTAMP},
-      start_time = #{startTime,jdbcType=TIMESTAMP},
-      end_time = #{endTime,jdbcType=TIMESTAMP},
-      add_time = #{addTime,jdbcType=TIMESTAMP},
-      remark = #{remark,jdbcType=VARCHAR},
-      flag = #{flag,jdbcType=INTEGER},
-      confirm_uid = #{confirmUid,jdbcType=VARCHAR},
-      confirm_time = #{confirmTime,jdbcType=TIMESTAMP},
-      isource = #{isource,jdbcType=VARCHAR},
-      plevel = #{plevel,jdbcType=INTEGER},
-      dist_code = #{distCode,jdbcType=VARCHAR},
-      ha_code = #{haCode,jdbcType=VARCHAR},
-      pgps = #{pgps,jdbcType=VARCHAR},
-      dealtype = #{dealtype,jdbcType=INTEGER},
-      contentname = #{contentname,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -145,9 +145,15 @@ public class Bills implements java.io.Serializable {
 
 
     @Transient
-    private Date startTime;
+    private UserPaymentInfo userPaymentInfo;
     @Transient
-    private Date endTime;
+    private DicUserType dicUserType;
+    @Transient
+    private UserList userList;
+    @Transient
+    private DicPostType dicPostType;
+    @Transient
+    private DicPayType dicPayType;
 
 
 
