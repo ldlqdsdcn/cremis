@@ -24,6 +24,12 @@
     id, user_type_code, user_type_name, user_type_title, intro, showorder, flag, product, 
     type, subtype, adduid, addtime, updateuid, updatetime
   </sql>
+
+  <select id="selectByType" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from dic_user_type WHERE dic_user_type.type IN ('dm','creprice')
+  </select>
   <sql id="Blob_Column_List">
     note
   </sql>
