@@ -1,9 +1,7 @@
-package cn.cityre.mis.datavip.service.Impl;
+package cn.cityre.mis.datavip.service.empl;
 
-import cn.cityre.mis.datavip.dao.BillsMapper;
 import cn.cityre.mis.datavip.dao.UserPaymentInfoMapper;
 import cn.cityre.mis.datavip.entity.UserPaymentInfo;
-import cn.cityre.mis.datavip.service.BillsService;
 import cn.cityre.mis.datavip.service.UserPaymentInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,7 +35,7 @@ public class UserPayementInfoServiceImpl implements UserPaymentInfoService {
 
     @Override
     public UserPaymentInfo getExistPaymentInfoBySuid(String suid) {
-        return userPaymentInfoMapper.selectBySuid(suid);
+        return null;
     }
 
     @Override
