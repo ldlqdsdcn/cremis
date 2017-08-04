@@ -16,4 +16,9 @@ public class UserPaymentInfoHistoryServiceImpl implements UserPaymentInfoHistory
     public UserPaymentInfoHistory getExistPaymentHistoryByBillCode(String billCode) {
         return userPaymentInfoHistoryMapper.selectByBillCode(billCode);
     }
+
+    @Override
+    public void createPaymentInfoHistory(UserPaymentInfoHistory userPaymentInfoHistory) {
+        userPaymentInfoHistoryMapper.insertSelective(userPaymentInfoHistory);
+    }
 }

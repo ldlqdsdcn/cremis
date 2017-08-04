@@ -55,10 +55,14 @@
     from user_payment_info
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user_payment_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
+
   <insert id="insertSelective" parameterType="cn.cityre.mis.datavip.entity.UserPaymentInfo" useGeneratedKeys="true"
     keyColumn="id" keyProperty="id">
     insert into user_payment_info
@@ -193,6 +197,8 @@
       </if>
     </trim>
   </insert>
+
+
   <update id="updateByPrimaryKeySelective" parameterType="cn.cityre.mis.datavip.entity.UserPaymentInfo">
     update user_payment_info
     <set>
@@ -267,32 +273,6 @@
         contentname = #{contentname,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.cityre.mis.datavip.entity.UserPaymentInfo">
-    update user_payment_info
-    set suid = #{suid,jdbcType=VARCHAR},
-      billcode = #{billcode,jdbcType=VARCHAR},
-      account_name = #{accountName,jdbcType=VARCHAR},
-      account_no = #{accountNo,jdbcType=VARCHAR},
-      city_code = #{cityCode,jdbcType=VARCHAR},
-      pay_type = #{payType,jdbcType=VARCHAR},
-      pay_amount = #{payAmount,jdbcType=DOUBLE},
-      pay_time = #{payTime,jdbcType=TIMESTAMP},
-      start_time = #{startTime,jdbcType=TIMESTAMP},
-      end_time = #{endTime,jdbcType=TIMESTAMP},
-      add_time = #{addTime,jdbcType=TIMESTAMP},
-      remark = #{remark,jdbcType=VARCHAR},
-      flag = #{flag,jdbcType=INTEGER},
-      confirm_uid = #{confirmUid,jdbcType=VARCHAR},
-      confirm_time = #{confirmTime,jdbcType=TIMESTAMP},
-      isource = #{isource,jdbcType=VARCHAR},
-      plevel = #{plevel,jdbcType=INTEGER},
-      dist_code = #{distCode,jdbcType=VARCHAR},
-      ha_code = #{haCode,jdbcType=VARCHAR},
-      pgps = #{pgps,jdbcType=VARCHAR},
-      dealtype = #{dealtype,jdbcType=INTEGER},
-      contentname = #{contentname,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

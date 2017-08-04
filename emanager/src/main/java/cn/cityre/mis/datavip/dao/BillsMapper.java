@@ -15,9 +15,9 @@ public interface BillsMapper {
 //    登记发票
     void updateInvoice(Bills bills);
 
-    int deleteByPrimaryKey(Integer id);
+    List<Bills> selectByBigBillCode(String bigBillCode);
 
-    int insert(Bills record);
+    int deleteByPrimaryKey(Integer id);
 
     int insertSelective(Bills record);
 
@@ -25,5 +25,5 @@ public interface BillsMapper {
 
     int updateByPrimaryKeySelective(Bills record);
 
-    int updateByPrimaryKey(Bills record);
+    void updateByBillsId(Bills bills);
 }

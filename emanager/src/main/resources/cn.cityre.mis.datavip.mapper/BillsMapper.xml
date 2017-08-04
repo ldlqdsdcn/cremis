@@ -108,6 +108,28 @@
         </set>
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
+
+    <!--开通服务时间-->
+    <update id="updateByBillsId" parameterType="cn.cityre.mis.datavip.entity.Bills">
+        UPDATE bills
+        <set>
+            <if test="payUpdateTime!=null">
+                pay_updatetime=#{payUpdateTime,jdbcType=VARCHAR},
+            </if>
+            pay_flag=1,
+        </set>
+        WHERE id =#{billsId,jdbcType=INTEGER}
+    </update>
+
+    <!--通过大订单查询所有的小定单-->
+    <select id="selectByBigBillCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM bills
+        WHERE big_billcode = #{bigBillCode,jdbcType=VARCHAR} AND IFNULL(pay_flag,0) = 0
+    </select>
+
+
     <!--通过主键查询-->
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select

@@ -35,6 +35,19 @@
     addtime, updatetime, pay_flag, pay_updatetime, w_pay_type, w_pay_user, w_pay_tel, 
     invoice_taxno, invoice_adtel, invoice_bankno, source, pkey
   </sql>
+
+  <update id="updateByBigBillCode" parameterType="cn.cityre.mis.datavip.entity.CartBills">
+    UPDATE cartbills
+    <set>
+      <if test="payUpdateTime!=null">
+        pay_update_time = #{payUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      pay_flag=1,
+    </set>
+    WHERE big_billcode=#{bigBillCode,jdbcType=VARCHAR}
+  </update>
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

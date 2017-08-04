@@ -37,6 +37,16 @@
     pay_user, pay_type, pay_tel, pay_remark, remark, usource, flag, checkuid, checktime, 
     company, agent, telflag, emailflag, usericon, birthdate, citycode, nickname, autoflag
   </sql>
+  <!--sql="select  uid,min(regtime) as regtime from userlist inner join dic_user_type on  dic_user_type.user_type_code=userlist.user_type where dic_user_type.type in ('dm','creprice') group by uid  having 1=1  "-->
+
+
+
+  <!--//数据会员查询-->
+  <select id="selectBypage" resultMap="BaseResultMap">
+    SELECT uid,min(regtime) AS  regtime from userlist
+    INNER JOIN dic_user_type.user_type_code = userlist.user_type
+    WHERE dic_user_type.type in ('dm','creprice') group by uid having 1=1
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -47,28 +57,6 @@
     delete from userlist
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.cityre.mis.datavip.entity.UserList">
-    insert into userlist (id, suid, uid, 
-      pwd, username, sex, 
-      regtime, updateuid, updatetime, 
-      email, user_type, pay_user, 
-      pay_type, pay_tel, pay_remark, 
-      remark, usource, flag, 
-      checkuid, checktime, company, 
-      agent, telflag, emailflag, 
-      usericon, birthdate, citycode, 
-      nickname, autoflag)
-    values (#{id,jdbcType=INTEGER}, #{suid,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, 
-      #{pwd,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
-      #{regtime,jdbcType=TIMESTAMP}, #{updateuid,jdbcType=VARCHAR}, #{updatetime,jdbcType=TIMESTAMP}, 
-      #{email,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, #{payUser,jdbcType=VARCHAR}, 
-      #{payType,jdbcType=VARCHAR}, #{payTel,jdbcType=VARCHAR}, #{payRemark,jdbcType=VARCHAR}, 
-      #{remark,jdbcType=VARCHAR}, #{usource,jdbcType=VARCHAR}, #{flag,jdbcType=INTEGER}, 
-      #{checkuid,jdbcType=VARCHAR}, #{checktime,jdbcType=TIMESTAMP}, #{company,jdbcType=VARCHAR}, 
-      #{agent,jdbcType=VARCHAR}, #{telflag,jdbcType=INTEGER}, #{emailflag,jdbcType=INTEGER}, 
-      #{usericon,jdbcType=VARCHAR}, #{birthdate,jdbcType=DATE}, #{citycode,jdbcType=VARCHAR}, 
-      #{nickname,jdbcType=VARCHAR}, #{autoflag,jdbcType=INTEGER})
-  </insert>
   <insert id="insertSelective" parameterType="cn.cityre.mis.datavip.entity.UserList">
     insert into userlist
     <trim prefix="(" suffix=")" suffixOverrides=",">

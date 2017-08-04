@@ -8,4 +8,6 @@ import cn.cityre.mis.datavip.entity.UserPaymentInfoHistory;
 public interface UserPaymentInfoHistoryService {
 
     UserPaymentInfoHistory getExistPaymentHistoryByBillCode(String billCode);
+
+    void createPaymentInfoHistory(UserPaymentInfoHistory userPaymentInfoHistory);
 }

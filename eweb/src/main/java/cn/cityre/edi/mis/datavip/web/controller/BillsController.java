@@ -21,6 +21,7 @@ import org.springframework.web.servlet.HttpServletBean;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
 
 /**
  * Created by cityre on 2017/8/2.
@@ -64,7 +65,17 @@ public class BillsController {
     @RequestMapping(value = "/addInvoice",method = RequestMethod.POST)
     @ResponseBody
     public JsonResult<Bills> addInvoice(HttpSession httpSession,@RequestBody Bills bills){
+        UserResource userResource = (UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
         billsService.addInvoice(bills);
+        return JsonResult.success(bills);
+    }
+
+    @RequestMapping(value = "/openService",method = RequestMethod.POST)
+    @RequiresPermissions(value = "update")
+    @ResponseBody
+    public JsonResult<Bills> openService(HttpSession httpSession,@RequestBody Bills bills) throws ParseException {
+        UserResource userResource = (UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
+        billsService.openService(bills);
         return JsonResult.success(bills);
     }
 }

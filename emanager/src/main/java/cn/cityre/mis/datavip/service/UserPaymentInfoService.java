@@ -10,4 +10,10 @@ public interface UserPaymentInfoService {
     UserPaymentInfo getExistPaymentInfo(String billCode);
 
     void closeServiceByBillCode(String billCode);
+
+    UserPaymentInfo getExistPaymentInfoBySuid(String suid);
+
+    void createUserPaymentInfo(UserPaymentInfo userPaymentInfo);
+
+
 }

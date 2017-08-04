@@ -5,6 +5,7 @@ import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.QueryParams;
 import org.mybatis.pagination.dto.datatables.SearchField;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface BillsService {
     void addInvoice(Bills bills);
 
     Bills getExistBillsById(Integer id);
+
+    void openService(Bills bills) throws ParseException;
 }

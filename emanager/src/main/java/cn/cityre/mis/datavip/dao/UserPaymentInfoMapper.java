@@ -3,6 +3,8 @@ package cn.cityre.mis.datavip.dao;
 import cn.cityre.mis.datavip.entity.UserPaymentInfo;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UserPaymentInfoMapper {
 
@@ -11,15 +13,16 @@ public interface UserPaymentInfoMapper {
 
     void updateByBillCode(String billCode);
 
-    int deleteByPrimaryKey(Integer id);
-
-    int insert(UserPaymentInfo record);
-
-    int insertSelective(UserPaymentInfo record);
+    List<UserPaymentInfo> selectBySuid(String suid);
 
     UserPaymentInfo selectByPrimaryKey(Integer id);
 
+    int deleteByPrimaryKey(Integer id);
+
+    int insertSelective(UserPaymentInfo record);
+
     int updateByPrimaryKeySelective(UserPaymentInfo record);
 
-    int updateByPrimaryKey(UserPaymentInfo record);
+
+
 }
