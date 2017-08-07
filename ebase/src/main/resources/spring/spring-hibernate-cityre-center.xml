@@ -8,7 +8,7 @@
     <!--  配置hibernate SessionFactory-->
     <bean id="cityreCenterSessionFactory"
           class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-        <property name="dataSource" ref="cityreCenterDatabase"/>
+        <property name="dataSource" ref="dynamicDataSource"/>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${jdbc.cargo.connection.dialect}</prop>
@@ -37,28 +37,23 @@
             </list>
         </property>
     </bean>
-
     <!--    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
             <property name="sessionFactory" ref="sessionFactory"></property>
         </bean>-->
-
     <aop:config>
         <aop:advisor advice-ref="txAdvice" pointcut="execution(* *..service.impl.*ServiceImpl.*(..))"/>
     </aop:config>
-
     <!--注解方式配置事物-->
-    <!--<tx:annotation-driven transaction-manager="hibernateTransactionManager"/>-->
-    <!--<tx:advice id="txAdvice" transaction-manager="hibernateTransactionManager">-->
-        <!--<tx:attributes>-->
-            <!--<tx:method name="save*" propagation="REQUIRED"/>-->
-            <!--<tx:method name="remove*" propagation="REQUIRED"/>-->
-            <!--<tx:method name="update*" propagation="REQUIRED"/>-->
-            <!--<tx:method name="executeUpdate*" propagation="REQUIRED"/>-->
-            <!--<tx:method name="delete*" propagation="REQUIRED"/>-->
-            <!--<tx:method name="get*" propagation="SUPPORTS" read-only="true"/>-->
-            <!--<tx:method name="find*" propagation="SUPPORTS" read-only="true"/>-->
-        <!--</tx:attributes>-->
-    <!--</tx:advice>-->
-
-
+    <tx:annotation-driven transaction-manager="hibernateTransactionManager"/>
+    <tx:advice id="txAdvice" transaction-manager="hibernateTransactionManager">
+        <tx:attributes>
+            <tx:method name="save*" propagation="REQUIRED"/>
+            <tx:method name="remove*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="executeUpdate*" propagation="REQUIRED"/>
+            <tx:method name="delete*" propagation="REQUIRED"/>
+            <tx:method name="get*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
 </beans>

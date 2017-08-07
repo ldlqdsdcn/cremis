@@ -4,6 +4,8 @@ import cn.cityre.edi.mis.base.dao.CityDao;
 import cn.cityre.edi.mis.base.dao.ProvinceDao;
 import cn.cityre.edi.mis.base.entity.cpo.CityPo;
 import cn.cityre.edi.mis.base.entity.cpo.ProvincePo;
+import cn.cityre.edi.mis.base.util.DataSourceContextHolder;
+import cn.cityre.edi.mis.base.util.DataSourceEnum;
 import cn.cityre.edi.mis.sys.entity.bo.CityCanAccessedBo;
 import cn.cityre.edi.mis.sys.entity.bo.LetterBo;
 import cn.cityre.edi.mis.sys.entity.bo.ProvinceAccessBo;
@@ -339,7 +341,9 @@ public class RoleServiceImpl implements RoleService {
         List<RoleCityAccessPo> roleCityAccessPoList = roleCityAccessDao.search(search);
         Search provinceSearch = new Search();
         //provinceSearch.addFilterEqual("isactive", "Y");
+        DataSourceContextHolder.setDbType(DataSourceEnum.center.value());
         List<ProvincePo> provincePoList = provinceDao.search(provinceSearch);
+        DataSourceContextHolder.setDbType("dataSource_core");
         Map<String, LetterBo> letterBoMap = new HashMap<>();
         List<ProvinceAccessBo> provinceAccessBoList = new ArrayList<>();
         for (ProvincePo provincePo : provincePoList) {
@@ -359,8 +363,9 @@ public class RoleServiceImpl implements RoleService {
         }
         Search citySearch = new Search();
         // citySearch.addFilterEqual("isactive", "Y");
+        DataSourceContextHolder.setDbType(DataSourceEnum.center.value());
         List<CityPo> cityPoList = cityDao.search(citySearch);
-
+        DataSourceContextHolder.setDbType("dataSource_core");
         cityPoList.forEach(cityPo -> {
             ProvinceAccessBo provinceAccessBo = getProvinceAccessBo(provinceAccessBoList, cityPo.getProvinceid());
             if (provinceAccessBo != null) {
