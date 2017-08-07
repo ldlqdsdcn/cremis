@@ -81,10 +81,6 @@
    left join dic_post_type on dic_post_type.post_type_code=bills.post_type
    inner join userlist on  userlist.suid=bills.suid
    left join dic_user_type on userlist.user_type=dic_user_type.user_type_code  where 1=1
-   <if test="billCode!=null">
-       AND bill_code=#{billCode,jdbcType=VARCHAR}
-   </if>
-
   </select>
 
     <!--登记发票-->

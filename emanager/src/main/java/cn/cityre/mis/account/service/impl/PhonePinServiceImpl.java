@@ -1,10 +1,10 @@
-package cn.cityre.mis.account.service.Impl;
+package cn.cityre.mis.account.service.impl;
 
 import cn.cityre.edi.mis.base.util.DataSourceContextHolder;
 import cn.cityre.edi.mis.base.util.DataSourceEnum;
-import cn.cityre.mis.account.dao.MisEmailDao;
-import cn.cityre.mis.account.entity.po.MisUserEmailPo;
-import cn.cityre.mis.account.service.MisEmailService;
+import cn.cityre.mis.account.dao.MisPhonePinDao;
+import cn.cityre.mis.account.entity.po.MisPhonePinPo;
+import cn.cityre.mis.account.service.PhonePinService;
 import com.dsdl.eidea.core.dao.CommonDao;
 import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.QueryParams;
@@ -20,71 +20,63 @@ import java.util.List;
  * Created by cityre on 2017/7/19.
  */
 @Service
-public class MisEmailServiceImpl implements MisEmailService {
-    //MybatisDao
+public class PhonePinServiceImpl implements PhonePinService {
     @Autowired
-    private MisEmailDao misEmailMapper;
-    //hibernateDao
-    @DataAccess(entity = MisUserEmailPo.class)
-    private CommonDao<MisUserEmailPo, Integer> misUserEmailDao;
+    private MisPhonePinDao misPhonePinMapper;
+    @DataAccess(entity = MisPhonePinPo.class)
+    private CommonDao<MisPhonePinPo, Integer> misPhonePinDao;
 
     @Override
-    public PaginationResult<MisUserEmailPo> getUserEmailList(Search search, QueryParams queryParams) {
+    public PaginationResult<MisPhonePinPo> getMisPhonePinList(Search search, QueryParams queryParams) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         search.setFirstResult(queryParams.getFirstResult());
         search.setMaxResults(queryParams.getPageSize());
-        PaginationResult<MisUserEmailPo> paginationResult = null;
+        PaginationResult<MisPhonePinPo> paginationResult = null;
         if (queryParams.isInit()) {
-            SearchResult<MisUserEmailPo> searchResult = misUserEmailDao.searchAndCount(search);
+            SearchResult<MisPhonePinPo> searchResult = misPhonePinDao.searchAndCount(search);
             paginationResult = PaginationResult.pagination(searchResult.getResult(), searchResult.getTotalCount(), queryParams.getPageNo(), queryParams.getPageSize());
         } else {
-            List<MisUserEmailPo> list = misUserEmailDao.search(search);
+            List<MisPhonePinPo> list = misPhonePinDao.search(search);
             paginationResult = PaginationResult.pagination(list, queryParams.getTotalRecords(), queryParams.getPageNo(), queryParams.getPageSize());
         }
         return paginationResult;
     }
 
     @Override
-    public MisUserEmailPo getExistEmailByUid(String unionUid, Byte isVerified, Byte isPrimary) {
+    public List<MisPhonePinPo> getExistPhonePinByPhone(String phone) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        return misEmailMapper.selectByUid(unionUid, isVerified, isPrimary);
+        return misPhonePinMapper.selectByPhone(phone);
     }
 
     @Override
-    public void updateEmailByUid(MisUserEmailPo misUserEmailPo) {
+    public List<MisPhonePinPo> getExistPhonePinList() {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        misEmailMapper.updateByUid(misUserEmailPo);
+        return misPhonePinMapper.selectAllList();
     }
 
     @Override
-    public List<MisUserEmailPo> getEmaliList() {
+    public MisPhonePinPo getPhonePinById(Integer id) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        return misEmailMapper.selectEmailList();
+        return misPhonePinMapper.selectById(id);
     }
 
     @Override
-    public void createEmail(MisUserEmailPo misUserEmailPo) {
+    public void createPhonePin(MisPhonePinPo misPhonePinPo) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        misEmailMapper.createEmail(misUserEmailPo);
+        misPhonePinMapper.createPhonePin(misPhonePinPo);
     }
 
     @Override
-    public void updateEmailById(MisUserEmailPo misUserEmailPo) {
+    public void updatePhonePin(MisPhonePinPo misPhonePinPo) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        misEmailMapper.updateById(misUserEmailPo);
+        misPhonePinMapper.updateById(misPhonePinPo);
     }
 
     @Override
-    public void deleteEmailById(Integer[] ids) {
+    public void deleteById(Integer[] ids) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         for (int i = 0; i < ids.length; i++) {
-            misEmailMapper.deleteById(ids[i]);
+            misPhonePinMapper.deleteById(ids[i]);
         }
-    }
-
-    @Override
-    public MisUserEmailPo getExistUserEmailById(Integer id) {
-        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        return misEmailMapper.selectById(id);
     }
 }

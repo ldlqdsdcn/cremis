@@ -1,4 +1,4 @@
-package cn.cityre.mis.account.service.Impl;
+package cn.cityre.mis.account.service.impl;
 
 import cn.cityre.edi.mis.base.util.DataSourceContextHolder;
 import cn.cityre.edi.mis.base.util.DataSourceEnum;
@@ -14,6 +14,7 @@ import com.googlecode.genericdao.search.SearchResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -27,6 +28,7 @@ public class MisPhoneServiceImpl implements MisPhoneService {
     private CommonDao<MisUserPhonePo, Integer> misUserPhoneDao;
 
     @Override
+    @Transactional
     public PaginationResult<MisUserPhonePo> getUserPhoneList(Search search, QueryParams queryParams) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         search.setFirstResult(queryParams.getFirstResult());

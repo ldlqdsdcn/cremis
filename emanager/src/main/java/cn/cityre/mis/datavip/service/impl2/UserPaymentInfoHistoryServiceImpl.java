@@ -1,4 +1,4 @@
-package cn.cityre.mis.datavip.service.empl;
+package cn.cityre.mis.datavip.service.impl2;
 
 import cn.cityre.mis.datavip.dao.UserPaymentInfoHistoryMapper;
 import cn.cityre.mis.datavip.entity.UserPaymentInfoHistory;

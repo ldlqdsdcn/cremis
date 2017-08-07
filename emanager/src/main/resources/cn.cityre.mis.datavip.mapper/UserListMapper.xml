@@ -47,6 +47,28 @@
     INNER JOIN dic_user_type.user_type_code = userlist.user_type
     WHERE dic_user_type.type in ('dm','creprice') group by uid having 1=1
   </select>
+
+  <select id="selectIntroByUid" parameterType="java.lang.String">
+    select DISTINCT dic_user_type.intro FROM userlist
+    INNER JOIN dic_user_type on dic_user_type.user_type_code = userlist.user_type
+    WHERE uid = #{Uid,jdbcType=VARCHAR}
+    AND dic_user_type.type IN ('dm','creprice') order by userlist.id
+  </select>
+
+  <select id="selectRegTimeByUid" parameterType="java.lang.String">
+    select DISTINCT userlist.regtime from userlist where uid = #{uid,jdbcType=VARCHAR} ORDER BY  userlist.id
+  </select>
+
+  <select id="selectTelByUid" parameterType="java.lang.String">
+    select DISTINCT userlist.pay_tel from userlist WHERE uid = #{uid,jdbcType=VARCHAR} ORDER BY  userlist.id
+  </select>
+
+  <select id="selectIdByUid" parameterType="java.lang.String">
+    select userlist.id from userlist WHERE  uid = #{uid,jdbcType=VARCHAR} AND flag=1
+  </select>
+
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
