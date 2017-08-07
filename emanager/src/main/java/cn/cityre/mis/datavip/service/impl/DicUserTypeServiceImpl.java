@@ -1,4 +1,4 @@
-package cn.cityre.mis.datavip.service.impl2;
+package cn.cityre.mis.datavip.service.impl;
 
 import cn.cityre.mis.datavip.service.DicUserTypeService;
 import org.springframework.stereotype.Service;

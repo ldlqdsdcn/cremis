@@ -1,4 +1,4 @@
-package cn.cityre.mis.datavip.service.impl2;
+package cn.cityre.mis.datavip.service.impl;
 
 import cn.cityre.mis.datavip.dao.DicUserTypeCostMapper;
 import cn.cityre.mis.datavip.entity.DicUserTypeCost;

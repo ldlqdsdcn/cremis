@@ -1,4 +1,4 @@
-package cn.cityre.mis.datavip.service.impl2;
+package cn.cityre.mis.datavip.service.impl;
 
 import cn.cityre.edi.mis.base.util.DataSourceContextHolder;
 import cn.cityre.mis.datavip.dao.*;
