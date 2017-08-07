@@ -20,7 +20,7 @@
     <!--  配置hibernate SessionFactory-->
     <bean id="sessionFactory"
           class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dynamicDataSource" />
+        <property name="dataSource" ref="dataSource_core" />
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${jdbc.cargo.connection.dialect}</prop>
