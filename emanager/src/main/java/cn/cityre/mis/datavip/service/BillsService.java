@@ -21,4 +21,6 @@ public interface BillsService {
     Bills getExistBillsById(Integer id);
 
     void openService(Bills bills) throws ParseException;
+
+    PaginationResult<Bills> getUserInfoList(QueryParams queryParams);
 }

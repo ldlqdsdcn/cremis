@@ -12,9 +12,11 @@
     <result column="updateuid" jdbcType="VARCHAR" property="updateUid" />
     <result column="updatetime" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
+
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.cityre.mis.datavip.entity.DicUserTypeCost">
     <result column="note" jdbcType="LONGVARCHAR" property="note" />
   </resultMap>
+
   <sql id="Base_Column_List">
     id, user_type, cost, cycle, remark, adduid, addtime, updateuid, updatetime
   </sql>

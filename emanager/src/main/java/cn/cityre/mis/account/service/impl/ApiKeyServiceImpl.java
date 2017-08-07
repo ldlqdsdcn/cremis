@@ -41,13 +41,16 @@ public class ApiKeyServiceImpl implements ApiKeyService {
             List<MisApiKeyPo> misApiKeyPoList = apiKeyDao.search(search);
             paginationResult = PaginationResult.pagination(misApiKeyPoList,queryParams.getTotalRecords(),queryParams.getPageNo(),queryParams.getPageSize());
         }
+        DataSourceContextHolder.setDbType("dataSource_core");
         return paginationResult;
+
     }
 
     @Override
     public void createApiKey(MisApiKeyPo misApiKeyPo) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         misApiKeyPo.setApiKey(RandomUtil.base62UUID());
+        DataSourceContextHolder.setDbType("dataSource_core");
         apiKeyMapper.createApiKey(misApiKeyPo);
     }
 
@@ -55,6 +58,7 @@ public class ApiKeyServiceImpl implements ApiKeyService {
     public void updateApikey(MisApiKeyPo misApiKeyPo) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         apiKeyMapper.updateByKey(misApiKeyPo);
+        DataSourceContextHolder.setDbType("dataSource_core");
     }
 
     @Override
@@ -63,19 +67,23 @@ public class ApiKeyServiceImpl implements ApiKeyService {
        for (int i=0;i<ids.length;i++){
            apiKeyMapper.logicDeleteById(ids[i]);
        }
+        DataSourceContextHolder.setDbType("dataSource_core");
     }
 
     @Override
     public MisApiKeyPo getApiKey(String apiKey) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         MisApiKeyPo misApiKeyPo = apiKeyMapper.selectByKey(apiKey);
+        DataSourceContextHolder.setDbType("dataSource_core");
         return misApiKeyPo;
+
     }
 
     @Override
     public void deleteById(Integer[] ids) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         apiKeyDao.removeByIds(ids);
+        DataSourceContextHolder.setDbType("dataSource_core");
     }
 
 }

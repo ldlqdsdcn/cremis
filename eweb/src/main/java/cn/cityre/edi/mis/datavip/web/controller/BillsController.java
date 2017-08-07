@@ -27,7 +27,7 @@ import java.text.ParseException;
  * Created by cityre on 2017/8/2.
  */
 @Controller
-@RequestMapping(value = "/base/bills")
+@RequestMapping(value = "/mis/bills")
 public class BillsController {
     private static final String URL = "bills";
 
@@ -37,7 +37,7 @@ public class BillsController {
     @RequestMapping(value = "/showList",method = RequestMethod.GET)
     @RequiresPermissions(value = "view")
     public ModelAndView showList(){
-        ModelAndView modelAndView = new ModelAndView("/base/bills/bills");
+        ModelAndView modelAndView = new ModelAndView("/mis/bills/bills");
         modelAndView.addObject(WebConst.PAGING_SETTINGS, PagingSettingResult.getDbPaging());
         modelAndView.addObject(WebConst.PAGE_URI,URL);
         return modelAndView;

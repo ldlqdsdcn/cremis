@@ -8,8 +8,6 @@
         <a href="#/edit" class="btn  btn-primary btn-sm" ng-show="canAdd"><eidea:label key="common.button.create"/></a>
         <button type="button" class="btn  btn-primary btn-sm" id="search_but" data-toggle="modal"
                 data-target="#searchModal"><eidea:label key="common.button.search"/></button>
-        <button type="button" class="btn  btn-primary btn-sm" ng-disabled="!canDelete()"
-                ng-click="deleteRecord()" ng-show="canDel"><eidea:label key="common.button.delete"/></button>
         <button type="button" class="btn btn-primary btn-sm" ng-disabled="!canDelete()"
                 ng-click="deleteLogic()" ng-show="canDel">逻辑删除</button>
     </div>

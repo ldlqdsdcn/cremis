@@ -52,11 +52,19 @@
     <resultMap id="UserPaymentBillsMap" type="cn.cityre.mis.datavip.entity.Bills" extends="BaseResultMap">
         <result property="userPaymentInfo.startTime" column="start_time" jdbcType="TIMESTAMP"/>
         <result property="userPaymentInfo.endTime" column="end_time" jdbcType="TIMESTAMP"/>
+        <result property="userPaymentInfo.payAmount" column="pay_amount" jdbcType="VARCHAR"/>
         <result property="dicUserType.userTypeName" column="user_type_name" jdbcType="VARCHAR"/>
+        <result property="dicUserType.note" column="note" jdbcType="VARCHAR"/>
         <result property="userList.uid" column="uid" jdbcType="VARCHAR"/>
+        <result property="userlist.userName" column="username" jdbcType="VARCHAR"/>
+        <result property="userlist.regTime" column="regtime" jdbcType="TIMESTAMP"/>
+        <result property="userlist.email" column="email" jdbcType="VARCHAR"/>
+        <result property="userlist.flag" column="flag" jdbcType="INTEGER"/>
         <result property="dicPostType.typeName" column="post_type_name" jdbcType="VARCHAR"/>
         <result property="dicPayType.typeName" column="type_name" jdbcType="VARCHAR"/>
     </resultMap>
+
+
     <sql id="Base_Column_List">
     id, suid, big_billcode, bill_code, alipay_bill_code, post_invoice_flag, product_code, 
     product_num, product_cost, product_remark, invoice_type, invoice_title, post_user, 
@@ -66,6 +74,18 @@
     source, pkey, plevel, dist_code, ha_code, pgps, buymonth, haclcode, buygroup, dealtype, 
     contentname, province_code
   </sql>
+
+    <select id="selectUserInfoByPage" resultMap="UserPaymentBillsMap">
+        SELECT
+        userlist.uid,userlist.username,userlist.regtime,userlist.email,userlist.flag,
+        dic_user_type.user_type_name,dic_user_type.note,
+        bills.bill_code,bills.product_cost,bills.city_code,bills.plevel,bills.contentname,bills.pgps,bills.dealtype,bills.invoice_title,
+        user_payment_info.pay_amount,user_payment_info.start_time,user_payment_info.end_time
+        FROM bills
+        INNER JOIN userlist ON userlist.suid = bills.suid
+        INNER JOIN dic_user_type ON dic_user_type.user_type_code = userlist.user_type AND dic_user_type.type IN ('dm','creprice','fjgj')
+        LEFT JOIN user_payment_info ON user_payment_info.billcode = bills.bill_code WHERE 1=1
+    </select>
 
 
     <!--Mybatis联合查询-->
@@ -99,7 +119,7 @@
                         kp_invoice_time=now(),
                     </otherwise>
                 </choose>
-                    invoice_no_flag=1,
+                invoice_no_flag=1,
             </trim>
         </set>
         WHERE id = #{id,jdbcType=INTEGER}
@@ -138,12 +158,9 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
-    <insert id="insertSelective" parameterType="cn.cityre.mis.datavip.entity.Bills">
+    <insert id="insert" parameterType="cn.cityre.mis.datavip.entity.Bills" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         insert into bills
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
             <if test="suid != null">
                 suid,
             </if>
@@ -278,9 +295,6 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=INTEGER},
-            </if>
             <if test="suid != null">
                 #{suid,jdbcType=VARCHAR},
             </if>
@@ -415,7 +429,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="cn.cityre.mis.datavip.entity.Bills">
+    <update id="updateByPrimaryKey" parameterType="cn.cityre.mis.datavip.entity.Bills">
         update bills
         <set>
             <if test="suid != null">
@@ -553,52 +567,4 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="cn.cityre.mis.datavip.entity.Bills">
-    update bills
-    set suid = #{suid,jdbcType=VARCHAR},
-      big_billcode = #{bigBillcode,jdbcType=VARCHAR},
-      bill_code = #{billCode,jdbcType=VARCHAR},
-      alipay_bill_code = #{alipayBillCode,jdbcType=VARCHAR},
-      post_invoice_flag = #{postInvoiceFlag,jdbcType=INTEGER},
-      product_code = #{productCode,jdbcType=VARCHAR},
-      product_num = #{productNum,jdbcType=INTEGER},
-      product_cost = #{productCost,jdbcType=DOUBLE},
-      product_remark = #{productRemark,jdbcType=VARCHAR},
-      invoice_type = #{invoiceType,jdbcType=INTEGER},
-      invoice_title = #{invoiceTitle,jdbcType=VARCHAR},
-      post_user = #{postUser,jdbcType=VARCHAR},
-      post_type = #{postType,jdbcType=VARCHAR},
-      address = #{address,jdbcType=VARCHAR},
-      tel = #{tel,jdbcType=VARCHAR},
-      addtime = #{addtime,jdbcType=TIMESTAMP},
-      updatetime = #{updatetime,jdbcType=TIMESTAMP},
-      pay_flag = #{payFlag,jdbcType=INTEGER},
-      pay_updatetime = #{payUpdatetime,jdbcType=TIMESTAMP},
-      w_pay_type = #{wPayType,jdbcType=VARCHAR},
-      w_pay_user = #{wPayUser,jdbcType=VARCHAR},
-      w_pay_tel = #{wPayTel,jdbcType=VARCHAR},
-      invoice_no = #{invoiceNo,jdbcType=VARCHAR},
-      kp_invoice_time = #{kpInvoiceTime,jdbcType=TIMESTAMP},
-      invoice_no_uid = #{invoiceNoUid,jdbcType=VARCHAR},
-      invoice_no_time = #{invoiceNoTime,jdbcType=TIMESTAMP},
-      invoice_no_flag = #{invoiceNoFlag,jdbcType=INTEGER},
-      invoice_taxno = #{invoiceTaxno,jdbcType=VARCHAR},
-      invoice_adtel = #{invoiceAdtel,jdbcType=VARCHAR},
-      invoice_bankno = #{invoiceBankno,jdbcType=VARCHAR},
-      autoopen_url = #{autoopenUrl,jdbcType=VARCHAR},
-      city_code = #{cityCode,jdbcType=VARCHAR},
-      source = #{source,jdbcType=INTEGER},
-      pkey = #{pkey,jdbcType=VARCHAR},
-      plevel = #{plevel,jdbcType=INTEGER},
-      dist_code = #{distCode,jdbcType=VARCHAR},
-      ha_code = #{haCode,jdbcType=VARCHAR},
-      pgps = #{pgps,jdbcType=VARCHAR},
-      buymonth = #{buymonth,jdbcType=VARCHAR},
-      haclcode = #{haclcode,jdbcType=VARCHAR},
-      buygroup = #{buygroup,jdbcType=VARCHAR},
-      dealtype = #{dealtype,jdbcType=INTEGER},
-      contentname = #{contentname,jdbcType=VARCHAR},
-      province_code = #{provinceCode,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
 </mapper>

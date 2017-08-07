@@ -1,17 +1,15 @@
 package cn.cityre.mis.datavip.dao;
 
 import cn.cityre.mis.datavip.entity.DicPostType;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface DicPostTypeMapper {
-    int deleteByPrimaryKey(Integer id);
+    void deleteByPrimaryKey(Integer id);
 
-    int insert(DicPostType record);
-
-    int insertSelective(DicPostType record);
+    void insert(DicPostType dicPostType);
 
     DicPostType selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(DicPostType record);
-
-    int updateByPrimaryKey(DicPostType record);
+    void updateByPrimaryKey(DicPostType dicPostType);
 }

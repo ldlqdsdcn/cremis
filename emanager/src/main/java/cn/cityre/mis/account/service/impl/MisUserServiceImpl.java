@@ -24,7 +24,8 @@ public class MisUserServiceImpl implements MisUserService {
     @Autowired
     private MisUserDao misUserDao;
     @DataAccess(entity = MisUserPo.class)
-    private CommonDao<MisUserPo,Integer> userDao;
+    private CommonDao<MisUserPo, Integer> userDao;
+
     @Override
     public PaginationResult<MisUserPo> getExistUserList(Search search, QueryParams queryParams) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
@@ -32,49 +33,62 @@ public class MisUserServiceImpl implements MisUserService {
         search.setMaxResults(queryParams.getPageSize());
         search.setFirstResult(queryParams.getFirstResult());
 
-        if (queryParams.isInit()){
+        if (queryParams.isInit()) {
             SearchResult searchResult = userDao.searchAndCount(search);
-            poPaginationResult = PaginationResult.pagination(searchResult.getResult(),searchResult.getTotalCount(),queryParams.getPageNo(),queryParams.getPageSize());
-        }else{
+            poPaginationResult = PaginationResult.pagination(searchResult.getResult(), searchResult.getTotalCount(), queryParams.getPageNo(), queryParams.getPageSize());
+        } else {
             List<MisUserPo> misUserPoList = userDao.search(search);
-            poPaginationResult = PaginationResult.pagination(misUserPoList,queryParams.getTotalRecords(),queryParams.getPageNo(),queryParams.getPageSize());
+            poPaginationResult = PaginationResult.pagination(misUserPoList, queryParams.getTotalRecords(), queryParams.getPageNo(), queryParams.getPageSize());
         }
+        DataSourceContextHolder.setDbType("dataSource_core");
+
         return poPaginationResult;
     }
 
     @Override
     public MisUserPo selectByUserId(String userId) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        return misUserDao.selectByUserId(userId);
+        MisUserPo misUserPo = misUserDao.selectByUserId(userId);
+        DataSourceContextHolder.setDbType("dataSource_core");
+        return misUserPo;
     }
 
     @Override
     public MisUserPo selectByUid(String uid) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        return misUserDao.selectByUid(uid);
+        MisUserPo misUserPo = misUserDao.selectByUid(uid);
+        DataSourceContextHolder.setDbType("dataSource_core");
+        return misUserPo;
     }
 
     @Override
     public List<MisUserPo> selectByRealName(String RealName) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        return misUserDao.selectByRealName(RealName);
+        List<MisUserPo> list = misUserDao.selectByRealName(RealName);
+        DataSourceContextHolder.setDbType("dataSource_core");
+        return list;
     }
 
     @Override
     public List<MisUserPo> selectByTime(String creatStartTime, String createEndTime) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        return misUserDao.selectByCreateTime(creatStartTime, createEndTime);
+        List<MisUserPo> misUserPos = misUserDao.selectByCreateTime(creatStartTime, createEndTime);
+        DataSourceContextHolder.setDbType("dataSource_core");
+        return misUserPos;
     }
 
     @Override
     public void updateById(MisUserPo misUserPo) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         misUserDao.updateById(misUserPo);
+        DataSourceContextHolder.setDbType("dataSource_core");
     }
 
     @Override
     public MisUserPo getExistUserById(Integer id) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        return misUserDao.selectById(id);
+        MisUserPo misUserPo = misUserDao.selectById(id);
+        DataSourceContextHolder.setDbType("dataSource_core");
+        return misUserPo;
     }
 }

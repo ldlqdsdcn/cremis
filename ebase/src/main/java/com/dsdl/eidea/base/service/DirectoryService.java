@@ -30,4 +30,6 @@ public interface DirectoryService {
      * @return
      */
     List<DirectoryBo> findAllDirectory(Search search);
+
+    List<DirectoryBo> findAllValidDirectory();
 }

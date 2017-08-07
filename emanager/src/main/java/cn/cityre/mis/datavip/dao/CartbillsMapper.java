@@ -10,13 +10,10 @@ public interface CartbillsMapper {
 
     int deleteByPrimaryKey(Integer id);
 
-    int insert(CartBills record);
-
-    int insertSelective(CartBills record);
+    int insert(CartBills cartBills);
 
     CartBills selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(CartBills record);
+    void updateByPrimaryKey(CartBills cartBills);
 
-    int updateByPrimaryKey(CartBills record);
 }

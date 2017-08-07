@@ -8,16 +8,16 @@
         <a href="#/edit" class="btn  btn-primary btn-sm" ng-show="canAdd"><eidea:label key="common.button.create"/></a>
         <button type="button" class="btn  btn-primary btn-sm" id="search_but" data-toggle="modal"
                 data-target="#searchModal"><eidea:label key="common.button.search"/></button>
-        <button type="button" class="btn  btn-primary btn-sm" ng-disabled="!canDelete()"
-                ng-click="deleteRecord()" ng-show="canDel"><eidea:label key="common.button.delete"/></button>
+        <%--<button type="button" class="btn  btn-primary btn-sm" ng-disabled="!canDelete()"--%>
+                <%--ng-click="deleteRecord()" ng-show="canDel"><eidea:label key="common.button.delete"/></button>--%>
     </div>
     <div class="row-fluid">
         <div class="span12">
             <table class="table table-hover table-striped table-condensed">
                 <thead>
                 <tr>
-                    <th><input type="checkbox" name="selectAll" style="margin:0px;" ng-change="selectAll()"
-                               ng-model="delFlag"></th>
+                    <%--<th><input type="checkbox" name="selectAll" style="margin:0px;" ng-change="selectAll()"--%>
+                               <%--ng-model="delFlag"></th>--%>
                     <th><%--序号--%><eidea:label key="base.serialNumber"/></th>
                     <th><%--productCode--%><eidea:label key="base.product.label.productCode"/></th>
                     <th><%--productName--%><eidea:label key="base.product.label.productName"/></th>
@@ -30,9 +30,9 @@
                 <tbody>
 
                 <tr ng-repeat="model in modelList track by $index" ng-class-even="success">
-                    <td>
-                        <input type="checkbox" ng-model="model.delFlag">
-                    </td>
+                    <%--<td>--%>
+                        <%--<input type="checkbox" ng-model="model.delFlag">--%>
+                    <%--</td>--%>
                     <td>{{(queryParams.pageNo-1)*queryParams.pageSize+$index+1}}</td>
                     <td>
                         {{model.productCode}}

@@ -8,16 +8,16 @@
         <a href="#/edit" class="btn  btn-primary btn-sm" ng-show="canAdd"><eidea:label key="common.button.create"/></a>
         <button type="button" class="btn  btn-primary btn-sm" id="search_but" data-toggle="modal"
                 data-target="#searchModal"><eidea:label key="common.button.search"/></button>
-        <button type="button" class="btn  btn-primary btn-sm" ng-disabled="!canDelete()"
-                ng-click="deleteRecord()" ng-show="canDel"><eidea:label key="common.button.delete"/></button>
+        <%--<button type="button" class="btn  btn-primary btn-sm" ng-disabled="!canDelete()"--%>
+                <%--ng-click="deleteRecord()" ng-show="canDel"><eidea:label key="common.button.delete"/></button>--%>
     </div>
     <div class="row-fluid">
         <div class="span12">
             <table class="table table-hover table-striped table-condensed">
                 <thead>
                 <tr>
-                    <th><input type="checkbox" name="selectAll" style="margin:0px;" ng-change="selectAll()"
-                               ng-model="delFlag"></th>
+                    <%--<th><input type="checkbox" name="selectAll" style="margin:0px;" ng-change="selectAll()"--%>
+                               <%--ng-model="delFlag"></th>--%>
                     <th><%--序号--%><eidea:label key="base.serialNumber"/></th>
                     <th><%--phone--%><eidea:label key="base.v2017.phonepin.label.phone"/></th>
                     <th><%--pintoken--%><eidea:label key="base.v2017.phonepin.label.pinToken"/></th>
@@ -25,15 +25,15 @@
                     <th><%--action--%><eidea:label key="base.v2017.phonepin.label.action"/></th>
                     <th><%--createTime--%><eidea:label key="base.v2017.user.label.createTime"/></th>
                     <th><%--expireTime--%><eidea:label key="base.apikey.label.expireTime"/></th>
-                    <th><%--编辑--%><eidea:label key="common.button.edit"/></th>
+                    <%--<th>&lt;%&ndash;编辑&ndash;%&gt;<eidea:label key="common.button.edit"/></th>--%>
                 </tr>
                 </thead>
                 <tbody>
 
                 <tr ng-repeat="model in modelList track by $index" ng-class-even="success">
-                    <td>
-                        <input type="checkbox" ng-model="model.delFlag">
-                    </td>
+                    <%--<td>--%>
+                        <%--<input type="checkbox" ng-model="model.delFlag">--%>
+                    <%--</td>--%>
                     <td>{{(queryParams.pageNo-1)*queryParams.pageSize+$index+1}}</td>
                     <td>
                         {{model.phone}}
@@ -52,10 +52,11 @@
                     </td>
                     <td>
                         {{model.expireTime|date:"yyyy-MM-dd HH:mm:ss"}}
-                    <td>
-                        <a class="btn btn-primary btn-xs" href="#/edit?id={{model.id}}"><eidea:label
-                                key="common.button.edit"/><%--编辑--%></a>
                     </td>
+                    <%--<td>--%>
+                        <%--<a class="btn btn-primary btn-xs" href="#/edit?id={{model.id}}"><eidea:label--%>
+                                <%--key="common.button.edit"/>&lt;%&ndash;编辑&ndash;%&gt;</a>--%>
+                    <%--</td>--%>
                 </tr>
                 </tbody>
             </table>

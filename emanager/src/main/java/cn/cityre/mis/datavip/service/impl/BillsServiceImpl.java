@@ -9,6 +9,7 @@ import cn.cityre.mis.datavip.entity.UserPaymentInfoHistory;
 import cn.cityre.mis.datavip.service.BillsService;
 import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.QueryParams;
+import javafx.scene.control.Pagination;
 import org.modelmapper.ModelMapper;
 import org.mybatis.pagination.dto.PageMyBatis;
 import org.mybatis.pagination.dto.datatables.PagingCriteria;
@@ -127,6 +128,19 @@ public class BillsServiceImpl implements BillsService {
         userPayment.setPayAmount(bills.getProductCost());
         userPayment.setAccountName(bills.getWPayUser());
         userPaymentInfoMapper.insertSelective(userPayment);
+    }
+
+    /**
+     * /new/service.asp
+     * @param queryParams
+     * @return
+     */
+    @Override
+    public PaginationResult<Bills> getUserInfoList(QueryParams queryParams) {
+        PagingCriteria pagingCriteria = PagingCriteria.createCriteria(queryParams.getPageSize(),queryParams.getFirstResult(),queryParams.getPageNo());
+        PageMyBatis<Bills> pageMyBatis = billsMapper.selectUserInfoByPage(pagingCriteria);
+        PaginationResult<Bills> paginationResult = PaginationResult.pagination(pageMyBatis,(int)pageMyBatis.getTotal(),queryParams.getPageNo(),queryParams.getPageSize());
+        return paginationResult;
     }
 }
 

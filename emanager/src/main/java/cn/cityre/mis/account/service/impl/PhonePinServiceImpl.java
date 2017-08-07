@@ -39,37 +39,49 @@ public class PhonePinServiceImpl implements PhonePinService {
             List<MisPhonePinPo> list = misPhonePinDao.search(search);
             paginationResult = PaginationResult.pagination(list, queryParams.getTotalRecords(), queryParams.getPageNo(), queryParams.getPageSize());
         }
+        DataSourceContextHolder.setDbType("dataSource_core");
+
         return paginationResult;
     }
 
     @Override
     public List<MisPhonePinPo> getExistPhonePinByPhone(String phone) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        return misPhonePinMapper.selectByPhone(phone);
+        List<MisPhonePinPo> list = misPhonePinMapper.selectByPhone(phone);
+        DataSourceContextHolder.setDbType("dataSource_core");
+
+        return list;
     }
 
     @Override
     public List<MisPhonePinPo> getExistPhonePinList() {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        return misPhonePinMapper.selectAllList();
+        List<MisPhonePinPo> list = misPhonePinMapper.selectAllList();
+        DataSourceContextHolder.setDbType("dataSource_core");
+        return list;
     }
 
     @Override
     public MisPhonePinPo getPhonePinById(Integer id) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        return misPhonePinMapper.selectById(id);
+        MisPhonePinPo misPhonePinPo = misPhonePinMapper.selectById(id);
+        DataSourceContextHolder.setDbType("dataSource_core");
+        return misPhonePinPo;
     }
 
     @Override
     public void createPhonePin(MisPhonePinPo misPhonePinPo) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         misPhonePinMapper.createPhonePin(misPhonePinPo);
+        DataSourceContextHolder.setDbType("dataSource_core");
+
     }
 
     @Override
     public void updatePhonePin(MisPhonePinPo misPhonePinPo) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         misPhonePinMapper.updateById(misPhonePinPo);
+        DataSourceContextHolder.setDbType("dataSource_core");
     }
 
     @Override
@@ -78,5 +90,7 @@ public class PhonePinServiceImpl implements PhonePinService {
         for (int i = 0; i < ids.length; i++) {
             misPhonePinMapper.deleteById(ids[i]);
         }
+        DataSourceContextHolder.setDbType("dataSource_core");
     }
+
 }
