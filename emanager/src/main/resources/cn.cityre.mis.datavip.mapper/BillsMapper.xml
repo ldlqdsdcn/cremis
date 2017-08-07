@@ -56,10 +56,10 @@
         <result property="dicUserType.userTypeName" column="user_type_name" jdbcType="VARCHAR"/>
         <result property="dicUserType.note" column="note" jdbcType="VARCHAR"/>
         <result property="userList.uid" column="uid" jdbcType="VARCHAR"/>
-        <result property="userlist.userName" column="username" jdbcType="VARCHAR"/>
-        <result property="userlist.regTime" column="regtime" jdbcType="TIMESTAMP"/>
-        <result property="userlist.email" column="email" jdbcType="VARCHAR"/>
-        <result property="userlist.flag" column="flag" jdbcType="INTEGER"/>
+        <result property="userList.userName" column="username" jdbcType="VARCHAR"/>
+        <result property="userList.regTime" column="regtime" jdbcType="TIMESTAMP"/>
+        <result property="userList.email" column="email" jdbcType="VARCHAR"/>
+        <result property="userList.flag" column="flag" jdbcType="INTEGER"/>
         <result property="dicPostType.typeName" column="post_type_name" jdbcType="VARCHAR"/>
         <result property="dicPayType.typeName" column="type_name" jdbcType="VARCHAR"/>
     </resultMap>
@@ -84,7 +84,7 @@
         FROM bills
         INNER JOIN userlist ON userlist.suid = bills.suid
         INNER JOIN dic_user_type ON dic_user_type.user_type_code = userlist.user_type AND dic_user_type.type IN ('dm','creprice','fjgj')
-        LEFT JOIN user_payment_info ON user_payment_info.billcode = bills.bill_code WHERE 1=1
+        LEFT JOIN user_payment_info ON user_payment_info.billcode = bills.bill_code
     </select>
 
 
@@ -100,7 +100,7 @@
    left join dic_pay_type on dic_pay_type.type_code=bills.w_pay_type
    left join dic_post_type on dic_post_type.post_type_code=bills.post_type
    inner join userlist on  userlist.suid=bills.suid
-   left join dic_user_type on userlist.user_type=dic_user_type.user_type_code  where 1=1
+   left join dic_user_type on userlist.user_type=dic_user_type.user_type_code
   </select>
 
     <!--登记发票-->

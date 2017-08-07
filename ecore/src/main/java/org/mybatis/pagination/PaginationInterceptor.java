@@ -5,6 +5,7 @@
 package org.mybatis.pagination;
 
 import com.dsdl.eidea.util.StringUtil;
+import com.google.common.base.Joiner;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
@@ -120,7 +121,7 @@ public class PaginationInterceptor implements Interceptor, Serializable {
             List<String> where_field = new ArrayList<>(0);
             for (SearchField searchField : searchFields) {
                 // fix inject sql
-                where_field.add(searchField.getField() + StringHelper.LIKE_CHAR + StringHelper.likeValue(searchField.getValue()));
+                where_field.add(searchField.getField() + StringHelper.LIKE_CHAR +"'%"+ StringHelper.likeValue(searchField.getValue())+"%'");
             }
             boolean where = SqlRemoveHelper.containWhere(sql);
             String orderBy = StringHelper.EMPTY;
@@ -130,7 +131,7 @@ public class PaginationInterceptor implements Interceptor, Serializable {
                 orderBy = CountHelper.SQL_ORDER + sqls[1];
             }
             sql = String.format((where ? CountHelper.OR_SQL_FORMAT : CountHelper.WHERE_SQL_FORMAT), sql
-                    , joinWhereField(CountHelper.OR_JOINER,where_field), orderBy);
+                    ,Joiner.on(CountHelper.OR_JOINER).skipNulls().join(where_field), orderBy);
         }
 
         final List<SortField> sortFields = pagingCriteria.getSortFields();
@@ -140,7 +141,7 @@ public class PaginationInterceptor implements Interceptor, Serializable {
                 field_order.add(sortField.getField() + StringHelper.BLANK_CHAR + sortField.getDirection().getDirection());
             }
             return String.format(order ? CountHelper.SQL_FORMAT : CountHelper.ORDER_SQL_FORMAT, sql
-                    , joinWhereField(StringHelper.DOT_CHAR,field_order));
+                    , Joiner.on(StringHelper.DOT_CHAR).skipNulls().join(field_order));
         }
 
         return sql;

@@ -22,6 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by cityre on 2017/8/2.
@@ -34,48 +36,58 @@ public class BillsController {
     @Autowired
     private BillsService billsService;
 
-    @RequestMapping(value = "/showList",method = RequestMethod.GET)
+    @RequestMapping(value = "/showList", method = RequestMethod.GET)
     @RequiresPermissions(value = "view")
-    public ModelAndView showList(){
+    public ModelAndView showList() {
         ModelAndView modelAndView = new ModelAndView("/mis/bills/bills");
         modelAndView.addObject(WebConst.PAGING_SETTINGS, PagingSettingResult.getDbPaging());
-        modelAndView.addObject(WebConst.PAGE_URI,URL);
+        modelAndView.addObject(WebConst.PAGE_URI, URL);
         return modelAndView;
     }
 
     @RequiresPermissions(value = "view")
-    @RequestMapping(value = "/list",method = RequestMethod.POST)
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
-    public JsonResult<PaginationResult<Bills>> list(HttpSession httpSession,@RequestBody QueryParams queryParams){
+    public JsonResult<PaginationResult<Bills>> list(HttpSession httpSession, @RequestBody QueryParams queryParams) {
 
         PaginationResult<Bills> paginationResult = billsService.getBillsListByOthers(queryParams);
         return JsonResult.success(paginationResult);
     }
 
     @RequiresPermissions(value = "view")
-    @RequestMapping(value = "/get",method = RequestMethod.GET)
+    @RequestMapping(value = "/get", method = RequestMethod.GET)
     @ResponseBody
-    public JsonResult<Bills> get(HttpSession httpSession,Integer id){
-        UserResource userResource = (UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
+    public JsonResult<Bills> get(HttpSession httpSession, Integer id) {
+        UserResource userResource = (UserResource) httpSession.getAttribute(WebConst.SESSION_RESOURCE);
         Bills bills = billsService.getExistBillsById(id);
         return JsonResult.success(bills);
     }
 
     @RequiresPermissions(value = "update")
-    @RequestMapping(value = "/addInvoice",method = RequestMethod.POST)
+    @RequestMapping(value = "/addInvoice", method = RequestMethod.POST)
     @ResponseBody
-    public JsonResult<Bills> addInvoice(HttpSession httpSession,@RequestBody Bills bills){
-        UserResource userResource = (UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
+    public JsonResult<Bills> addInvoice(HttpSession httpSession, @RequestBody Bills bills) {
+        UserResource userResource = (UserResource) httpSession.getAttribute(WebConst.SESSION_RESOURCE);
         billsService.addInvoice(bills);
         return JsonResult.success(bills);
     }
 
-    @RequestMapping(value = "/openService",method = RequestMethod.POST)
+    @RequestMapping(value = "/openService", method = RequestMethod.POST)
     @RequiresPermissions(value = "update")
     @ResponseBody
-    public JsonResult<Bills> openService(HttpSession httpSession,@RequestBody Bills bills) throws ParseException {
-        UserResource userResource = (UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
+    public JsonResult<Bills> openService(HttpSession httpSession, @RequestBody Bills bills) throws ParseException {
+        UserResource userResource = (UserResource) httpSession.getAttribute(WebConst.SESSION_RESOURCE);
         billsService.openService(bills);
         return JsonResult.success(bills);
+    }
+
+    @RequiresPermissions(value = "view")
+    @RequestMapping(value = "/showUserInfo", method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult<PaginationResult<Bills>> showUserInfo(HttpSession httpSession, QueryParams queryParams) {
+        queryParams = new QueryParams();
+        List<SearchField> searchFields = new ArrayList<SearchField>();
+        PaginationResult<Bills> paginationResult = billsService.getUserInfoList(searchFields, queryParams);
+        return JsonResult.success(paginationResult);
     }
 }

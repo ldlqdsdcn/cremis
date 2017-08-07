@@ -13,6 +13,7 @@ import javafx.scene.control.Pagination;
 import org.modelmapper.ModelMapper;
 import org.mybatis.pagination.dto.PageMyBatis;
 import org.mybatis.pagination.dto.datatables.PagingCriteria;
+import org.mybatis.pagination.dto.datatables.SearchField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,6 +72,7 @@ public class BillsServiceImpl implements BillsService {
      */
     @Override
     public void openService(Bills bills) throws ParseException {
+        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
 
         UserPaymentInfo userPaymentInfo = bills.getUserPaymentInfo();
 
@@ -128,6 +130,7 @@ public class BillsServiceImpl implements BillsService {
         userPayment.setPayAmount(bills.getProductCost());
         userPayment.setAccountName(bills.getWPayUser());
         userPaymentInfoMapper.insertSelective(userPayment);
+        DataSourceContextHolder.setDbType("dataSouce_core");
     }
 
     /**
@@ -136,10 +139,12 @@ public class BillsServiceImpl implements BillsService {
      * @return
      */
     @Override
-    public PaginationResult<Bills> getUserInfoList(QueryParams queryParams) {
-        PagingCriteria pagingCriteria = PagingCriteria.createCriteria(queryParams.getPageSize(),queryParams.getFirstResult(),queryParams.getPageNo());
+    public PaginationResult<Bills> getUserInfoList(List<SearchField> searchFields,QueryParams queryParams) {
+        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
+        PagingCriteria pagingCriteria = PagingCriteria.createCriteriaWithSearch(queryParams.getFirstResult(),queryParams.getPageSize(),queryParams.getPageNo(),searchFields);
         PageMyBatis<Bills> pageMyBatis = billsMapper.selectUserInfoByPage(pagingCriteria);
         PaginationResult<Bills> paginationResult = PaginationResult.pagination(pageMyBatis,(int)pageMyBatis.getTotal(),queryParams.getPageNo(),queryParams.getPageSize());
+        DataSourceContextHolder.setDbType("dataSource_core");
         return paginationResult;
     }
 }
