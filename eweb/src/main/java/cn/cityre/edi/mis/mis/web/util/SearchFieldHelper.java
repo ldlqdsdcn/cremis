@@ -22,14 +22,14 @@ public class SearchFieldHelper {
 
     public static List<SearchField> getSearchField(String uri, HttpSession httpSession) {
         List<SearchColumnVo> searchColumnVos = (List<SearchColumnVo>) httpSession.getAttribute(uri + WebConst.SESSION_SEARCH_PARAM);
-
+        List<SearchField> searchFields = new ArrayList<SearchField>();
+        if (searchColumnVos==null){
+            return searchFields;
+        }
         ModelMapper modelMapper = new ModelMapper();
         List<SearchColumnDto> searchColumnDtos = modelMapper.map(searchColumnVos, new TypeToken<List<SearchColumnDto>>() {
         }.getType());
-        List<SearchField> searchFields = new ArrayList<SearchField>();
-        if (searchColumnDtos==null){
-            return searchFields;
-        }
+
         for (SearchColumnDto searchColumnDto : searchColumnDtos) {
             SearchField searchField = new SearchField(searchColumnDto.getColumnName(), false, false, searchColumnDto.getValue());
             searchFields.add(searchField);
