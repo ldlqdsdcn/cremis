@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserPaymentInfoHistoryMapper {
-
     UserPaymentInfoHistory selectByBillCode(String billCode);
 
     void deleteByPrimaryKey(Integer id);

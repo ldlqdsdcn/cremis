@@ -12,17 +12,17 @@
 </head>
 <body>
 <div ng-app='myApp' ng-view class="content"></div>
-<%--<jsp:include page="/common/searchPage">--%>
-    <%--<jsp:param name="uri" value="${uri}"/>--%>
-<%--</jsp:include>--%>
+<jsp:include page="/common/searchPage">
+    <jsp:param name="uri" value="${uri}"/>
+</jsp:include>
 </body>
 <script type="text/javascript">
     var app = angular.module('myApp', ['ngRoute', 'ui.bootstrap', 'jcs-autoValidate'])
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider
                 .when('/list', {templateUrl: '<c:url value="/mis/datavip/bills/list.tpl.jsp"/>'})
-                .when('/serviceEdit', {templateUrl: '<c:url value="/base/bills/service.tpl.jsp"/>'})
-                .when('/invoiceEdit',{templateUrl:'<c:url value="/base/bills/invoice.tpl.jsp"/> '})
+                .when('/edit', {templateUrl: '<c:url value="/mis/datavip/bills/edit.tpl.jsp"/>'})
+                .when('/invoiceEdit',{templateUrl:'<c:url value="/mis/datavip/bills/invoice.tpl.jsp"/> '})
                 .otherwise({redirectTo: '/list'});
         }]);
     app.controller('listCtrl', function ($scope,$rootScope, $http) {
@@ -50,7 +50,7 @@
             return false;
         }
         $scope.pageChanged = function () {
-            $http.post("<c:url value="/mis/bills/list"/>", $scope.queryParams)
+            $http.post("<c:url value="/mis/datavip/bills/list"/>", $scope.queryParams)
                 .success(function (response) {
                     $scope.isLoading = false;
                     if (response.success) {
@@ -120,33 +120,93 @@
         }
         $scope.pageChanged();
     });
-    <%--<%--%>
+//    服务操作Ctrl
+    app.controller('editCtrl', function ($scope, $http, $routeParams) {
+        /**
+         * 日期时间选择控件
+         * bootstrap-datetime 24小时时间是hh
+         */
+        $('.bootstrap-datetime').datetimepicker({
+            language: 'zh-CN',
+            format: 'yyyy-mm-dd hh:ii:ss',
+            weekStart: 1,
+            todayBtn: 1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            forceParse: 0,
+            showMeridian: 1,
+            clearBtn: true
+        });
+        /**
+         * 日期选择控件
+         */
+        $('.bootstrap-date').datepicker({
+            language: 'zh-CN',
+            format: 'yyyy-mm-dd',
+            autoclose: 1,
+            todayBtn: 1,
+            clearBtn: true
+        });
 
-				<%--if 	rs_datavip("w_pay_type")="1" or isnull(rs_datavip("w_pay_type")) then--%>
+        $scope.message = '';
+        $scope.userPaymentInfo={};
+        $scope.canAdd = PrivilegeService.hasPrivilege('add');
+        var url = "<c:url value="/mis/ifmanager/apikey/create"/>";
+        if ($routeParams.billCode!= null) {
+            url = "<c:url value="/mis/datavip/bills/getUserPaymentInfo"/>" + "?billCode=" + $routeParams.billCode;
+        }
+        $http.get(url)
+            .success(function (response) {
+                if (response.success) {
+                    $scope.userPaymentInfo = response.data;
+                    $scope.canSave = (PrivilegeService.hasPrivilege('add') && $scope.billsPo.id == null) || PrivilegeService.hasPrivilege('update');
+                }
+                else {
+                    bootbox.alert(response.message);
+                }
+            }).error(function (response) {
+            bootbox.alert(response);
+        });
+        <%--$scope.save = function () {--%>
+            <%--if ($scope.editForm.$valid) {--%>
+                <%--var postUrl = '<c:url value="/mis/ifmanager/apikey/saveForUpdated"/>';--%>
+                <%--if ($routeParams.id == null) {--%>
+                    <%--postUrl = '<c:url value="/mis/ifmanager/apikey/saveForCreated"/>';--%>
+                <%--}--%>
+                <%--$http.post(postUrl, $scope.misApiKeyPo).success(function (data) {--%>
+                    <%--if (data.success) {--%>
+                        <%--$scope.message = "<eidea:label key="base.save.success"/>";--%>
+                        <%--$scope.misApiKeyPo = data.data;--%>
+                    <%--}--%>
+                    <%--else {--%>
+                        <%--$scope.message = data.message;--%>
+                        <%--$scope.errors = data.data;--%>
+                    <%--}--%>
+                <%--}).error(function (data, status, headers, config) {--%>
+                    <%--alert(JSON.stringify(data));--%>
+                <%--});--%>
+            <%--}--%>
+        <%--}--%>
+        <%--$scope.create = function () {--%>
+            <%--$scope.message = "";--%>
+            <%--$scope.misApiKeyPo = {};--%>
+            <%--var url = "<c:url value="/mis/ifmanager/apikey/create"/>";--%>
+            <%--$http.get(url)--%>
+                <%--.success(function (response) {--%>
+                    <%--if (response.success) {--%>
+                        <%--$scope.misApiKeyPo = response.data;--%>
+                        <%--$scope.canSave = (PrivilegeService.hasPrivilege('add') && $scope.misApiKeyPo.id == null) || PrivilegeService.hasPrivilege('update');--%>
+                    <%--}--%>
+                    <%--else {--%>
+                        <%--bootbox.alert(response.message);--%>
+                    <%--}--%>
+                <%--}).error(function (response) {--%>
+                <%--bootbox.alert(response);--%>
+            <%--});--%>
+        <%--}--%>
 
-					<%--if rs_datavip("pay_flag")<>1 then--%>
-
-						<%--response.write"<p><a href='open_service.asp?billsid="& rs_datavip("ids") & "&bigbillcode=" & rs_datavip("big_billcode") & "' target='_black'>开通服务</a></p>"--%>
-
-					<%--end if--%>
-				<%--elseif rs_datavip("pay_flag")=1 and isnull(rs_datavip("end_time")) then--%>
-					<%--'2017.05.24 修改：如果支付成功，但是服务没开通，也显示开通服务的链接--%>
-					<%--response.write"<p><a href='open_service.asp?billsid="& rs_datavip("ids") & "&bigbillcode=" & rs_datavip("big_billcode") & "' target='_black'>开通服务</a></p>"--%>
-				<%--end if--%>
-				<%----%>
-
-
-					<%--'如果支付俄时间<当前的时间-1天的4点则需要财务输入密码--%>
-
-				<%--if rs_datavip("invoice_no_flag")<>1 then--%>
-
-					<%--str_time=date()&" 16:00:00"--%>
-
-					<%--if rs_datavip("pay_updatetime")<dateadd("d",-1,str_time) then		--%>
-
-					<%--para=rs_datavip("ids")--%>
-
-				<%--%>--%>
+    });
 
     app.controller('serviceCtrl',function ($scope,$http,$routeParams) {
         /**
@@ -175,7 +235,20 @@
             todayBtn: 1,
             clearBtn: true
         });
-
+        $scope.billsPo = {};
+        if ($routeParams.id==null){
+            bootbox.alert("aaa");
+        }else {
+            var url = "<c:url value="/mis/datavip/bills/get"/> "+"?id="+$routeParams.id
+        }
+        $http.get(url)
+            .success(function (response) {
+            if(response.success){
+                $scope.billsPo = response.data;
+            }else{
+                bootbox.alert(response.message);
+            }
+        });
     });
     app.controller('invoiceCtrl',function ($scope,$http,$routeParams) {
         /**
@@ -208,7 +281,7 @@
         if($routeParams.id==null){
             bootbox.alert("参数错误！")
         }
-        var url = "<c:url value="/base/bills/get"/> "+"?id="+$routeParams.id
+        var url = "<c:url value="/mis/datavip/bills/get"/> "+"?id="+$routeParams.id
         $http.get(url).success(function (response) {
             if (response.success){
                 $scope.bill = response.data;
@@ -218,7 +291,7 @@
         });
         $scope.addInvoice = function () {
             if ($scope.addInvoiceForm.$valid){
-                var url='<c:url value = "/base/bills/addInvoice"/>'
+                var url='<c:url value = "/mis/datavip/bills/addInvoice"/>'
                 $http.post(url,$scope.bill).success(function (response) {
                     if(response.success){
                         $scope.message="<eidea:label key="base.save.success"/> "

@@ -1,5 +1,6 @@
 package cn.cityre.mis.datavip.service.impl;
 
+import cn.cityre.edi.mis.base.util.DataSourceContextHolder;
 import cn.cityre.mis.datavip.dao.CartbillsMapper;
 import cn.cityre.mis.datavip.entity.CartBills;
 import cn.cityre.mis.datavip.service.CartBillService;
@@ -15,6 +16,9 @@ public class CartBillServiceImpl implements CartBillService{
     private CartbillsMapper cartbillsMapper;
     @Override
     public void updateExistCartBillByBillCode(CartBills cartBills) {
+        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
         cartbillsMapper.updateByBigBillCode(cartBills);
+        DataSourceContextHolder.setDbType("dataSource_core");
+
     }
 }

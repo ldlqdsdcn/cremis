@@ -39,6 +39,7 @@ public class MisProductServiceImpl implements MisProductService {
             List<MisProductPo> misProductPoList = productDao.search(search);
             paginationResult = PaginationResult.pagination(misProductPoList, queryParams.getTotalRecords(), queryParams.getPageNo(), queryParams.getPageSize());
         }
+        DataSourceContextHolder.setDbType("dataSource_core");
         return paginationResult;
     }
 
@@ -46,23 +47,27 @@ public class MisProductServiceImpl implements MisProductService {
     public void updateProduct(MisProductPo misProductPo) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         misProductMapper.updateProduct(misProductPo);
+        DataSourceContextHolder.setDbType("dataSource_core");
     }
     @Override
     public void createProduct(MisProductPo misProductPo){
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         misProductMapper.createProduct(misProductPo);
+        DataSourceContextHolder.setDbType("dataSource_core");
     }
 
     @Override
     public void deleteProducts(String[] productCode) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         productDao.removeByIds(productCode);
+        DataSourceContextHolder.setDbType("dataSource_core");
     }
 
     @Override
     public MisProductPo getExistProduct(String productCode) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         MisProductPo misProductPo = misProductMapper.selectProductByCode(productCode);
+        DataSourceContextHolder.setDbType("dataSource_core");
         return misProductPo;
     }
 
@@ -70,6 +75,7 @@ public class MisProductServiceImpl implements MisProductService {
     public boolean findExistProductByProductCode(String productCode) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         MisProductPo misProductPo = misProductMapper.selectProductByCode(productCode);
+        DataSourceContextHolder.setDbType("dataSource_core");
         if (misProductPo == null) {
             return false;
         } else {

@@ -39,6 +39,7 @@ public class MisPhoneServiceImpl implements MisPhoneService {
             List<MisUserPhonePo> list = misUserPhoneDao.search(search);
             paginationResult = PaginationResult.pagination(list, queryParams.getTotalRecords(), queryParams.getPageNo(), queryParams.getPageSize());
         }
+        DataSourceContextHolder.setDbType("dataSource_core");
         return paginationResult;
     }
 
@@ -46,37 +47,46 @@ public class MisPhoneServiceImpl implements MisPhoneService {
     public List<MisUserPhonePo> getExistPhoneByUid(String unionUid) {
 
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        return misPhoneMapper.selectByUid(unionUid);
+        List<MisUserPhonePo> misUserPhonePos= misPhoneMapper.selectByUid(unionUid);
+        DataSourceContextHolder.setDbType("dataSource_core");
+        return misUserPhonePos;
     }
 
     @Override
     public MisUserPhonePo getExistPhoneById(Integer id) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        return misPhoneMapper.selectById(id);
+        MisUserPhonePo misUserPhonePo =  misPhoneMapper.selectById(id);
+        DataSourceContextHolder.setDbType("dataSource_core");
+        return misUserPhonePo;
     }
 
     @Override
     public void updatePhoneByUid(MisUserPhonePo misUserPhonePo) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         misPhoneMapper.updateByUid(misUserPhonePo);
+        DataSourceContextHolder.setDbType("dataSource_core");
     }
 
     @Override
     public List<MisUserPhonePo> getExistPhoneList() {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        return misPhoneMapper.selectPhoneList();
+        List<MisUserPhonePo> misUserPhonePos= misPhoneMapper.selectPhoneList();
+        DataSourceContextHolder.setDbType("dataSource_core");
+        return misUserPhonePos;
     }
 
     @Override
     public void createPhone(MisUserPhonePo misUserPhonePo) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         misPhoneMapper.createPhone(misUserPhonePo);
+        DataSourceContextHolder.setDbType("dataSource_core");
     }
 
     @Override
     public void updateById(MisUserPhonePo misUserPhonePo) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         misPhoneMapper.updateById(misUserPhonePo);
+        DataSourceContextHolder.setDbType("dataSource_core");
     }
 
     @Override
@@ -85,6 +95,7 @@ public class MisPhoneServiceImpl implements MisPhoneService {
         for (int i = 0; i < ids.length; i++) {
             misPhoneMapper.deleteById(ids[i]);
         }
+        DataSourceContextHolder.setDbType("dataSource_core");
     }
 
     /**
@@ -115,6 +126,7 @@ public class MisPhoneServiceImpl implements MisPhoneService {
                 isExist = false;
             }
         }
+        DataSourceContextHolder.setDbType("dataSource_core");
         return isExist;
     }
 }

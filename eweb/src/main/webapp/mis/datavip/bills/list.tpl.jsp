@@ -128,12 +128,12 @@
                         {{model.dicUserType.userTypeName}}
                     </td>
                     <td>
-                        <a class="btn btn-primary btn-xs" href="#/serviceEdit?id={{model.billCode}}"><eidea:label
-                                key="base.mis.datavip.service.edit"/><%--编辑--%></a>
+                        <a class="btn btn-primary btn-xs" href="#/edit?billCode={{model.billCode}}"><eidea:label
+                                key="Base.mis.datavip.service.edit"/><%--编辑--%></a>
                     </td>
                     <td>
                         <a class="btn btn-primary btn-xs" href="#/invoiceEdit?id={{model.id}}"><eidea:label
-                                key="Base.mis.datavip.invoice.edit"/><%--编辑--%></a>
+                                key="base.mis.datavip.invoice.edit"/><%--编辑--%></a>
                     </td>
                 </tr>
                 </tbody>

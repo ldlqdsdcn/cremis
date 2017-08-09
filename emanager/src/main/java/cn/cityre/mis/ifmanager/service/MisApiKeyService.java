@@ -13,8 +13,11 @@ import java.util.List;
  */
 public interface MisApiKeyService {
 
-    //    v2017_api_key：增改查删（逻辑删）
+//        v2017_api_key：增改查删（逻辑删）
     PaginationResult<MisApiKeyPo> getApiKeyList(Search search, QueryParams queryParams);
+
+//        PaginationResult<MisApiKeyPo> getApiKeyList(List<SearchField> searchFields, QueryParams queryParams);
+
 
     void createApiKey(MisApiKeyPo misApiKeyPo);
 

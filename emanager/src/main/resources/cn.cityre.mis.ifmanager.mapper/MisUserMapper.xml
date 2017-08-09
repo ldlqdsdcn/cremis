@@ -12,7 +12,7 @@
         <result column="userIcon" property="userIcon" jdbcType="VARCHAR"/>
         <result column="passwordSalt" property="passwordSalt" jdbcType="VARCHAR"/>
         <result column="passwordHash" property="passwordHash" jdbcType="VARCHAR"/>
-        <result column="oldPasswordHash" property="oldPasswordSalt" jdbcType="VARCHAR"/>
+        <result column="oldPasswordHash" property="oldPasswordHash" jdbcType="VARCHAR"/>
         <result column="isVerified" property="isVerified" jdbcType="TINYINT"/>
         <result column="isValid" property="isValid" jdbcType="TINYINT"/>
         <result column="accountSecret" property="accountSecret" jdbcType="VARCHAR"/>
@@ -22,6 +22,12 @@
     <sql id="Base_Column">
         id,unionUid,userId,nickName,realName,sex,birthday,userIcon,passwordSalt,passwordHash,oldPasswordHash,isVerified,isValid,accountSecret,createTime,updateTime
     </sql>
+
+    <select id="selectByPage" resultMap="BaseResultMap" >
+        SELECT
+        <include refid="Base_Column"/>
+        from v2017_user
+    </select>
     <!--v2017_user：查，条件：注册时间段、姓名、是否已验证、用户全局唯一ID、用户登录名，暂定这些-->
     <select id="selectByRealName" resultMap="BaseResultMap" parameterType="java.lang.String">
         SELECT

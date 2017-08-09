@@ -9,5 +9,7 @@ public interface UserPaymentInfoHistoryService {
 
     UserPaymentInfoHistory getExistPaymentHistoryByBillCode(String billCode);
 
+    UserPaymentInfoHistory getExistPaymentHistoryByByPrimaryKey(Integer id);
+
     void createPaymentInfoHistory(UserPaymentInfoHistory userPaymentInfoHistory);
 }

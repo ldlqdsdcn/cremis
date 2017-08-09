@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface BillsService {
 
-    PaginationResult<Bills> getBillsListByOthers(QueryParams queryParams);
+    PaginationResult<Bills> getBillsListByOthers(List<SearchField> searchFields,QueryParams queryParams);
 
     void addInvoice(Bills bills);
 

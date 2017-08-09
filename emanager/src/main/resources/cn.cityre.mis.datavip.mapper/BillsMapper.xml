@@ -4,7 +4,7 @@
     <resultMap id="BaseResultMap" type="cn.cityre.mis.datavip.entity.Bills">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="suid" jdbcType="VARCHAR" property="suid"/>
-        <result column="big_billcode" jdbcType="VARCHAR" property="bigBillcode"/>
+        <result column="big_billcode" jdbcType="VARCHAR" property="bigBillCode"/>
         <result column="bill_code" jdbcType="VARCHAR" property="billCode"/>
         <result column="alipay_bill_code" jdbcType="VARCHAR" property="alipayBillCode"/>
         <result column="post_invoice_flag" jdbcType="INTEGER" property="postInvoiceFlag"/>
@@ -74,7 +74,6 @@
     source, pkey, plevel, dist_code, ha_code, pgps, buymonth, haclcode, buygroup, dealtype, 
     contentname, province_code
   </sql>
-
     <select id="selectUserInfoByPage" resultMap="UserPaymentBillsMap">
         SELECT
         userlist.uid,userlist.username,userlist.regtime,userlist.email,userlist.flag,

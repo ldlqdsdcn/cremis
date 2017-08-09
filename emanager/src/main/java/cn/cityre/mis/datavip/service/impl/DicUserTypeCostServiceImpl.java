@@ -1,5 +1,6 @@
 package cn.cityre.mis.datavip.service.impl;
 
+import cn.cityre.edi.mis.base.util.DataSourceContextHolder;
 import cn.cityre.mis.datavip.dao.DicUserTypeCostMapper;
 import cn.cityre.mis.datavip.entity.DicUserTypeCost;
 import cn.cityre.mis.datavip.service.DicUserTypeCostService;
@@ -15,6 +16,10 @@ public class DicUserTypeCostServiceImpl implements DicUserTypeCostService {
     private DicUserTypeCostMapper dicUserTypeCostMapper;
     @Override
     public DicUserTypeCost getExistByUserType(String userType) {
-        return dicUserTypeCostMapper.selectByUserType(userType);
+        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
+        DicUserTypeCost dicUserTypeCost= dicUserTypeCostMapper.selectByUserType(userType);
+        DataSourceContextHolder.setDbType("dataSource_core");
+        return dicUserTypeCost;
+
     }
 }

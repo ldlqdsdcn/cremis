@@ -42,11 +42,12 @@ public class BillsServiceImpl implements BillsService {
     private ModelMapper modelMapper = new ModelMapper();
 
     @Override
-    public PaginationResult<Bills> getBillsListByOthers(QueryParams queryParams) {
+    public PaginationResult<Bills> getBillsListByOthers(List<SearchField> searchFields,QueryParams queryParams) {
         DataSourceContextHolder.setDbType("dataSource_cityreaccount");
-        PagingCriteria pagingCriteria = PagingCriteria.createCriteria(queryParams.getPageSize(), queryParams.getFirstResult(), queryParams.getPageNo());
+        PagingCriteria pagingCriteria = PagingCriteria.createCriteriaWithSearch(queryParams.getFirstResult(), queryParams.getPageSize(), queryParams.getPageNo(),searchFields);
         PageMyBatis<Bills> pageMyBatis = billsMapper.selectDefaultByPage(pagingCriteria);
         PaginationResult<Bills> paginationResult = PaginationResult.pagination(pageMyBatis, (int) pageMyBatis.getTotal(), pagingCriteria.getPageNumber(), pagingCriteria.getDisplaySize());
+        DataSourceContextHolder.setDbType("dataSource_core");
         return paginationResult;
     }
 
@@ -54,11 +55,15 @@ public class BillsServiceImpl implements BillsService {
     public void addInvoice(Bills bills) {
         DataSourceContextHolder.setDbType("dataSource_cityreaccount");
         billsMapper.updateInvoice(bills);
+        DataSourceContextHolder.setDbType("dataSource_core");
     }
 
     @Override
     public Bills getExistBillsById(Integer id) {
-        return billsMapper.selectByPrimaryKey(id);
+        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
+        Bills bills =  billsMapper.selectByPrimaryKey(id);
+        DataSourceContextHolder.setDbType("dataSource_core");
+        return bills;
     }
 
     /**

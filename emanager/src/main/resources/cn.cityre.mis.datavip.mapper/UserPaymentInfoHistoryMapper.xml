@@ -51,16 +51,13 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
-  <insert id="insertSelective" parameterType="cn.cityre.mis.datavip.entity.UserPaymentInfoHistory">
+  <insert id="insertSelective" parameterType="cn.cityre.mis.datavip.entity.UserPaymentInfoHistory" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
     insert into user_payment_info_history
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="suid != null">
         suid,
       </if>
-      <if test="billcode != null">
+      <if test="billCode != null">
         billcode,
       </if>
       <if test="accountName != null">
@@ -105,7 +102,7 @@
       <if test="isource != null">
         isource,
       </if>
-      <if test="plevel != null">
+      <if test="pLevel != null">
         plevel,
       </if>
       <if test="distCode != null">
@@ -114,25 +111,23 @@
       <if test="haCode != null">
         ha_code,
       </if>
-      <if test="pgps != null">
+      <if test="pGps != null">
         pgps,
       </if>
-      <if test="dealtype != null">
+      <if test="dealType != null">
         dealtype,
       </if>
-      <if test="contentname != null">
+      <if test="contentName != null">
         contentname,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
+
       <if test="suid != null">
         #{suid,jdbcType=VARCHAR},
       </if>
-      <if test="billcode != null">
-        #{billcode,jdbcType=VARCHAR},
+      <if test="billCode != null">
+        #{billCode,jdbcType=VARCHAR},
       </if>
       <if test="accountName != null">
         #{accountName,jdbcType=VARCHAR},
@@ -176,8 +171,8 @@
       <if test="isource != null">
         #{isource,jdbcType=VARCHAR},
       </if>
-      <if test="plevel != null">
-        #{plevel,jdbcType=INTEGER},
+      <if test="pLevel != null">
+        #{pLevel,jdbcType=INTEGER},
       </if>
       <if test="distCode != null">
         #{distCode,jdbcType=VARCHAR},
@@ -185,13 +180,13 @@
       <if test="haCode != null">
         #{haCode,jdbcType=VARCHAR},
       </if>
-      <if test="pgps != null">
-        #{pgps,jdbcType=VARCHAR},
+      <if test="pGps != null">
+        #{pGps,jdbcType=VARCHAR},
       </if>
-      <if test="dealtype != null">
-        #{dealtype,jdbcType=INTEGER},
+      <if test="dealType != null">
+        #{dealType,jdbcType=INTEGER},
       </if>
-      <if test="contentname != null">
+      <if test="contentName != null">
         #{contentname,jdbcType=VARCHAR},
       </if>
     </trim>
@@ -202,8 +197,8 @@
       <if test="suid != null">
         suid = #{suid,jdbcType=VARCHAR},
       </if>
-      <if test="billcode != null">
-        billcode = #{billcode,jdbcType=VARCHAR},
+      <if test="billCode != null">
+        billcode = #{billCode,jdbcType=VARCHAR},
       </if>
       <if test="accountName != null">
         account_name = #{accountName,jdbcType=VARCHAR},
@@ -247,8 +242,8 @@
       <if test="isource != null">
         isource = #{isource,jdbcType=VARCHAR},
       </if>
-      <if test="plevel != null">
-        plevel = #{plevel,jdbcType=INTEGER},
+      <if test="pLevel != null">
+        plevel = #{pLevel,jdbcType=INTEGER},
       </if>
       <if test="distCode != null">
         dist_code = #{distCode,jdbcType=VARCHAR},
@@ -256,14 +251,14 @@
       <if test="haCode != null">
         ha_code = #{haCode,jdbcType=VARCHAR},
       </if>
-      <if test="pgps != null">
-        pgps = #{pgps,jdbcType=VARCHAR},
+      <if test="pGps != null">
+        pgps = #{pGps,jdbcType=VARCHAR},
       </if>
-      <if test="dealtype != null">
-        dealtype = #{dealtype,jdbcType=INTEGER},
+      <if test="dealType != null">
+        dealtype = #{dealType,jdbcType=INTEGER},
       </if>
-      <if test="contentname != null">
-        contentname = #{contentname,jdbcType=VARCHAR},
+      <if test="contentName != null">
+        contentname = #{contentName,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

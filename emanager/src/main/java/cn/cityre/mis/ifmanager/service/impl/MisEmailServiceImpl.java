@@ -41,37 +41,37 @@ public class MisEmailServiceImpl implements MisEmailService {
             List<MisUserEmailPo> list = misUserEmailDao.search(search);
             paginationResult = PaginationResult.pagination(list, queryParams.getTotalRecords(), queryParams.getPageNo(), queryParams.getPageSize());
         }
+        DataSourceContextHolder.setDbType("dataSource_core");
         return paginationResult;
     }
 
-//    @Override
-//    public MisUserEmailPo getExistEmailByUid(String unionUid, Byte isVerified, Byte isPrimary) {
-//        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-//        return misEmailMapper.selectById(unionUid, isVerified, isPrimary);
-//    }
 
     @Override
     public void updateEmailByUid(MisUserEmailPo misUserEmailPo) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         misEmailMapper.updateByUid(misUserEmailPo);
+        DataSourceContextHolder.setDbType("dataSource_core");
     }
 
     @Override
     public List<MisUserEmailPo> getEmaliList() {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        return misEmailMapper.selectEmailList();
+        List<MisUserEmailPo> userEmailPos = misEmailMapper.selectEmailList();
+        return userEmailPos;
     }
 
     @Override
     public void createEmail(MisUserEmailPo misUserEmailPo) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         misEmailMapper.createEmail(misUserEmailPo);
+        DataSourceContextHolder.setDbType("dataSource_core");
     }
 
     @Override
     public void updateEmailById(MisUserEmailPo misUserEmailPo) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         misEmailMapper.updateById(misUserEmailPo);
+        DataSourceContextHolder.setDbType("dataSource_core");
     }
 
     @Override
@@ -80,11 +80,15 @@ public class MisEmailServiceImpl implements MisEmailService {
         for (int i = 0; i < ids.length; i++) {
             misEmailMapper.deleteById(ids[i]);
         }
+        DataSourceContextHolder.setDbType("dataSource_core");
     }
 
     @Override
     public MisUserEmailPo getExistUserEmailById(Integer id) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        return misEmailMapper.selectById(id);
+        MisUserEmailPo misUserEmailPo =  misEmailMapper.selectById(id);
+        DataSourceContextHolder.setDbType("dataSource_core");
+        return misUserEmailPo;
+
     }
 }

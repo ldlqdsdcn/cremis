@@ -29,7 +29,7 @@ public class PageMyBatis<E> extends ArrayList<E> {
     /**
      * count resultset.
      */
-    private final long total;
+    private final Integer total;
 
     /**
      * Instantiates a new Page my batis.
@@ -38,7 +38,7 @@ public class PageMyBatis<E> extends ArrayList<E> {
      * @param pageable the pageable
      * @param total    the total
      */
-    public PageMyBatis(Collection<? extends E> content, PagingCriteria pageable, long total) {
+    public PageMyBatis(Collection<? extends E> content, PagingCriteria pageable, Integer total) {
         super(content);
 
         this.content.addAll(content);

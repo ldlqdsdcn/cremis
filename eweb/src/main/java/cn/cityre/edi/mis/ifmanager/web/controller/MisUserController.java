@@ -1,5 +1,6 @@
 package cn.cityre.edi.mis.ifmanager.web.controller;
 
+import cn.cityre.edi.mis.mis.web.util.SearchFieldHelper;
 import cn.cityre.mis.ifmanager.def.SexType;
 import cn.cityre.mis.ifmanager.def.VerifiedType;
 import cn.cityre.mis.ifmanager.entity.MisUserPo;
@@ -47,7 +48,8 @@ public class MisUserController {
     @ResponseBody
     @RequiresPermissions(value = "view")
     public JsonResult<PaginationResult<MisUserPo>> list(HttpSession httpSession , @RequestBody QueryParams queryParams){
-        PaginationResult<MisUserPo> paginationResult = misUserService.getExistUserList(SearchHelper.getSearchParam(URL,httpSession),queryParams);
+//        PaginationResult<MisUserPo> paginationResult = misUserService.getExistUserList(SearchHelper.getSearchParam(URL,httpSession),queryParams);
+        PaginationResult<MisUserPo> paginationResult =misUserService.getExistUserListByMybatis(SearchFieldHelper.getSearchField(URL,httpSession),queryParams);
         return JsonResult.success(paginationResult);
     }
     @RequiresPermissions("view")

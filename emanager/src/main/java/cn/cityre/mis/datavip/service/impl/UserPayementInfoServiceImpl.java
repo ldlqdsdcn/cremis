@@ -1,5 +1,6 @@
 package cn.cityre.mis.datavip.service.impl;
 
+import cn.cityre.edi.mis.base.util.DataSourceContextHolder;
 import cn.cityre.mis.datavip.dao.UserPaymentInfoMapper;
 import cn.cityre.mis.datavip.entity.UserPaymentInfo;
 import cn.cityre.mis.datavip.service.UserPaymentInfoService;
@@ -18,31 +19,44 @@ public class UserPayementInfoServiceImpl implements UserPaymentInfoService {
 
     /**
      * 关闭服务时页面的显示的服务时间
+     *
      * @param billCode
      * @return
      */
     @Override
     public UserPaymentInfo getExistPaymentInfo(String billCode) {
-        return userPaymentInfoMapper.selectByBillCode(billCode);
+        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
+        UserPaymentInfo userPaymentInfo = userPaymentInfoMapper.selectByBillCode(billCode);
+        DataSourceContextHolder.setDbType("dataSource_core");
+        return userPaymentInfo;
     }
 
     /**
      * 关闭服务
+     *
      * @param billCode
      */
     @Override
     public void closeServiceByBillCode(String billCode) {
+        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
         userPaymentInfoMapper.updateByBillCode(billCode);
+        DataSourceContextHolder.setDbType("dataSource_core");
+
     }
 
     @Override
     public List<UserPaymentInfo> getExistPaymentInfoBySuid(String suid) {
-        return userPaymentInfoMapper.selectBySuid(suid);
+        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
+        List<UserPaymentInfo> userPaymentInfos= userPaymentInfoMapper.selectBySuid(suid);
+        DataSourceContextHolder.setDbType("dataSource_core");
+        return userPaymentInfos;
     }
 
     @Override
     public void createUserPaymentInfo(UserPaymentInfo userPaymentInfo) {
+        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
         userPaymentInfoMapper.insertSelective(userPaymentInfo);
+        DataSourceContextHolder.setDbType("dataSource_core");
     }
 
 
