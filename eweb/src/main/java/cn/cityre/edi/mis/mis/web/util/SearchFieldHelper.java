@@ -18,6 +18,7 @@ import java.util.List;
  * Created by cityre on 2017/8/3.
  */
 public class SearchFieldHelper {
+
     private static ApplicationContext applicationContext = SpringContextHolder.getApplicationContext();
 
     public static List<SearchField> getSearchField(String uri, HttpSession httpSession) {
@@ -26,6 +27,7 @@ public class SearchFieldHelper {
         if (searchColumnVos==null){
             return searchFields;
         }
+
         ModelMapper modelMapper = new ModelMapper();
         List<SearchColumnDto> searchColumnDtos = modelMapper.map(searchColumnVos, new TypeToken<List<SearchColumnDto>>() {
         }.getType());

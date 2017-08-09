@@ -11,7 +11,6 @@ import com.dsdl.eidea.core.params.QueryParams;
 import com.dsdl.eidea.core.web.def.WebConst;
 import com.dsdl.eidea.core.web.result.JsonResult;
 import com.dsdl.eidea.core.web.result.def.ErrorCodes;
-import com.dsdl.eidea.core.web.util.SearchHelper;
 import com.dsdl.eidea.core.web.vo.PagingSettingResult;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.mybatis.pagination.dto.datatables.SearchField;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.HttpServletBean;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -45,7 +43,7 @@ public class BillsController {
     @RequestMapping(value = "/showList", method = RequestMethod.GET)
     @RequiresPermissions(value = "view")
     public ModelAndView showList() {
-        ModelAndView modelAndView = new ModelAndView("/mis/datavip/bills/bills");
+        ModelAndView modelAndView = new ModelAndView("mis/datavip/new/vipinfo");
         modelAndView.addObject(WebConst.PAGING_SETTINGS, PagingSettingResult.getDbPaging());
         modelAndView.addObject(WebConst.PAGE_URI, URL);
         return modelAndView;
@@ -89,15 +87,15 @@ public class BillsController {
         return JsonResult.success(bills);
     }
 
-    @RequiresPermissions(value = "view")
-    @RequestMapping(value = "/showUserInfo", method = RequestMethod.GET)
-    @ResponseBody
-    public JsonResult<PaginationResult<Bills>> showUserInfo(HttpSession httpSession, QueryParams queryParams) {
-        queryParams = new QueryParams();
-        List<SearchField> searchFields = new ArrayList<SearchField>();
-        PaginationResult<Bills> paginationResult = billsService.getUserInfoList(searchFields, queryParams);
-        return JsonResult.success(paginationResult);
-    }
+//    @RequiresPermissions(value = "view")
+//    @RequestMapping(value = "/showUserInfo", method = RequestMethod.GET)
+//    @ResponseBody
+//    public JsonResult<PaginationResult<Bills>> showUserInfo(HttpSession httpSession, QueryParams queryParams) {
+//        queryParams = new QueryParams();
+//        List<SearchField> searchFields = new ArrayList<SearchField>();
+//        PaginationResult<Bills> paginationResult = billsService.getUserInfoList(searchFields, queryParams);
+//        return JsonResult.success(paginationResult);
+//    }
 
     @RequestMapping(value = "/getUserPaymentInfo", method = RequestMethod.GET)
     @RequiresPermissions("view")

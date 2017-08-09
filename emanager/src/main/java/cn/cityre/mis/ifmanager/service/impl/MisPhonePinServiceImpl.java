@@ -4,6 +4,7 @@ import cn.cityre.edi.mis.base.util.DataSourceContextHolder;
 import cn.cityre.edi.mis.base.util.DataSourceEnum;
 import cn.cityre.mis.ifmanager.dao.MisPhonePinMapper;
 import cn.cityre.mis.ifmanager.entity.MisPhonePinPo;
+import cn.cityre.mis.ifmanager.entity.MisUserPhonePo;
 import cn.cityre.mis.ifmanager.service.MisPhonePinService;
 import com.dsdl.eidea.core.dao.CommonDao;
 import com.dsdl.eidea.core.dto.PaginationResult;
@@ -11,6 +12,9 @@ import com.dsdl.eidea.core.params.QueryParams;
 import com.dsdl.eidea.core.spring.annotation.DataAccess;
 import com.googlecode.genericdao.search.Search;
 import com.googlecode.genericdao.search.SearchResult;
+import org.mybatis.pagination.dto.PageMyBatis;
+import org.mybatis.pagination.dto.datatables.PagingCriteria;
+import org.mybatis.pagination.dto.datatables.SearchField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +29,16 @@ public class MisPhonePinServiceImpl implements MisPhonePinService {
     private MisPhonePinMapper misPhonePinMapper;
     @DataAccess(entity = MisPhonePinPo.class)
     private CommonDao<MisPhonePinPo, Integer> misPhonePinDao;
+
+    @Override
+    public PaginationResult<MisPhonePinPo> getMisPhonePinListMybatis(List<SearchField> search, QueryParams queryParams) {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
+        PagingCriteria pagingCriteria = PagingCriteria.createCriteriaWithSearch(queryParams.getFirstResult(),queryParams.getPageSize(),queryParams.getPageNo(),search);
+        PageMyBatis<MisPhonePinPo> pageMyBatis =misPhonePinMapper.selectByPage(pagingCriteria);
+        PaginationResult<MisPhonePinPo>  paginationResult = PaginationResult.pagination(pageMyBatis,(int)pageMyBatis.getTotal(),queryParams.getPageNo(),queryParams.getPageSize());
+        DataSourceContextHolder.setDbType("dataSource_core");
+        return paginationResult;
+    }
 
     @Override
     public PaginationResult<MisPhonePinPo> getMisPhonePinList(Search search, QueryParams queryParams) {

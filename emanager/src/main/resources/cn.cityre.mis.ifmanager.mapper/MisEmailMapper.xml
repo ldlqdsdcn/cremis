@@ -16,6 +16,13 @@
     <sql id="Base_Column">
         unionUid,address,isVerified,isPrimary,pinToken,expireTime,createTime,updateTime
     </sql>
+
+    <select id="selectByPage" resultMap="BaseResultType">
+        SELECT id,
+        <include refid="Base_Column"/>
+        FROM v2017_user_email
+    </select>
+
     <select id="selectById" resultMap="BaseResultType" parameterType="java.lang.Integer">
         select id,
         <include refid="Base_Column"/>

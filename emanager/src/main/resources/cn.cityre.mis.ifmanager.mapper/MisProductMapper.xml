@@ -13,6 +13,12 @@
         productCode,productName,platform,createTime,updateTime
     </sql>
 
+    <select id="selectByPage" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column"/>
+        FROM v2017_products
+    </select>
+
     <select id="selectAllProduct" resultMap="BaseResultMap" >
         SELECT
          <include refid="Base_Column"/>

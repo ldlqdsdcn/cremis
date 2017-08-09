@@ -5,7 +5,7 @@
         <ol class="breadcrumb">
             <li><a href="javascript:;"><i class="icon icon-tasks"></i><eidea:label key="base.phone.title"/></a></li>
         </ol>
-        <a href="#/edit" class="btn  btn-primary btn-sm" ng-show="canAdd"><eidea:label key="common.button.create"/></a>
+        <%--<a href="#/edit" class="btn  btn-primary btn-sm" ng-show="canAdd"><eidea:label key="common.button.create"/></a>--%>
         <button type="button" class="btn  btn-primary btn-sm" id="search_but" data-toggle="modal"
                 data-target="#searchModal"><eidea:label key="common.button.search"/></button>
         <%--<button type="button" class="btn  btn-primary btn-sm" ng-disabled="!canDelete()"--%>
@@ -25,7 +25,7 @@
                     <th><%--isPrimary--%><eidea:label key="base.v2017.useremail.label.isPrimary"/></th>
                     <th><%--createTime--%><eidea:label key="base.product.label.createTime"/></th>
                     <th><%--updateTime--%><eidea:label key="base.product.label.updateTime"/></th>
-                    <th><%--编辑--%><eidea:label key="common.button.edit"/></th>
+                    <%--<th>&lt;%&ndash;编辑&ndash;%&gt;<eidea:label key="common.button.edit"/></th>--%>
                 </tr>
                 </thead>
                 <tbody>
@@ -53,10 +53,10 @@
                     <td>
                         {{model.updateTime|date:"yyyy-MM-dd HH:mm:ss"}}
                     </td>
-                    <td>
+                    <%--<td>
                         <a class="btn btn-primary btn-xs" href="#/edit?id={{model.id}}"><eidea:label
-                                key="common.button.edit"/><%--编辑--%></a>
-                    </td>
+                                key="common.button.edit"/>&lt;%&ndash;编辑&ndash;%&gt;</a>
+                    </td>--%>
                 </tr>
                 </tbody>
             </table>

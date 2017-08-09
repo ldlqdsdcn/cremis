@@ -4,6 +4,7 @@ import cn.cityre.mis.ifmanager.entity.MisUserPhonePo;
 import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.QueryParams;
 import com.googlecode.genericdao.search.Search;
+import org.mybatis.pagination.dto.datatables.SearchField;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * Created by cityre on 2017/7/19.
  */
 public interface MisPhoneService {
+    PaginationResult<MisUserPhonePo> getUserPhoneListByMyBatis(List<SearchField> searchFields, QueryParams queryParams);
 
     PaginationResult<MisUserPhonePo> getUserPhoneList(Search search, QueryParams queryParams);
 

@@ -13,7 +13,7 @@ public interface BillsMapper {
     //asp中default查询方法
     PageMyBatis<Bills> selectDefaultByPage(PagingCriteria pagingCriteria);
     //数据会员查询的方法,new/service.asp
-    PageMyBatis<Bills> selectUserInfoByPage(PagingCriteria pagingCriteria);
+//    PageMyBatis<Bills> selectUserInfoByPage(PagingCriteria pagingCriteria);
 //    登记发票
     void updateInvoice(Bills bills);
 

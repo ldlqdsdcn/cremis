@@ -22,5 +22,5 @@ public interface BillsService {
 
     void openService(Bills bills) throws ParseException;
 
-    PaginationResult<Bills> getUserInfoList(List<SearchField> searchFields,QueryParams queryParams);
+//    PaginationResult<Bills> getUserInfoList(List<SearchField> searchFields,QueryParams queryParams);
 }

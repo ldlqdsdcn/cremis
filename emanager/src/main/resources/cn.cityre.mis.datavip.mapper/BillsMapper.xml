@@ -74,19 +74,6 @@
     source, pkey, plevel, dist_code, ha_code, pgps, buymonth, haclcode, buygroup, dealtype, 
     contentname, province_code
   </sql>
-    <select id="selectUserInfoByPage" resultMap="UserPaymentBillsMap">
-        SELECT
-        userlist.uid,userlist.username,userlist.regtime,userlist.email,userlist.flag,
-        dic_user_type.user_type_name,dic_user_type.note,
-        bills.bill_code,bills.product_cost,bills.city_code,bills.plevel,bills.contentname,bills.pgps,bills.dealtype,bills.invoice_title,
-        user_payment_info.pay_amount,user_payment_info.start_time,user_payment_info.end_time
-        FROM bills
-        INNER JOIN userlist ON userlist.suid = bills.suid
-        INNER JOIN dic_user_type ON dic_user_type.user_type_code = userlist.user_type AND dic_user_type.type IN ('dm','creprice','fjgj')
-        LEFT JOIN user_payment_info ON user_payment_info.billcode = bills.bill_code
-    </select>
-
-
     <!--Mybatis联合查询-->
     <select id="selectDefaultByPage" resultMap="UserPaymentBillsMap">
    SELECT
@@ -101,7 +88,6 @@
    inner join userlist on  userlist.suid=bills.suid
    left join dic_user_type on userlist.user_type=dic_user_type.user_type_code
   </select>
-
     <!--登记发票-->
     <update id="updateInvoice" parameterType="cn.cityre.mis.datavip.entity.Bills">
         UPDATE bills

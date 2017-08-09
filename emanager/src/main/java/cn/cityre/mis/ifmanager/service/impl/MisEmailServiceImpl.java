@@ -11,6 +11,9 @@ import com.dsdl.eidea.core.params.QueryParams;
 import com.dsdl.eidea.core.spring.annotation.DataAccess;
 import com.googlecode.genericdao.search.Search;
 import com.googlecode.genericdao.search.SearchResult;
+import org.mybatis.pagination.dto.PageMyBatis;
+import org.mybatis.pagination.dto.datatables.PagingCriteria;
+import org.mybatis.pagination.dto.datatables.SearchField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +30,16 @@ public class MisEmailServiceImpl implements MisEmailService {
     //hibernateDao
     @DataAccess(entity = MisUserEmailPo.class)
     private CommonDao<MisUserEmailPo, Integer> misUserEmailDao;
+
+    @Override
+    public PaginationResult<MisUserEmailPo> getUserEmailListByMybatis(List<SearchField> searchFields, QueryParams queryParams) {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
+        PagingCriteria pagingCriteria = PagingCriteria.createCriteriaWithSearch(queryParams.getFirstResult(),queryParams.getPageSize(),queryParams.getPageNo(),searchFields);
+        PageMyBatis<MisUserEmailPo> pageMyBatis = misEmailMapper.selectByPage(pagingCriteria);
+        PaginationResult<MisUserEmailPo> paginationResult = PaginationResult.pagination(pageMyBatis,(int)pageMyBatis.getTotal(),queryParams.getPageNo(),queryParams.getPageSize());
+        DataSourceContextHolder.setDbType("dataSource_core");
+        return paginationResult;
+    }
 
     @Override
     public PaginationResult<MisUserEmailPo> getUserEmailList(Search search, QueryParams queryParams) {

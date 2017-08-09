@@ -49,15 +49,15 @@ public class MisApiKeyServiceImpl implements MisApiKeyService {
         return paginationResult;
     }
 
-//    @Override
-//    public PaginationResult<MisApiKeyPo> getApiKeyList(List<SearchField> searchFields, QueryParams queryParams) {
-//        DataSourceContextHolder.setDbType("dataSource_account");
-//        PagingCriteria pagingCriteria = PagingCriteria.createCriteriaWithSearch(queryParams.getFirstResult(),queryParams.getPageSize(),queryParams.getPageNo(),searchFields);
-//        PageMyBatis<MisApiKeyPo> pageMyBatis = misApiKeyMapper.selectByPage(pagingCriteria);
-//        PaginationResult<MisApiKeyPo> poPaginationResult = PaginationResult.pagination(pageMyBatis,(int)pageMyBatis.getTotal(),queryParams.getPageNo(),queryParams.getPageSize());
-//        DataSourceContextHolder.setDbType("dataSource_core");
-//        return poPaginationResult;
-//    }
+    @Override
+    public PaginationResult<MisApiKeyPo> getApiKeyListByMybatis(List<SearchField> searchFields, QueryParams queryParams) {
+        DataSourceContextHolder.setDbType("dataSource_account");
+        PagingCriteria pagingCriteria = PagingCriteria.createCriteriaWithSearch(queryParams.getFirstResult(),queryParams.getPageSize(),queryParams.getPageNo(),searchFields);
+        PageMyBatis<MisApiKeyPo> pageMyBatis = misApiKeyMapper.selectByPage(pagingCriteria);
+        PaginationResult<MisApiKeyPo> poPaginationResult = PaginationResult.pagination(pageMyBatis,(int)pageMyBatis.getTotal(),queryParams.getPageNo(),queryParams.getPageSize());
+        DataSourceContextHolder.setDbType("dataSource_core");
+        return poPaginationResult;
+    }
 
     @Override
     public void createApiKey(MisApiKeyPo misApiKeyPo) {

@@ -1,5 +1,6 @@
 package cn.cityre.edi.mis.ifmanager.web.controller;
 
+import cn.cityre.edi.mis.mis.web.util.SearchFieldHelper;
 import cn.cityre.mis.ifmanager.entity.MisUserEmailPo;
 import cn.cityre.mis.ifmanager.service.MisEmailService;
 import com.dsdl.eidea.base.web.vo.UserResource;
@@ -8,10 +9,9 @@ import com.dsdl.eidea.core.params.DeleteParams;
 import com.dsdl.eidea.core.params.QueryParams;
 import com.dsdl.eidea.core.web.def.WebConst;
 import com.dsdl.eidea.core.web.result.JsonResult;
-import com.dsdl.eidea.core.web.util.SearchHelper;
 import com.dsdl.eidea.core.web.vo.PagingSettingResult;
-import com.googlecode.genericdao.search.Search;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.mybatis.pagination.dto.datatables.SearchField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by cityre on 2017/7/12.
@@ -45,8 +46,8 @@ public class MisUserEmailController {
     @ResponseBody
     @RequestMapping(value = "/list",method = RequestMethod.POST)
     public JsonResult<PaginationResult<MisUserEmailPo>> list(HttpSession httpSession, @RequestBody QueryParams queryParams){
-        Search search = SearchHelper.getSearchParam(URL,httpSession);
-        PaginationResult<MisUserEmailPo> paginationResult = misEmailService.getUserEmailList(search,queryParams);
+        List<SearchField> search = SearchFieldHelper.getSearchField(URL,httpSession);
+        PaginationResult<MisUserEmailPo> paginationResult = misEmailService.getUserEmailListByMybatis(search,queryParams);
         return JsonResult.success(paginationResult);
     }
     @RequestMapping(value = "/get",method = RequestMethod.GET)

@@ -1,14 +1,11 @@
-<%--
-  Created by cityre.
-  Date: 2017-06-28 15:50:20
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/inc/taglib.jsp" %>
 <html>
 <head>
-    <title><%--MisUser--%><eidea:label key="mis.user.title"/></title>
+    <title>会员信息</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <%@include file="/inc/inc_ang_js_css.jsp" %>
+    <%@include file="/common/common_header.jsp" %>
 </head>
 <body>
 <div ng-app='myApp' ng-view class="content"></div>
@@ -16,25 +13,27 @@
     <jsp:param name="uri" value="${uri}"/>
 </jsp:include>
 </body>
+
 <script type="text/javascript">
-    var app = angular.module('myApp', ['ngRoute', 'ui.bootstrap', 'jcs-autoValidate'])
+    var app = angular.module('myApp', ['ngFileUpload','ngRoute', 'ui.bootstrap', 'jcs-autoValidate'])
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider
-                .when('/list', {templateUrl: '<c:url value="/mis/ifmanager/v2017User/list.tpl.jsp"/>'})
-                .when('/edit', {templateUrl: '<c:url value="/mis/ifmanager/v2017User/edit.tpl.jsp"/>'})
+                .when('/list', {templateUrl: '<c:url value="/mis/datavip/new/list.tpl.jsp"/>'})
+                .when('/edit', {templateUrl: '<c:url value="/base/directory/edit.tpl.jsp"/>'})
                 .otherwise({redirectTo: '/list'});
         }]);
-    app.controller('listCtrl', function ($scope, $rootScope, $http) {
+    app.controller('listCtrl', function ($rootScope,$scope,$http,$window) {
         $scope.modelList = [];
         $scope.delFlag = false;
-        $scope.isLoading = true;
-        $scope.canDel = PrivilegeService.hasPrivilege('delete');
-        $scope.canAdd = PrivilegeService.hasPrivilege('add');
+        $scope.isLoading=true;
+        $scope.canDel=PrivilegeService.hasPrivilege('delete');
+        $scope.canAdd=PrivilegeService.hasPrivilege('add');
         $scope.updateList = function (result) {
             $scope.modelList = result.data;
             $scope.queryParams.totalRecords = result.totalRecords;
             $scope.queryParams.init = false;
         };
+
         $scope.selectAll = function () {
             for (var i = 0; i < $scope.modelList.length; i++) {
                 $scope.modelList[i].delFlag = $scope.delFlag;
@@ -49,7 +48,7 @@
             return false;
         }
         $scope.pageChanged = function () {
-            $http.post("<c:url value="/mis/ifmanager/v2017User/list"/>", $scope.queryParams)
+            $http.post("<c:url value="/mis/datavip/new/list"/>", $scope.queryParams)
                 .success(function (response) {
                     $scope.isLoading = false;
                     if (response.success) {
@@ -85,7 +84,7 @@
                         }
                         $scope.queryParams.init = true;
                         var param = {"queryParams": $scope.queryParams, "ids": ids};
-                        $http.post("<c:url value="/mis/ifmanager/v2017User/deletes"/>", param).success(function (data) {
+                        $http.post("<c:url value="/base/directory/deletes"/>", param).success(function (data) {
                             if (data.success) {
                                 $scope.updateList(data.data);
                                 bootbox.alert("<eidea:message key="module.deleted.success"/>");
@@ -97,8 +96,6 @@
                 }
             });
         };
-
-
 //可现实分页item数量
         $scope.maxSize =${pagingSettingResult.pagingButtonSize};
         if ($rootScope.listQueryParams != null) {
@@ -114,100 +111,60 @@
             };
             $rootScope.listQueryParams = $scope.queryParams;
         }
-        $scope.pageChanged();
-    });
-    app.controller('editCtrl', function ($scope, $http, $routeParams) {
-        /**
-         * 日期时间选择控件
-         * bootstrap-datetime 24小时时间是hh
-         */
-        $('.bootstrap-datetime').datetimepicker({
-            language: 'zh-CN',
-            format: 'yyyy-mm-dd hh:ii:ss',
-            weekStart: 1,
-            todayBtn: 1,
-            autoclose: 1,
-            todayHighlight: 1,
-            startView: 2,
-            forceParse: 0,
-            showMeridian: 1,
-            clearBtn: true
-        });
-        /**
-         * 日期选择控件
-         */
-        $('.bootstrap-date').datepicker({
-            language: 'zh-CN',
-            format: 'yyyy-mm-dd',
-            autoclose: 1,
-            todayBtn: 1,
-            clearBtn: true
-        });
 
+        $scope.pageChanged();
+
+        buttonHeader.listInit($scope,$window);
+    });
+    app.controller('editCtrl', function ($routeParams,$scope, $http,$window,$timeout, Upload) {
         $scope.message = '';
-        $scope.misUserPo = {};
-        $scope.canAdd = PrivilegeService.hasPrivilege('add');
-        $http.get("<c:url value="/mis/ifmanager/v2017User/getVerifiedType"/> ").success(function (response) {
-            if (response.success){
-                var verifiedType= $.parseJSON(response.data);
-                $scope.verifiedTypeList = verifiedType.verifiedTypeList;
-            }else {
-                bootbox.alert(response.message);
-            }
-        });
-        $http.get("<c:url value="/mis/ifmanager/v2017User/getSexType"/> ").success(function (response) {
-            if (response.success){
-                var sexType= $.parseJSON(response.data);
-                $scope.sexTypeList = sexType.sexTypeList;
-            }else {
-                bootbox.alert(response.message);
-            }
-        });
-        var url = "<c:url value="/mis/ifmanager/v2017User/create"/>";
+        $scope.directoryBo = {};
+        $scope.canAdd=PrivilegeService.hasPrivilege('add');
+        $scope.canSave=PrivilegeService.hasPrivilege('update');
         if ($routeParams.id != null) {
-            url = "<c:url value="/mis/ifmanager/v2017User/get"/>" + "?id=" + $routeParams.id;
+            url = "<c:url value="/base/directory/get"/>" + "?id=" + $routeParams.id;
+            $http.get(url)
+                .success(function (response) {
+                    if (response.success) {
+                        $scope.directoryBo = response.data;
+                        $scope.tableId=$scope.directoryBo.id;
+                        $scope.canSave=(PrivilegeService.hasPrivilege('add')&&$scope.directoryBo.id==null)||PrivilegeService.hasPrivilege('update');
+                    }
+                    else {
+                        bootbox.alert(response.message);
+                    }
+                }).error(function (response) {
+                bootbox.alert(response);
+            });
         }
-        $http.get(url)
-            .success(function (response) {
-                if (response.success) {
-                    $scope.misUserPo = response.data;
-                    $scope.canSave = (PrivilegeService.hasPrivilege('add') && $scope.misUserPo.id == null) || PrivilegeService.hasPrivilege('update');
-                }
-                else {
-                    bootbox.alert(response.message);
-                }
-            }).error(function (response) {
-            bootbox.alert(response);
-        });
         $scope.save = function () {
+            $scope.message="";
             if ($scope.editForm.$valid) {
-                var postUrl = '<c:url value="/mis/ifmanager/v2017User/saveForUpdated"/>';
-                if ($scope.misUserPo.id == null) {
-                    postUrl = '<c:url value="/mis/ifmanager/v2017User/saveForCreated"/>';
+                var postUrl = '<c:url value="/base/directory/saveForUpdated"/>';
+                if ($scope.directoryBo.id==null) {
+                    postUrl = '<c:url value="/base/directory/saveForCreated"/>';
                 }
-                $http.post(postUrl, $scope.misUserPo).success(function (data) {
+
+                $http.post(postUrl, $scope.directoryBo).success(function (data) {
                     if (data.success) {
                         $scope.message = "<eidea:label key="base.save.success"/>";
-                        $scope.misUserPo = data.data;
+                        //bootbox.alert("保存成功");
+                        $scope.directoryBo = data.data;
                     }
                     else {
                         $scope.message = data.message;
-                        $scope.errors = data.data;
                     }
-                }).error(function (data, status, headers, config) {
-                    alert(JSON.stringify(data));
                 });
             }
         }
         $scope.create = function () {
             $scope.message = "";
-            $scope.misUserPo = {};
-            var url = "<c:url value="/mis/ifmanager/v2017User/create"/>";
+            $scope.directoryBo = {};
+            var url = "<c:url value="/base/directory/create"/>";
             $http.get(url)
                 .success(function (response) {
                     if (response.success) {
-                        $scope.misUserPo = response.data;
-                        $scope.canSave = (PrivilegeService.hasPrivilege('add') && $scope.misUserPo.id == null) || PrivilegeService.hasPrivilege('update');
+                        $scope.directoryBo = response.data;
                     }
                     else {
                         bootbox.alert(response.message);
@@ -217,6 +174,7 @@
             });
         }
 
+        buttonHeader.editInit($scope,$http,$window,$timeout, Upload,"/base");
     });
     app.run([
         'bootstrap3ElementModifier',

@@ -32,6 +32,24 @@
     <result column="nickname" jdbcType="VARCHAR" property="nickName" />
     <result column="autoflag" jdbcType="INTEGER" property="autoFlag" />
   </resultMap>
+  <resultMap id="UserListInfoMap" type="cn.cityre.mis.datavip.entity.UserList" extends="BaseResultMap">
+    <result property="bills.billCode" column="bill_code" jdbcType="VARCHAR"/>
+    <result property="bills.productCost" column="product_cost" jdbcType="VARCHAR"/>
+    <result property="bills.cityCode" column="city_code" jdbcType="VARCHAR"/>
+    <result property="bills.pLevel" column="plevel" jdbcType="VARCHAR"/>
+    <result property="bills.contentName" column="contentname" jdbcType="VARCHAR"/>
+    <result property="bills.pgps" column="pgps" jdbcType="VARCHAR"/>
+    <result property="bills.dealType" column="dealtype" jdbcType="VARCHAR"/>
+    <result property="bills.payFlag" column="pay_flag" jdbcType="VARCHAR"/>
+    <result property="bills.invoiceTitle" column="invoice_title" jdbcType="VARCHAR"/>
+    <result property="dicUserType.userTypeName" column="user_type_name" jdbcType="VARCHAR"/>
+    <result property="dicUserType.note" column="note" jdbcType="VARCHAR"/>
+    <result property="userPaymentInfo.payAmount" column="pay_amount" jdbcType="VARCHAR"/>
+    <result property="userPaymentInfo.startTime" column="start_time" jdbcType="TIMESTAMP"/>
+    <result property="userPaymentInfo.endTime" column="end_time" jdbcType="TIMESTAMP"/>
+  </resultMap>
+
+
   <sql id="Base_Column_List">
     id, suid, uid, pwd, username, sex, regtime, updateuid, updatetime, email, user_type, 
     pay_user, pay_type, pay_tel, pay_remark, remark, usource, flag, checkuid, checktime, 
@@ -40,7 +58,17 @@
   <!--sql="select  uid,min(regtime) as regtime from userlist inner join dic_user_type on  dic_user_type.user_type_code=userlist.user_type where dic_user_type.type in ('dm','creprice') group by uid  having 1=1  "-->
 
 
-
+  <select id="selectUserInfoByPage" resultMap="UserListInfoMap">
+    SELECT
+    userlist.uid,userlist.username,userlist.regtime,userlist.email,userlist.flag,userlist.pay_tel,
+    dic_user_type.user_type_name,dic_user_type.note,
+    bills.bill_code,bills.product_cost,bills.city_code,bills.plevel,bills.contentname,bills.pgps,bills.dealtype,bills.invoice_title,bills.pay_flag,
+    user_payment_info.pay_amount,user_payment_info.start_time,user_payment_info.end_time
+    FROM userlist
+    INNER JOIN bills ON bills.suid = userlist.suid
+    INNER JOIN dic_user_type ON dic_user_type.user_type_code = userlist.user_type AND dic_user_type.type IN ('dm','creprice','fjgj')
+    LEFT JOIN user_payment_info ON user_payment_info.billcode = bills.bill_code
+  </select>
   <!--//数据会员查询-->
   <select id="selectBypage" resultMap="BaseResultMap">
     SELECT uid,min(regtime) AS  regtime from userlist

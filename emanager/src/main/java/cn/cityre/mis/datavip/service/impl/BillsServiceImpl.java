@@ -143,14 +143,14 @@ public class BillsServiceImpl implements BillsService {
      * @param queryParams
      * @return
      */
-    @Override
-    public PaginationResult<Bills> getUserInfoList(List<SearchField> searchFields,QueryParams queryParams) {
-        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
-        PagingCriteria pagingCriteria = PagingCriteria.createCriteriaWithSearch(queryParams.getFirstResult(),queryParams.getPageSize(),queryParams.getPageNo(),searchFields);
-        PageMyBatis<Bills> pageMyBatis = billsMapper.selectUserInfoByPage(pagingCriteria);
-        PaginationResult<Bills> paginationResult = PaginationResult.pagination(pageMyBatis,(int)pageMyBatis.getTotal(),queryParams.getPageNo(),queryParams.getPageSize());
-        DataSourceContextHolder.setDbType("dataSource_core");
-        return paginationResult;
-    }
+//    @Override
+//    public PaginationResult<Bills> getUserInfoList(List<SearchField> searchFields,QueryParams queryParams) {
+//        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
+//        PagingCriteria pagingCriteria = PagingCriteria.createCriteriaWithSearch(queryParams.getFirstResult(),queryParams.getPageSize(),queryParams.getPageNo(),searchFields);
+//        PageMyBatis<Bills> pageMyBatis = billsMapper.selectUserInfoByPage(pagingCriteria);
+//        PaginationResult<Bills> paginationResult = PaginationResult.pagination(pageMyBatis,(int)pageMyBatis.getTotal(),queryParams.getPageNo(),queryParams.getPageSize());
+//        DataSourceContextHolder.setDbType("dataSource_core");
+//        return paginationResult;
+//    }
 }
 

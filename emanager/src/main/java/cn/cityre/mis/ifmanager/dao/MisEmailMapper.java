@@ -1,6 +1,8 @@
 package cn.cityre.mis.ifmanager.dao;
 
 import cn.cityre.mis.ifmanager.entity.MisUserEmailPo;
+import org.mybatis.pagination.dto.PageMyBatis;
+import org.mybatis.pagination.dto.datatables.PagingCriteria;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -10,6 +12,7 @@ import java.util.List;
  */
 @Repository
 public interface MisEmailMapper {
+    PageMyBatis<MisUserEmailPo> selectByPage(PagingCriteria pagingCriteria);
 
     void updateByUid(MisUserEmailPo misUserEmailPo);
 

@@ -1,6 +1,8 @@
 package cn.cityre.mis.ifmanager.dao;
 
 import cn.cityre.mis.ifmanager.entity.MisPhonePinPo;
+import org.mybatis.pagination.dto.PageMyBatis;
+import org.mybatis.pagination.dto.datatables.PagingCriteria;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -10,6 +12,7 @@ import java.util.List;
  */
 @Repository
 public interface MisPhonePinMapper {
+    PageMyBatis<MisPhonePinPo> selectByPage(PagingCriteria pagingCriteria);
 
     List<MisPhonePinPo> selectByPhone(String phone);
 

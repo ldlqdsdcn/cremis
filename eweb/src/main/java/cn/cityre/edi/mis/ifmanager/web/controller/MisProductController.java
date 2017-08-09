@@ -1,5 +1,6 @@
 package cn.cityre.edi.mis.ifmanager.web.controller;
 
+import cn.cityre.edi.mis.mis.web.util.SearchFieldHelper;
 import cn.cityre.mis.ifmanager.def.PlatformType;
 import cn.cityre.mis.ifmanager.entity.MisProductPo;
 import cn.cityre.mis.ifmanager.service.MisProductService;
@@ -16,6 +17,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.googlecode.genericdao.search.Search;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.mybatis.pagination.dto.datatables.SearchField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by cityre on 2017/7/11.
@@ -49,8 +52,8 @@ public class MisProductController {
     @RequestMapping(value = "/list",method = RequestMethod.POST)
     @ResponseBody
     public JsonResult<PaginationResult<MisProductPo>> list(HttpSession httpSession, @RequestBody QueryParams queryParams){
-        Search search = SearchHelper.getSearchParam(URL,httpSession);
-        PaginationResult<MisProductPo> paginationResult = misProductService.getProductList(search,queryParams);
+        List<SearchField> search = SearchFieldHelper.getSearchField(URL,httpSession);
+        PaginationResult<MisProductPo> paginationResult = misProductService.getProductListByMybatis(search,queryParams);
         return JsonResult.success(paginationResult);
     }
     @ResponseBody

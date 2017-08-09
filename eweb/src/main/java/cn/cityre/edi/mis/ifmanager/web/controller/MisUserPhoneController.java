@@ -1,5 +1,6 @@
 package cn.cityre.edi.mis.ifmanager.web.controller;
 
+import cn.cityre.edi.mis.mis.web.util.SearchFieldHelper;
 import cn.cityre.mis.ifmanager.entity.MisUserPhonePo;
 import cn.cityre.mis.ifmanager.service.MisPhoneService;
 import com.dsdl.eidea.base.web.vo.UserResource;
@@ -13,6 +14,7 @@ import com.dsdl.eidea.core.web.util.SearchHelper;
 import com.dsdl.eidea.core.web.vo.PagingSettingResult;
 import com.googlecode.genericdao.search.Search;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.mybatis.pagination.dto.datatables.SearchField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by cityre on 2017/7/12.
@@ -46,8 +49,8 @@ public class MisUserPhoneController {
     @RequiresPermissions("view")
     @ResponseBody
     public JsonResult<PaginationResult<MisUserPhonePo>> list(HttpSession httpSession, @RequestBody QueryParams queryParams){
-        Search search = SearchHelper.getSearchParam(URL,httpSession);
-        PaginationResult<MisUserPhonePo> paginationResult = misPhoneService.getUserPhoneList(search,queryParams);
+        List<SearchField> search = SearchFieldHelper.getSearchField(URL,httpSession);
+        PaginationResult<MisUserPhonePo> paginationResult = misPhoneService.getUserPhoneListByMyBatis(search,queryParams);
         return JsonResult.success(paginationResult);
     }
     @ResponseBody

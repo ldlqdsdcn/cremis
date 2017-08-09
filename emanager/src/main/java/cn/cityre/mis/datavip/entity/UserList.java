@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.Date;
 
 /**
@@ -97,4 +98,13 @@ public class UserList implements java.io.Serializable {
 //    自动注册标识：1=自注册，0=正 常注册
     @Column(name = "autoflag",length = 1)
     private Integer autoFlag;
+
+    @Transient
+    private Bills bills;
+
+    @Transient
+    private DicUserType dicUserType;
+
+    @Transient
+    private UserPaymentInfo userPaymentInfo;
 }

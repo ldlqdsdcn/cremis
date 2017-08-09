@@ -1,5 +1,6 @@
 package cn.cityre.edi.mis.ifmanager.web.controller;
 
+import cn.cityre.edi.mis.mis.web.util.SearchFieldHelper;
 import cn.cityre.mis.ifmanager.def.ActionType;
 import cn.cityre.mis.ifmanager.entity.MisPhonePinPo;
 import cn.cityre.mis.ifmanager.service.MisPhonePinService;
@@ -15,6 +16,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.googlecode.genericdao.search.Search;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.mybatis.pagination.dto.datatables.SearchField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by cityre on 2017/7/12.
@@ -48,8 +51,8 @@ public class MisPhonePinController {
     @ResponseBody
     @RequestMapping(value = "/list",method = RequestMethod.POST)
     public JsonResult<PaginationResult<MisPhonePinPo>> list(HttpSession httpSession, @RequestBody QueryParams queryParams){
-        Search search = SearchHelper.getSearchParam(URL,httpSession);
-        PaginationResult<MisPhonePinPo> paginationResult = misPhonePinService.getMisPhonePinList(search,queryParams);
+        List<SearchField> search =  SearchFieldHelper.getSearchField(URL,httpSession);
+        PaginationResult<MisPhonePinPo> paginationResult = misPhonePinService.getMisPhonePinListMybatis(search,queryParams);
         return JsonResult.success(paginationResult);
     }
     @ResponseBody

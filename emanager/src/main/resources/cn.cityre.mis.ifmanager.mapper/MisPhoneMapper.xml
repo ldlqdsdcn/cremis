@@ -15,6 +15,12 @@
         id,unionUid,phone,isVerified,isPrimary,createTime,updateTime
     </sql>
 
+    <select id="selectByPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column"/>
+        FROM v2017_user_phone
+    </select>
+
     <!--v2017_user_phone：查，条件：用户全局唯一ID，暂定这些-->
     <select id="selectByUid" resultMap="BaseResultMap">
         SELECT
