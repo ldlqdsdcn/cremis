@@ -15,6 +15,10 @@ public interface BillsMapper {
     //数据会员查询的方法,new/service.asp
 //    PageMyBatis<Bills> selectUserInfoByPage(PagingCriteria pagingCriteria);
 //    登记发票
+    Bills selectByCode(String billCode);
+
+    Date selectTime();
+    List<Bills> selectAllBills();
     void updateInvoice(Bills bills);
 
     List<Bills> selectByBigBillCode(String bigBillCode);

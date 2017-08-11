@@ -42,13 +42,34 @@ public class BillsServiceImpl implements BillsService {
     private ModelMapper modelMapper = new ModelMapper();
 
     @Override
-    public PaginationResult<Bills> getBillsListByOthers(List<SearchField> searchFields,QueryParams queryParams) {
+    public PaginationResult<Bills> getBillsListByOthers(List<SearchField> searchFields, QueryParams queryParams) throws ParseException {
         DataSourceContextHolder.setDbType("dataSource_cityreaccount");
-        PagingCriteria pagingCriteria = PagingCriteria.createCriteriaWithSearch(queryParams.getFirstResult(), queryParams.getPageSize(), queryParams.getPageNo(),searchFields);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = billsMapper.selectTime();
+        date = simpleDateFormat.parse(simpleDateFormat.format(date));
+        PagingCriteria pagingCriteria = PagingCriteria.createCriteriaWithSearch(queryParams.getFirstResult(), queryParams.getPageSize(), queryParams.getPageNo(), searchFields);
         PageMyBatis<Bills> pageMyBatis = billsMapper.selectDefaultByPage(pagingCriteria);
+        //判断服务状态
+        for (Bills bills : pageMyBatis) {
+            if (bills.getUserPaymentInfo()==null){
+                bills.setServiceState(0);//开通服务
+            }else if (bills.getUserPaymentInfo().getEndTime().before(date)) {
+                bills.setServiceState(1);//服务时间结束->已关闭
+            } else {
+                bills.setServiceState(2);//关闭服务
+            }
+        }
         PaginationResult<Bills> paginationResult = PaginationResult.pagination(pageMyBatis, (int) pageMyBatis.getTotal(), pagingCriteria.getPageNumber(), pagingCriteria.getDisplaySize());
         DataSourceContextHolder.setDbType("dataSource_core");
         return paginationResult;
+    }
+
+    @Override
+    public List<Bills> getExistList() {
+        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
+        List<Bills> list = billsMapper.selectAllBills();
+        DataSourceContextHolder.setDbType("dataSource_core");
+        return list;
     }
 
     @Override
@@ -61,7 +82,25 @@ public class BillsServiceImpl implements BillsService {
     @Override
     public Bills getExistBillsById(Integer id) {
         DataSourceContextHolder.setDbType("dataSource_cityreaccount");
-        Bills bills =  billsMapper.selectByPrimaryKey(id);
+        Bills bills = billsMapper.selectByPrimaryKey(id);
+        DataSourceContextHolder.setDbType("dataSource_core");
+        return bills;
+    }
+
+    @Override
+    public Bills getExistBillsByCode(String billCode) throws ParseException {
+        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = billsMapper.selectTime();
+        date = simpleDateFormat.parse(simpleDateFormat.format(date));
+        Bills bills = billsMapper.selectByCode(billCode);
+        if (bills.getUserPaymentInfo()==null){
+            bills.setServiceState(0);//开通服务
+        }else if (bills.getUserPaymentInfo().getEndTime().before(date)) {
+            bills.setServiceState(1);//服务时间结束->已关闭
+        } else {
+            bills.setServiceState(2);//关闭服务
+        }
         DataSourceContextHolder.setDbType("dataSource_core");
         return bills;
     }
@@ -78,9 +117,7 @@ public class BillsServiceImpl implements BillsService {
     @Override
     public void openService(Bills bills) throws ParseException {
         DataSourceContextHolder.setDbType("dataSource_cityreaccount");
-
         UserPaymentInfo userPaymentInfo = bills.getUserPaymentInfo();
-
         bills.setPayUpdateTime(userPaymentInfo.getPayTime());
         billsMapper.updateByBillsId(bills);
 //        2015.03.20
@@ -104,8 +141,15 @@ public class BillsServiceImpl implements BillsService {
                 userPaymentInfoHistoryMapper.insertSelective(userPaymentInfoHistory);
             }
         }
-    //系统自动计算终止时间，并保存到支付信息表中
+        //系统自动计算终止时间，并保存到支付信息表中
         UserPaymentInfo userPayment = new UserPaymentInfo();
+        userPayment = modelMapper.map(bills.getUserPaymentInfo(), UserPaymentInfo.class);
+        userPayment.setSuid(bills.getSuid());
+        userPayment.setBillCode(bills.getBillCode());
+        userPayment.setPayType(bills.getWPayType());
+        userPayment.setPayAmount(bills.getProductCost());
+        userPayment.setAccountName(bills.getWPayUser());
+
         String cycle = dicUserTypeCostMapper.selectByUserType(bills.getProductCode()).getCycle();
         String date_time = cycle.substring(0, cycle.length() - 1);
         String dateType = cycle.substring(cycle.length() - 1);
@@ -130,7 +174,7 @@ public class BillsServiceImpl implements BillsService {
             }
             userPayment.setEndTime(calendar.getTime());
         }
-        userPayment = modelMapper.map(bills, UserPaymentInfo.class);
+        userPayment = modelMapper.map(bills.getUserPaymentInfo(), UserPaymentInfo.class);
         userPayment.setPayType(bills.getWPayType());
         userPayment.setPayAmount(bills.getProductCost());
         userPayment.setAccountName(bills.getWPayUser());

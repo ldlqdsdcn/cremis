@@ -121,7 +121,7 @@ public class PaginationInterceptor implements Interceptor, Serializable {
             List<String> where_field = new ArrayList<>(0);
             for (SearchField searchField : searchFields) {
                 // fix inject sql
-                where_field.add(searchField.getField() + StringHelper.LIKE_CHAR +"'%"+ StringHelper.likeValue(searchField.getValue())+"%'");
+                where_field.add(searchField.getField() + StringHelper.LIKE_CHAR +"'%"+StringHelper.likeValue(searchField.getValue())+"%'");
             }
             boolean where = SqlRemoveHelper.containWhere(sql);
             String orderBy = StringHelper.EMPTY;

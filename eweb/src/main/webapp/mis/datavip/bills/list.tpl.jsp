@@ -7,11 +7,13 @@
         </ol>
         <a href="#/edit" class="btn  btn-primary btn-sm" ng-show="canAdd"><eidea:label key="common.button.create"/></a>
         <button type="button" class="btn  btn-primary btn-sm" id="search_but" data-toggle="modal"
-                data-target="#searchModal"><eidea:label key="common.button.search"/></button>
+                data-target="#confirmModal"><eidea:label key="common.button.search"/></button>
         <button type="button" class="btn  btn-primary btn-sm" ng-disabled="!canDelete()"
                 ng-click="deleteRecord()" ng-show="canDel"><eidea:label key="common.button.delete"/></button>
         <button type="button" class="btn btn-primary btn-sm" ng-disabled="!canDelete()"
                 ng-click="deleteLogic()" ng-show="canDel">逻辑删除</button>
+        <button type="button" class="btn btn-primary btn-sm"
+                ng-click="exportExcel()" >导出</button>
     </div>
     <div class="row-fluid">
         <div class="span12" >
@@ -53,7 +55,7 @@
                 <tr ng-repeat="model in modelList track by $index" ng-class-even="success">
                     <td>{{(queryParams.pageNo-1)*queryParams.pageSize+$index+1}}</td>
                     <td>
-                        {{model.userList.uid}}
+                        {{model.uid}}
                     </td>
                     <td>
                         {{model.bigBillCode}}
@@ -65,10 +67,10 @@
                         {{model.alipayBillCode}}
                     </td>
                     <td>
-                        {{model.userPaymentInfo.startTime|date:"yyyy-MM-dd HH:mm:ss"}}
+                        {{model.startTime|date:"yyyy-MM-dd HH:mm:ss"}}
                     </td>
                     <td>
-                        {{model.userPaymentInfo.endTime|date:"yyyy-MM-dd HH:mm:ss"}}
+                        {{model.endTime|date:"yyyy-MM-dd HH:mm:ss"}}
                     </td>
                     <td>
                         {{model.wPayType}}
@@ -76,8 +78,14 @@
                     <td>
                         {{model.productCost}}
                     </td>
-                    <td>
-                        {{model.payFlag}}
+                    <td ng-if="model.payFlag==1">
+                        已支付
+                    </td>
+                    <td ng-if="model.payFlag==0">
+                        未支付
+                    </td>
+                    <td ng-if="model.payFlag!=1&&model.payFlag!=0">
+                        支付失败
                     </td>
                     <td>
                         {{model.payUpdateTime|date:"yyyy-MM-dd HH:mm:ss"}}
@@ -104,7 +112,7 @@
                         {{model.postUser}}
                     </td>
                     <td>
-                        {{model.dicPostType.typeName}}
+                        {{model.typeName}}
                     </td>
                     <td>
                         {{model.address}}
@@ -125,11 +133,18 @@
                         {{model.kpInvoiceTime|date:"yyyy-MM-dd HH:mm:ss"}}
                     </td>
                     <td>
-                        {{model.dicUserType.userTypeName}}
+                        {{model.userTypeName}}
                     </td>
-                    <td>
-                        <a class="btn btn-primary btn-xs" href="#/edit?billCode={{model.billCode}}"><eidea:label
-                                key="Base.mis.datavip.service.edit"/><%--编辑--%></a>
+
+                    <td ng-if="model.serviceState==2">
+                        <a ng-if="model.userPaymentInfo.endTime!=nul" class="btn btn-primary btn-xs" href="#/edit?billCode={{model.billCode}}">关闭服务<%--关闭服务--%></a>
+                    </td>
+                    <td ng-if="model.serviceState==0">
+                        未开通
+                        <a ng-if="model.payFlag==1"class="btn btn-primary btn-xs" href="#/edit?billCode={{model.billCode}}">开通服务</a>
+                    </td>
+                    <td ng-if="model.serviceState==1">
+                        已关闭
                     </td>
                     <td>
                         <a class="btn btn-primary btn-xs" href="#/invoiceEdit?id={{model.id}}"><eidea:label

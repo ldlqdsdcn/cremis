@@ -7,10 +7,14 @@ import com.googlecode.genericdao.search.SearchFacade;
 import org.mybatis.pagination.dto.datatables.SearchField;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by cityre on 2017/8/9.
  */
 public interface UserListService {
-    PaginationResult<UserList> getExistUserInfoList(List<SearchField> searchFieldList, QueryParams queryParams);
+    PaginationResult<UserList> getExistUserInfoList(Map<String, Object> map, QueryParams queryParams);
+    /*根据用户suid获取用户*/
+    UserList getExistUserListBySuid(String suid);
+
 }

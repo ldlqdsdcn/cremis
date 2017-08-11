@@ -56,9 +56,13 @@
     company, agent, telflag, emailflag, usericon, birthdate, citycode, nickname, autoflag
   </sql>
   <!--sql="select  uid,min(regtime) as regtime from userlist inner join dic_user_type on  dic_user_type.user_type_code=userlist.user_type where dic_user_type.type in ('dm','creprice') group by uid  having 1=1  "-->
+  <!--<sql id="Where_Example">-->
+    <!--<where>-->
+      <!--<foreach collection="seachMap" item="item" open=""-->
+    <!--</where>-->
+  <!--</sql>-->
 
-
-  <select id="selectUserInfoByPage" resultMap="UserListInfoMap">
+  <select id="selectUserInfoByPage" resultMap="UserListInfoMap" parameterType="java.util.Map">
     SELECT
     userlist.uid,userlist.username,userlist.regtime,userlist.email,userlist.flag,userlist.pay_tel,
     dic_user_type.user_type_name,dic_user_type.note,
@@ -67,7 +71,43 @@
     FROM userlist
     INNER JOIN bills ON bills.suid = userlist.suid
     INNER JOIN dic_user_type ON dic_user_type.user_type_code = userlist.user_type AND dic_user_type.type IN ('dm','creprice','fjgj')
-    LEFT JOIN user_payment_info ON user_payment_info.billcode = bills.bill_code
+    LEFT JOIN user_payment_info ON user_payment_info.billcode = bills.bill_code WHERE 1=1
+    <if test="uid!=null">
+      AND userlist.uid like concat('%',#{uid,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="userType!=null">
+      And dic_user_type.user_type_name = #{userType,jdbcType=VARCHAR}
+    </if>
+    <!--<if test="regStartTime!=null">-->
+      <!--AND userlist.regtime <![CDATA[>=]]>#{regStartTime,jdbcType=TIMESTAMP}-->
+    <!--</if>-->
+    <!--<if test="regEndTime!=null">-->
+      <!--AND userlist.regtime <![CDATA[<=]]> #{regEndTime,jdbcType=TIMESTAMP}-->
+    <!--</if>-->
+    <!--<if test="payTel!=null">-->
+      <!--and userlist.pay_tel LIKE  concat('%',#{payTel,jdbcType=VARCHAR},'%')-->
+    <!--</if>-->
+    <!--<if test="payFlag!=null">-->
+      <!--AND bills.pay_flag = #{payFlag,jdbcType=VARCHAR}-->
+    <!--</if>-->
+    <!--<if test="serviceStartTime!=null">-->
+      <!--AND user_payment_info.start_time <![CDATA[>=]]>#{serviceStartTime,jdbcType=TIMESTAMP}-->
+    <!--</if>-->
+    <!--<if test="serviceEndTime!=null">-->
+      <!--AND user_payment_info.end_time <![CDATA[<=]]> #{serviceEndTime,jdbcType=TIMESTAMP}-->
+    <!--</if>-->
+  </select>
+
+  <!--查询用户密码-->
+  <select id="selectUserPassword" resultType="java.lang.String" parameterType="java.lang.String">
+    SELECT userlist.pwd FROM userlist WHERE suid = #{suid,jdbcType=VARCHAR}
+  </select>
+
+  <!--获取用户BySuid-->
+  <select id="selectBySuid" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List"/>
+    FROM userlist WHERE userlist.suid = #{suid,jdbcType=VARCHAR}
   </select>
   <!--//数据会员查询-->
   <select id="selectBypage" resultMap="BaseResultMap">

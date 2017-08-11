@@ -14,11 +14,15 @@ import java.util.List;
  */
 public interface BillsService {
 
-    PaginationResult<Bills> getBillsListByOthers(List<SearchField> searchFields,QueryParams queryParams);
+    PaginationResult<Bills> getBillsListByOthers(List<SearchField> searchFields,QueryParams queryParams) throws ParseException;
+
+    List<Bills> getExistList();
 
     void addInvoice(Bills bills);
 
     Bills getExistBillsById(Integer id);
+
+    Bills getExistBillsByCode(String billCode) throws ParseException;
 
     void openService(Bills bills) throws ParseException;
 

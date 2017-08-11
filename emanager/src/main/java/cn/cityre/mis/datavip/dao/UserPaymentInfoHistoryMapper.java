@@ -9,7 +9,7 @@ public interface UserPaymentInfoHistoryMapper {
 
     void deleteByPrimaryKey(Integer id);
 
-    int insertSelective(UserPaymentInfoHistory record);
+    void insertSelective(UserPaymentInfoHistory userPaymentInfoHistory);
 
     UserPaymentInfoHistory selectByPrimaryKey(Integer id);
 
