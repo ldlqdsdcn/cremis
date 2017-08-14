@@ -8,6 +8,7 @@ import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.QueryParams;
 import org.mybatis.pagination.dto.PageMyBatis;
 import org.mybatis.pagination.dto.datatables.PagingCriteria;
+import org.mybatis.pagination.dto.datatables.SearchField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +23,10 @@ public class UserListServiceImpl implements UserListService {
     @Autowired
     private UserListMapper userListMapper;
     @Override
-    public PaginationResult<UserList> getExistUserInfoList(Map<String,Object> map, QueryParams queryParams) {
+    public PaginationResult<UserList> getExistUserInfoList(List<SearchField> searchFields, QueryParams queryParams) {
         DataSourceContextHolder.setDbType("dataSource_cityreaccount");
-        PagingCriteria pagingCriteria =PagingCriteria.createCriteria(queryParams.getFirstResult(),queryParams.getPageSize(),queryParams.getPageNo());
-        List<UserList> pageMyBatis = userListMapper.selectUserInfoByPage(map);
+        PagingCriteria pagingCriteria =PagingCriteria.createCriteriaWithSearch(queryParams.getFirstResult(),queryParams.getPageSize(),queryParams.getPageNo(),searchFields);
+        PageMyBatis<UserList> pageMyBatis = userListMapper.selectUserInfoByPage(pagingCriteria);
         PaginationResult<UserList> paginationResult = PaginationResult.pagination(pageMyBatis,pageMyBatis.size(),queryParams.getPageNo(),queryParams.getPageSize());
         DataSourceContextHolder.setDbType("dataSource_core");
         return paginationResult;

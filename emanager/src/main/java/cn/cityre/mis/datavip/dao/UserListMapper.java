@@ -11,7 +11,7 @@ import java.util.Map;
 @Repository
 public interface UserListMapper {
 
-    List<UserList> selectUserInfoByPage(Map<String,Object > map);
+    PageMyBatis<UserList> selectUserInfoByPage(PagingCriteria pagingCriteria);
 
     String  selectUserPassword(String suid);
 

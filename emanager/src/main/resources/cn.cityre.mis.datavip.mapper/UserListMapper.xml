@@ -71,13 +71,13 @@
     FROM userlist
     INNER JOIN bills ON bills.suid = userlist.suid
     INNER JOIN dic_user_type ON dic_user_type.user_type_code = userlist.user_type AND dic_user_type.type IN ('dm','creprice','fjgj')
-    LEFT JOIN user_payment_info ON user_payment_info.billcode = bills.bill_code WHERE 1=1
-    <if test="uid!=null">
-      AND userlist.uid like concat('%',#{uid,jdbcType=VARCHAR},'%')
-    </if>
-    <if test="userType!=null">
-      And dic_user_type.user_type_name = #{userType,jdbcType=VARCHAR}
-    </if>
+    LEFT JOIN user_payment_info ON user_payment_info.billcode = bills.bill_code 
+    <!--<if test="uid!=null">-->
+      <!--AND userlist.uid like concat('%',#{uid,jdbcType=VARCHAR},'%')-->
+    <!--</if>-->
+    <!--<if test="userType!=null">-->
+      <!--And dic_user_type.user_type_name = #{userType,jdbcType=VARCHAR}-->
+    <!--</if>-->
     <!--<if test="regStartTime!=null">-->
       <!--AND userlist.regtime <![CDATA[>=]]>#{regStartTime,jdbcType=TIMESTAMP}-->
     <!--</if>-->

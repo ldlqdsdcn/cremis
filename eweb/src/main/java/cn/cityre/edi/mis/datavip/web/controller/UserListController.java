@@ -54,13 +54,10 @@ public class UserListController {
     public JsonResult<PaginationResult<UserList>> list(HttpSession httpSession, @RequestBody QueryParams queryParams) {
         UserResource userResource = (UserResource) httpSession.getAttribute(WebConst.SESSION_RESOURCE);
         List<SearchField> searchFields = SearchFieldHelper.getSearchField(URL, httpSession);
-//        if (searchFields == null || searchFields.size() == 0) {
-//            return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(), userResource.getMessage(""));
-//        }
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("uid", "l3f2810k");
-        map.put("userType", "移动客户端数据查阅服务");
-        PaginationResult<UserList> paginationResult = userListService.getExistUserInfoList(map, queryParams);
+        if (searchFields == null || searchFields.size() == 0) {
+            return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(), userResource.getMessage(""));
+        }
+        PaginationResult<UserList> paginationResult = userListService.getExistUserInfoList(searchFields, queryParams);
         return JsonResult.success(paginationResult);
     }
 
