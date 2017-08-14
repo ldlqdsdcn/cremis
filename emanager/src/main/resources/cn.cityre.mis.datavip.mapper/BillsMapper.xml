@@ -53,6 +53,7 @@
         <result property="userPaymentInfo.startTime" column="start_time" jdbcType="TIMESTAMP"/>
         <result property="userPaymentInfo.endTime" column="end_time" jdbcType="TIMESTAMP"/>
         <result property="userPaymentInfo.payAmount" column="pay_amount" jdbcType="VARCHAR"/>
+        <result property="userPaymentInfo.payTime" column="pay_time" jdbcType="TIMESTAMP"/>
         <result property="dicUserType.userTypeName" column="user_type_name" jdbcType="VARCHAR"/>
         <result property="dicUserType.note" column="note" jdbcType="VARCHAR"/>
         <result property="userList.uid" column="uid" jdbcType="VARCHAR"/>
@@ -62,6 +63,16 @@
         <result property="userList.flag" column="flag" jdbcType="INTEGER"/>
         <result property="dicPostType.typeName" column="post_type_name" jdbcType="VARCHAR"/>
         <result property="dicPayType.typeName" column="type_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <resultMap id="BillsMap" type="cn.cityre.mis.datavip.entity.Bills" extends="BaseResultMap">
+        <result property="startTime" column="start_time" jdbcType="TIMESTAMP"/>
+        <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
+        <result property="typeName" column="type_name" jdbcType="VARCHAR"/>
+        <result property="postTypeName" column="post_type_name" jdbcType="VARCHAR"/>
+        <result property="uid" column="uid" jdbcType="VARCHAR"/>
+        <result property="userTypeName" column="user_type_name" jdbcType="VARCHAR"/>
     </resultMap>
 
 
@@ -75,11 +86,11 @@
     contentname, province_code
   </sql>
     <!--Mybatis联合查询-->
-    <select id="selectDefaultByPage" resultMap="UserPaymentBillsMap">
+    <select id="selectDefaultByPage" resultMap="BillsMap">
    SELECT
-   big_billcode,bill_code,alipay_bill_code,
+   bills.big_billcode,bills.bill_code,bills.alipay_bill_code,
    user_payment_info.start_time,user_payment_info.end_time,
-   w_pay_type,ifnull(product_cost,0)as product_cost,pay_flag,pay_updatetime,bills.id,
+   bills.w_pay_type,ifnull(product_cost,0)as product_cost,pay_flag,pay_updatetime,bills.id,
    dic_pay_type.type_name ,post_invoice_flag,invoice_type,invoice_title,post_user,dic_post_type.post_type_name,address,tel,w_pay_user,w_pay_tel,invoice_no,kp_invoice_time,
    invoice_no_flag,invoice_taxno,invoice_adtel,invoice_bankno,dic_user_type.user_type_name, userlist.uid from bills
    left join user_payment_info on user_payment_info.suid=bills.suid and user_payment_info.billcode=bills.bill_code
@@ -88,6 +99,36 @@
    inner join userlist on  userlist.suid=bills.suid
    left join dic_user_type on userlist.user_type=dic_user_type.user_type_code
   </select>
+    <select id="selectByCode" resultMap="UserPaymentBillsMap" parameterType="java.lang.String">
+    SELECT
+   big_billcode,bill_code,alipay_bill_code,bills.suid,
+   user_payment_info.start_time,user_payment_info.end_time,user_payment_info.pay_time,
+   w_pay_type,ifnull(product_cost,0)as product_cost,pay_flag,pay_updatetime,bills.id,bills.product_code,
+   dic_pay_type.type_name ,post_invoice_flag,invoice_type,invoice_title,post_user,dic_post_type.post_type_name,address,tel,w_pay_user,w_pay_tel,invoice_no,kp_invoice_time,
+   invoice_no_flag,invoice_taxno,invoice_adtel,invoice_bankno,dic_user_type.user_type_name, userlist.uid from bills
+   left join user_payment_info on user_payment_info.suid=bills.suid and user_payment_info.billcode=bills.bill_code
+   left join dic_pay_type on dic_pay_type.type_code=bills.w_pay_type
+   left join dic_post_type on dic_post_type.post_type_code=bills.post_type
+   inner join userlist on  userlist.suid=bills.suid
+   left join dic_user_type on userlist.user_type=dic_user_type.user_type_code WHERE bills.bill_code=#{billCode,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectAllBills" resultMap="BaseResultMap">
+    SELECT
+   bills.big_billcode,bills.bill_code,bills.alipay_bill_code,
+   user_payment_info.start_time,user_payment_info.end_time,
+   bills.w_pay_type,ifnull(product_cost,0)as product_cost,pay_flag,pay_updatetime,bills.id,
+   dic_pay_type.type_name ,post_invoice_flag,invoice_type,invoice_title,post_user,dic_post_type.post_type_name,address,tel,w_pay_user,w_pay_tel,invoice_no,kp_invoice_time,
+   invoice_no_flag,invoice_taxno,invoice_adtel,invoice_bankno,dic_user_type.user_type_name, userlist.uid from bills
+   left join user_payment_info on user_payment_info.suid=bills.suid and user_payment_info.billcode=bills.bill_code
+   left join dic_pay_type on dic_pay_type.type_code=bills.w_pay_type
+   left join dic_post_type on dic_post_type.post_type_code=bills.post_type
+   inner join userlist on  userlist.suid=bills.suid
+   left join dic_user_type on userlist.user_type=dic_user_type.user_type_code
+    </select>
+    <select id="selectTime" resultType="java.util.Date">
+        select now()
+    </select>
     <!--登记发票-->
     <update id="updateInvoice" parameterType="cn.cityre.mis.datavip.entity.Bills">
         UPDATE bills
@@ -114,12 +155,15 @@
     <update id="updateByBillsId" parameterType="cn.cityre.mis.datavip.entity.Bills">
         UPDATE bills
         <set>
-            <if test="payUpdateTime!=null">
-                pay_updatetime=#{payUpdateTime,jdbcType=VARCHAR},
-            </if>
+            <choose>
+                <when test="payUpdateTime!=null">
+                    pay_updatetime=#{payUpdateTime,jdbcType=VARCHAR},
+                </when>
+                <otherwise>now(),</otherwise>
+            </choose>
             pay_flag=1,
         </set>
-        WHERE id =#{billsId,jdbcType=INTEGER}
+        WHERE id =#{id,jdbcType=INTEGER}
     </update>
 
     <!--通过大订单查询所有的小定单-->
@@ -143,7 +187,8 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
-    <insert id="insert" parameterType="cn.cityre.mis.datavip.entity.Bills" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+    <insert id="insert" parameterType="cn.cityre.mis.datavip.entity.Bills" useGeneratedKeys="true" keyColumn="id"
+            keyProperty="id">
         insert into bills
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="suid != null">

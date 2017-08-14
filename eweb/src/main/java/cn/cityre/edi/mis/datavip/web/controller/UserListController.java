@@ -23,7 +23,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by cityre on 2017/8/9.
@@ -49,14 +51,22 @@ public class UserListController {
     @ResponseBody
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @RequiresPermissions("view")
-    public JsonResult<PaginationResult<UserList>> list(HttpSession httpSession, @RequestBody QueryParams queryParams){
-        UserResource userResource = (UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
-        List<SearchField> searchFields = SearchFieldHelper.getSearchField(URL,httpSession);
-        if (searchFields==null||searchFields.size()==0){
-            return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(),userResource.getMessage(""));
+    public JsonResult<PaginationResult<UserList>> list(HttpSession httpSession, @RequestBody QueryParams queryParams) {
+        UserResource userResource = (UserResource) httpSession.getAttribute(WebConst.SESSION_RESOURCE);
+        List<SearchField> searchFields = SearchFieldHelper.getSearchField(URL, httpSession);
+        if (searchFields == null || searchFields.size() == 0) {
+            return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(), userResource.getMessage(""));
         }
-        PaginationResult<UserList> paginationResult = userListService.getExistUserInfoList(searchFields,queryParams);
+        PaginationResult<UserList> paginationResult = userListService.getExistUserInfoList(searchFields, queryParams);
         return JsonResult.success(paginationResult);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/get",method = RequestMethod.GET)
+    @RequiresPermissions("view")
+    public JsonResult<UserList> get(HttpSession httpSession,String suid){
+        UserResource userResource=(UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
+        return JsonResult.success(userListService.getExistUserListBySuid(suid));
     }
 
 }

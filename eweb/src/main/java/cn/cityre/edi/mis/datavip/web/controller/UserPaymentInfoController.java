@@ -1,5 +1,6 @@
 package cn.cityre.edi.mis.datavip.web.controller;
 
+import cn.cityre.mis.datavip.entity.Bills;
 import cn.cityre.mis.datavip.entity.UserPaymentInfo;
 import cn.cityre.mis.datavip.entity.UserPaymentInfoHistory;
 import cn.cityre.mis.datavip.service.UserPaymentInfoHistoryService;
@@ -33,12 +34,12 @@ public class UserPaymentInfoController {
 
     @RequiresPermissions("update")
     @ResponseBody
-    @RequestMapping(value = "/closeService",method = RequestMethod.GET)
-    public JsonResult<UserPaymentInfo> closeService(HttpSession httpSession,String billCode){
+    @RequestMapping(value = "/closeService",method = RequestMethod.POST)
+    public JsonResult<Bills> closeService(HttpSession httpSession, @RequestBody Bills bills){
         UserResource userResource = (UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
-        userPaymentInfoService.closeServiceByBillCode(billCode);
-        UserPaymentInfo userPaymentInfo = userPaymentInfoService.getExistPaymentInfo(billCode);
-        return JsonResult.success(userPaymentInfo);
+        userPaymentInfoService.closeServiceByBillCode(bills.getBillCode());
+        UserPaymentInfo userPaymentInfo = userPaymentInfoService.getExistPaymentInfo(bills.getBillCode());
+        return JsonResult.success(bills);
     }
     @ResponseBody
     @RequestMapping(value = "/create",method = RequestMethod.GET)

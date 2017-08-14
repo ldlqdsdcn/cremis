@@ -154,6 +154,20 @@ public class Bills implements java.io.Serializable {
     private DicPostType dicPostType;
     @Transient
     private DicPayType dicPayType;
+    @Transient
+    private Integer serviceState;
+    @Transient
+    private Date startTime;
+    @Transient
+    private Date endTime;
+    @Transient
+    private String typeName;
+    @Transient
+    private String postTypeName;
+    @Transient
+    private String userTypeName;
+    @Transient
+    private String uid;
 
 
 

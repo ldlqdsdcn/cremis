@@ -16,6 +16,7 @@
     <jsp:param name="uri" value="${uri}"/>
 </jsp:include>
 </body>
+<%@ include file="/mis/datavip/bills/confirm_password.jsp" %>
 <script type="text/javascript">
     var app = angular.module('myApp', ['ngRoute', 'ui.bootstrap', 'jcs-autoValidate'])
         .config(['$routeProvider', function ($routeProvider) {
@@ -118,10 +119,21 @@
             };
             $rootScope.listQueryParams = $scope.queryParams;
         }
+        var bills={"bills":$scope.modelList};
+        $scope.exportExcel=function () {
+            $http.post("<c:url value="/mis/datavip/bills/exportExcel"/> ",$scope.modelList).success(function (response) {
+                if (response.success){
+                    $scope.message="<eidea:label key="base.save.success"/>"
+                }
+            }).error(function (response) {
+                $scope.message=response.message;
+                $scope.errors=response.data;
+            })
+        };
         $scope.pageChanged();
     });
-//    服务操作Ctrl
-    app.controller('editCtrl', function ($scope, $http, $routeParams) {
+//    开通服务和关闭服务
+    app.controller('editCtrl', function ($scope, $http, $routeParams,$rootScope) {
         /**
          * 日期时间选择控件
          * bootstrap-datetime 24小时时间是hh
@@ -150,16 +162,20 @@
         });
 
         $scope.message = '';
-        $scope.userPaymentInfo={};
+        $scope.billsPo={};
         $scope.canAdd = PrivilegeService.hasPrivilege('add');
-        var url = "<c:url value="/mis/ifmanager/apikey/create"/>";
         if ($routeParams.billCode!= null) {
-            url = "<c:url value="/mis/datavip/bills/getUserPaymentInfo"/>" + "?billCode=" + $routeParams.billCode;
+          var  url = "<c:url value="/mis/datavip/bills/getBills"/>" + "?billCode=" + $routeParams.billCode;
         }
+        var postUrl="<c:url value="/mis/datavip/bills/openService"/> "
         $http.get(url)
             .success(function (response) {
                 if (response.success) {
-                    $scope.userPaymentInfo = response.data;
+                    $scope.billsPo = response.data;
+                    $rootScope.billsId=$scope.billsPo.suid;
+                    if($scope.billsPo.serviceState ==2){
+                        postUrl = "<c:url value="/mis/datavip/userpaymentInfo/closeService"/> "
+                    }
                     $scope.canSave = (PrivilegeService.hasPrivilege('add') && $scope.billsPo.id == null) || PrivilegeService.hasPrivilege('update');
                 }
                 else {
@@ -168,88 +184,26 @@
             }).error(function (response) {
             bootbox.alert(response);
         });
-        <%--$scope.save = function () {--%>
-            <%--if ($scope.editForm.$valid) {--%>
-                <%--var postUrl = '<c:url value="/mis/ifmanager/apikey/saveForUpdated"/>';--%>
-                <%--if ($routeParams.id == null) {--%>
-                    <%--postUrl = '<c:url value="/mis/ifmanager/apikey/saveForCreated"/>';--%>
-                <%--}--%>
-                <%--$http.post(postUrl, $scope.misApiKeyPo).success(function (data) {--%>
-                    <%--if (data.success) {--%>
-                        <%--$scope.message = "<eidea:label key="base.save.success"/>";--%>
-                        <%--$scope.misApiKeyPo = data.data;--%>
-                    <%--}--%>
-                    <%--else {--%>
-                        <%--$scope.message = data.message;--%>
-                        <%--$scope.errors = data.data;--%>
-                    <%--}--%>
-                <%--}).error(function (data, status, headers, config) {--%>
-                    <%--alert(JSON.stringify(data));--%>
-                <%--});--%>
-            <%--}--%>
-        <%--}--%>
-        <%--$scope.create = function () {--%>
-            <%--$scope.message = "";--%>
-            <%--$scope.misApiKeyPo = {};--%>
-            <%--var url = "<c:url value="/mis/ifmanager/apikey/create"/>";--%>
-            <%--$http.get(url)--%>
-                <%--.success(function (response) {--%>
-                    <%--if (response.success) {--%>
-                        <%--$scope.misApiKeyPo = response.data;--%>
-                        <%--$scope.canSave = (PrivilegeService.hasPrivilege('add') && $scope.misApiKeyPo.id == null) || PrivilegeService.hasPrivilege('update');--%>
-                    <%--}--%>
-                    <%--else {--%>
-                        <%--bootbox.alert(response.message);--%>
-                    <%--}--%>
-                <%--}).error(function (response) {--%>
-                <%--bootbox.alert(response);--%>
-            <%--});--%>
-        <%--}--%>
 
-    });
-
-    app.controller('serviceCtrl',function ($scope,$http,$routeParams) {
-        /**
-         * 日期时间选择控件
-         * bootstrap-datetime 24小时时间是hh
-         */
-        $('.bootstrap-datetime').datetimepicker({
-            language: 'zh-CN',
-            format: 'yyyy-mm-dd hh:ii:ss',
-            weekStart: 1,
-            todayBtn: 1,
-            autoclose: 1,
-            todayHighlight: 1,
-            startView: 2,
-            forceParse: 0,
-            showMeridian: 1,
-            clearBtn: true
-        });
-        /**
-         * 日期选择控件
-         */
-        $('.bootstrap-date').datepicker({
-            language: 'zh-CN',
-            format: 'yyyy-mm-dd',
-            autoclose: 1,
-            todayBtn: 1,
-            clearBtn: true
-        });
-        $scope.billsPo = {};
-        if ($routeParams.id==null){
-            bootbox.alert("aaa");
-        }else {
-            var url = "<c:url value="/mis/datavip/bills/get"/> "+"?id="+$routeParams.id
-        }
-        $http.get(url)
-            .success(function (response) {
-            if(response.success){
-                $scope.billsPo = response.data;
-            }else{
-                bootbox.alert(response.message);
+        $scope.serviceEdit = function(){
+            if ($scope.editForm.$valid){
+                $http.post(postUrl,$scope.billsPo).success(function (response) {
+                    if(response.success){
+                        $scope.message="<eidea:label key="base.save.success"/>";
+                        $scope.billsPo=response.data;
+                    }else{
+                        $scope.message=response.message;
+                        $scope.errors=response.data;
+                    }
+                }).errors(function (response) {
+                    bootbox.alert(response.message);
+                })
             }
-        });
+        }
     });
+
+
+
     app.controller('invoiceCtrl',function ($scope,$http,$routeParams) {
         /**
          * 日期时间选择控件
@@ -306,7 +260,8 @@
             }
 
         }
-    })
+    });
+
     app.run([
         'bootstrap3ElementModifier',
         function (bootstrap3ElementModifier) {
