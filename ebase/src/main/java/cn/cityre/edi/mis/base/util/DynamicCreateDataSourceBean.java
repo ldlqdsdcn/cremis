@@ -1,12 +1,12 @@
 package cn.cityre.edi.mis.base.util;
 
-import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.*;
 import org.springframework.context.event.ContextRefreshedEvent;
 
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
