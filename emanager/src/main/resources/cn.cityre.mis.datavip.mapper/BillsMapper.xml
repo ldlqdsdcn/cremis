@@ -85,6 +85,7 @@
     source, pkey, plevel, dist_code, ha_code, pgps, buymonth, haclcode, buygroup, dealtype, 
     contentname, province_code
   </sql>
+
     <sql id="where_sql">
         <where>
         <if test="billCode!=null">
@@ -96,8 +97,8 @@
         <if test="alipayBillCode!=null">
         AND bills.alipay_bill_code LIKE concat('%',#{alipayBillCode,jdbcType=VARCHAR},'%')
         </if>
-        <if test="wPayType!=null">
-        AND bills.w_pay_type LIKE = #{wPayType,jdbcType=VARCHAR}
+        <if test="typeName!=null">
+        AND dic_pay_type.type_name LIKE concat('%',#{typeName,jdbcType=VARCHAR},'%')
         </if>
         <if test="payFlag!=null">
         AND bills.pay_flag ={#payFlag,jdbcType=VARCHAR}
@@ -115,10 +116,10 @@
         AND bills.invoice_no_flag = #{invoiceNoFlag,jdbcType=INTEGER}
         </if>
         <if test="invoiceNo!=null">
-        AND bills.invoice_no concat('%',#{billCode,jdbcType=VARCHAR},'%')
+        AND bills.invoice_no concat('%',#{invoiceNo,jdbcType=VARCHAR},'%')
         </if>
         <if test="uid!=null">
-        AND userlist.uid LIKE concat('%',#{billCode,jdbcType=VARCHAR},'%')
+        AND userlist.uid LIKE concat('%',#{uid,jdbcType=VARCHAR},'%')
         </if>
         </where>
     </sql>
@@ -139,6 +140,7 @@
         <if test="_parameter!=null">
             <include refid="where_sql"/>
         </if>
+        ORDER by bills.pay_updatetime DESC
     </select>
     <!--Mybatis联合查询-->
     <select id="selectExportInfo" resultMap="BillsMap" parameterType="java.util.Map">

@@ -16,7 +16,9 @@
     <jsp:param name="uri" value="${uri}"/>
 </jsp:include>
 </body>
-<%@ include file="/mis/datavip/bills/confirm_password.jsp" %>
+<jsp:include page="/mis/datavip/bills/confirm_password.jsp">
+    <jsp:param name="billsId" value="${id}"/>
+</jsp:include>
 <script type="text/javascript">
     var app = angular.module('myApp', ['ngRoute', 'ui.bootstrap', 'jcs-autoValidate'])
         .config(['$routeProvider', function ($routeProvider) {
@@ -99,9 +101,7 @@
                 }
             });
         };
-        $scope.remeber=function (id) {
-            $rootScope.billsId=id;
-        };
+
 //        服务开通的判断
 
 

@@ -8,8 +8,8 @@
         <a href="#/edit" class="btn  btn-primary btn-sm" ng-show="canAdd"><eidea:label key="common.button.create"/></a>
         <button type="button" class="btn  btn-primary btn-sm" id="search_but" data-toggle="modal"
                 data-target="#searchModal"><eidea:label key="common.button.search"/></button>
-        <button type="button" class="btn  btn-primary btn-sm" ng-disabled="!canDelete()"
-                ng-click="deleteRecord()" ng-show="canDel"><eidea:label key="common.button.delete"/></button>
+        <button type="button" class="btn btn-primary btn-sm"
+                ng-click="exportExcel()" >导出</button>
     </div>
     <div class="row-fluid">
         <div class="span12" >
@@ -18,21 +18,21 @@
                 <tr>
                     <th><%--序号--%><eidea:label key="base.serialNumber"/></th>
                     <th><%--账号--%><eidea:label key="base.v2017.user.label.userId"/></th>
-                    <th><%--姓名--%><eidea:label key="cityre.mis.datavip.bill.bigBillCode"/></th>
-                    <th><%--用户类型--%><eidea:label key="cityre.mis.datavip.bill.billCode"/></th>
-                    <th><%--注册时间--%><eidea:label key="cityre.mis.datavip.bill.alipayCode"/></th>
-                    <th><%--电话--%><eidea:label key="cityre.mis.datavip.paymentinfo.starttime"/></th>
-                    <th><%--Email--%><eidea:label key="cityre.mis.datavip.paymentinfo.endtime"/></th>
-                    <th><%--状态--%><eidea:label key="cityre.mis.datavip.dicpaytype.typename"/></th>
-                    <th><%--账单号--%><eidea:label key="cityre.mis.datavip.bill.productCost"/></th>
-                    <th><%--账单状态--%><eidea:label key="cityre.mis.datavip.bill.payflag"/></th>
-                    <th><%--账单金额--%><eidea:label key="cityre.mis.datavip.bill.payTime"/></th>
-                    <th><%--服务类型--%><eidea:label key="cityre.mis.datavip.bill.postInvoiceFlag"/></th>
-                    <th><%--城市--%><eidea:label key="cityre.mis.datavip.bill.invoiceType"/></th>
-                    <th><%--查询级别--%><eidea:label key="cityre.mis.datavip.bill.invoiceTitle"/></th>
-                    <th><%--名称--%><eidea:label key="cityre.mis.datavip.bills.invoicetaxno"/></th>
-                    <th><%--附近--%><eidea:label key="cityre.mis.datavip.bills.invoiceadtel"/></th>
-                    <th><%--租售--%><eidea:label key="cityre.mis.datavip.bill.bankNo"/></th>
+                    <th><%--姓名--%><eidea:label key="cityre.mis.datavip.userlist.name"/></th>
+                    <th><%--用户类型--%><eidea:label key="cityre.mis.datavip.userlist.userType"/></th>
+                    <th><%--注册时间--%><eidea:label key="cityre.mis.datavip.userlist.regTime"/></th>
+                    <th><%--电话--%><eidea:label key="cityre.mis.datavip.userlist.userTel"/></th>
+                    <th><%--Email--%><eidea:label key="cityre.mis.datavip.userlist.userEmail"/></th>
+                    <th><%--状态--%><eidea:label key="cityre.mis.datavip.userlist.userState"/></th>
+                    <th><%--账单号--%><eidea:label key="cityre.mis.datavip.userlist.payCode"/></th>
+                    <th><%--账单状态--%><eidea:label key="cityre.mis.datavip.userlist.payState"/></th>
+                    <th><%--账单金额--%><eidea:label key="cityre.mis.datavip.userlist.payCost"/></th>
+                    <th><%--服务类型--%><eidea:label key="cityre.mis.datavip.userlist.serviceType"/></th>
+                    <th><%--城市--%><eidea:label key="cityre.mis.datavip.userlist.city"/></th>
+                    <th><%--查询级别--%><eidea:label key="cityre.mis.datavip.userlist.searchLevel"/></th>
+                    <th><%--名称--%><eidea:label key="cityre.mis.datavip.userlist.contentName"/></th>
+                    <th><%--附近--%><eidea:label key="cityre.mis.datavip.userlist.around"/></th>
+                    <th><%--租售--%><eidea:label key="cityre.mis.datavip.userlist.sale"/></th>
                     <th><%--服务开始时间--%><eidea:label key="cityre.mis.datavip.paymentinfo.starttime"/></th>
                     <th><%--服务结束时间--%><eidea:label key="cityre.mis.datavip.paymentinfo.endtime"/></th>
                     <th><%--发票抬头--%><eidea:label key="cityre.mis.datavip.bill.invoiceTitle"/></th>

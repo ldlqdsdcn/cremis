@@ -157,6 +157,16 @@
                 });
             }
         }
+        $scope.exportExcel=function () {
+            $http.post("<c:url value="/mis/datavip/new/exportExcel"/> ",$scope.modelList).success(function (response) {
+                if (response.success){
+                    $scope.message="<eidea:label key="base.save.success"/>"
+                }
+            }).error(function (response) {
+                $scope.message=response.message;
+                $scope.errors=response.data;
+            })
+        };
         $scope.create = function () {
             $scope.message = "";
             $scope.directoryBo = {};

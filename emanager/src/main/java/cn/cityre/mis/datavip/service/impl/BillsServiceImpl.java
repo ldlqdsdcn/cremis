@@ -128,9 +128,10 @@ public class BillsServiceImpl implements BillsService {
         DataSourceContextHolder.setDbType("dataSource_cityreaccount");
         Map<String, Object> map = new HashMap<>();
         if (searchFields == null) {
+            map.put("billCode",null);
             map.put("bigBillMap", null);
             map.put("alipayBillCode", null);
-            map.put("wPayType", null);
+            map.put("typeName", null);
             map.put("payFlag", null);
             map.put("postInvoiceFlag", null);
             map.put("invoiceType", null);
@@ -140,14 +141,17 @@ public class BillsServiceImpl implements BillsService {
             map.put("uid", null);
         } else {
             for (SearchField searchField : searchFields)
-                if (searchField.getField().equals("bigBillMap")) {
+                if (searchField.getField().equals("billCode")) {
+                    map.put("billCode", searchField.getValue());
+                    continue;
+            }else if (searchField.getField().equals("bigBillMap")) {
                     map.put("bigBillMap", searchField.getValue());
                     continue;
                 } else if (searchField.getField().equals("alipayBillCode")) {
                     map.put("alipayBillCode", searchField.getValue());
                     continue;
-                } else if (searchField.getField().equals("wPayType")) {
-                    map.put("wPayType", searchField.getValue());
+                } else if (searchField.getField().equals("typeName")) {
+                    map.put("typeName", searchField.getValue());
                     continue;
                 } else if (searchField.getField().equals("payFlag")) {
                     map.put("payFlag", searchField.getValue());
@@ -170,7 +174,7 @@ public class BillsServiceImpl implements BillsService {
                 } else {
                     map.put("bigBillMap", null);
                     map.put("alipayBillCode", null);
-                    map.put("wPayType", null);
+                    map.put("typeName", null);
                     map.put("payFlag", null);
                     map.put("postInvoiceFlag", null);
                     map.put("invoiceType", null);

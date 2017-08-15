@@ -55,9 +55,8 @@
             $http.post("<c:url value="/mis/datavip/bills/confirmPassword"/>", {"password":allparam}).success(function (data) {
                 if (data.success) {
                     $scope.message = data.data;
-                    alert($rootScope.billsId);
                     $('#confirmModal').modal('hide');
-                    window.location.href = "#/invoiceEdit?id=$rootScope.billsId";
+                    window.location.href = "#/invoiceEdit?id=bills.billsId";
                 }
             }).errors(function (response) {
                 $scope.message=response.message;

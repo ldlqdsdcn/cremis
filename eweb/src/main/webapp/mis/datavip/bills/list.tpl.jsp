@@ -12,7 +12,7 @@
     </div>
     <div class="row-fluid">
         <div class="span12" >
-            <table class="table table-hover table-striped table-condensed" >
+            <table class="table table-bordered table-hover table-striped table-condensed" >
                 <thead class="">
                 <tr>
                     <th><%--序号--%><eidea:label key="base.serialNumber"/></th>
@@ -46,7 +46,6 @@
                 </tr>
                 </thead>
                 <tbody>
-
                 <tr ng-repeat="model in modelList track by $index" ng-class-even="success">
                     <td>{{(queryParams.pageNo-1)*queryParams.pageSize+$index+1}}</td>
                     <td>
@@ -68,7 +67,7 @@
                         {{model.endTime|date:"yyyy-MM-dd HH:mm:ss"}}
                     </td>
                     <td>
-                        {{model.wPayType}}
+                        {{model.typeName}}
                     </td>
                     <td>
                         {{model.productCost}}
@@ -107,7 +106,7 @@
                         {{model.postUser}}
                     </td>
                     <td>
-                        {{model.typeName}}
+                        {{model.postTypeName}}
                     </td>
                     <td>
                         {{model.address}}
@@ -142,9 +141,10 @@
                         已关闭
                     </td>
                     <td>
+
                         <%--<a class="btn btn-primary btn-xs" href="#/invoiceEdit?id={{model.id}}" ng-show="!model.confirmPassword"><eidea:label--%>
                                 <%--key="base.mis.datavip.invoice.edit"/>&lt;%&ndash;开通发票&ndash;%&gt;</a>--%>
-                        <button type="button" class="btn btn-primary btn-xs"  ng-click="remember({{model.id}})" data-toggle="modal"
+                        <button type="button" class="btn btn-primary btn-xs"  data-toggle="modal"
                                 data-target="#confirmModal" ><eidea:label
                                 key="base.mis.datavip.invoice.edit"/></button>
                     </td>
