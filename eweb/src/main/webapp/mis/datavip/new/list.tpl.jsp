@@ -3,7 +3,7 @@
 <div class="container-fluid" ng-controller="listCtrl">
     <div class="page-header">
         <ol class="breadcrumb">
-            <li><a href="javascript:;"><i class="icon icon-tasks"></i><eidea:label key="apikey.title"/></a></li>
+            <li><a href="javascript:;"><i class="icon icon-tasks"></i><eidea:label key="mis.datavip.search.title"/></a></li>
         </ol>
         <button type="button" class="btn  btn-primary btn-sm" id="search_but" data-toggle="modal"
                 data-target="#searchModal"><eidea:label key="common.button.search"/></button>
