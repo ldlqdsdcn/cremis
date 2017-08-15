@@ -201,9 +201,6 @@
             }
         }
     });
-
-
-
     app.controller('invoiceCtrl',function ($scope,$http,$routeParams) {
         /**
          * 日期时间选择控件
@@ -235,7 +232,7 @@
         if($routeParams.id==null){
             bootbox.alert("参数错误！")
         }
-        var url = "<c:url value="/mis/datavip/bills/get"/> "+"?id="+$routeParams.id
+        var  url = "<c:url value="/mis/datavip/bills/get"/>" + "?id=" + $routeParams.id;
         $http.get(url).success(function (response) {
             if (response.success){
                 $scope.bill = response.data;

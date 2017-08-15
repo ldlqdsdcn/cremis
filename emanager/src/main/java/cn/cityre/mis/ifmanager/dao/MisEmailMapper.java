@@ -6,13 +6,14 @@ import org.mybatis.pagination.dto.datatables.PagingCriteria;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by cityre on 2017/8/8.
  */
 @Repository
 public interface MisEmailMapper {
-    PageMyBatis<MisUserEmailPo> selectByPage(PagingCriteria pagingCriteria);
+    PageMyBatis<MisUserEmailPo> selectByPage(Map<String,Object>map);
 
     void updateByUid(MisUserEmailPo misUserEmailPo);
 

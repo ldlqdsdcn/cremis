@@ -5,13 +5,30 @@
         <ol class="breadcrumb">
             <li><a href="javascript:;"><i class="icon icon-tasks"></i><eidea:label key="apikey.title"/></a></li>
         </ol>
-        <a href="#/edit" class="btn  btn-primary btn-sm" ng-show="canAdd"><eidea:label key="common.button.create"/></a>
+        <table>
+            <tr>
+                <td>
+                    <eidea:label key="base.v2017.user.label.userId"/>
+                </td>
+                    <input type="text" ng-model=""/>
+
+                    <eidea:label key="cityre.mis.datavip.bill.billCode"/><input type="text" ng-model=""/>
+                    <eidea:label key="cityre.mis.datavip.bill.bigBillCode"/><input type="text" ng-model=""/>
+                    <eidea:label key="cityre.mis.datavip.bill.alipayCode"/><input type="text" ng-model=""/>
+                    <eidea:label key="cityre.mis.datavip.dicpaytype.typename"/><input type="text" ng-model=""/>
+                </td>
+                <td>
+                    <eidea:label key="cityre.mis.datavip.bill.payflag"/><input type="text" ng-model=""/>
+                    <eidea:label key="cityre.mis.datavip.bill.postInvoiceFlag"/><input type="text" ng-model=""/>
+                    <eidea:label key="cityre.mis.datavip.bill.invoiceType"/><input type="text" ng-model=""/>
+                    <eidea:label key="cityre.mis.datavip.bill.postType"/><input type="text" ng-model=""/>
+                    <eidea:label key="cityre.mis.datavip.bill.invoiceNo"/><input type="text" ng-model=""/>
+                </td>
+            </tr>
+        </table>
+
         <button type="button" class="btn  btn-primary btn-sm" id="search_but" data-toggle="modal"
-                data-target="#confirmModal"><eidea:label key="common.button.search"/></button>
-        <button type="button" class="btn  btn-primary btn-sm" ng-disabled="!canDelete()"
-                ng-click="deleteRecord()" ng-show="canDel"><eidea:label key="common.button.delete"/></button>
-        <button type="button" class="btn btn-primary btn-sm" ng-disabled="!canDelete()"
-                ng-click="deleteLogic()" ng-show="canDel">逻辑删除</button>
+                data-target="#searchModal"><eidea:label key="common.button.search"/></button>
         <button type="button" class="btn btn-primary btn-sm"
                 ng-click="exportExcel()" >导出</button>
     </div>
@@ -147,8 +164,11 @@
                         已关闭
                     </td>
                     <td>
-                        <a class="btn btn-primary btn-xs" href="#/invoiceEdit?id={{model.id}}"><eidea:label
-                                key="base.mis.datavip.invoice.edit"/><%--编辑--%></a>
+                        <%--<a class="btn btn-primary btn-xs" href="#/invoiceEdit?id={{model.id}}" ng-show="!model.confirmPassword"><eidea:label--%>
+                                <%--key="base.mis.datavip.invoice.edit"/>&lt;%&ndash;开通发票&ndash;%&gt;</a>--%>
+                        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal"
+                                data-target="#confirmModal" ><eidea:label
+                                key="base.mis.datavip.invoice.edit"/></button>
                     </td>
                 </tr>
                 </tbody>

@@ -7,6 +7,7 @@ import org.mybatis.pagination.dto.datatables.PagingCriteria;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by cityre on 2017/8/8.
@@ -14,7 +15,7 @@ import java.util.List;
 @Repository
 public interface MisPhoneMapper {
 
-    PageMyBatis<MisUserPhonePo> selectByPage(PagingCriteria pagingCriteria);
+    PageMyBatis<MisUserPhonePo> selectByPage(Map<String,Object>map);
 
     List<MisUserPhonePo> selectByUid(@Param(value = "unionUid") String unionUid);
 

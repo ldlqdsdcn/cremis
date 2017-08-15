@@ -12,15 +12,25 @@
         <result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
+    <sql id="where_sql">
+        <where>
+            <if test="unionUid">
+            unionUid LIKE CONCAT("%",#{unionUid,jdbcType=VARCHAR},"%")
+            </if>
+        </where>
+    </sql>
     <!--v2017_user_email：查，条件：用户全局唯一ID，暂定这些-->
     <sql id="Base_Column">
         unionUid,address,isVerified,isPrimary,pinToken,expireTime,createTime,updateTime
     </sql>
 
-    <select id="selectByPage" resultMap="BaseResultType">
+    <select id="selectByPage" resultMap="BaseResultType" parameterType="java.util.Map">
         SELECT id,
         <include refid="Base_Column"/>
         FROM v2017_user_email
+        <if test="_parameter!=null">
+            <include refid="where_sql"/>
+        </if>
     </select>
 
     <select id="selectById" resultMap="BaseResultType" parameterType="java.lang.Integer">

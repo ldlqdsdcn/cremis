@@ -17,7 +17,9 @@ import org.mybatis.pagination.dto.datatables.SearchField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by cityre on 2017/7/19.
@@ -32,9 +34,19 @@ public class MisPhoneServiceImpl implements MisPhoneService {
     @Override
     public PaginationResult<MisUserPhonePo> getUserPhoneListByMyBatis(List<SearchField> searchFields, QueryParams queryParams) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        PagingCriteria pagingCriteria = PagingCriteria.createCriteriaWithSearch(queryParams.getFirstResult(),queryParams.getPageSize(),queryParams.getPageNo(),searchFields);
-        PageMyBatis<MisUserPhonePo> pageMyBatis =misPhoneMapper.selectByPage(pagingCriteria);
-        PaginationResult<MisUserPhonePo>  paginationResult = PaginationResult.pagination(pageMyBatis,(int)pageMyBatis.getTotal(),queryParams.getPageNo(),queryParams.getPageSize());
+        PagingCriteria pagingCriteria = PagingCriteria.createCriteria(queryParams.getPageSize(), queryParams.getFirstResult(), queryParams.getPageNo());
+        Map<String,Object>map = new HashMap<>();
+        map.put("pagingCriteria",pagingCriteria);
+        if (searchFields==null){
+            map.put("unionUid",null);
+        }else{
+            for (SearchField searchField:searchFields)
+                if (searchField.getField().equals("unionUid")){
+                    map.put("unionUid",searchField.getValue());
+                }
+        }
+        PageMyBatis<MisUserPhonePo> pageMyBatis = misPhoneMapper.selectByPage(map);
+        PaginationResult<MisUserPhonePo> paginationResult = PaginationResult.pagination(pageMyBatis, (int) pageMyBatis.getTotal(), queryParams.getPageNo(), queryParams.getPageSize());
         DataSourceContextHolder.setDbType("dataSource_core");
         return paginationResult;
     }
@@ -60,7 +72,7 @@ public class MisPhoneServiceImpl implements MisPhoneService {
     public List<MisUserPhonePo> getExistPhoneByUid(String unionUid) {
 
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        List<MisUserPhonePo> misUserPhonePos= misPhoneMapper.selectByUid(unionUid);
+        List<MisUserPhonePo> misUserPhonePos = misPhoneMapper.selectByUid(unionUid);
         DataSourceContextHolder.setDbType("dataSource_core");
         return misUserPhonePos;
     }
@@ -68,7 +80,7 @@ public class MisPhoneServiceImpl implements MisPhoneService {
     @Override
     public MisUserPhonePo getExistPhoneById(Integer id) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        MisUserPhonePo misUserPhonePo =  misPhoneMapper.selectById(id);
+        MisUserPhonePo misUserPhonePo = misPhoneMapper.selectById(id);
         DataSourceContextHolder.setDbType("dataSource_core");
         return misUserPhonePo;
     }
@@ -83,7 +95,7 @@ public class MisPhoneServiceImpl implements MisPhoneService {
     @Override
     public List<MisUserPhonePo> getExistPhoneList() {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        List<MisUserPhonePo> misUserPhonePos= misPhoneMapper.selectPhoneList();
+        List<MisUserPhonePo> misUserPhonePos = misPhoneMapper.selectPhoneList();
         DataSourceContextHolder.setDbType("dataSource_core");
         return misUserPhonePos;
     }

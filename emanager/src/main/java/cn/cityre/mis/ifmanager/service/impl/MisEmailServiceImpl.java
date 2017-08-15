@@ -17,7 +17,9 @@ import org.mybatis.pagination.dto.datatables.SearchField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by cityre on 2017/7/19.
@@ -34,8 +36,18 @@ public class MisEmailServiceImpl implements MisEmailService {
     @Override
     public PaginationResult<MisUserEmailPo> getUserEmailListByMybatis(List<SearchField> searchFields, QueryParams queryParams) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        PagingCriteria pagingCriteria = PagingCriteria.createCriteriaWithSearch(queryParams.getFirstResult(),queryParams.getPageSize(),queryParams.getPageNo(),searchFields);
-        PageMyBatis<MisUserEmailPo> pageMyBatis = misEmailMapper.selectByPage(pagingCriteria);
+        PagingCriteria pagingCriteria = PagingCriteria.createCriteria(queryParams.getPageSize(),queryParams.getFirstResult(),queryParams.getPageNo());
+        Map<String,Object>map = new HashMap<>();
+        map.put("pagingCriteria",pagingCriteria);
+        if (searchFields==null){
+            map.put("unionUid",null);
+        }else{
+            for (SearchField searchField:searchFields)
+                if (searchField.getField().equals("unionUid")){
+                    map.put("unionUid",searchField.getValue());
+                }
+        }
+        PageMyBatis<MisUserEmailPo> pageMyBatis = misEmailMapper.selectByPage(map);
         PaginationResult<MisUserEmailPo> paginationResult = PaginationResult.pagination(pageMyBatis,(int)pageMyBatis.getTotal(),queryParams.getPageNo(),queryParams.getPageSize());
         DataSourceContextHolder.setDbType("dataSource_core");
         return paginationResult;
