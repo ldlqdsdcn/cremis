@@ -7,13 +7,14 @@ import org.mybatis.pagination.dto.datatables.PagingCriteria;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by cityre on 2017/8/8.
  */
 @Repository
 public interface MisUserMapper {
-    PageMyBatis<MisUserPo> selectByPage(PagingCriteria pagingCriteria);
+    PageMyBatis<MisUserPo> selectByPage(Map<String,Object> map);
 
     MisUserPo selectByUserId(String userId);
 

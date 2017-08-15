@@ -35,15 +35,16 @@ public class MisPhoneServiceImpl implements MisPhoneService {
     public PaginationResult<MisUserPhonePo> getUserPhoneListByMyBatis(List<SearchField> searchFields, QueryParams queryParams) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         PagingCriteria pagingCriteria = PagingCriteria.createCriteria(queryParams.getPageSize(), queryParams.getFirstResult(), queryParams.getPageNo());
-        Map<String,Object>map = new HashMap<>();
-        map.put("pagingCriteria",pagingCriteria);
-        if (searchFields==null){
-            map.put("unionUid",null);
-        }else{
-            for (SearchField searchField:searchFields)
-                if (searchField.getField().equals("unionUid")){
-                    map.put("unionUid",searchField.getValue());
+        Map<String, Object> map = new HashMap<>();
+        map.put("pagingCriteria", pagingCriteria);
+        if (searchFields == null) {
+            map.put("unionUid", null);
+        } else {
+            for (SearchField searchField : searchFields) {
+                if (searchField.getField().equals("unionUid")) {
+                    map.put("unionUid", searchField.getValue());
                 }
+            }
         }
         PageMyBatis<MisUserPhonePo> pageMyBatis = misPhoneMapper.selectByPage(map);
         PaginationResult<MisUserPhonePo> paginationResult = PaginationResult.pagination(pageMyBatis, (int) pageMyBatis.getTotal(), queryParams.getPageNo(), queryParams.getPageSize());

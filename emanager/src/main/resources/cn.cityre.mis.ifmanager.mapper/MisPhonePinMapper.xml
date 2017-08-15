@@ -14,11 +14,31 @@
     <sql id="Base_Column">
          id,phone,pinToken,pinCode,action,createTime,expireTime
     </sql>
-
+    <sql id="where_sql">
+        <where>
+            <if test="phone!=null">
+                phone = #{phone,jdbcType=VARCHAR}
+            </if>
+            <if test="action!=null">
+                v2017_phone_pin.action=#{action,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+    <select id="selectCount" resultType="java.lang.Integer">
+        SELECT
+        count(1)
+        FROM v2017_phone_pin
+        <if test="_parameter!=null">
+            <include refid="where_sql"></include>
+        </if>
+    </select>
     <select id="selectByPage" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column"/>
         FROM v2017_phone_pin
+        <if test="_parameter!=null">
+            <include refid="where_sql"></include>
+        </if>
     </select>
 
     <select id="selectByPhone" resultMap="BaseResultMap" parameterType="java.lang.String">
