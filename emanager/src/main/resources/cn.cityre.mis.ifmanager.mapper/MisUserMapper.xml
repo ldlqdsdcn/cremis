@@ -55,6 +55,14 @@
         WHERE realName = #{realName,jdbcType=VARCHAR}
     </select>
 
+    <select id="selectUserOrderByCreateTime" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column"/>
+        from v2017_user
+        WHERE createTime <![CDATA[>=]]> DATE_SUB(now(),INTERVAL 1 WEEK)
+        ORDER BY createTime DESC
+    </select>
+
     <select id="selectByUid" parameterType="java.lang.String" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column"/>

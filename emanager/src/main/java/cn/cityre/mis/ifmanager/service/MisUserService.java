@@ -15,6 +15,8 @@ import java.util.List;
 public interface MisUserService {
     PaginationResult<MisUserPo> getExistUserList(Search search, QueryParams queryParams);
 
+    List<MisUserPo> getNewUser();
+
     PaginationResult<MisUserPo> getExistUserListByMybatis(List<SearchField> searchFields, QueryParams queryParams);
 
     MisUserPo selectByUserId(String userId);

@@ -5,7 +5,6 @@
         <ol class="breadcrumb">
             <li><a href="javascript:;"><i class="icon icon-tasks"></i><eidea:label key="apikey.title"/></a></li>
         </ol>
-        <%--<a href="#/edit" class="btn  btn-primary btn-sm" ng-show="canAdd"><eidea:label key="common.button.create"/></a>--%>
         <button type="button" class="btn  btn-primary btn-sm" id="search_but" data-toggle="modal"
                 data-target="#searchModal"><eidea:label key="common.button.search"/></button>
         <button type="button" class="btn btn-primary btn-sm"
@@ -69,10 +68,7 @@
                     <td>
                         {{model.bills.payFlag}}
                     </td>
-                    <td ng-if="model.userPaymentInfo.payAmount==null">
-                        {{model.bills.productCost}}
-                    </td>
-                    <td ng-if="model.userPaymentInfo.payAmount!=null">
+                    <td>
                         {{model.userPaymentInfo.payAmount}}
                     </td>
                     <td>

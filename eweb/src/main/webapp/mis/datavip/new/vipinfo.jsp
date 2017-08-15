@@ -111,6 +111,17 @@
             };
             $rootScope.listQueryParams = $scope.queryParams;
         }
+        $scope.exportExcel=function () {
+            $http.post("<c:url value="/mis/datavip/new/exportExcel"/> ",$scope.modelList).success(function (response) {
+                if (response.success){
+                    $scope.message="<eidea:label key="base.save.success"/>"
+                    bootbox.alert(response.data);
+                }
+            }).error(function (response) {
+                $scope.message=response.message;
+                $scope.errors=response.data;
+            })
+        }
 
         $scope.pageChanged();
 
@@ -156,17 +167,8 @@
                     }
                 });
             }
-        }
-        $scope.exportExcel=function () {
-            $http.post("<c:url value="/mis/datavip/new/exportExcel"/> ",$scope.modelList).success(function (response) {
-                if (response.success){
-                    $scope.message="<eidea:label key="base.save.success"/>"
-                }
-            }).error(function (response) {
-                $scope.message=response.message;
-                $scope.errors=response.data;
-            })
         };
+
         $scope.create = function () {
             $scope.message = "";
             $scope.directoryBo = {};
@@ -183,7 +185,6 @@
                 bootbox.alert(response);
             });
         }
-
         buttonHeader.editInit($scope,$http,$window,$timeout, Upload,"/base");
     });
     app.run([

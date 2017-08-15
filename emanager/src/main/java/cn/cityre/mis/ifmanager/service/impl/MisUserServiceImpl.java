@@ -50,16 +50,24 @@ public class MisUserServiceImpl implements MisUserService {
     }
 
     @Override
+    public List<MisUserPo> getNewUser() {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
+        List<MisUserPo> list = misUserMapper.selectUserOrderByCreateTime();
+        DataSourceContextHolder.setDbType("dataSource_core");
+        return list;
+    }
+
+    @Override
     public PaginationResult<MisUserPo> getExistUserListByMybatis(List<SearchField> searchFields, QueryParams queryParams) {
         DataSourceContextHolder.setDbType("dataSource_account");
         PagingCriteria pagingCriteria = PagingCriteria.createCriteria(queryParams.getPageSize(), queryParams.getFirstResult(), queryParams.getPageNo());
-        Map<String,Object> map = new HashMap<>();
-        map.put("pagingCriteria",pagingCriteria);
+        Map<String, Object> map = new HashMap<>();
+        map.put("pagingCriteria", pagingCriteria);
         if (searchFields == null) {
-            map.put("realName",null);
-            map.put("isVerified",null);
-            map.put("createStartTime",null);
-            map.put("createEndTime",null);
+            map.put("realName", null);
+            map.put("isVerified", null);
+            map.put("createStartTime", null);
+            map.put("createEndTime", null);
         } else {
             for (SearchField searchField : searchFields) {
                 if (searchField.getField().equals("realName")) {

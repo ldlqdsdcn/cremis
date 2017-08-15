@@ -16,6 +16,8 @@ import java.util.Map;
 public interface MisUserMapper {
     PageMyBatis<MisUserPo> selectByPage(Map<String,Object> map);
 
+    List<MisUserPo> selectUserOrderByCreateTime();
+
     MisUserPo selectByUserId(String userId);
 
     MisUserPo selectByUid(String uid);

@@ -1,437 +1,457 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.cityre.mis.datavip.dao.UserListMapper">
-  <resultMap id="BaseResultMap" type="cn.cityre.mis.datavip.entity.UserList">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="suid" jdbcType="VARCHAR" property="suid" />
-    <result column="uid" jdbcType="VARCHAR" property="uid" />
-    <result column="pwd" jdbcType="VARCHAR" property="pwd" />
-    <result column="username" jdbcType="VARCHAR" property="userName" />
-    <result column="sex" jdbcType="VARCHAR" property="sex" />
-    <result column="regtime" jdbcType="TIMESTAMP" property="regTime" />
-    <result column="updateuid" jdbcType="VARCHAR" property="updateUid" />
-    <result column="updatetime" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="user_type" jdbcType="VARCHAR" property="userType" />
-    <result column="pay_user" jdbcType="VARCHAR" property="payUser" />
-    <result column="pay_type" jdbcType="VARCHAR" property="payType" />
-    <result column="pay_tel" jdbcType="VARCHAR" property="payTel" />
-    <result column="pay_remark" jdbcType="VARCHAR" property="payRemark" />
-    <result column="remark" jdbcType="VARCHAR" property="remark" />
-    <result column="usource" jdbcType="VARCHAR" property="usource" />
-    <result column="flag" jdbcType="INTEGER" property="flag" />
-    <result column="checkuid" jdbcType="VARCHAR" property="checkUid" />
-    <result column="checktime" jdbcType="TIMESTAMP" property="checkTime" />
-    <result column="company" jdbcType="VARCHAR" property="company" />
-    <result column="agent" jdbcType="VARCHAR" property="agent" />
-    <result column="telflag" jdbcType="INTEGER" property="telFlag" />
-    <result column="emailflag" jdbcType="INTEGER" property="emailFlag" />
-    <result column="usericon" jdbcType="VARCHAR" property="usericon" />
-    <result column="birthdate" jdbcType="DATE" property="birthdate" />
-    <result column="citycode" jdbcType="VARCHAR" property="cityCode" />
-    <result column="nickname" jdbcType="VARCHAR" property="nickName" />
-    <result column="autoflag" jdbcType="INTEGER" property="autoFlag" />
-  </resultMap>
-  <resultMap id="UserListInfoMap" type="cn.cityre.mis.datavip.entity.UserList" extends="BaseResultMap">
-    <result property="bills.billCode" column="bill_code" jdbcType="VARCHAR"/>
-    <result property="bills.productCost" column="product_cost" jdbcType="VARCHAR"/>
-    <result property="bills.cityCode" column="city_code" jdbcType="VARCHAR"/>
-    <result property="bills.pLevel" column="plevel" jdbcType="VARCHAR"/>
-    <result property="bills.contentName" column="contentname" jdbcType="VARCHAR"/>
-    <result property="bills.pgps" column="pgps" jdbcType="VARCHAR"/>
-    <result property="bills.dealType" column="dealtype" jdbcType="VARCHAR"/>
-    <result property="bills.payFlag" column="pay_flag" jdbcType="VARCHAR"/>
-    <result property="bills.invoiceTitle" column="invoice_title" jdbcType="VARCHAR"/>
-    <result property="dicUserType.userTypeName" column="user_type_name" jdbcType="VARCHAR"/>
-    <result property="dicUserType.note" column="note" jdbcType="VARCHAR"/>
-    <result property="userPaymentInfo.payAmount" column="pay_amount" jdbcType="VARCHAR"/>
-    <result property="userPaymentInfo.startTime" column="start_time" jdbcType="TIMESTAMP"/>
-    <result property="userPaymentInfo.endTime" column="end_time" jdbcType="TIMESTAMP"/>
-  </resultMap>
+    <resultMap id="BaseResultMap" type="cn.cityre.mis.datavip.entity.UserList">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="suid" jdbcType="VARCHAR" property="suid"/>
+        <result column="uid" jdbcType="VARCHAR" property="uid"/>
+        <result column="pwd" jdbcType="VARCHAR" property="pwd"/>
+        <result column="username" jdbcType="VARCHAR" property="userName"/>
+        <result column="sex" jdbcType="VARCHAR" property="sex"/>
+        <result column="regtime" jdbcType="TIMESTAMP" property="regTime"/>
+        <result column="updateuid" jdbcType="VARCHAR" property="updateUid"/>
+        <result column="updatetime" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="user_type" jdbcType="VARCHAR" property="userType"/>
+        <result column="pay_user" jdbcType="VARCHAR" property="payUser"/>
+        <result column="pay_type" jdbcType="VARCHAR" property="payType"/>
+        <result column="pay_tel" jdbcType="VARCHAR" property="payTel"/>
+        <result column="pay_remark" jdbcType="VARCHAR" property="payRemark"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="usource" jdbcType="VARCHAR" property="usource"/>
+        <result column="flag" jdbcType="INTEGER" property="flag"/>
+        <result column="checkuid" jdbcType="VARCHAR" property="checkUid"/>
+        <result column="checktime" jdbcType="TIMESTAMP" property="checkTime"/>
+        <result column="company" jdbcType="VARCHAR" property="company"/>
+        <result column="agent" jdbcType="VARCHAR" property="agent"/>
+        <result column="telflag" jdbcType="INTEGER" property="telFlag"/>
+        <result column="emailflag" jdbcType="INTEGER" property="emailFlag"/>
+        <result column="usericon" jdbcType="VARCHAR" property="usericon"/>
+        <result column="birthdate" jdbcType="DATE" property="birthdate"/>
+        <result column="citycode" jdbcType="VARCHAR" property="cityCode"/>
+        <result column="nickname" jdbcType="VARCHAR" property="nickName"/>
+        <result column="autoflag" jdbcType="INTEGER" property="autoFlag"/>
+    </resultMap>
+    <resultMap id="UserListInfoMap" type="cn.cityre.mis.datavip.entity.UserList" extends="BaseResultMap">
+        <result property="bills.billCode" column="bill_code" jdbcType="VARCHAR"/>
+        <result property="bills.productCost" column="product_cost" jdbcType="VARCHAR"/>
+        <result property="bills.cityCode" column="city_code" jdbcType="VARCHAR"/>
+        <result property="bills.pLevel" column="plevel" jdbcType="VARCHAR"/>
+        <result property="bills.contentName" column="contentname" jdbcType="VARCHAR"/>
+        <result property="bills.pgps" column="pgps" jdbcType="VARCHAR"/>
+        <result property="bills.dealType" column="dealtype" jdbcType="VARCHAR"/>
+        <result property="bills.payFlag" column="pay_flag" jdbcType="VARCHAR"/>
+        <result property="bills.invoiceTitle" column="invoice_title" jdbcType="VARCHAR"/>
+        <result property="dicUserType.userTypeName" column="user_type_name" jdbcType="VARCHAR"/>
+        <result property="dicUserType.note" column="note" jdbcType="VARCHAR"/>
+        <result property="userPaymentInfo.payAmount" column="pay_amount" jdbcType="VARCHAR"/>
+        <result property="userPaymentInfo.startTime" column="start_time" jdbcType="TIMESTAMP"/>
+        <result property="userPaymentInfo.endTime" column="end_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <resultMap id="UserListExportMap" type="cn.cityre.mis.datavip.entity.UserList" extends="BaseResultMap">
+        <result property="billCode" column="bill_code" jdbcType="VARCHAR"/>
+        <result property="productCost" column="product_cost" jdbcType="VARCHAR"/>
+        <result property="billsCityCode" column="city_code" jdbcType="VARCHAR"/>
+        <result property="pLevel" column="plevel" jdbcType="VARCHAR"/>
+        <result property="contentName" column="contentname" jdbcType="VARCHAR"/>
+        <result property="pGps" column="pgps" jdbcType="VARCHAR"/>
+        <result property="dealType" column="dealtype" jdbcType="VARCHAR"/>
+        <result property="payFlag" column="pay_flag" jdbcType="VARCHAR"/>
+        <result property="invoiceTitle" column="invoice_title" jdbcType="VARCHAR"/>
+        <result property="userTypeName" column="user_type_name" jdbcType="VARCHAR"/>
+        <result property="note" column="note" jdbcType="VARCHAR"/>
+        <result property="payAmount" column="pay_amount" jdbcType="VARCHAR"/>
+        <result property="startTime" column="start_time" jdbcType="TIMESTAMP"/>
+        <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
 
 
-  <sql id="Base_Column_List">
+    <sql id="Base_Column_List">
     id, suid, uid, pwd, username, sex, regtime, updateuid, updatetime, email, user_type, 
     pay_user, pay_type, pay_tel, pay_remark, remark, usource, flag, checkuid, checktime, 
     company, agent, telflag, emailflag, usericon, birthdate, citycode, nickname, autoflag
   </sql>
-  <sql id="where_sql">
-    <where>
-    <if test="uid!=null">
-    AND userlist.uid like concat('%',#{uid,jdbcType=VARCHAR},'%')
-    </if>
-    <if test="userType!=null">
-    And dic_user_type.user_type_name LIKE CONCAT('%',#{userType,jdbcType=VARCHAR},'%')
-    </if>
-    <if test="regStartTime!=null">
-    AND userlist.regtime <![CDATA[>=]]>#{regStartTime,jdbcType=TIMESTAMP}
-    </if>
-    <if test="regEndTime!=null">
-    AND userlist.regtime <![CDATA[<=]]> #{regEndTime,jdbcType=TIMESTAMP}
-    </if>
-    <if test="payTel!=null">
-    and userlist.pay_tel LIKE  concat('%',#{payTel,jdbcType=VARCHAR},'%')
-    </if>
-    <if test="payFlag!=null">
-    AND bills.pay_flag = #{payFlag,jdbcType=VARCHAR}
-    </if>
-    <if test="serviceStartTime!=null">
-    AND user_payment_info.start_time <![CDATA[>=]]>#{serviceStartTime,jdbcType=TIMESTAMP}
-    </if>
-    <if test="serviceEndTime!=null">
-    AND user_payment_info.end_time <![CDATA[<=]]> #{serviceEndTime,jdbcType=TIMESTAMP}
-    </if>
-    </where>
-  </sql>
+    <sql id="where_sql">
+        <where>
+            <if test="uid!=null">
+                AND userlist.uid like concat('%',#{uid,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="userType!=null">
+                And dic_user_type.user_type_name LIKE CONCAT('%',#{userType,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="regStartTime!=null">
+                AND userlist.regtime <![CDATA[>=]]>#{regStartTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="regEndTime!=null">
+                AND userlist.regtime <![CDATA[<=]]> #{regEndTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="payTel!=null">
+                and userlist.pay_tel LIKE concat('%',#{payTel,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="payFlag!=null">
+                AND bills.pay_flag = #{payFlag,jdbcType=VARCHAR}
+            </if>
+            <if test="serviceStartTime!=null">
+                AND user_payment_info.start_time <![CDATA[>=]]>#{serviceStartTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="serviceEndTime!=null">
+                AND user_payment_info.end_time <![CDATA[<=]]> #{serviceEndTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="newUser!=null">
+                1=1
+            </if>
+        </where>
+    </sql>
 
-  <select id="selectUserInfoByPage" resultMap="UserListInfoMap" parameterType="java.util.Map">
-    SELECT
-    userlist.uid,userlist.username,userlist.regtime,userlist.email,userlist.flag,userlist.pay_tel,
-    dic_user_type.user_type_name,dic_user_type.note,
-    bills.bill_code,bills.product_cost,bills.city_code,bills.plevel,bills.contentname,bills.pgps,bills.dealtype,bills.invoice_title,bills.pay_flag,
-    user_payment_info.pay_amount,user_payment_info.start_time,user_payment_info.end_time
-    FROM userlist
-    INNER JOIN bills ON bills.suid = userlist.suid
-    INNER JOIN dic_user_type ON dic_user_type.user_type_code = userlist.user_type AND dic_user_type.type IN ('dm','creprice','fjgj')
-    LEFT JOIN user_payment_info ON user_payment_info.billcode = bills.bill_code
-    <if test="_parameter!=null">
-      <include refid="where_sql"/>
-    </if>
-  </select>
-  <select id="selectExportInfo" resultMap="UserListInfoMap" parameterType="java.util.Map">
-    SELECT
-    userlist.uid,userlist.username,userlist.regtime,userlist.email,userlist.flag,userlist.pay_tel,
-    dic_user_type.user_type_name,dic_user_type.note,
-    bills.bill_code,bills.product_cost,bills.city_code,bills.plevel,bills.contentname,bills.pgps,bills.dealtype,bills.invoice_title,bills.pay_flag,
-    user_payment_info.pay_amount,user_payment_info.start_time,user_payment_info.end_time
-    FROM userlist
-    INNER JOIN bills ON bills.suid = userlist.suid
-    INNER JOIN dic_user_type ON dic_user_type.user_type_code = userlist.user_type AND dic_user_type.type IN ('dm','creprice','fjgj')
-    LEFT JOIN user_payment_info ON user_payment_info.billcode = bills.bill_code
-    <if test="_parameter!=null">
-      <include refid="where_sql"/>
-    </if>
-  </select>
-  <!--查询用户密码-->
-  <select id="selectUserPassword" resultType="java.lang.String" parameterType="java.lang.String">
+    <select id="selectUserInfoByPage" resultMap="UserListInfoMap" parameterType="java.util.Map">
+        SELECT
+        userlist.uid,userlist.username,userlist.regtime,userlist.email,userlist.flag,userlist.pay_tel,
+        dic_user_type.user_type_name,dic_user_type.note,
+        bills.bill_code,bills.city_code,bills.plevel,bills.contentname,bills.pgps,bills.dealtype,bills.invoice_title,bills.pay_flag,
+        ifnull(user_payment_info.pay_amount,bills.product_cost) as pay_amount,user_payment_info.start_time,user_payment_info.end_time
+        FROM userlist
+        INNER JOIN bills ON bills.suid = userlist.suid
+        INNER JOIN dic_user_type ON dic_user_type.user_type_code = userlist.user_type AND dic_user_type.type IN
+        ('dm','creprice','fjgj')
+        LEFT JOIN user_payment_info ON user_payment_info.billcode = bills.bill_code
+        <if test="_parameter!=null">
+            <include refid="where_sql"/>
+        </if>
+    </select>
+    <select id="selectExportInfo" resultMap="UserListExportMap" parameterType="java.util.Map">
+        SELECT
+        userlist.uid,userlist.username,userlist.regtime,userlist.email,userlist.flag,userlist.pay_tel,
+        dic_user_type.user_type_name,dic_user_type.note,
+        bills.bill_code,bills.product_cost,bills.city_code,bills.plevel,bills.contentname,bills.pgps,bills.dealtype,bills.invoice_title,bills.pay_flag,
+        ifnull(user_payment_info.pay_amount,bills.product_cost) as pay_amount,user_payment_info.start_time,user_payment_info.end_time
+        FROM userlist
+        INNER JOIN bills ON bills.suid = userlist.suid
+        INNER JOIN dic_user_type ON dic_user_type.user_type_code = userlist.user_type AND dic_user_type.type IN
+        ('dm','creprice','fjgj')
+        LEFT JOIN user_payment_info ON user_payment_info.billcode = bills.bill_code
+        <if test="_parameter!=null">
+            <include refid="where_sql"/>
+        </if>
+    </select>
+    <!--查询用户密码-->
+    <select id="selectUserPassword" resultType="java.lang.String" parameterType="java.lang.String">
     SELECT userlist.pwd FROM userlist WHERE suid = #{suid,jdbcType=VARCHAR}
   </select>
-  <!--获取用户BySuid-->
-  <select id="selectBySuid" resultMap="BaseResultMap" parameterType="java.lang.String">
-    select
-    <include refid="Base_Column_List"/>
-    FROM userlist WHERE userlist.suid = #{suid,jdbcType=VARCHAR}
-  </select>
-  <!--//数据会员查询-->
-  <select id="selectBypage" resultMap="BaseResultMap">
+    <!--获取用户BySuid-->
+    <select id="selectBySuid" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        FROM userlist WHERE userlist.suid = #{suid,jdbcType=VARCHAR}
+    </select>
+    <!--//数据会员查询-->
+    <select id="selectBypage" resultMap="BaseResultMap">
     SELECT uid,min(regtime) AS  regtime from userlist
     INNER JOIN dic_user_type.user_type_code = userlist.user_type
     WHERE dic_user_type.type in ('dm','creprice') group by uid having 1=1
   </select>
 
-  <select id="selectIntroByUid" parameterType="java.lang.String">
+    <select id="selectIntroByUid" parameterType="java.lang.String">
     select DISTINCT dic_user_type.intro FROM userlist
     INNER JOIN dic_user_type on dic_user_type.user_type_code = userlist.user_type
     WHERE uid = #{Uid,jdbcType=VARCHAR}
     AND dic_user_type.type IN ('dm','creprice') order by userlist.id
   </select>
 
-  <select id="selectRegTimeByUid" parameterType="java.lang.String">
+    <select id="selectRegTimeByUid" parameterType="java.lang.String">
     select DISTINCT userlist.regtime from userlist where uid = #{uid,jdbcType=VARCHAR} ORDER BY  userlist.id
   </select>
 
-  <select id="selectTelByUid" parameterType="java.lang.String">
+    <select id="selectTelByUid" parameterType="java.lang.String">
     select DISTINCT userlist.pay_tel from userlist WHERE uid = #{uid,jdbcType=VARCHAR} ORDER BY  userlist.id
   </select>
 
-  <select id="selectIdByUid" parameterType="java.lang.String">
+    <select id="selectIdByUid" parameterType="java.lang.String">
     select userlist.id from userlist WHERE  uid = #{uid,jdbcType=VARCHAR} AND flag=1
   </select>
 
 
-
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from userlist
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from userlist
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from userlist
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insertSelective" parameterType="cn.cityre.mis.datavip.entity.UserList">
-    insert into userlist
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="suid != null">
-        suid,
-      </if>
-      <if test="uid != null">
-        uid,
-      </if>
-      <if test="pwd != null">
-        pwd,
-      </if>
-      <if test="username != null">
-        username,
-      </if>
-      <if test="sex != null">
-        sex,
-      </if>
-      <if test="regtime != null">
-        regtime,
-      </if>
-      <if test="updateuid != null">
-        updateuid,
-      </if>
-      <if test="updatetime != null">
-        updatetime,
-      </if>
-      <if test="email != null">
-        email,
-      </if>
-      <if test="userType != null">
-        user_type,
-      </if>
-      <if test="payUser != null">
-        pay_user,
-      </if>
-      <if test="payType != null">
-        pay_type,
-      </if>
-      <if test="payTel != null">
-        pay_tel,
-      </if>
-      <if test="payRemark != null">
-        pay_remark,
-      </if>
-      <if test="remark != null">
-        remark,
-      </if>
-      <if test="usource != null">
-        usource,
-      </if>
-      <if test="flag != null">
-        flag,
-      </if>
-      <if test="checkuid != null">
-        checkuid,
-      </if>
-      <if test="checktime != null">
-        checktime,
-      </if>
-      <if test="company != null">
-        company,
-      </if>
-      <if test="agent != null">
-        agent,
-      </if>
-      <if test="telflag != null">
-        telflag,
-      </if>
-      <if test="emailflag != null">
-        emailflag,
-      </if>
-      <if test="usericon != null">
-        usericon,
-      </if>
-      <if test="birthdate != null">
-        birthdate,
-      </if>
-      <if test="citycode != null">
-        citycode,
-      </if>
-      <if test="nickname != null">
-        nickname,
-      </if>
-      <if test="autoflag != null">
-        autoflag,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="suid != null">
-        #{suid,jdbcType=VARCHAR},
-      </if>
-      <if test="uid != null">
-        #{uid,jdbcType=VARCHAR},
-      </if>
-      <if test="pwd != null">
-        #{pwd,jdbcType=VARCHAR},
-      </if>
-      <if test="username != null">
-        #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="sex != null">
-        #{sex,jdbcType=VARCHAR},
-      </if>
-      <if test="regtime != null">
-        #{regtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateuid != null">
-        #{updateuid,jdbcType=VARCHAR},
-      </if>
-      <if test="updatetime != null">
-        #{updatetime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="email != null">
-        #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="userType != null">
-        #{userType,jdbcType=VARCHAR},
-      </if>
-      <if test="payUser != null">
-        #{payUser,jdbcType=VARCHAR},
-      </if>
-      <if test="payType != null">
-        #{payType,jdbcType=VARCHAR},
-      </if>
-      <if test="payTel != null">
-        #{payTel,jdbcType=VARCHAR},
-      </if>
-      <if test="payRemark != null">
-        #{payRemark,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null">
-        #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="usource != null">
-        #{usource,jdbcType=VARCHAR},
-      </if>
-      <if test="flag != null">
-        #{flag,jdbcType=INTEGER},
-      </if>
-      <if test="checkuid != null">
-        #{checkuid,jdbcType=VARCHAR},
-      </if>
-      <if test="checktime != null">
-        #{checktime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="company != null">
-        #{company,jdbcType=VARCHAR},
-      </if>
-      <if test="agent != null">
-        #{agent,jdbcType=VARCHAR},
-      </if>
-      <if test="telflag != null">
-        #{telflag,jdbcType=INTEGER},
-      </if>
-      <if test="emailflag != null">
-        #{emailflag,jdbcType=INTEGER},
-      </if>
-      <if test="usericon != null">
-        #{usericon,jdbcType=VARCHAR},
-      </if>
-      <if test="birthdate != null">
-        #{birthdate,jdbcType=DATE},
-      </if>
-      <if test="citycode != null">
-        #{citycode,jdbcType=VARCHAR},
-      </if>
-      <if test="nickname != null">
-        #{nickname,jdbcType=VARCHAR},
-      </if>
-      <if test="autoflag != null">
-        #{autoflag,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.cityre.mis.datavip.entity.UserList">
-    update userlist
-    <set>
-      <if test="suid != null">
-        suid = #{suid,jdbcType=VARCHAR},
-      </if>
-      <if test="uid != null">
-        uid = #{uid,jdbcType=VARCHAR},
-      </if>
-      <if test="pwd != null">
-        pwd = #{pwd,jdbcType=VARCHAR},
-      </if>
-      <if test="username != null">
-        username = #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="sex != null">
-        sex = #{sex,jdbcType=VARCHAR},
-      </if>
-      <if test="regtime != null">
-        regtime = #{regtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateuid != null">
-        updateuid = #{updateuid,jdbcType=VARCHAR},
-      </if>
-      <if test="updatetime != null">
-        updatetime = #{updatetime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="email != null">
-        email = #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="userType != null">
-        user_type = #{userType,jdbcType=VARCHAR},
-      </if>
-      <if test="payUser != null">
-        pay_user = #{payUser,jdbcType=VARCHAR},
-      </if>
-      <if test="payType != null">
-        pay_type = #{payType,jdbcType=VARCHAR},
-      </if>
-      <if test="payTel != null">
-        pay_tel = #{payTel,jdbcType=VARCHAR},
-      </if>
-      <if test="payRemark != null">
-        pay_remark = #{payRemark,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null">
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="usource != null">
-        usource = #{usource,jdbcType=VARCHAR},
-      </if>
-      <if test="flag != null">
-        flag = #{flag,jdbcType=INTEGER},
-      </if>
-      <if test="checkuid != null">
-        checkuid = #{checkuid,jdbcType=VARCHAR},
-      </if>
-      <if test="checktime != null">
-        checktime = #{checktime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="company != null">
-        company = #{company,jdbcType=VARCHAR},
-      </if>
-      <if test="agent != null">
-        agent = #{agent,jdbcType=VARCHAR},
-      </if>
-      <if test="telflag != null">
-        telflag = #{telflag,jdbcType=INTEGER},
-      </if>
-      <if test="emailflag != null">
-        emailflag = #{emailflag,jdbcType=INTEGER},
-      </if>
-      <if test="usericon != null">
-        usericon = #{usericon,jdbcType=VARCHAR},
-      </if>
-      <if test="birthdate != null">
-        birthdate = #{birthdate,jdbcType=DATE},
-      </if>
-      <if test="citycode != null">
-        citycode = #{citycode,jdbcType=VARCHAR},
-      </if>
-      <if test="nickname != null">
-        nickname = #{nickname,jdbcType=VARCHAR},
-      </if>
-      <if test="autoflag != null">
-        autoflag = #{autoflag,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.cityre.mis.datavip.entity.UserList">
+    <insert id="insertSelective" parameterType="cn.cityre.mis.datavip.entity.UserList">
+        insert into userlist
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="suid != null">
+                suid,
+            </if>
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="pwd != null">
+                pwd,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="regtime != null">
+                regtime,
+            </if>
+            <if test="updateuid != null">
+                updateuid,
+            </if>
+            <if test="updatetime != null">
+                updatetime,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="userType != null">
+                user_type,
+            </if>
+            <if test="payUser != null">
+                pay_user,
+            </if>
+            <if test="payType != null">
+                pay_type,
+            </if>
+            <if test="payTel != null">
+                pay_tel,
+            </if>
+            <if test="payRemark != null">
+                pay_remark,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="usource != null">
+                usource,
+            </if>
+            <if test="flag != null">
+                flag,
+            </if>
+            <if test="checkuid != null">
+                checkuid,
+            </if>
+            <if test="checktime != null">
+                checktime,
+            </if>
+            <if test="company != null">
+                company,
+            </if>
+            <if test="agent != null">
+                agent,
+            </if>
+            <if test="telflag != null">
+                telflag,
+            </if>
+            <if test="emailflag != null">
+                emailflag,
+            </if>
+            <if test="usericon != null">
+                usericon,
+            </if>
+            <if test="birthdate != null">
+                birthdate,
+            </if>
+            <if test="citycode != null">
+                citycode,
+            </if>
+            <if test="nickname != null">
+                nickname,
+            </if>
+            <if test="autoflag != null">
+                autoflag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="suid != null">
+                #{suid,jdbcType=VARCHAR},
+            </if>
+            <if test="uid != null">
+                #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="pwd != null">
+                #{pwd,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="regtime != null">
+                #{regtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateuid != null">
+                #{updateuid,jdbcType=VARCHAR},
+            </if>
+            <if test="updatetime != null">
+                #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="userType != null">
+                #{userType,jdbcType=VARCHAR},
+            </if>
+            <if test="payUser != null">
+                #{payUser,jdbcType=VARCHAR},
+            </if>
+            <if test="payType != null">
+                #{payType,jdbcType=VARCHAR},
+            </if>
+            <if test="payTel != null">
+                #{payTel,jdbcType=VARCHAR},
+            </if>
+            <if test="payRemark != null">
+                #{payRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="usource != null">
+                #{usource,jdbcType=VARCHAR},
+            </if>
+            <if test="flag != null">
+                #{flag,jdbcType=INTEGER},
+            </if>
+            <if test="checkuid != null">
+                #{checkuid,jdbcType=VARCHAR},
+            </if>
+            <if test="checktime != null">
+                #{checktime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="company != null">
+                #{company,jdbcType=VARCHAR},
+            </if>
+            <if test="agent != null">
+                #{agent,jdbcType=VARCHAR},
+            </if>
+            <if test="telflag != null">
+                #{telflag,jdbcType=INTEGER},
+            </if>
+            <if test="emailflag != null">
+                #{emailflag,jdbcType=INTEGER},
+            </if>
+            <if test="usericon != null">
+                #{usericon,jdbcType=VARCHAR},
+            </if>
+            <if test="birthdate != null">
+                #{birthdate,jdbcType=DATE},
+            </if>
+            <if test="citycode != null">
+                #{citycode,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="autoflag != null">
+                #{autoflag,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.cityre.mis.datavip.entity.UserList">
+        update userlist
+        <set>
+            <if test="suid != null">
+                suid = #{suid,jdbcType=VARCHAR},
+            </if>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="pwd != null">
+                pwd = #{pwd,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="regtime != null">
+                regtime = #{regtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateuid != null">
+                updateuid = #{updateuid,jdbcType=VARCHAR},
+            </if>
+            <if test="updatetime != null">
+                updatetime = #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="userType != null">
+                user_type = #{userType,jdbcType=VARCHAR},
+            </if>
+            <if test="payUser != null">
+                pay_user = #{payUser,jdbcType=VARCHAR},
+            </if>
+            <if test="payType != null">
+                pay_type = #{payType,jdbcType=VARCHAR},
+            </if>
+            <if test="payTel != null">
+                pay_tel = #{payTel,jdbcType=VARCHAR},
+            </if>
+            <if test="payRemark != null">
+                pay_remark = #{payRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="usource != null">
+                usource = #{usource,jdbcType=VARCHAR},
+            </if>
+            <if test="flag != null">
+                flag = #{flag,jdbcType=INTEGER},
+            </if>
+            <if test="checkuid != null">
+                checkuid = #{checkuid,jdbcType=VARCHAR},
+            </if>
+            <if test="checktime != null">
+                checktime = #{checktime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="company != null">
+                company = #{company,jdbcType=VARCHAR},
+            </if>
+            <if test="agent != null">
+                agent = #{agent,jdbcType=VARCHAR},
+            </if>
+            <if test="telflag != null">
+                telflag = #{telflag,jdbcType=INTEGER},
+            </if>
+            <if test="emailflag != null">
+                emailflag = #{emailflag,jdbcType=INTEGER},
+            </if>
+            <if test="usericon != null">
+                usericon = #{usericon,jdbcType=VARCHAR},
+            </if>
+            <if test="birthdate != null">
+                birthdate = #{birthdate,jdbcType=DATE},
+            </if>
+            <if test="citycode != null">
+                citycode = #{citycode,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="autoflag != null">
+                autoflag = #{autoflag,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.cityre.mis.datavip.entity.UserList">
     update userlist
     set suid = #{suid,jdbcType=VARCHAR},
       uid = #{uid,jdbcType=VARCHAR},

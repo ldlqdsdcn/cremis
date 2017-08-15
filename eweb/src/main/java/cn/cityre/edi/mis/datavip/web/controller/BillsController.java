@@ -155,7 +155,7 @@ public class BillsController {
     @RequiresPermissions("view")
     @RequestMapping(value = "/exportExcel",method = RequestMethod.POST)
     @ResponseBody
-    public void exportExcel(HttpSession httpSession, @RequestBody List<Bills> bills) throws IOException {
+    public JsonResult<String> exportExcel(HttpSession httpSession, @RequestBody List<Bills> bills) throws IOException {
         List<SearchField> searchFields = SearchFieldHelper.getSearchField(URL,httpSession);
         List<String> headList = new ArrayList<>();
         headList.add("用户名");
@@ -213,5 +213,7 @@ public class BillsController {
         ExcelExport excelExport = new CityreExcel("BillsInfo",headList);
         excelExport.setDataList(dataList,dataMap,2,true);
         excelExport.writeFile("F:/BillsInfo.xlsx");
+        return JsonResult.success("C:/VipInfo.xlsx");
+
     }
 }
