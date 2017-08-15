@@ -3,7 +3,7 @@
 <div class="container-fluid" ng-controller="listCtrl">
     <div class="page-header">
         <ol class="breadcrumb">
-            <li><a href="javascript:;"><i class="icon icon-tasks"></i><eidea:label key="apikey.title"/></a></li>
+            <li><a href="javascript:;"><i class="icon icon-tasks"></i><eidea:label key="cremis.datavip.bills.title"/></a></li>
         </ol>
         <button type="button" class="btn  btn-primary btn-sm" id="search_but" data-toggle="modal"
                 data-target="#searchModal"><eidea:label key="common.button.search"/></button>
@@ -87,7 +87,13 @@
                     <td>
                         {{model.postInvoiceFlag}}
                     </td>
-                    <td>
+                    <td ng-if="model.invoiceType==1">
+                        个人
+                    </td>
+                    <td ng-if="model.invoiceType==2">
+                        单位
+                    </td>
+                    <td ng-if="model.invoiceType==null">
                         {{model.invoiceType}}
                     </td>
                     <td>
@@ -131,7 +137,7 @@
                     </td>
 
                     <td ng-if="model.serviceState==2">
-                        <a ng-if="model.userPaymentInfo.endTime!=nul" class="btn btn-primary btn-xs" href="#/edit?billCode={{model.billCode}}">关闭服务<%--关闭服务--%></a>
+                        <a ng-if="model.endTime!=nul" class="btn btn-primary btn-xs" href="#/edit?billCode={{model.billCode}}">关闭服务<%--关闭服务--%></a>
                     </td>
                     <td ng-if="model.serviceState==0">
                         未开通
@@ -140,7 +146,7 @@
                     <td ng-if="model.serviceState==1">
                         已关闭
                     </td>
-                    <td>
+                    <td >
 
                         <%--<a class="btn btn-primary btn-xs" href="#/invoiceEdit?id={{model.id}}" ng-show="!model.confirmPassword"><eidea:label--%>
                                 <%--key="base.mis.datavip.invoice.edit"/>&lt;%&ndash;开通发票&ndash;%&gt;</a>--%>

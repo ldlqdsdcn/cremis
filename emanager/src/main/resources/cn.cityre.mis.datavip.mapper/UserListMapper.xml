@@ -56,11 +56,12 @@
     company, agent, telflag, emailflag, usericon, birthdate, citycode, nickname, autoflag
   </sql>
   <sql id="where_sql">
+    <where>
     <if test="uid!=null">
     AND userlist.uid like concat('%',#{uid,jdbcType=VARCHAR},'%')
     </if>
     <if test="userType!=null">
-    And dic_user_type.user_type_name = #{userType,jdbcType=VARCHAR}
+    And dic_user_type.user_type_name LIKE CONCAT('%',#{userType,jdbcType=VARCHAR},'%')
     </if>
     <if test="regStartTime!=null">
     AND userlist.regtime <![CDATA[>=]]>#{regStartTime,jdbcType=TIMESTAMP}
@@ -80,6 +81,7 @@
     <if test="serviceEndTime!=null">
     AND user_payment_info.end_time <![CDATA[<=]]> #{serviceEndTime,jdbcType=TIMESTAMP}
     </if>
+    </where>
   </sql>
 
   <select id="selectUserInfoByPage" resultMap="UserListInfoMap" parameterType="java.util.Map">
@@ -110,12 +112,10 @@
       <include refid="where_sql"/>
     </if>
   </select>
-
   <!--查询用户密码-->
   <select id="selectUserPassword" resultType="java.lang.String" parameterType="java.lang.String">
     SELECT userlist.pwd FROM userlist WHERE suid = #{suid,jdbcType=VARCHAR}
   </select>
-
   <!--获取用户BySuid-->
   <select id="selectBySuid" resultMap="BaseResultMap" parameterType="java.lang.String">
     select

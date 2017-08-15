@@ -110,9 +110,23 @@ public class BillsServiceImpl implements BillsService {
         PageMyBatis<Bills> pageMyBatis = billsMapper.selectDefaultByPage(map);
         //判断服务状态
         for (Bills bills : pageMyBatis) {
-            if (bills.getUserPaymentInfo() == null) {
+
+            if (bills.getInvoiceTitle()!=null&&bills.getInvoiceTitle().equals("null")){
+                bills.setInvoiceTitle("");
+            }
+            if (bills.getTel()!=null&&bills.getTel().equals("null")){
+                bills.setTel("");
+            }
+            if (bills.getAddress()!=null&&bills.getAddress().equals("null")){
+                bills.setAddress("");
+            }
+            if (bills.getPostUser()!=null&&bills.getPostUser().equals("null")){
+                bills.setPostUser("");
+            }
+
+            if (bills.getEndTime()== null) {
                 bills.setServiceState(0);//开通服务
-            } else if (bills.getUserPaymentInfo().getEndTime().before(date)) {
+            } else if (bills.getEndTime().before(date)) {
                 bills.setServiceState(1);//服务时间结束->已关闭
             } else {
                 bills.setServiceState(2);//关闭服务
@@ -122,7 +136,6 @@ public class BillsServiceImpl implements BillsService {
         DataSourceContextHolder.setDbType("dataSource_core");
         return paginationResult;
     }
-
     @Override
     public List<Bills> getExportList(List<SearchField> searchFields) {
         DataSourceContextHolder.setDbType("dataSource_cityreaccount");

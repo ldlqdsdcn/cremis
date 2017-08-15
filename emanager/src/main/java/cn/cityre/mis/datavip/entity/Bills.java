@@ -1,5 +1,6 @@
 package cn.cityre.mis.datavip.entity;
 
+import cn.cityre.mis.datavip.converter.InvoiceTypeConverter;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
