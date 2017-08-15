@@ -168,6 +168,8 @@ public class Bills implements java.io.Serializable {
     private String userTypeName;
     @Transient
     private String uid;
+    @Transient
+    private Boolean confirmPassword;
 
 
 

@@ -8,17 +8,21 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
 @Repository
 public interface BillsMapper {
     //asp中default查询方法
-    PageMyBatis<Bills> selectDefaultByPage(PagingCriteria pagingCriteria);
-    //数据会员查询的方法,new/service.asp
-//    PageMyBatis<Bills> selectUserInfoByPage(PagingCriteria pagingCriteria);
-//    登记发票
+    PageMyBatis<Bills> selectDefaultByPage(Map<String, Object> map);
+
+    List<Bills> selectExportInfo(Map<String,Object> map);
+
     Bills selectByCode(String billCode);
 
     Date selectTime();
+
     List<Bills> selectAllBills();
+
     void updateInvoice(Bills bills);
 
     List<Bills> selectByBigBillCode(String bigBillCode);

@@ -43,7 +43,7 @@
     //用于生成初始key
     var key = CryptoJS.lib.WordArray.random(128/8).toString(CryptoJS.enc.Hex);
     var app = angular.module('confirmApp', ['ngRoute', 'ui.bootstrap', 'jcs-autoValidate']);
-    app.controller('confirmCtrl', function ($scope, $http) {
+    app.controller('confirmCtrl', function ($scope, $http,$rootScope) {
         $scope.password = null;
         var  userName = '<%=((UserBo)request.getSession().getAttribute(WebConst.SESSION_LOGINUSER)).getUsername()%>';
         $scope.save = function () {
@@ -55,8 +55,9 @@
             $http.post("<c:url value="/mis/datavip/bills/confirmPassword"/>", {"password":allparam}).success(function (data) {
                 if (data.success) {
                     $scope.message = data.data;
+                    alert($rootScope.billsId);
                     $('#confirmModal').modal('hide');
-                    window.location.href = "<c:url value="/mis/datavip/bills/invoice.tpl.jsp"/>";
+                    window.location.href = "#/invoiceEdit?id=$rootScope.billsId";
                 }
             }).errors(function (response) {
                 $scope.message=response.message;

@@ -55,12 +55,32 @@
     pay_user, pay_type, pay_tel, pay_remark, remark, usource, flag, checkuid, checktime, 
     company, agent, telflag, emailflag, usericon, birthdate, citycode, nickname, autoflag
   </sql>
-  <!--sql="select  uid,min(regtime) as regtime from userlist inner join dic_user_type on  dic_user_type.user_type_code=userlist.user_type where dic_user_type.type in ('dm','creprice') group by uid  having 1=1  "-->
-  <!--<sql id="Where_Example">-->
-    <!--<where>-->
-      <!--<foreach collection="seachMap" item="item" open=""-->
-    <!--</where>-->
-  <!--</sql>-->
+  <sql id="where_sql">
+    <if test="uid!=null">
+    AND userlist.uid like concat('%',#{uid,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="userType!=null">
+    And dic_user_type.user_type_name = #{userType,jdbcType=VARCHAR}
+    </if>
+    <if test="regStartTime!=null">
+    AND userlist.regtime <![CDATA[>=]]>#{regStartTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="regEndTime!=null">
+    AND userlist.regtime <![CDATA[<=]]> #{regEndTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="payTel!=null">
+    and userlist.pay_tel LIKE  concat('%',#{payTel,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="payFlag!=null">
+    AND bills.pay_flag = #{payFlag,jdbcType=VARCHAR}
+    </if>
+    <if test="serviceStartTime!=null">
+    AND user_payment_info.start_time <![CDATA[>=]]>#{serviceStartTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="serviceEndTime!=null">
+    AND user_payment_info.end_time <![CDATA[<=]]> #{serviceEndTime,jdbcType=TIMESTAMP}
+    </if>
+  </sql>
 
   <select id="selectUserInfoByPage" resultMap="UserListInfoMap" parameterType="java.util.Map">
     SELECT
@@ -71,31 +91,24 @@
     FROM userlist
     INNER JOIN bills ON bills.suid = userlist.suid
     INNER JOIN dic_user_type ON dic_user_type.user_type_code = userlist.user_type AND dic_user_type.type IN ('dm','creprice','fjgj')
-    LEFT JOIN user_payment_info ON user_payment_info.billcode = bills.bill_code 
-    <!--<if test="uid!=null">-->
-      <!--AND userlist.uid like concat('%',#{uid,jdbcType=VARCHAR},'%')-->
-    <!--</if>-->
-    <!--<if test="userType!=null">-->
-      <!--And dic_user_type.user_type_name = #{userType,jdbcType=VARCHAR}-->
-    <!--</if>-->
-    <!--<if test="regStartTime!=null">-->
-      <!--AND userlist.regtime <![CDATA[>=]]>#{regStartTime,jdbcType=TIMESTAMP}-->
-    <!--</if>-->
-    <!--<if test="regEndTime!=null">-->
-      <!--AND userlist.regtime <![CDATA[<=]]> #{regEndTime,jdbcType=TIMESTAMP}-->
-    <!--</if>-->
-    <!--<if test="payTel!=null">-->
-      <!--and userlist.pay_tel LIKE  concat('%',#{payTel,jdbcType=VARCHAR},'%')-->
-    <!--</if>-->
-    <!--<if test="payFlag!=null">-->
-      <!--AND bills.pay_flag = #{payFlag,jdbcType=VARCHAR}-->
-    <!--</if>-->
-    <!--<if test="serviceStartTime!=null">-->
-      <!--AND user_payment_info.start_time <![CDATA[>=]]>#{serviceStartTime,jdbcType=TIMESTAMP}-->
-    <!--</if>-->
-    <!--<if test="serviceEndTime!=null">-->
-      <!--AND user_payment_info.end_time <![CDATA[<=]]> #{serviceEndTime,jdbcType=TIMESTAMP}-->
-    <!--</if>-->
+    LEFT JOIN user_payment_info ON user_payment_info.billcode = bills.bill_code
+    <if test="_parameter!=null">
+      <include refid="where_sql"/>
+    </if>
+  </select>
+  <select id="selectExportInfo" resultMap="UserListInfoMap" parameterType="java.util.Map">
+    SELECT
+    userlist.uid,userlist.username,userlist.regtime,userlist.email,userlist.flag,userlist.pay_tel,
+    dic_user_type.user_type_name,dic_user_type.note,
+    bills.bill_code,bills.product_cost,bills.city_code,bills.plevel,bills.contentname,bills.pgps,bills.dealtype,bills.invoice_title,bills.pay_flag,
+    user_payment_info.pay_amount,user_payment_info.start_time,user_payment_info.end_time
+    FROM userlist
+    INNER JOIN bills ON bills.suid = userlist.suid
+    INNER JOIN dic_user_type ON dic_user_type.user_type_code = userlist.user_type AND dic_user_type.type IN ('dm','creprice','fjgj')
+    LEFT JOIN user_payment_info ON user_payment_info.billcode = bills.bill_code
+    <if test="_parameter!=null">
+      <include refid="where_sql"/>
+    </if>
   </select>
 
   <!--查询用户密码-->

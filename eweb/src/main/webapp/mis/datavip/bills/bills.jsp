@@ -99,6 +99,9 @@
                 }
             });
         };
+        $scope.remeber=function (id) {
+            $rootScope.billsId=id;
+        };
 //        服务开通的判断
 
 

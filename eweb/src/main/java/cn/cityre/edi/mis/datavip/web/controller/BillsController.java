@@ -153,6 +153,7 @@ public class BillsController {
     @RequestMapping(value = "/exportExcel",method = RequestMethod.POST)
     @ResponseBody
     public void exportExcel(HttpSession httpSession, @RequestBody List<Bills> bills) throws IOException {
+        List<SearchField> searchFields = SearchFieldHelper.getSearchField(URL,httpSession);
         List<String> headList = new ArrayList<>();
         headList.add("用户名");
         headList.add("大订单号");
@@ -205,8 +206,9 @@ public class BillsController {
         dataMap.put("invoiceNo",2);
         dataMap.put("kpInvoiceTime",2);
         dataMap.put("userTypeName",2);
+        List<Bills> dataList = billsService.getExportList(searchFields);
         ExcelExport excelExport = new CityreExcel("BillsInfo",headList);
-        excelExport.setDataList(bills,dataMap,2,true);
+        excelExport.setDataList(dataList,dataMap,2,true);
         excelExport.writeFile("F:/BillsInfo.xlsx");
     }
 }
