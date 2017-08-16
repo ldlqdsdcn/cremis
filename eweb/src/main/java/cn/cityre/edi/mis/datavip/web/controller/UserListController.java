@@ -1,6 +1,8 @@
 package cn.cityre.edi.mis.datavip.web.controller;
 
 import cn.cityre.edi.mis.mis.web.util.SearchFieldHelper;
+import cn.cityre.mis.datavip.del.BillFlagDef;
+import cn.cityre.mis.datavip.dto.SearchParams;
 import cn.cityre.mis.datavip.entity.Bills;
 import cn.cityre.mis.datavip.entity.DicUserType;
 import cn.cityre.mis.datavip.entity.UserList;
@@ -17,6 +19,8 @@ import com.dsdl.eidea.core.web.def.WebConst;
 import com.dsdl.eidea.core.web.result.JsonResult;
 import com.dsdl.eidea.core.web.result.def.ErrorCodes;
 import com.dsdl.eidea.core.web.vo.PagingSettingResult;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import javafx.scene.control.Pagination;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.mybatis.pagination.dto.datatables.SearchField;
@@ -60,29 +64,28 @@ public class UserListController {
     @ResponseBody
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @RequiresPermissions("view")
-    public JsonResult<PaginationResult<UserList>> list(HttpSession httpSession, @RequestBody QueryParams queryParams) {
+    public JsonResult<PaginationResult<UserList>> list(HttpSession httpSession, @RequestBody SearchParams searchParams) {
         UserResource userResource = (UserResource) httpSession.getAttribute(WebConst.SESSION_RESOURCE);
-        List<SearchField> searchFields = SearchFieldHelper.getSearchField(URL, httpSession);
         PaginationResult<UserList> paginationResult = null;
-        paginationResult = userListService.getExistUserInfoList(searchFields, queryParams);
-        for (SearchField searchField : searchFields) {
-            if (searchField.getField().equals("newUser") && searchField.getValue() != null) {
-                List<UserList> userLists = new ArrayList<>();
-                List<MisUserPo> misUserList = misUserService.getNewUser();
-                for (MisUserPo misUserPo : misUserList) {
-                    for (UserList userList : paginationResult.getData()) {
-                        if (userList.getUid().equals(misUserPo.getUserId())) {
-                            userLists.add(userList);
-                        }
+        paginationResult = userListService.getExistUserInfoList(searchParams);
+        QueryParams queryParams = searchParams.getQueryParams();
+        if (searchParams.getNewUser().equals("true")) {
+            List<UserList> userLists = new ArrayList<>();
+            List<MisUserPo> misUserList = misUserService.getNewUser();
+            for (MisUserPo misUserPo : misUserList) {
+                for (UserList userList : paginationResult.getData()) {
+                    if (userList.getUid().equals(misUserPo.getUserId())) {
+                        userLists.add(userList);
                     }
                 }
-                paginationResult = PaginationResult.pagination(userLists, userLists.size(), queryParams.getPageNo(), queryParams.getPageSize());
             }
+            paginationResult = PaginationResult.pagination(userLists, userLists.size(), queryParams.getPageNo(), queryParams.getPageSize());
         }
 
 
         return JsonResult.success(paginationResult);
     }
+
 
     @ResponseBody
     @RequestMapping(value = "/get", method = RequestMethod.GET)
@@ -91,12 +94,29 @@ public class UserListController {
         UserResource userResource = (UserResource) httpSession.getAttribute(WebConst.SESSION_RESOURCE);
         return JsonResult.success(userListService.getExistUserListBySuid(suid));
     }
-//    //获取用户类型
-//    @ResponseBody
-//    @RequestMapping(value = "/getUserType",method = RequestMethod.GET)
-//    public JsonResult<String> getUserType(){
-//
-//    }
+
+    //获取用户类型
+    @ResponseBody
+    @RequestMapping(value = "/getUserType", method = RequestMethod.GET)
+    public JsonResult<List<DicUserType>> getUserType() {
+        return JsonResult.success(dicUserTypeService.getExistUserTypeList());
+    }
+
+    //获取账单状态
+    @ResponseBody
+    @RequestMapping(value = "/getBillsFlag", method = RequestMethod.GET)
+    public JsonResult<String> getBillsFlag() {
+        JsonObject jsonObject = new JsonObject();
+        JsonArray jsonArray = new JsonArray();
+        for (BillFlagDef billFlagDef : BillFlagDef.values()) {
+            JsonObject list = new JsonObject();
+            list.addProperty("key", billFlagDef.getKey());
+            list.addProperty("value", billFlagDef.getValue());
+            jsonArray.add(list);
+        }
+        jsonObject.add("billsFlag", jsonArray);
+        return JsonResult.success(jsonObject.toString());
+    }
 
     @RequiresPermissions("view")
     @RequestMapping(value = "/exportExcel", method = RequestMethod.POST)
@@ -157,7 +177,7 @@ public class UserListController {
                         }
                     }
                 }
-            }else{
+            } else {
                 userData = dataList;
             }
         }

@@ -1,5 +1,6 @@
 package cn.cityre.mis.datavip.service;
 
+import cn.cityre.mis.datavip.dto.SearchParams;
 import cn.cityre.mis.datavip.entity.UserList;
 import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.QueryParams;
@@ -13,7 +14,7 @@ import java.util.Map;
  * Created by cityre on 2017/8/9.
  */
 public interface UserListService {
-    PaginationResult<UserList> getExistUserInfoList(List<SearchField> list, QueryParams queryParams);
+    PaginationResult<UserList> getExistUserInfoList(SearchParams searchParams);
     /*根据用户suid获取用户*/
     UserList getExistUserListBySuid(String suid);
 

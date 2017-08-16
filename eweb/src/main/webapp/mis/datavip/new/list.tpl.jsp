@@ -1,50 +1,50 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/inc/taglib.jsp" %>
 <div class="container-fluid" ng-controller="listCtrl">
+    <div class="page-header">
+        <form role="form" name="editForm" novalidate ng-submit="pageChanged()" class="form-inline form-label-left">
+            <table class="table table-borderless">
+                <tr>
+                    <td class="control-label"><eidea:label key="cityre.mis.datavip.user.useruid"/>:</td>
+                    <td class="form-group"><input type="text" class="form-control" ng-model="uid"
+                                                  placeholder="<eidea:message key="common.please.input"><eidea:param value="cityre.mis.datavip.user.useruid" type="label"/></eidea:message>">
+                    </td>
+                    <td class="control-label"><eidea:label key="cityre.mis.datavip.userlist.userType"/>:</td>
+                    <td class="form-group"><select class="form-control" ng-model="userType"
+                                                   ng-options="userType.userTypeName as userType.userTypeName for userType in userTypeList"></select>
+                    </td>
+                    <td class="control-label"><eidea:label key="cityre.mis.datavip.userlist.userTel"/>:</td>
+                    <td class="form-group"><input type="text" class="form-control" ng-model="payTel"
+                                                  placeholder="<eidea:message key="common.please.input"><eidea:param value="cityre.mis.datavip.userlist.userTel" type="label"/></eidea:message>">
+                    </td>
+                    <td class="control-label"><eidea:label key="cityre.mis.datavip.userlist.payState"/>:</td>
+                    <td class="form-group"><select class="form-control" ng-model="payFlag"
+                                                   ng-options="option.key as option.value for option in billsFlagList"></select>
+                    </td>
+                    <td class="control-label"><eidea:label key="cityre.mis.datavip.user.newUser"/>:</td>
+                    <td class="form-group"><input type="checkbox" class="form-control" ng-model="newUser"
+                                                  ng-true-value="'true'"
+                                                  ng-false-value="'false'"></td>
 
-    <form class=" form form-inline" novalidate submit="">
-        <div class="form-group"><%--账号--%>
-            <eidea:label key="cityre.mis.datavip.user.useruid"/>:
-            <input type="text" class="form-control" ng-model="uid">
-        </div>
-        <div class="form-group"><%--用户类型--%>
-            <eidea:label key="cityre.mis.datavip.userlist.userType"/>:
-            <select class="form-control" ng-model="userType" ng-options="">
-        </div>
-        <div class="form-group"><%--注册时间--%>
-            <eidea:label key="cityre.mis.datavip.user.useruid"/>:
-            <input type="text" class="form-control" ng-model="regStartTime">
-        </div>
-        ——
-        <div class="form-group">
-            <input type="text" class="form-control" ng-model="regEndTime">
-        </div>
-        <div class="form-group">
-            <eidea:label key="cityre.mis.datavip.user.useruid"/>:
-            <input type="text" class="form-control" ng-model="payTel">
-        </div>
-        <div class="form-group">
-            <eidea:label key="cityre.mis.datavip.user.useruid"/>:
-            <input type="text" class="form-control" ng-model="payFlag">
-        </div>
-        <div class="form-group">
-            <eidea:label key="cityre.mis.datavip.user.useruid"/>:
-            <input type="text" class="form-control" ng-model="serviceStartTime">
-        </div>
-        <div class="form-group">
-            <eidea:label key="cityre.mis.datavip.user.useruid"/>:
-            <input type="text" class="form-control" ng-model="serviceEndTime">
-        </div>
-        <div class="form-group">
-            <eidea:label key="cityre.mis.datavip.user.useruid"/>:
-            <input type="text" class="form-control" ng-model="newUser">
-        </div>
-        <button type="button" class="btn" id="search_but" data-toggle="modal"
-                data-target="#searchModal"><eidea:label key="common.button.search"/></button>
-        <button type="button" class="btn"
-                ng-click="exportExcel()">导出
-        </button>
-    </form>
+                </tr>
+                <tr>
+
+                    <td class="control-label"><eidea:label key="cityre.mis.datavip.userlist.regTime"/></td>
+                    <td class="input-group date bootstrap-datetime"><input type="date" class="form-control" ng-model="regStartTime" uib-datepicker-popup="yyyy-MM-dd HH:mm:ss"><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></td>
+                    <td class="control-label"><eidea:label key="cityre.mis.datavip.userlist.regTime"/>结束</td>
+                    <td class="input-group date bootstrap-datetime"><input type="date" class="form-control" ng-model="regEndTime" uib-datepicker-popup="yyyy-MM-dd HH:mm:ss"><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></td>
+                    <td class="control-label"><eidea:label key="cityre.mis.datavip.paymentinfo.starttime"/>:</td>
+                    <td class="input-group date bootstrap-datetime"><input type="date" class="form-control" ng-model="serviceStartTime" uib-datepicker-popup="yyyy-MM-dd HH:mm:ss"><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></td>
+                    <td class="control-label"><eidea:label key="cityre.mis.datavip.paymentinfo.endtime"/>:</td>
+                    <td class="input-group date bootstrap-datetime"><input type="date" class="form-control" ng-model="serviceEndTime" uib-datepicker-popup="yyyy-MM-dd HH:mm:ss"><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </td>
+                    <td class="control-label">
+                        <button type="submit" class="btn"><eidea:label key="common.button.search"/></button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
     <div class="row-fluid">
         <div class="span12">
             <table class="table table-bordered table-hover table-striped table-condensed">

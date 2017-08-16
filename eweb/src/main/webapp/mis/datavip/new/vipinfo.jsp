@@ -24,6 +24,32 @@
         }]);
 
     app.controller('listCtrl', function ($rootScope,$scope,$http,$window) {
+        /**
+         * 日期时间选择控件
+         * bootstrap-datetime 24小时时间是hh
+         */
+        $('.bootstrap-datetime').datetimepicker({
+            language: 'zh-CN',
+            format: 'yyyy-mm-dd hh:ii:ss',
+            weekStart: 1,
+            todayBtn: 1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            forceParse: 0,
+            showMeridian: 1,
+            clearBtn: true
+        });
+        /**
+         * 日期选择控件
+         */
+        $('.bootstrap-date').datepicker({
+            language: 'zh-CN',
+            format: 'yyyy-mm-dd',
+            autoclose: 1,
+            todayBtn: 1,
+            clearBtn: true
+        });
 //        查询条件
         $scope.uid=null;
         $scope.userType=null;
@@ -34,7 +60,9 @@
         $scope.serviceStartTime=null;
         $scope.serviceEndTime=null;
         $scope.newUser=false;
-
+//select查询条件
+        $scope.userTypeList=[];
+        $scope.billsFlagList=[];
         $scope.modelList = [];
         $scope.delFlag = false;
         $scope.isLoading=true;
@@ -60,7 +88,9 @@
             return false;
         }
         $scope.pageChanged = function () {
-            $http.post("<c:url value="/mis/datavip/new/list"/>", $scope.queryParams)
+            var searchParams={"uid":$scope.uid,"userType":$scope.userType,"payTel":$scope.payTel,"payFlag":$scope.payFlag,"newUser":$scope.newUser,"regStartTime":$scope.regStartTime,
+                "regEndTime":$scope.regEndTime,"serviceStartTime":$scope.serviceStartTime,"serviceEndTime":$scope.serviceEndTime,"queryParams":$scope.queryParams}
+            $http.post("<c:url value="/mis/datavip/new/list"/>", searchParams)
                 .success(function (response) {
                     $scope.isLoading = false;
                     if (response.success) {
@@ -108,7 +138,38 @@
                 }
             });
         };
-        $http.get()
+        //获取userTypeKList
+        $http.get("<c:url value="/mis/datavip/new/getUserType"/>").success(function (response) {
+            if (response.success){
+                $scope.userTypeList=response.data;
+            }else{
+                bootbox.alert(response.message);
+            }
+        });
+        <%--$http.save=function () {--%>
+            <%--if ($scope.editForm.$valid){--%>
+                <%--var searchMap={"userType":$scope.userType,"uid":$scope.uid,"regStartTime":$scope.regStartTime,--%>
+                    <%--"regEndTime":$scope.regEndTime,"payTel":$scope.payTel,"payFlag":$scope.payFlag,"newUser":$scope.newUser,"serviceStartTime":$scope.serviceStartTime,"serviceEndTime":$scope.serviceEndTime,"queryParams":$scope.queryParams}--%>
+                <%--$http.post("<c:url value="/mis/datavip/new/testlist"/>",searchMap).success(function (response) {--%>
+                    <%--$scope.isLoading=false;--%>
+                    <%--if (response.success){--%>
+                        <%--$scope.updateList(response.data)--%>
+                    <%--}--%>
+                    <%--else {--%>
+                        <%--bootbox.alert(response.message);--%>
+                    <%--}--%>
+                <%--})--%>
+            <%--}--%>
+        <%--}--%>
+        //获取账单状态
+        $http.get("<c:url value = "/mis/datavip/new/getBillsFlag"/>").success(function(response){
+            if (response.success){
+                var billsFlagList= $.parseJSON(response.data);
+                $scope.billsFlagList=billsFlagList.billsFlag;
+            }else{
+                bootbox.alert(response.message);
+            }
+        })
 //可现实分页item数量
         $scope.maxSize =${pagingSettingResult.pagingButtonSize};
         if ($rootScope.listQueryParams != null) {
