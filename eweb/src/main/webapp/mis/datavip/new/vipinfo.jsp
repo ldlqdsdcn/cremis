@@ -146,22 +146,6 @@
                 bootbox.alert(response.message);
             }
         });
-        <%--$http.save=function () {--%>
-            <%--if ($scope.editForm.$valid){--%>
-                <%--var searchMap={"userType":$scope.userType,"uid":$scope.uid,"regStartTime":$scope.regStartTime,--%>
-                    <%--"regEndTime":$scope.regEndTime,"payTel":$scope.payTel,"payFlag":$scope.payFlag,"newUser":$scope.newUser,"serviceStartTime":$scope.serviceStartTime,"serviceEndTime":$scope.serviceEndTime,"queryParams":$scope.queryParams}--%>
-                <%--$http.post("<c:url value="/mis/datavip/new/testlist"/>",searchMap).success(function (response) {--%>
-                    <%--$scope.isLoading=false;--%>
-                    <%--if (response.success){--%>
-                        <%--$scope.updateList(response.data)--%>
-                    <%--}--%>
-                    <%--else {--%>
-                        <%--bootbox.alert(response.message);--%>
-                    <%--}--%>
-                <%--})--%>
-            <%--}--%>
-        <%--}--%>
-        //获取账单状态
         $http.get("<c:url value = "/mis/datavip/new/getBillsFlag"/>").success(function(response){
             if (response.success){
                 var billsFlagList= $.parseJSON(response.data);
@@ -185,17 +169,7 @@
             };
             $rootScope.listQueryParams = $scope.queryParams;
         }
-        $scope.exportExcel=function () {
-            $http.post("<c:url value="/mis/datavip/new/exportExcel"/> ",$scope.modelList).success(function (response) {
-                if (response.success){
-                    $scope.message="<eidea:label key="base.save.success"/>"
-                    bootbox.alert(response.data);
-                }
-            }).error(function (response) {
-                $scope.message=response.message;
-                $scope.errors=response.data;
-            })
-        }
+
 
         $scope.pageChanged();
 

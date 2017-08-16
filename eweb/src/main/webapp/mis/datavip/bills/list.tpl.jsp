@@ -50,6 +50,7 @@
                     </td>
                     <td class="control-label">
                         <button type="submit" class="btn"><eidea:label key="common.button.search"/></button>
+                        <a href="<c:url value ="/mis/datavip/bills/exportExl"/>" target="_blank">导出</a>
                     </td>
                 </tr>
             </table>

@@ -1,11 +1,12 @@
 package cn.cityre.edi.mis.datavip.web.controller;
 
-import cn.cityre.edi.mis.mis.web.util.SearchFieldHelper;
+import cn.cityre.mis.datavip.Excel.BillsHeader;
 import cn.cityre.mis.datavip.del.BillFlagDef;
 import cn.cityre.mis.datavip.del.InvoiceFlag;
 import cn.cityre.mis.datavip.del.InvoiceState;
 import cn.cityre.mis.datavip.del.InvoiceType;
 import cn.cityre.mis.datavip.dto.SearchBillParams;
+import cn.cityre.mis.datavip.dto.SearchParams;
 import cn.cityre.mis.datavip.entity.Bills;
 import cn.cityre.mis.datavip.entity.DicPayType;
 import cn.cityre.mis.datavip.entity.DicPostType;
@@ -14,29 +15,25 @@ import cn.cityre.mis.datavip.service.BillsService;
 import cn.cityre.mis.datavip.service.DicPayTypeService;
 import cn.cityre.mis.datavip.service.DicPostTypeService;
 import cn.cityre.mis.datavip.service.UserPaymentInfoService;
-import cn.cityre.mis.datavip.util.CityreExcel;
-import cn.cityre.mis.datavip.util.ExcelExport;
+import cn.cityre.mis.datavip.util.ExlUtil;
 import com.dsdl.eidea.base.entity.bo.UserBo;
-import com.dsdl.eidea.base.entity.po.UserPo;
 import com.dsdl.eidea.base.service.UserService;
 import com.dsdl.eidea.base.web.vo.UserResource;
 import com.dsdl.eidea.core.dto.PaginationResult;
-import com.dsdl.eidea.core.params.QueryParams;
 import com.dsdl.eidea.core.web.def.WebConst;
 import com.dsdl.eidea.core.web.result.JsonResult;
 import com.dsdl.eidea.core.web.result.def.ErrorCodes;
 import com.dsdl.eidea.core.web.vo.PagingSettingResult;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.sun.deploy.net.HttpResponse;
 import cryptography.AesUtil;
 import cryptography.Md5Util;
 import cryptography.RsaUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.codehaus.groovy.util.ListHashMap;
-import org.mybatis.pagination.dto.datatables.SearchField;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -264,19 +261,9 @@ public class BillsController {
         return JsonResult.success(userPaymentInfo);
     }
 
-    @RequiresPermissions("view")
-    @RequestMapping(value = "/exportExcel", method = RequestMethod.POST)
-    @ResponseBody
-    public JsonResult<String> exportExcel(HttpServletResponse response, @RequestBody List<Bills> bills) throws IOException {
-        SimpleDateFormat myFmt = new SimpleDateFormat("yyyyMMdd_HHmmss");
-        response.setHeader("Pragma", "public");
-        response.setHeader("Cache-Control", "max-age=0");
-//        if(excelVersion.equals("xlsx")){
-//            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-//            response.setHeader("Content-Disposition", "attachment; filename=test"+myFmt.format(new Date())+".xlsx");
-//        }else{
-        response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-Disposition", "attachment; filename=\"test" + myFmt.format(new Date()) + ".xls\"");
-        return JsonResult.success(null);
+    @RequestMapping("/exportExl")
+    public ResponseEntity<byte[]> exportExl(Bills bills, Model model) throws IOException {
+        List<Bills> stocks = billsService.getExportList();
+        return ExlUtil.getDataStream(new BillsHeader(),stocks, "账单信息");
     }
 }
