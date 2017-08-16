@@ -69,20 +69,6 @@ public class UserListController {
         PaginationResult<UserList> paginationResult = null;
         paginationResult = userListService.getExistUserInfoList(searchParams);
         QueryParams queryParams = searchParams.getQueryParams();
-        if (searchParams.getNewUser().equals("true")) {
-            List<UserList> userLists = new ArrayList<>();
-            List<MisUserPo> misUserList = misUserService.getNewUser();
-            for (MisUserPo misUserPo : misUserList) {
-                for (UserList userList : paginationResult.getData()) {
-                    if (userList.getUid().equals(misUserPo.getUserId())) {
-                        userLists.add(userList);
-                    }
-                }
-            }
-            paginationResult = PaginationResult.pagination(userLists, userLists.size(), queryParams.getPageNo(), queryParams.getPageSize());
-        }
-
-
         return JsonResult.success(paginationResult);
     }
 

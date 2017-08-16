@@ -98,7 +98,7 @@
                 AND user_payment_info.end_time <![CDATA[<=]]> #{serviceEndTime,jdbcType=TIMESTAMP}
             </if>
             <if test="newUser!=null">
-                1=1
+                AND (select count(uid) from bills )<![CDATA[>=]]>2
             </if>
         </where>
     </sql>

@@ -59,6 +59,9 @@ public class UserListServiceImpl implements UserListService {
         if (searchParams.getServiceEndTime()!=null){
             map.put("serviceEndTime",searchParams.getServiceEndTime());
         }
+        if (searchParams.getNewUser().equals("true")){
+            map.put("newUser",true);
+        }
         PaginationResult<UserList> paginationResult = null;
         PageMyBatis<UserList> pageMyBatis = userListMapper.selectUserInfoByPage(map);
 
