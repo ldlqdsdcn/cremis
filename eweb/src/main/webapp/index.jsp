@@ -63,10 +63,11 @@
 <input type="hidden" id="systemTimeStamp" value="<%=systemTimeStamp%>">
 <div class="container body">
     <div class="main_container">
+        <!--left menu bgn-->
         <div class="col-md-3 left_col menu_fixed">
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="<c:url value="/index.jsp"/> " class="site_title"><li class="fa" style="margin-top: 8px;"><img src="http://www.cityre.cn/images/img2017/cityre_logo.png" style="width:45px;height: 45px;"/></li> <span style="font-family: 微软雅黑;color:#105594">&nbsp;<eidea:label key="index.enterprise_thinking"/></span></a>
+                    <a href="<c:url value="/index.jsp"/> " class="site_title"><li class="fa" style="margin-top: 8px;"><img src="http://www.cityre.cn/images/img2017/cityre_logo.png" style="width:45px;height: 45px;"/></li> <span style="font-family: 微软雅黑"><eidea:label key="index.enterprise_thinking"/></span></a>
                 </div>
 
                 <div class="clearfix"></div>
