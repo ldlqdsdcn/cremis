@@ -135,7 +135,7 @@ public class BillsController {
     @ResponseBody
     public JsonResult<Bills> openService(HttpSession httpSession,@RequestBody Bills bills) throws ParseException {
         UserResource userResource = (UserResource) httpSession.getAttribute(WebConst.SESSION_RESOURCE);
-        if (bills.getUserPaymentInfo().getPayTime()==null){
+        if (bills.getUserPaymentInfo()==null){
             return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(),userResource.getMessage("error.mis.bills.payTime.empty"));
         }
         billsService.openService(bills);

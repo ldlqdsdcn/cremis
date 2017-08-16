@@ -84,10 +84,10 @@ public class UserListServiceImpl implements UserListService {
                 }
             }
         }
-        PaginationResult<UserList> paginationResult=null;
+        PaginationResult<UserList> paginationResult = null;
         PageMyBatis<UserList> pageMyBatis = userListMapper.selectUserInfoByPage(map);
 
-            paginationResult = PaginationResult.pagination(pageMyBatis, pageMyBatis.size(), queryParams.getPageNo(), queryParams.getPageSize());
+        paginationResult = PaginationResult.pagination(pageMyBatis,(int)pageMyBatis.getTotal(), queryParams.getPageNo(), queryParams.getPageSize());
 
         DataSourceContextHolder.setDbType("dataSource_core");
         return paginationResult;

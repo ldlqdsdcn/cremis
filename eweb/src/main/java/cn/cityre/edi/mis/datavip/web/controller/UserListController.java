@@ -59,9 +59,6 @@ public class UserListController {
     public JsonResult<PaginationResult<UserList>> list(HttpSession httpSession, @RequestBody QueryParams queryParams) {
         UserResource userResource = (UserResource) httpSession.getAttribute(WebConst.SESSION_RESOURCE);
         List<SearchField> searchFields = SearchFieldHelper.getSearchField(URL, httpSession);
-        if (searchFields == null || searchFields.size() == 0) {
-            return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(), userResource.getMessage(""));
-        }
         PaginationResult<UserList> paginationResult = null;
         paginationResult = userListService.getExistUserInfoList(searchFields, queryParams);
         for (SearchField searchField : searchFields) {

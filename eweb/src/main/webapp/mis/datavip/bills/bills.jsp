@@ -127,7 +127,6 @@
             $http.post("<c:url value="/mis/datavip/bills/exportExcel"/> ",$scope.modelList).success(function (response) {
                 if (response.success){
                     $scope.message="<eidea:label key="base.save.success"/>"
-                    bootbox.alert(response.data);
                 }
             }).error(function (response) {
                 $scope.message=response.message;
@@ -181,12 +180,11 @@
                         postUrl = "<c:url value="/mis/datavip/userpaymentInfo/closeService"/> "
                     }
                     $scope.canSave = (PrivilegeService.hasPrivilege('add') && $scope.billsPo.id == null) || PrivilegeService.hasPrivilege('update');
-                }
-                else {
+                } else {
                     bootbox.alert(response.message);
                 }
             }).error(function (response) {
-            bootbox.alert(response);
+            bootbox.alert(response.data);
         });
 
         $scope.serviceEdit = function(){

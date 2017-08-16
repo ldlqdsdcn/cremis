@@ -84,8 +84,11 @@
                     <td>
                         {{model.payUpdateTime|date:"yyyy-MM-dd HH:mm:ss"}}
                     </td>
-                    <td>
-                        {{model.postInvoiceFlag}}
+                    <td ng-if="model.postInvoiceFlag==1">
+                        是
+                    </td>
+                    <td ng-if="model.postInvoiceFlag==0">
+                        否
                     </td>
                     <td ng-if="model.invoiceType==1">
                         个人
