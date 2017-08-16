@@ -22,7 +22,19 @@
                 .when('/edit', {templateUrl: '<c:url value="/base/directory/edit.tpl.jsp"/>'})
                 .otherwise({redirectTo: '/list'});
         }]);
+
     app.controller('listCtrl', function ($rootScope,$scope,$http,$window) {
+//        查询条件
+        $scope.uid=null;
+        $scope.userType=null;
+        $scope.regStartTime=null;
+        $scope.regEndTime=null;
+        $scope.payTel=null;
+        $scope.payFlag=null;
+        $scope.serviceStartTime=null;
+        $scope.serviceEndTime=null;
+        $scope.newUser=false;
+
         $scope.modelList = [];
         $scope.delFlag = false;
         $scope.isLoading=true;
@@ -96,6 +108,7 @@
                 }
             });
         };
+        $http.get()
 //可现实分页item数量
         $scope.maxSize =${pagingSettingResult.pagingButtonSize};
         if ($rootScope.listQueryParams != null) {
@@ -126,66 +139,6 @@
         $scope.pageChanged();
 
         buttonHeader.listInit($scope,$window);
-    });
-    app.controller('editCtrl', function ($routeParams,$scope, $http,$window,$timeout, Upload) {
-        $scope.message = '';
-        $scope.directoryBo = {};
-        $scope.canAdd=PrivilegeService.hasPrivilege('add');
-        $scope.canSave=PrivilegeService.hasPrivilege('update');
-        if ($routeParams.id != null) {
-            url = "<c:url value="/base/directory/get"/>" + "?id=" + $routeParams.id;
-            $http.get(url)
-                .success(function (response) {
-                    if (response.success) {
-                        $scope.directoryBo = response.data;
-                        $scope.tableId=$scope.directoryBo.id;
-                        $scope.canSave=(PrivilegeService.hasPrivilege('add')&&$scope.directoryBo.id==null)||PrivilegeService.hasPrivilege('update');
-                    }
-                    else {
-                        bootbox.alert(response.message);
-                    }
-                }).error(function (response) {
-                bootbox.alert(response);
-            });
-        }
-        $scope.save = function () {
-            $scope.message="";
-            if ($scope.editForm.$valid) {
-                var postUrl = '<c:url value="/base/directory/saveForUpdated"/>';
-                if ($scope.directoryBo.id==null) {
-                    postUrl = '<c:url value="/base/directory/saveForCreated"/>';
-                }
-
-                $http.post(postUrl, $scope.directoryBo).success(function (data) {
-                    if (data.success) {
-                        $scope.message = "<eidea:label key="base.save.success"/>";
-                        //bootbox.alert("保存成功");
-                        $scope.directoryBo = data.data;
-                    }
-                    else {
-                        $scope.message = data.message;
-                    }
-                });
-            }
-        };
-
-        $scope.create = function () {
-            $scope.message = "";
-            $scope.directoryBo = {};
-            var url = "<c:url value="/base/directory/create"/>";
-            $http.get(url)
-                .success(function (response) {
-                    if (response.success) {
-                        $scope.directoryBo = response.data;
-                    }
-                    else {
-                        bootbox.alert(response.message);
-                    }
-                }).error(function (response) {
-                bootbox.alert(response);
-            });
-        }
-        buttonHeader.editInit($scope,$http,$window,$timeout, Upload,"/base");
     });
     app.run([
         'bootstrap3ElementModifier',

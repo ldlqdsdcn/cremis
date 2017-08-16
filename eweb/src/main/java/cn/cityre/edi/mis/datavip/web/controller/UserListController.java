@@ -87,6 +87,12 @@ public class UserListController {
         UserResource userResource = (UserResource) httpSession.getAttribute(WebConst.SESSION_RESOURCE);
         return JsonResult.success(userListService.getExistUserListBySuid(suid));
     }
+    //获取用户类型
+//    @ResponseBody
+//    @RequestMapping(value = "/getUserType",method = RequestMethod.GET)
+//    public JsonResult<String> getUserType(){
+//
+//    }
 
     @RequiresPermissions("view")
     @RequestMapping(value = "/exportExcel", method = RequestMethod.POST)
