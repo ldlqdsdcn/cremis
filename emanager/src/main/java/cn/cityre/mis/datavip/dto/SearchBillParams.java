@@ -15,11 +15,11 @@ public class SearchBillParams implements Serializable {
     private String bigBillCode;
     private String alipayBillCode;
     private String typeCode;
-    private String payFlag;
+    private Integer payFlag;
     private String invoiceNoFlag;
     private String postInvoiceFlag;
     private String postTypeCode;
     private String invoiceNo;
-    private String inoviceType;
+    private String invoiceType;
     private QueryParams queryParams;
 }

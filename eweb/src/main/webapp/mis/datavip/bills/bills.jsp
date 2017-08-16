@@ -16,9 +16,10 @@
     <jsp:param name="uri" value="${uri}"/>
 </jsp:include>
 </body>
-<jsp:include page="/mis/datavip/bills/confirm_password.jsp">
-    <jsp:param name="billsId" value="${id}"/>
-</jsp:include>
+<div name="elementPassword" ng-show="false">
+
+</div>
+<%@include  file="/mis/datavip/bills/confirm_password.jsp"%>
 <script type="text/javascript">
     var app = angular.module('myApp', ['ngRoute', 'ui.bootstrap', 'jcs-autoValidate'])
         .config(['$routeProvider', function ($routeProvider) {
@@ -65,6 +66,9 @@
             }
             return false;
         }
+        $scope.getBillsId=function (id) {
+            window.passConfirm=id;
+        }
         $scope.pageChanged = function () {
             var searchBillParams={"uid":$scope.uid,"billCode":$scope.billCode,"bigBillCode":$scope.bigBillCode,"alipayBillCode":$scope.alipayBillCode,
             "typeCode":$scope.typeCode,"payFlag":$scope.payFlag,"invoiceNoFlag":$scope.invoiceNoFlag,"postTypeCode":$scope.postTypeCode,"invoiceNo":$scope.invoiceNo,"postInvoiceFlag":$scope.postInvoiceFlag,"invoiceType":$scope.invoiceType,"queryParams":$scope.queryParams}
@@ -76,6 +80,7 @@
                     }
                     else {
                         bootbox.alert(response.message);
+                        $scope.modelList=null;
                     }
 
                 });

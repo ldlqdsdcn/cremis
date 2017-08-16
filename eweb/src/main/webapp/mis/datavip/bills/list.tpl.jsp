@@ -23,26 +23,26 @@
                     </td>
                     <td class="control-label"><%--支付类型--%><eidea:label key="cityre.mis.datavip.dicpaytype.typename"/>:
                     </td>
-                    <td class="form-group"><select class="form-control" ng-model="typeCode"
-                                                   ng-options="dicPayType.typeCode as dicPayType.typeName for dicPayType in payTypeList"/>
+                    <td class="form-group"><select class="form-control" ng-model="typeCode" ng-init="typeCode='null'"><option value="null">请选择</option><option ng-repeat="option in payTypeList" value="{{option.typeCode}}">{{option.typeName}}</option></select>
                     </td>
                     <td class="control-label"><%--支付状态--%><eidea:label key="cityre.mis.datavip.bill.payflag"/></td>
-                    <td class="form-group"><select class="form-control" ng-model="payFlag"
-                                                   ng-options="option.key as option.value for option in billsFlag"/></td>
+                    <td class="form-group"><select class="form-control" ng-model="payFlag" ng-init="payFlag='null'"
+                    >   <option value="null">请选择</option>
+                        <option ng-repeat="option in billsFlag" value="{{option.key}}">{{option.value}}</option></select></td>
 
                 </tr>
                 <tr>
                     <td class="control-label"><%--开票与否--%><eidea:label key="cityre.mis.datavip.bill.kpInvoiceType"/></td>
-                    <td class="form-group"><select class="form-control" ng-model="invoiceNoFlag" ng-options="option.key as option.value for option in invoiceStateList"/></td>
+                    <td class="form-group"><select class="form-control" ng-model="invoiceNoFlag"  ng-init="invoiceNoFlag='null'"><option value="null">请选择</option><option ng-repeat="option in invoiceStateList" value="{{option.key}}">{{option.value}}</option></select></td>
                     <td class="control-label"><%--邮寄发票--%><eidea:label
                             key="cityre.mis.datavip.bill.postInvoiceFlag"/></td>
-                    <td class="form-group"><select class="form-control" ng-model="invoiceNoFlag" ng-options="option.key as option.value for option in falgList"/></td>
+                    <td class="form-group"><select class="form-control" ng-model="postInvoiceFlag" ng-init="postInvoiceFlag='null'"><option value="null">请选择</option><option ng-repeat="option in falgList" value="{{option.key}}">{{option.value}}</option></select></td>
                     <td class="control-label"><%--收件类型--%><eidea:label key="cityre.mis.datavip.bill.postType"/></td>
-                    <td class="form-group"><select class="form-control" ng-model="postTypeCode"
-                                                   ng-options="postType.typeCode as postType.typeName for postType in postTypeList"/>
+                    <td class="form-group"><select class="form-control" ng-model="postTypeCode" ng-init="postTypeCode='null'"><option value="null">请选择</option>
+                        <option ng-repeat="postType in postTypeList" value="{{postType.typeCode}}">{{postType.typeName}}</option></select>
                     </td>
                     <td class="control-label"><eidea:label key="cityre.mis.datavip.bill.invoiceType"/></td>
-                    <td><select class="form-control" ng-model="invoiceType" ng-options="option.key as option.value for option in invoiceFlagType"/></td>
+                    <td><select class="form-control" ng-model="invoiceType"  ng-init="invoiceType='null'"><option value="null">请选择</option><option ng-repeat="option in invoiceFlagType" value="{{option.key}}">{{option.value}}</option></select>
                     <td class="control-label"><%--发票号--%><eidea:label key="cityre.mis.datavip.bills.invoiceNo"/>:</td>
                     <td class="form-group"><input type="text" class="form-control"
                                                   ng-model="invoiceNo"
@@ -50,6 +50,7 @@
                     </td>
                     <td class="control-label">
                         <button type="submit" class="btn"><eidea:label key="common.button.search"/></button>
+                        <a href="<c:url value ="/mis/datavip/bills/exportExl"/>" target="_blank">导出</a>
                     </td>
                 </tr>
             </table>
@@ -197,17 +198,18 @@
                     <td ng-if="model.serviceState==1">
                         已关闭
                     </td>
-                    <td>
 
-                        <%--<a class="btn btn-primary btn-xs" href="#/invoiceEdit?id={{model.id}}" ng-show="!model.confirmPassword"><eidea:label--%>
-                        <%--key="base.mis.datavip.invoice.edit"/>&lt;%&ndash;开通发票&ndash;%&gt;</a>--%>
+                    <td>
+                        <a class="btn btn-primary btn-xs" href="#/invoiceEdit?id={{model.id}}" ng-show="!model.confirmPassword"><eidea:label
+                        key="base.mis.datavip.invoice.edit"/><%--开通发票--%></a>
                         <button type="button" class="btn btn-primary btn-xs" data-toggle="modal"
-                                data-target="#confirmModal"><eidea:label
+                                data-target="#confirmModal" ng-show="model.confirmPassword" ng-click="getBillsId(model.id)"><eidea:label
                                 key="base.mis.datavip.invoice.edit"/></button>
                     </td>
                 </tr>
                 </tbody>
             </table>
+
             <ul uib-pagination boundary-links="true" total-items="queryParams.totalRecords"
                 ng-model="queryParams.pageNo"
                 max-size="maxSize" first-text="<eidea:label key="common.label.firstpage"/>"

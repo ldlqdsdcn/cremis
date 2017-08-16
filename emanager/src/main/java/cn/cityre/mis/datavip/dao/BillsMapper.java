@@ -15,7 +15,7 @@ public interface BillsMapper {
     //asp中default查询方法
     PageMyBatis<Bills> selectDefaultByPage(Map<String, Object> map);
 
-    List<Bills> selectExportInfo(Map<String,Object> map);
+    List<Bills> selectExportInfo();
 
     Bills selectByCode(String billCode);
 
