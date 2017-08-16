@@ -5,7 +5,7 @@ package cn.cityre.mis.datavip.del;
  */
 public enum BillFlagDef {
 
-    PAY(1,"已支付"),UNPAY(0,"未支付"),FALSE(-1,"支付失败"),NULL(null,null);
+    PAY(1,"已支付"),UNPAY(0,"未支付"),FALSE(-1,"支付失败");
 
     private Integer key;
     private String value;

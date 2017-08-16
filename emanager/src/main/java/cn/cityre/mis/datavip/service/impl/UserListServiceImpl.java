@@ -39,13 +39,13 @@ public class UserListServiceImpl implements UserListService {
         PagingCriteria pagingCriteria = PagingCriteria.createCriteria(queryParams.getPageSize(), queryParams.getFirstResult(), queryParams.getPageNo());
         Map<String, Object> map = new HashMap<>();
         map.put("pagingCriteria", pagingCriteria);
-        if (searchParams.getPayFlag()!=null){
+        if (searchParams.getPayFlag()!=null&&!searchParams.getPayFlag().equals("null")){
             map.put("payFlag",searchParams.getPayFlag());
         }
         if (searchParams.getUid()!=null){
             map.put("uid",searchParams.getUid());
         }
-        if (searchParams.getUserType()!=null){
+        if (searchParams.getUserType()!=null&&!searchParams.getUserType().equals("null")){
             map.put("userType",searchParams.getUserType());
         }
         if (searchParams.getRegStartTime()!=null){

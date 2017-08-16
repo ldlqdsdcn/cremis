@@ -10,16 +10,14 @@
                                                   placeholder="<eidea:message key="common.please.input"><eidea:param value="cityre.mis.datavip.user.useruid" type="label"/></eidea:message>">
                     </td>
                     <td class="control-label"><eidea:label key="cityre.mis.datavip.userlist.userType"/>:</td>
-                    <td class="form-group"><select class="form-control" ng-model="userType"
-                                                   ng-options="userType.userTypeName as userType.userTypeName for userType in userTypeList"></select>
+                    <td class="form-group"><select class="form-control" ng-model="userType" ng-init="userType='null'"><option value=null>请选择</option><option ng-repeat="userType in userTypeList" value="{{userType.userTypeName}}">{{userType.userTypeName}}</option></select>
                     </td>
                     <td class="control-label"><eidea:label key="cityre.mis.datavip.userlist.userTel"/>:</td>
                     <td class="form-group"><input type="text" class="form-control" ng-model="payTel"
                                                   placeholder="<eidea:message key="common.please.input"><eidea:param value="cityre.mis.datavip.userlist.userTel" type="label"/></eidea:message>">
                     </td>
                     <td class="control-label"><eidea:label key="cityre.mis.datavip.userlist.payState"/>:</td>
-                    <td class="form-group"><select class="form-control" ng-model="payFlag"
-                                                   ng-options="option.key as option.value for option in billsFlagList"></select>
+                    <td class="form-group"><select class="form-control" ng-model="payFlag" ng-init="payFlag='null'"><option value="null">请选择</option><option ng-repeat="option in billsFlagList" value="{{option.key}}">{{option.value}}</option></select>
                     </td>
                     <td class="control-label"><eidea:label key="cityre.mis.datavip.user.newUser"/>:</td>
                     <td class="form-group"><input type="checkbox" class="form-control" ng-model="newUser"

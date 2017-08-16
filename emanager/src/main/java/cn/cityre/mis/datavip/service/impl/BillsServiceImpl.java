@@ -63,25 +63,25 @@ public class BillsServiceImpl implements BillsService {
         if (searchBillParams.getBigBillCode() != null) {
             map.put("bigBillCode", searchBillParams.getBigBillCode());
         }
-        if (searchBillParams.getInvoiceType() != null) {
+        if (searchBillParams.getInvoiceType() != null&&!searchBillParams.getInvoiceType().equals("null")) {
             map.put("invoiceType", searchBillParams.getInvoiceType());
         }
-        if (searchBillParams.getTypeCode() != null) {
+        if (searchBillParams.getTypeCode() != null&&!searchBillParams.getTypeCode().equals("null")) {
             map.put("typeCode", searchBillParams.getTypeCode());
         }
         if (searchBillParams.getInvoiceNo() != null) {
             map.put("invoiceNo", searchBillParams.getInvoiceNo());
         }
-        if (searchBillParams.getPostInvoiceFlag() != null) {
+        if (searchBillParams.getPostInvoiceFlag() != null&&!searchBillParams.getPostInvoiceFlag().equals("null")) {
             map.put("postInvoiceFlag", searchBillParams.getPostInvoiceFlag());
         }
-        if (searchBillParams.getInvoiceNoFlag() != null) {
+        if (searchBillParams.getInvoiceNoFlag() != null&&!searchBillParams.getInvoiceNoFlag().equals("null")) {
             map.put("invoiceNoFlag", searchBillParams.getInvoiceNoFlag());
         }
-        if (searchBillParams.getPayFlag() != null) {
+        if (searchBillParams.getPayFlag() != null&&!searchBillParams.getPayFlag().equals("null")) {
             map.put("payFlag", searchBillParams.getPayFlag());
         }
-        if (searchBillParams.getPostTypeCode() != null) {
+        if (searchBillParams.getPostTypeCode() != null&&!searchBillParams.getPostTypeCode().equals("null")) {
             map.put("postTypeCode", searchBillParams.getPostTypeCode());
         }
         PageMyBatis<Bills> pageMyBatis = billsMapper.selectDefaultByPage(map);
