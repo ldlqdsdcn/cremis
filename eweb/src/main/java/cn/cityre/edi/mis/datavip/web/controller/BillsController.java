@@ -197,7 +197,6 @@ public class BillsController {
             jsonObject1.addProperty("value", billFlagDef.getValue());
             jsonArray.add(jsonObject1);
         }
-        jsonArray.add(null);
         jsonObject.add("billFlagList", jsonArray);
         return JsonResult.success(jsonObject.toString());
     }
@@ -215,7 +214,6 @@ public class BillsController {
             jsonObject1.addProperty("value", invoiceFlag.getValue());
             jsonArray.add(jsonObject1);
         }
-        jsonArray.add(null);
         jsonObject.add("flag", jsonArray);
         return JsonResult.success(jsonObject.toString());
     }
@@ -233,7 +231,6 @@ public class BillsController {
             jsonObject1.addProperty("value", invoiceState.getValue());
             jsonArray.add(jsonObject1);
         }
-        jsonArray.add(null);
         jsonObject.add("invoiceState", jsonArray);
         return JsonResult.success(jsonObject.toString());
     }
@@ -251,7 +248,6 @@ public class BillsController {
             jsonObject1.addProperty("value", invoiceType.getValue());
             jsonArray.add(jsonObject1);
         }
-        jsonArray.add(null);
         jsonObject.add("invoiceTypeList", jsonArray);
         return JsonResult.success(jsonObject.toString());
     }

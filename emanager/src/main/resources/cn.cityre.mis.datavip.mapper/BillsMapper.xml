@@ -101,7 +101,7 @@
         AND dic_pay_type.type_code =#{typeCode,jdbcType=VARCHAR}
         </if>
         <if test="payFlag!=null">
-        AND bills.pay_flag ={#payFlag,jdbcType=VARCHAR}
+        AND bills.pay_flag =#{payFlag,jdbcType=VARCHAR}
         </if>
         <if test="postInvoiceFlag!=null">
         AND bills.post_invoice_flag = #{postInvoiceFlag,jdbcType=VARCHAR}
@@ -140,7 +140,7 @@
         <if test="_parameter!=null">
             <include refid="where_sql"/>
         </if>
-        ORDER by bills.pay_updatetime DESC
+        ORDER by pay_updatetime DESC
     </select>
     <!--Mybatis联合查询-->
     <select id="selectExportInfo" resultMap="BillsMap" parameterType="java.util.Map">

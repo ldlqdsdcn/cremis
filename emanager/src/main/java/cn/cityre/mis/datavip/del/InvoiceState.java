@@ -4,7 +4,7 @@ package cn.cityre.mis.datavip.del;
  * Created by cityre on 2017/8/16.
  */
 public enum InvoiceState {
-    KINVOICE(1,"已开票"),NINVOICE(0,"未开票");
+    KINVOICE(1,"已开票"),NINVOICE(0,"未开票"),NULL(null,null);
     private Integer key;
     private String value;
 

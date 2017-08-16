@@ -63,8 +63,8 @@ public class BillsServiceImpl implements BillsService {
         if (searchBillParams.getBigBillCode() != null) {
             map.put("bigBillCode", searchBillParams.getBigBillCode());
         }
-        if (searchBillParams.getInoviceType() != null) {
-            map.put("invoiceType", searchBillParams.getInoviceType());
+        if (searchBillParams.getInvoiceType() != null) {
+            map.put("invoiceType", searchBillParams.getInvoiceType());
         }
         if (searchBillParams.getTypeCode() != null) {
             map.put("typeCode", searchBillParams.getTypeCode());
@@ -143,8 +143,8 @@ public class BillsServiceImpl implements BillsService {
             if (searchBillParams.getBigBillCode() != null) {
                 map.put("bigBillCode", searchBillParams.getAlipayBillCode());
             }
-            if (searchBillParams.getInoviceType() != null) {
-                map.put("invoiceType", searchBillParams.getInoviceType());
+            if (searchBillParams.getInvoiceType() != null) {
+                map.put("invoiceType", searchBillParams.getInvoiceType());
             }
             if (searchBillParams.getTypeCode() != null) {
                 map.put("typeCode", searchBillParams.getTypeCode());

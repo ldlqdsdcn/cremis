@@ -116,7 +116,6 @@ public class UserListController {
             list.addProperty("value", billFlagDef.getValue());
             jsonArray.add(list);
         }
-        jsonArray.add(null);
         jsonObject.add("billsFlag", jsonArray);
         return JsonResult.success(jsonObject.toString());
     }
