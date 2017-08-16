@@ -8,7 +8,7 @@
         <result column="pwd" jdbcType="VARCHAR" property="pwd"/>
         <result column="username" jdbcType="VARCHAR" property="userName"/>
         <result column="sex" jdbcType="VARCHAR" property="sex"/>
-        <result column="regtime" jdbcType="TIMESTAMP" property="regTime"/>
+        <result column="regtime" jdbcType="TIMESTAMP" property="userTypeName"/>
         <result column="updateuid" jdbcType="VARCHAR" property="updateUid"/>
         <result column="updatetime" jdbcType="TIMESTAMP" property="updateTime"/>
         <result column="email" jdbcType="VARCHAR" property="email"/>
@@ -129,9 +129,9 @@
         INNER JOIN dic_user_type ON dic_user_type.user_type_code = userlist.user_type AND dic_user_type.type IN
         ('dm','creprice','fjgj')
         LEFT JOIN user_payment_info ON user_payment_info.billcode = bills.bill_code
-        <if test="_parameter!=null">
-            <include refid="where_sql"/>
-        </if>
+        <!--<if test="_parameter!=null">-->
+            <!--<include refid="where_sql"/>-->
+        <!--</if>-->
     </select>
     <!--查询用户密码-->
     <select id="selectUserPassword" resultType="java.lang.String" parameterType="java.lang.String">

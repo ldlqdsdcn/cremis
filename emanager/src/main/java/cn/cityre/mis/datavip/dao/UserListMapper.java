@@ -13,7 +13,7 @@ public interface UserListMapper {
 
     PageMyBatis<UserList> selectUserInfoByPage(Map<String, Object> map);
 
-    List<UserList> selectExportInfo(Map<String, Object> map);
+    List<UserList> selectExportInfo();
 
     String selectUserPassword(String suid);
 

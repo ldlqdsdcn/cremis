@@ -80,63 +80,9 @@ public class UserListServiceImpl implements UserListService {
     }
 
     @Override
-    public List<UserList> getExportList(List<SearchField> searchFields) {
+    public List<UserList> getExportList() {
         DataSourceContextHolder.setDbType("dataSource_cityreaccount");
-        Map<String, Object> map = new HashMap<>();
-        if (searchFields == null) {
-            map.put("uid", null);
-            map.put("userType", null);
-            map.put("regStartTime", null);
-            map.put("regEndTime", null);
-            map.put("payTel", null);
-            map.put("payFlag", null);
-            map.put("serviceStartTime", null);
-            map.put("serviceEndTime", null);
-        } else {
-            for (SearchField searchField : searchFields) {
-                if (searchField.getField().equals("uid")) {
-                    map.put("uid", searchField.getValue());
-                } else {
-                    map.put("uid", null);
-                }
-                if (searchField.getField().equals("userType")) {
-                    map.put("userType", searchField.getValue());
-                } else {
-                    map.put("userType", null);
-                }
-                if (searchField.getField().equals("regStartTime")) {
-                    map.put("regStartTime", searchField.getValue());
-                } else {
-                    map.put("regStartTime", null);
-                }
-                if (searchField.getField().equals("regEndTime")) {
-                    map.put("regEndTime", searchField.getValue());
-                } else {
-                    map.put("regEndTime", null);
-                }
-                if (searchField.getField().equals("payTel")) {
-                    map.put("payTel", searchField.getValue());
-                } else {
-                    map.put("payTel", null);
-                }
-                if (searchField.getField().equals("payFlag")) {
-                    map.put("payFlag", searchField.getValue());
-                } else {
-                    map.put("payFlag", null);
-                }
-                if (searchField.getField().equals("serviceStartTime")) {
-                    map.put("serviceStartTime", searchField.getValue());
-                } else {
-                    map.put("serviceStartTime", null);
-                }
-                if (searchField.getField().equals("serviceEndTime")) {
-                    map.put("serviceEndTime", searchField.getValue());
-                } else {
-                    map.put("serviceEndTime", null);
-                }
-            }
-        }
-        List<UserList> list = userListMapper.selectExportInfo(map);
+        List<UserList> list = userListMapper.selectExportInfo();
         DataSourceContextHolder.setDbType("dataSource_core");
         return list;
     }

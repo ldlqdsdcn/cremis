@@ -128,43 +128,11 @@ public class BillsServiceImpl implements BillsService {
             return paginationResult;
         }
         @Override
-        public List<Bills> getExportList (SearchBillParams searchBillParams){
+        public List<Bills> getExportList (){
             DataSourceContextHolder.setDbType("dataSource_cityreaccount");
             Map<String, Object> map = new HashMap<>();
-            if (searchBillParams.getUid() != null) {
-                map.put("uid",  searchBillParams.getUid());
-            }
-            if (searchBillParams.getBillCode() != null) {
-                map.put("billCode", searchBillParams.getBillCode());
-            }
-            if (searchBillParams.getAlipayBillCode() != null) {
-                map.put("alipayBillCode", searchBillParams.getAlipayBillCode());
-            }
-            if (searchBillParams.getBigBillCode() != null) {
-                map.put("bigBillCode", searchBillParams.getAlipayBillCode());
-            }
-            if (searchBillParams.getInvoiceType() != null) {
-                map.put("invoiceType", searchBillParams.getInvoiceType());
-            }
-            if (searchBillParams.getTypeCode() != null) {
-                map.put("typeCode", searchBillParams.getTypeCode());
-            }
-            if (searchBillParams.getInvoiceNo() != null) {
-                map.put("invoiceNo", searchBillParams.getInvoiceNo());
-            }
-            if (searchBillParams.getPostInvoiceFlag() != null) {
-                map.put("postInvoiceFlag", searchBillParams.getPostInvoiceFlag());
-            }
-            if (searchBillParams.getInvoiceNoFlag() != null) {
-                map.put("invoiceNoFlag", searchBillParams.getInvoiceNoFlag());
-            }
-            if (searchBillParams.getPayFlag() != null) {
-                map.put("payFlag", searchBillParams.getPayFlag());
-            }
-            if (searchBillParams.getPostTypeCode() != null) {
-                map.put("postTypeCode", searchBillParams.getPostTypeCode());
-            }
-            List<Bills> list = billsMapper.selectExportInfo(map);
+
+            List<Bills> list = billsMapper.selectExportInfo();
             DataSourceContextHolder.setDbType("dataSource_core");
             return list;
 
