@@ -29,6 +29,19 @@
                 .otherwise({redirectTo: '/list'});
         }]);
     app.controller('listCtrl', function ($scope,$rootScope, $http) {
+        //查询条件
+        $scope.billCode=null;
+        $scope.bigBillCode=null;
+        $scope.alipayBillCode=null;
+        $scope.payFlag=null;
+        $scope.postInvoiceFlag=null
+        $scope.invoiceType=null;
+        $scope.postTypeCode=null;
+        $scope.invoiceNo = null
+        $scope.uid = null;
+        $scope.typeCode = null;
+        $scope.invoiceNoFlag=null;
+
         $scope.modelList = [];
         $scope.delFlag = false;
         $scope.isLoading = true;
@@ -53,7 +66,9 @@
             return false;
         }
         $scope.pageChanged = function () {
-            $http.post("<c:url value="/mis/datavip/bills/list"/>", $scope.queryParams)
+            var searchBillParams={"uid":$scope.uid,"billCode":$scope.billCode,"bigBillCode":$scope.bigBillCode,"alipayBillCode":$scope.alipayBillCode,
+            "typeCode":$scope.typeCode,"payFlag":$scope.payFlag,"invoiceNoFlag":$scope.invoiceNoFlag,"postTypeCode":$scope.postTypeCode,"invoiceNo":$scope.invoiceNo,"postInvoiceFlag":$scope.postInvoiceFlag,"invoiceType":$scope.invoiceType,"queryParams":$scope.queryParams}
+            $http.post("<c:url value="/mis/datavip/bills/list"/>", searchBillParams)
                 .success(function (response) {
                     $scope.isLoading = false;
                     if (response.success) {
@@ -102,8 +117,58 @@
             });
         };
 
-//        服务开通的判断
-
+//        获取支付类型
+        $http.get("<c:url value="/mis/datavip/bills/getPayType"/>").success(function (response) {
+            if (response.success){
+                $scope.payTypeList=response.data;
+            }else{
+                $scope.message=response.message;
+            }
+        });
+        //        获取邮寄类型
+        $http.get("<c:url value="/mis/datavip/bills/getPostType"/>").success(function (response) {
+            if (response.success){
+                $scope.postTypeList=response.data;
+            }else{
+                $scope.message=response.message;
+            }
+        });
+        //        获取支付状态
+        $http.get("<c:url value="/mis/datavip/bills/getBillFlag"/>").success(function (response) {
+            if (response.success){
+                var billFlag=$.parseJSON(response.data);
+                $scope.billsFlag = billFlag.billFlagList
+            }else{
+                $scope.message=response.message;
+            }
+        });
+        //        获取发票状态
+        $http.get("<c:url value="/mis/datavip/bills/getInvoiceFlag"/>").success(function (response) {
+            if (response.success){
+                var invoiceFlag=$.parseJSON(response.data);
+                $scope.invoiceFlagType = invoiceFlag.invoiceTypeList
+            }else{
+                $scope.message=response.message;
+            }
+        });
+        //        获取发票状态
+        $http.get("<c:url value="/mis/datavip/bills/getFlag"/>").success(function (response) {
+            if (response.success){
+                var flag=$.parseJSON(response.data);
+                $scope.falgList =flag.flag;
+            }else{
+                $scope.message=response.message;
+            }
+        });
+        //        获取发票状态
+        $http.get("<c:url value="/mis/datavip/bills/getInvoiceState"/>").success(function (response) {
+            if (response.success){
+                var invoice=$.parseJSON(response.data);
+                $scope.invoiceStateList =invoice.invoiceState;
+            }else{
+                $scope.message=response.message;
+            }
+        });
 
 
 
@@ -186,7 +251,6 @@
             }).error(function (response) {
             bootbox.alert(response.data);
         });
-
         $scope.serviceEdit = function(){
             if ($scope.editForm.$valid){
                 $http.post(postUrl,$scope.billsPo).success(function (response) {

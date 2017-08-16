@@ -2,17 +2,62 @@
 <%@ include file="/inc/taglib.jsp" %>
 <div class="container-fluid" ng-controller="listCtrl">
     <div class="page-header">
-        <ol class="breadcrumb">
-            <li><a href="javascript:;"><i class="icon icon-tasks"></i><eidea:label key="cremis.datavip.bills.title"/></a></li>
-        </ol>
-        <button type="button" class="btn  btn-primary btn-sm" id="search_but" data-toggle="modal"
-                data-target="#searchModal"><eidea:label key="common.button.search"/></button>
-        <button type="button" class="btn btn-primary btn-sm"
-                ng-click="exportExcel()" >导出</button>
+        <form role="form" name="editForm" novalidate ng-submit="pageChanged()" class="form-inline form-label-left">
+            <table class="table table-borderless">
+                <tr>
+                    <td class="control-label"><%--订购单号--%><eidea:label key="cityre.mis.datavip.bill.bigBillCode"/>:</td>
+                    <td class="form-group"><input type="text" class="form-control" ng-model="bigBillCode"
+                                                  placeholder="<eidea:message key="common.please.input"><eidea:param value="cityre.mis.datavip.bill.bigBillCode" type="label"/></eidea:message>">
+                    </td>
+                    <td class="control-label"><%--购物车订单号--%><eidea:label key="cityre.mis.datavip.bill.billCode"/>:</td>
+                    <td class="form-group"><input type="text" class="form-control" ng-model="billCode"
+                                                  placeholder="<eidea:message key="common.please.input"><eidea:param value="cityre.mis.datavip.bill.billCode" type="label"/></eidea:message>">
+                    </td>
+                    <td class="control-label"><%--用户UID--%><eidea:label key="base.v2017.user.label.userId"/>:</td>
+                    <td class="form-group"><input type="text" class="form-control" ng-model="uid"
+                                                  placeholder="<eidea:message key="common.please.input"><eidea:param value="base.v2017.user.label.userId" type="label"/></eidea:message>">
+                    </td>
+                    <td class="control-label"><%--支付宝账号--%><eidea:label key="cityre.mis.datavip.bill.alipayCode"/>:</td>
+                    <td class="form-group"><input type="text" class="form-control" ng-model="alipayBillCode"
+                                                  placeholder="<eidea:message key="common.please.input"><eidea:param value="cityre.mis.datavip.bill.alipayCode" type="label"/></eidea:message>">
+                    </td>
+                    <td class="control-label"><%--支付类型--%><eidea:label key="cityre.mis.datavip.dicpaytype.typename"/>:
+                    </td>
+                    <td class="form-group"><select class="form-control" ng-model="typeCode"
+                                                   ng-options="dicPayType.typeCode as dicPayType.typeName for dicPayType in payTypeList"/>
+                    </td>
+                    <td class="control-label"><%--支付状态--%><eidea:label key="cityre.mis.datavip.bill.payflag"/></td>
+                    <td class="form-group"><select class="form-control" ng-model="payFlag"
+                                                   ng-options="option.key as option.value for option in billsFlag"/></td>
+
+                </tr>
+                <tr>
+                    <td class="control-label"><%--开票与否--%><eidea:label key="cityre.mis.datavip.bill.kpInvoiceType"/></td>
+                    <td class="form-group"><select class="form-control" ng-model="invoiceNoFlag" ng-options="option.key as option.value for option in invoiceStateList"/></td>
+                    <td class="control-label"><%--邮寄发票--%><eidea:label
+                            key="cityre.mis.datavip.bill.postInvoiceFlag"/></td>
+                    <td class="form-group"><select class="form-control" ng-model="invoiceNoFlag" ng-options="option.key as option.value for option in falgList"/></td>
+                    <td class="control-label"><%--收件类型--%><eidea:label key="cityre.mis.datavip.bill.postType"/></td>
+                    <td class="form-group"><select class="form-control" ng-model="postTypeCode"
+                                                   ng-options="postType.typeCode as postType.typeName for postType in postTypeList"/>
+                    </td>
+                    <td class="control-label"><eidea:label key="cityre.mis.datavip.bill.invoiceType"/></td>
+                    <td><select class="form-control" ng-model="invoiceType" ng-options="option.key as option.value for option in invoiceFlagType"/></td>
+                    <td class="control-label"><%--发票号--%><eidea:label key="cityre.mis.datavip.bills.invoiceNo"/>:</td>
+                    <td class="form-group"><input type="text" class="form-control"
+                                                  ng-model="invoiceNo"
+                                                  placeholder="<eidea:message key="common.please.input"><eidea:param value="cityre.mis.datavip.bills.invoiceNo" type="label"/></eidea:message>">
+                    </td>
+                    <td class="control-label">
+                        <button type="submit" class="btn"><eidea:label key="common.button.search"/></button>
+                    </td>
+                </tr>
+            </table>
+        </form>
     </div>
     <div class="row-fluid">
-        <div class="span12" >
-            <table class="table table-bordered table-hover table-striped table-condensed" >
+        <div class="span12">
+            <table class="table table-bordered table-hover table-striped table-condensed">
                 <thead class="">
                 <tr>
                     <th><%--序号--%><eidea:label key="base.serialNumber"/></th>
@@ -140,21 +185,23 @@
                     </td>
 
                     <td ng-if="model.serviceState==2">
-                        <a ng-if="model.endTime!=nul" class="btn btn-primary btn-xs" href="#/edit?billCode={{model.billCode}}">关闭服务<%--关闭服务--%></a>
+                        <a ng-if="model.endTime!=nul" class="btn btn-primary btn-xs"
+                           href="#/edit?billCode={{model.billCode}}">关闭服务<%--关闭服务--%></a>
                     </td>
                     <td ng-if="model.serviceState==0">
                         未开通
-                        <a ng-if="model.payFlag==1"class="btn btn-primary btn-xs" href="#/edit?billCode={{model.billCode}}">开通服务</a>
+                        <a ng-if="model.payFlag==1" class="btn btn-primary btn-xs"
+                           href="#/edit?billCode={{model.billCode}}">开通服务</a>
                     </td>
                     <td ng-if="model.serviceState==1">
                         已关闭
                     </td>
-                    <td >
+                    <td>
 
                         <%--<a class="btn btn-primary btn-xs" href="#/invoiceEdit?id={{model.id}}" ng-show="!model.confirmPassword"><eidea:label--%>
-                                <%--key="base.mis.datavip.invoice.edit"/>&lt;%&ndash;开通发票&ndash;%&gt;</a>--%>
-                        <button type="button" class="btn btn-primary btn-xs"  data-toggle="modal"
-                                data-target="#confirmModal" ><eidea:label
+                        <%--key="base.mis.datavip.invoice.edit"/>&lt;%&ndash;开通发票&ndash;%&gt;</a>--%>
+                        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal"
+                                data-target="#confirmModal"><eidea:label
                                 key="base.mis.datavip.invoice.edit"/></button>
                     </td>
                 </tr>

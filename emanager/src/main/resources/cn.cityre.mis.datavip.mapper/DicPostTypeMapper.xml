@@ -3,14 +3,19 @@
 <mapper namespace="cn.cityre.mis.datavip.dao.DicPostTypeMapper">
     <resultMap id="BaseResultMap" type="cn.cityre.mis.datavip.entity.DicPostType">
         <id column="id" jdbcType="INTEGER" property="id"/>
-        <result column="post_type_code" jdbcType="VARCHAR" property="postTypeCode"/>
-        <result column="post_type_name" jdbcType="VARCHAR" property="postTypeName"/>
+        <result column="post_type_code" jdbcType="VARCHAR" property="typeCode"/>
+        <result column="post_type_name" jdbcType="VARCHAR" property="typeName"/>
     </resultMap>
 
     <sql id="Base_Column_List">
     id, post_type_code, post_type_name
   </sql>
-
+    <select id="selectAllPostType" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        FROM
+        dic_post_type
+    </select>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

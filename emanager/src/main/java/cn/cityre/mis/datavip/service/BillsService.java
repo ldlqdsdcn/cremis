@@ -1,5 +1,7 @@
 package cn.cityre.mis.datavip.service;
 
+import cn.cityre.mis.datavip.dto.SearchBillParams;
+import cn.cityre.mis.datavip.dto.SearchParams;
 import cn.cityre.mis.datavip.entity.Bills;
 import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.QueryParams;
@@ -14,7 +16,7 @@ import java.util.List;
  */
 public interface BillsService {
 
-    PaginationResult<Bills> getBillsListByOthers(List<SearchField> searchFields,QueryParams queryParams) throws ParseException;
+    PaginationResult<Bills> getBillsListByOthers(SearchBillParams searchBillsParams) throws ParseException;
 
     List<Bills> getExportList(List<SearchField> searchFields);
 

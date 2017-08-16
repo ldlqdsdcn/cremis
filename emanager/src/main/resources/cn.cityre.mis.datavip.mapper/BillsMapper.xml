@@ -97,8 +97,8 @@
         <if test="alipayBillCode!=null">
         AND bills.alipay_bill_code LIKE concat('%',#{alipayBillCode,jdbcType=VARCHAR},'%')
         </if>
-        <if test="typeName!=null">
-        AND dic_pay_type.type_name LIKE concat('%',#{typeName,jdbcType=VARCHAR},'%')
+        <if test="typeCode!=null">
+        AND dic_pay_type.type_code =#{typeCode,jdbcType=VARCHAR}
         </if>
         <if test="payFlag!=null">
         AND bills.pay_flag ={#payFlag,jdbcType=VARCHAR}
@@ -109,8 +109,8 @@
         <if test="invoiceType!=null">
         AND bills.invoice_type = #{invoiceType,jdbcType=VARCHAR}
         </if>
-        <if test="postType!=null">
-        AND bills.post_type = #{postType,jdbcType=VARCHAR}
+        <if test="postTypeCode!=null">
+        AND bills.post_type = #{postTypeCode,jdbcType=VARCHAR}
         </if>
         <if test="invoiceNoFlag!=null">
         AND bills.invoice_no_flag = #{invoiceNoFlag,jdbcType=INTEGER}

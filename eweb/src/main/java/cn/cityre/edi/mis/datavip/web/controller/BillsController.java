@@ -1,9 +1,18 @@
 package cn.cityre.edi.mis.datavip.web.controller;
 
 import cn.cityre.edi.mis.mis.web.util.SearchFieldHelper;
+import cn.cityre.mis.datavip.del.BillFlagDef;
+import cn.cityre.mis.datavip.del.InvoiceFlag;
+import cn.cityre.mis.datavip.del.InvoiceState;
+import cn.cityre.mis.datavip.del.InvoiceType;
+import cn.cityre.mis.datavip.dto.SearchBillParams;
 import cn.cityre.mis.datavip.entity.Bills;
+import cn.cityre.mis.datavip.entity.DicPayType;
+import cn.cityre.mis.datavip.entity.DicPostType;
 import cn.cityre.mis.datavip.entity.UserPaymentInfo;
 import cn.cityre.mis.datavip.service.BillsService;
+import cn.cityre.mis.datavip.service.DicPayTypeService;
+import cn.cityre.mis.datavip.service.DicPostTypeService;
 import cn.cityre.mis.datavip.service.UserPaymentInfoService;
 import cn.cityre.mis.datavip.util.CityreExcel;
 import cn.cityre.mis.datavip.util.ExcelExport;
@@ -17,6 +26,8 @@ import com.dsdl.eidea.core.web.def.WebConst;
 import com.dsdl.eidea.core.web.result.JsonResult;
 import com.dsdl.eidea.core.web.result.def.ErrorCodes;
 import com.dsdl.eidea.core.web.vo.PagingSettingResult;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import cryptography.AesUtil;
 import cryptography.Md5Util;
 import cryptography.RsaUtil;
@@ -51,6 +62,10 @@ public class BillsController {
     private UserPaymentInfoService userPaymentInfoService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private DicPayTypeService dicPayTypeService;
+    @Autowired
+    private DicPostTypeService dicPostTypeService;
 
     @RequestMapping(value = "/showList", method = RequestMethod.GET)
     @RequiresPermissions(value = "view")
@@ -64,9 +79,12 @@ public class BillsController {
     @RequiresPermissions(value = "view")
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
-    public JsonResult<PaginationResult<Bills>> list(HttpSession httpSession, @RequestBody QueryParams queryParams) throws ParseException {
-        List<SearchField> searchFields = SearchFieldHelper.getSearchField(URL,httpSession);
-        PaginationResult<Bills> paginationResult = billsService.getBillsListByOthers(searchFields,queryParams);
+    public JsonResult<PaginationResult<Bills>> list(HttpSession httpSession, @RequestBody SearchBillParams searchBillParams) throws ParseException {
+        UserResource userResource = (UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
+        PaginationResult<Bills> paginationResult = billsService.getBillsListByOthers(searchBillParams);
+        if (paginationResult.getData()==null||paginationResult.getData().size()==0){
+            return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(),userResource.getMessage("mis.datavip.error.noexist"));
+        }
         return JsonResult.success(paginationResult);
     }
 
@@ -140,6 +158,85 @@ public class BillsController {
         }
         billsService.openService(bills);
         return JsonResult.success(bills);
+    }
+
+    /*获取支付类型*/
+    @RequestMapping(value = "/getPayType",method = RequestMethod.GET)
+    @ResponseBody
+    @RequiresPermissions(value = "view")
+    public JsonResult<List<DicPayType>> getPayType(){
+        return JsonResult.success(dicPayTypeService.getExistAllType());
+    }
+    /*获取邮寄类型*/
+    @RequestMapping(value = "/getPostType",method = RequestMethod.GET)
+    @ResponseBody
+    @RequiresPermissions(value = "view")
+    public JsonResult<List<DicPostType>> getPostType(){
+        return JsonResult.success(dicPostTypeService.getExistPostTypeList());
+    }
+    /*获取支付状态*/
+    @RequestMapping(value="/getBillFlag",method = RequestMethod.GET)
+    @ResponseBody
+    @RequiresPermissions(value = "view")
+    public JsonResult<String> getBillFlag(){
+        JsonObject jsonObject = new JsonObject();
+        JsonArray jsonArray = new JsonArray();
+        for(BillFlagDef billFlagDef:BillFlagDef.values()){
+            JsonObject jsonObject1 = new JsonObject();
+            jsonObject1.addProperty("key",billFlagDef.getKey());
+            jsonObject1.addProperty("value",billFlagDef.getValue());
+            jsonArray.add(jsonObject1);
+        }
+        jsonObject.add("billFlagList",jsonArray);
+        return JsonResult.success(jsonObject.toString());
+    }
+    /*获取状态*/
+    @RequestMapping(value="/getFlag",method = RequestMethod.GET)
+    @ResponseBody
+    @RequiresPermissions(value = "view")
+    public JsonResult<String> getFlag(){
+        JsonObject jsonObject = new JsonObject();
+        JsonArray jsonArray = new JsonArray();
+        for(InvoiceFlag invoiceFlag:InvoiceFlag.values()){
+            JsonObject jsonObject1 = new JsonObject();
+            jsonObject1.addProperty("key",invoiceFlag.getKey());
+            jsonObject1.addProperty("value",invoiceFlag.getValue());
+            jsonArray.add(jsonObject1);
+        }
+        jsonObject.add("flag",jsonArray);
+        return JsonResult.success(jsonObject.toString());
+    }
+    /*获取状态*/
+    @RequestMapping(value="/getInvoiceState",method = RequestMethod.GET)
+    @ResponseBody
+    @RequiresPermissions(value = "view")
+    public JsonResult<String> getInvoiceState(){
+        JsonObject jsonObject = new JsonObject();
+        JsonArray jsonArray = new JsonArray();
+        for(InvoiceState invoiceState:InvoiceState.values()){
+            JsonObject jsonObject1 = new JsonObject();
+            jsonObject1.addProperty("key",invoiceState.getKey());
+            jsonObject1.addProperty("value",invoiceState.getValue());
+            jsonArray.add(jsonObject1);
+        }
+        jsonObject.add("invoiceState",jsonArray);
+        return JsonResult.success(jsonObject.toString());
+    }
+    /*获取发票状态*/
+    @RequestMapping(value="/getInvoiceFlag",method = RequestMethod.GET)
+    @ResponseBody
+    @RequiresPermissions(value = "view")
+    public JsonResult<String> getInvoiceFlag(){
+        JsonObject jsonObject = new JsonObject();
+        JsonArray jsonArray = new JsonArray();
+        for(InvoiceType invoiceType:InvoiceType.values()){
+            JsonObject jsonObject1 = new JsonObject();
+            jsonObject1.addProperty("key",invoiceType.getKey());
+            jsonObject1.addProperty("value",invoiceType.getValue());
+            jsonArray.add(jsonObject1);
+        }
+        jsonObject.add("invoiceTypeList",jsonArray);
+        return JsonResult.success(jsonObject.toString());
     }
     @RequestMapping(value = "/getUserPaymentInfo", method = RequestMethod.GET)
     @RequiresPermissions("view")
