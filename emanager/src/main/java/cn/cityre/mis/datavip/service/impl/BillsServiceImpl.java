@@ -132,7 +132,7 @@ public class BillsServiceImpl implements BillsService {
             DataSourceContextHolder.setDbType("dataSource_cityreaccount");
             Map<String, Object> map = new HashMap<>();
             if (searchBillParams.getUid() != null) {
-                map.put("uid", searchBillParams.getUid());
+                map.put("uid",  searchBillParams.getUid());
             }
             if (searchBillParams.getBillCode() != null) {
                 map.put("billCode", searchBillParams.getBillCode());
