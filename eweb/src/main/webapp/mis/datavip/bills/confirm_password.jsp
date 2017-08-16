@@ -13,7 +13,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     &times;
                 </button>
-                <h4 class="modal-title" id="myModalLabel"><eidea:message key="common.selectCity.title"/></h4>
+                <h4 class="modal-title" id="myModalLabel"><eidea:label key="change.password.input.confirm.password"/></h4>
             </div>
             <form name="editForm" novalidate ng-submit="save()" method="post" class="form-horizontal form-label-left">
                 <div class="modal-body">
@@ -38,6 +38,8 @@
     </div>
 </div>
 <script type="text/javascript">
+    var obj=document.getElementsByName("elementPassword");
+        debugger;
     //密钥偏移量，用于aes加密
     var iv = CryptoJS.lib.WordArray.random(128/8).toString(CryptoJS.enc.Hex);
     //用于生成初始key
@@ -47,16 +49,24 @@
         $scope.password = null;
         var  userName = '<%=((UserBo)request.getSession().getAttribute(WebConst.SESSION_LOGINUSER)).getUsername()%>';
         $scope.save = function () {
+            if($scope.password==null){
+                bootbox.alert("请输入密码！");
+                return false;
+            }
             var usernameAndPassword = userName+"|"+$scope.password;
             var aesAndRsaUtil = new AesAndRsaUtil(iv,key);
             var enkey = aesAndRsaUtil.encryptkey();
             var cipherUsernameAndPassword = aesAndRsaUtil.aesencrypt(usernameAndPassword);
             var allparam = cipherUsernameAndPassword + "|" + enkey + "|" + iv;
+            var password=window.passConfirm;
             $http.post("<c:url value="/mis/datavip/bills/confirmPassword"/>", {"password":allparam}).success(function (data) {
                 if (data.success) {
                     $scope.message = data.data;
                     $('#confirmModal').modal('hide');
-                    window.location.href = "#/invoiceEdit?id=bills.billsId";
+                    var url = "#/invoiceEdit?id="+password;
+                    window.location.href = url;
+                }else{
+                    bootbox.alert("密码错误请重新输入！")
                 }
             }).errors(function (response) {
                 $scope.message=response.message;

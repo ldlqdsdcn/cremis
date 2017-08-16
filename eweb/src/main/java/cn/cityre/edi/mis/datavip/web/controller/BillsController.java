@@ -249,68 +249,68 @@ public class BillsController {
         }
         return JsonResult.success(userPaymentInfo);
     }
-    @RequiresPermissions("view")
-    @RequestMapping(value = "/exportExcel",method = RequestMethod.POST)
-    @ResponseBody
-    public JsonResult<String> exportExcel(HttpSession httpSession, @RequestBody List<Bills> bills) throws IOException {
-        List<SearchField> searchFields = SearchFieldHelper.getSearchField(URL,httpSession);
-        List<String> headList = new ArrayList<>();
-        headList.add("用户名");
-        headList.add("大订单号");
-        headList.add("订单号");
-        headList.add("支付宝账号");
-        headList.add("开始时间");
-        headList.add("结束时间");
-        headList.add("支付类型");
-        headList.add("支付金额");
-        headList.add("支付状态");
-        headList.add("支付时间");
-        headList.add("是否邮寄(1-》是；0-》否");
-        headList.add("发票类型");
-        headList.add("发票抬头");
-        headList.add("纳税人识别号");
-        headList.add("地址电话");
-        headList.add("开户行及账号");
-        headList.add("收件人");
-        headList.add("收件类型");
-        headList.add("发送地址");
-        headList.add("联系电话");
-        headList.add("支付人");
-        headList.add("支付电话");
-        headList.add("发票号");
-        headList.add("开票日期");
-        headList.add("用户类型");
-        Map<String,Integer> dataMap= new LinkedHashMap<>();
-        dataMap.put("uid",2);
-        dataMap.put("bigBillCode",2);
-        dataMap.put("billCode",2);
-        dataMap.put("alipayBillCode",2);
-        dataMap.put("startTime",2);
-        dataMap.put("endTime",2);
-        dataMap.put("wPayType",2);
-        dataMap.put("productCost",2);
-        dataMap.put("payFlag",2);
-        dataMap.put("payUpdateTime",2);
-        dataMap.put("postInvoiceFlag",2);
-        dataMap.put("invoiceType",2);
-        dataMap.put("invoiceTitle",2);
-        dataMap.put("invoiceTaxNo",2);
-        dataMap.put("invoiceAdTel",2);
-        dataMap.put("invoiceBankNo",2);
-        dataMap.put("postUser",2);
-        dataMap.put("typeName",2);
-        dataMap.put("address",2);
-        dataMap.put("tel",2);
-        dataMap.put("wPayUser",2);
-        dataMap.put("wPayTel",2);
-        dataMap.put("invoiceNo",2);
-        dataMap.put("kpInvoiceTime",2);
-        dataMap.put("userTypeName",2);
-        List<Bills> dataList = billsService.getExportList(searchFields);
-        ExcelExport excelExport = new CityreExcel("BillsInfo",headList);
-        excelExport.setDataList(dataList,dataMap,2,true);
-        excelExport.writeFile("F:/BillsInfo.xlsx");
-        return JsonResult.success("C:/VipInfo.xlsx");
-
-    }
+//    @RequiresPermissions("view")
+//    @RequestMapping(value = "/exportExcel",method = RequestMethod.POST)
+//    @ResponseBody
+//    public JsonResult<String> exportExcel(HttpSession httpSession, @RequestBody List<Bills> bills) throws IOException {
+//        List<SearchField> searchFields = SearchFieldHelper.getSearchField(URL,httpSession);
+//        List<String> headList = new ArrayList<>();
+//        headList.add("用户名");
+//        headList.add("大订单号");
+//        headList.add("订单号");
+//        headList.add("支付宝账号");
+//        headList.add("开始时间");
+//        headList.add("结束时间");
+//        headList.add("支付类型");
+//        headList.add("支付金额");
+//        headList.add("支付状态");
+//        headList.add("支付时间");
+//        headList.add("是否邮寄(1-》是；0-》否");
+//        headList.add("发票类型");
+//        headList.add("发票抬头");
+//        headList.add("纳税人识别号");
+//        headList.add("地址电话");
+//        headList.add("开户行及账号");
+//        headList.add("收件人");
+//        headList.add("收件类型");
+//        headList.add("发送地址");
+//        headList.add("联系电话");
+//        headList.add("支付人");
+//        headList.add("支付电话");
+//        headList.add("发票号");
+//        headList.add("开票日期");
+//        headList.add("用户类型");
+//        Map<String,Integer> dataMap= new LinkedHashMap<>();
+//        dataMap.put("uid",2);
+//        dataMap.put("bigBillCode",2);
+//        dataMap.put("billCode",2);
+//        dataMap.put("alipayBillCode",2);
+//        dataMap.put("startTime",2);
+//        dataMap.put("endTime",2);
+//        dataMap.put("wPayType",2);
+//        dataMap.put("productCost",2);
+//        dataMap.put("payFlag",2);
+//        dataMap.put("payUpdateTime",2);
+//        dataMap.put("postInvoiceFlag",2);
+//        dataMap.put("invoiceType",2);
+//        dataMap.put("invoiceTitle",2);
+//        dataMap.put("invoiceTaxNo",2);
+//        dataMap.put("invoiceAdTel",2);
+//        dataMap.put("invoiceBankNo",2);
+//        dataMap.put("postUser",2);
+//        dataMap.put("typeName",2);
+//        dataMap.put("address",2);
+//        dataMap.put("tel",2);
+//        dataMap.put("wPayUser",2);
+//        dataMap.put("wPayTel",2);
+//        dataMap.put("invoiceNo",2);
+//        dataMap.put("kpInvoiceTime",2);
+//        dataMap.put("userTypeName",2);
+//        List<Bills> dataList = billsService.getExportList(searchFields);
+//        ExcelExport excelExport = new CityreExcel("BillsInfo",headList);
+//        excelExport.setDataList(dataList,dataMap,2,true);
+//        excelExport.writeFile("F:/BillsInfo.xlsx");
+//        return JsonResult.success("C:/VipInfo.xlsx");
+//
+//    }
 }

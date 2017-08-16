@@ -197,17 +197,18 @@
                     <td ng-if="model.serviceState==1">
                         已关闭
                     </td>
-                    <td>
 
-                        <%--<a class="btn btn-primary btn-xs" href="#/invoiceEdit?id={{model.id}}" ng-show="!model.confirmPassword"><eidea:label--%>
-                        <%--key="base.mis.datavip.invoice.edit"/>&lt;%&ndash;开通发票&ndash;%&gt;</a>--%>
+                    <td>
+                        <a class="btn btn-primary btn-xs" href="#/invoiceEdit?id={{model.id}}" ng-show="!model.confirmPassword"><eidea:label
+                        key="base.mis.datavip.invoice.edit"/><%--开通发票--%></a>
                         <button type="button" class="btn btn-primary btn-xs" data-toggle="modal"
-                                data-target="#confirmModal"><eidea:label
+                                data-target="#confirmModal" ng-show="model.confirmPassword" ng-click="getBillsId(model.id)"><eidea:label
                                 key="base.mis.datavip.invoice.edit"/></button>
                     </td>
                 </tr>
                 </tbody>
             </table>
+
             <ul uib-pagination boundary-links="true" total-items="queryParams.totalRecords"
                 ng-model="queryParams.pageNo"
                 max-size="maxSize" first-text="<eidea:label key="common.label.firstpage"/>"

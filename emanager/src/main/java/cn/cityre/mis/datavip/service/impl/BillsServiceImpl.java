@@ -108,71 +108,57 @@ public class BillsServiceImpl implements BillsService {
             } else {
                 bills.setServiceState(2);//关闭服务
             }
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.roll(Calendar.DAY_OF_MONTH,-1);
+            calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH),16,0,0);
+            Date dateRoll = calendar.getTime();
+            if (bills.getPayUpdateTime().before(dateRoll)){
+                bills.setConfirmPassword(true);
+            }else {
+                bills.setConfirmPassword(false);
+            }
         }
         PaginationResult<Bills> paginationResult = PaginationResult.pagination(pageMyBatis, (int) pageMyBatis.getTotal(), pagingCriteria.getPageNumber(), pagingCriteria.getDisplaySize());
         DataSourceContextHolder.setDbType("dataSource_core");
         return paginationResult;
     }
     @Override
-    public List<Bills> getExportList(List<SearchField> searchFields) {
+    public List<Bills> getExportList(SearchBillParams searchBillParams) {
         DataSourceContextHolder.setDbType("dataSource_cityreaccount");
         Map<String, Object> map = new HashMap<>();
-        if (searchFields == null) {
-            map.put("billCode",null);
-            map.put("bigBillMap", null);
-            map.put("alipayBillCode", null);
-            map.put("typeName", null);
-            map.put("payFlag", null);
-            map.put("postInvoiceFlag", null);
-            map.put("invoiceType", null);
-            map.put("postType", null);
-            map.put("invoiceNoFlag", null);
-            map.put("invoiceNo", null);
-            map.put("uid", null);
-        } else {
-            for (SearchField searchField : searchFields)
-                if (searchField.getField().equals("billCode")) {
-                    map.put("billCode", searchField.getValue());
-                    continue;
-            }else if (searchField.getField().equals("bigBillMap")) {
-                    map.put("bigBillMap", searchField.getValue());
-                    continue;
-                } else if (searchField.getField().equals("alipayBillCode")) {
-                    map.put("alipayBillCode", searchField.getValue());
-                    continue;
-                } else if (searchField.getField().equals("typeName")) {
-                    map.put("typeName", searchField.getValue());
-                    continue;
-                } else if (searchField.getField().equals("payFlag")) {
-                    map.put("payFlag", searchField.getValue());
-                    continue;
-                } else if (searchField.getField().equals("postInvoiceFlag")) {
-                    map.put("postInvoiceFlag", searchField.getValue());
-                    continue;
-                } else if (searchField.getField().equals("invoiceType")) {
-                    map.put("invoiceType", searchField.getValue());
-                    continue;
-                } else if (searchField.getField().equals("postType")) {
-                    map.put("postType", searchField.getValue());
-                    continue;
-                } else if (searchField.getField().equals("invoiceNo")) {
-                    map.put("invoiceNo", searchField.getValue());
-                    continue;
-                } else if (searchField.getField().equals("uid")) {
-                    map.put("uid", searchField.getValue());
-                    continue;
-                } else {
-                    map.put("bigBillMap", null);
-                    map.put("alipayBillCode", null);
-                    map.put("typeName", null);
-                    map.put("payFlag", null);
-                    map.put("postInvoiceFlag", null);
-                    map.put("invoiceType", null);
-                    map.put("postType", null);
-                    map.put("invoiceNoFlag", null);
-                    map.put("invoiceNo", null);
-                    map.put("uid", null);
-                }
+        if (searchBillParams.getUid()!=null){
+            map.put("uid", searchBillParams.getUid());
+        }
+        if (searchBillParams.getBillCode()!=null){
+            map.put("billCode", searchBillParams.getBillCode());
+        }
+        if (searchBillParams.getAlipayBillCode()!=null){
+            map.put("alipayBillCode", searchBillParams.getAlipayBillCode());
+        }
+        if (searchBillParams.getBigBillCode()!=null){
+            map.put("bigBillCode",searchBillParams.getAlipayBillCode());
+        }
+        if (searchBillParams.getInoviceType()!=null){
+            map.put("invoiceType",searchBillParams.getInoviceType());
+        }
+        if (searchBillParams.getTypeCode()!=null){
+            map.put("typeCode",searchBillParams.getTypeCode());
+        }
+        if (searchBillParams.getInvoiceNo()!=null){
+            map.put("invoiceNo",searchBillParams.getInvoiceNo());
+        }
+        if (searchBillParams.getPostInvoiceFlag()!=null){
+            map.put("postInvoiceFlag",searchBillParams.getPostInvoiceFlag());
+        }
+        if (searchBillParams.getInvoiceNoFlag()!=null){
+            map.put("invoiceNoFlag",searchBillParams.getInvoiceNoFlag());
+        }
+        if(searchBillParams.getPayFlag()!=null){
+            map.put("payFlag",searchBillParams.getPayFlag());
+        }
+        if (searchBillParams.getPostTypeCode()!=null){
+            map.put("postTypeCode",searchBillParams.getPostTypeCode());
         }
         List<Bills> list = billsMapper.selectExportInfo(map);
         DataSourceContextHolder.setDbType("dataSource_core");
@@ -220,12 +206,12 @@ public class BillsServiceImpl implements BillsService {
         //进行是否输入密码的判断
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        calendar.roll(Calendar.DAY_OF_YEAR, 1);
-        calendar.set(Calendar.HOUR_OF_DAY, 16);
-        date = calendar.getTime();
-        if (bills.getPayUpdateTime().before(date)) {
+        calendar.roll(Calendar.DAY_OF_MONTH,1);
+        calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH),16,0,0);
+        Date dateRoll = calendar.getTime();
+        if (bills.getPayUpdateTime().before(dateRoll)){
             bills.setConfirmPassword(true);
-        } else {
+        }else {
             bills.setConfirmPassword(false);
         }
         DataSourceContextHolder.setDbType("dataSource_core");
