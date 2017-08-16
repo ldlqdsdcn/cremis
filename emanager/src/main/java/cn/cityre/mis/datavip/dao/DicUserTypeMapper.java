@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface DicUserTypeMapper {
-
+    List<DicUserType> selectByType();
 
     List<DicUserType> selectByTypeTitle(String typeTitle);
 

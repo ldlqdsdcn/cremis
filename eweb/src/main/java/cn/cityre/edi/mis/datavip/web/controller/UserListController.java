@@ -2,7 +2,9 @@ package cn.cityre.edi.mis.datavip.web.controller;
 
 import cn.cityre.edi.mis.mis.web.util.SearchFieldHelper;
 import cn.cityre.mis.datavip.entity.Bills;
+import cn.cityre.mis.datavip.entity.DicUserType;
 import cn.cityre.mis.datavip.entity.UserList;
+import cn.cityre.mis.datavip.service.DicUserTypeService;
 import cn.cityre.mis.datavip.service.UserListService;
 import cn.cityre.mis.datavip.util.CityreExcel;
 import cn.cityre.mis.datavip.util.ExcelExport;
@@ -42,6 +44,8 @@ public class UserListController {
     private UserListService userListService;
     @Autowired
     private MisUserService misUserService;
+    @Autowired
+    private DicUserTypeService dicUserTypeService;
 
     @RequestMapping(value = "/showList")
     @RequiresPermissions(value = "view")
@@ -87,7 +91,7 @@ public class UserListController {
         UserResource userResource = (UserResource) httpSession.getAttribute(WebConst.SESSION_RESOURCE);
         return JsonResult.success(userListService.getExistUserListBySuid(suid));
     }
-    //获取用户类型
+//    //获取用户类型
 //    @ResponseBody
 //    @RequestMapping(value = "/getUserType",method = RequestMethod.GET)
 //    public JsonResult<String> getUserType(){
