@@ -36,7 +36,7 @@
                     <td class="form-group"><select class="form-control" ng-model="invoiceNoFlag" ng-options="option.key as option.value for option in invoiceStateList"/></td>
                     <td class="control-label"><%--邮寄发票--%><eidea:label
                             key="cityre.mis.datavip.bill.postInvoiceFlag"/></td>
-                    <td class="form-group"><select class="form-control" ng-model="invoiceNoFlag" ng-options="option.key as option.value for option in falgList"/></td>
+                    <td class="form-group"><select class="form-control" ng-model="postInvoiceFlag" ng-options="option.key as option.value for option in falgList"/></td>
                     <td class="control-label"><%--收件类型--%><eidea:label key="cityre.mis.datavip.bill.postType"/></td>
                     <td class="form-group"><select class="form-control" ng-model="postTypeCode"
                                                    ng-options="postType.typeCode as postType.typeName for postType in postTypeList"/>

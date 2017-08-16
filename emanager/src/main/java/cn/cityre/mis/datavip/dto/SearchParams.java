@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Created by cityre on 2017/8/16.
@@ -20,9 +19,9 @@ public class SearchParams implements Serializable {
     private String payTel;
     private String payFlag;
     private String newUser;
-    private Date regStartTime;
-    private Date regEndTime;
-    private Date serviceStartTime;
-    private Date serviceEndTime;
+    private String regStartTime;
+    private String regEndTime;
+    private String serviceStartTime;
+    private String serviceEndTime;
     private QueryParams queryParams;
 }

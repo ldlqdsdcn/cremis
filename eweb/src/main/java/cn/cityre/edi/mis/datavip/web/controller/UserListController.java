@@ -99,7 +99,9 @@ public class UserListController {
     @ResponseBody
     @RequestMapping(value = "/getUserType", method = RequestMethod.GET)
     public JsonResult<List<DicUserType>> getUserType() {
-        return JsonResult.success(dicUserTypeService.getExistUserTypeList());
+        List<DicUserType>list = dicUserTypeService.getExistUserTypeList();
+        list.add(null);
+        return JsonResult.success(list);
     }
 
     //获取账单状态
@@ -114,6 +116,7 @@ public class UserListController {
             list.addProperty("value", billFlagDef.getValue());
             jsonArray.add(list);
         }
+        jsonArray.add(null);
         jsonObject.add("billsFlag", jsonArray);
         return JsonResult.success(jsonObject.toString());
     }

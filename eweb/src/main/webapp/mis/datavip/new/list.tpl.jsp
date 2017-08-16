@@ -28,15 +28,14 @@
 
                 </tr>
                 <tr>
-
                     <td class="control-label"><eidea:label key="cityre.mis.datavip.userlist.regTime"/></td>
-                    <td class="input-group date bootstrap-datetime"><input type="date" class="form-control" ng-model="regStartTime" uib-datepicker-popup="yyyy-MM-dd HH:mm:ss"><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></td>
+                    <td class="input-group date bootstrap-datetime"><input type="datetime" class="form-control" ng-model="regStartTime" uib-datepicker-popup="yyyy-MM-dd HH:mm:ss"><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></td>
                     <td class="control-label"><eidea:label key="cityre.mis.datavip.userlist.regTime"/>结束</td>
-                    <td class="input-group date bootstrap-datetime"><input type="date" class="form-control" ng-model="regEndTime" uib-datepicker-popup="yyyy-MM-dd HH:mm:ss"><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></td>
+                    <td class="input-group date bootstrap-datetime"><input type="datetime" class="form-control" ng-model="regEndTime" uib-datepicker-popup="yyyy-MM-dd HH:mm:ss"><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></td>
                     <td class="control-label"><eidea:label key="cityre.mis.datavip.paymentinfo.starttime"/>:</td>
-                    <td class="input-group date bootstrap-datetime"><input type="date" class="form-control" ng-model="serviceStartTime" uib-datepicker-popup="yyyy-MM-dd HH:mm:ss"><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></td>
+                    <td class="input-group date bootstrap-datetime"><input type="datetime" class="form-control" ng-model="serviceStartTime" uib-datepicker-popup="yyyy-MM-dd HH:mm:ss"><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></td>
                     <td class="control-label"><eidea:label key="cityre.mis.datavip.paymentinfo.endtime"/>:</td>
-                    <td class="input-group date bootstrap-datetime"><input type="date" class="form-control" ng-model="serviceEndTime" uib-datepicker-popup="yyyy-MM-dd HH:mm:ss"><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    <td class="input-group date bootstrap-datetime"><input type="datetime" class="form-control" ng-model="serviceEndTime" uib-datepicker-popup="yyyy-MM-dd HH:mm:ss"><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                     </td>
                     <td class="control-label">
                         <button type="submit" class="btn"><eidea:label key="common.button.search"/></button>
@@ -86,7 +85,7 @@
                         {{model.dicUserType.userTypeName}}
                     </td>
                     <td>
-                        {{model.regTime}}
+                        {{model.regTime|date:"yyyy-MM-dd HH:mm:ss"}}
                     </td>
                     <td>
                         {{model.payTel}}

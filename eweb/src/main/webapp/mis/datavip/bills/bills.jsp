@@ -80,6 +80,7 @@
                     }
                     else {
                         bootbox.alert(response.message);
+                        $scope.modelList=null;
                     }
 
                 });
