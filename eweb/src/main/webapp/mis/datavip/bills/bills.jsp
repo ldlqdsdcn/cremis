@@ -16,7 +16,9 @@
     <jsp:param name="uri" value="${uri}"/>
 </jsp:include>
 </body>
-<%@ include file="/mis/datavip/bills/confirm_password.jsp" %>
+<jsp:include page="/mis/datavip/bills/confirm_password.jsp">
+    <jsp:param name="billsId" value="${id}"/>
+</jsp:include>
 <script type="text/javascript">
     var app = angular.module('myApp', ['ngRoute', 'ui.bootstrap', 'jcs-autoValidate'])
         .config(['$routeProvider', function ($routeProvider) {
@@ -99,6 +101,7 @@
                 }
             });
         };
+
 //        服务开通的判断
 
 
@@ -177,12 +180,11 @@
                         postUrl = "<c:url value="/mis/datavip/userpaymentInfo/closeService"/> "
                     }
                     $scope.canSave = (PrivilegeService.hasPrivilege('add') && $scope.billsPo.id == null) || PrivilegeService.hasPrivilege('update');
-                }
-                else {
+                } else {
                     bootbox.alert(response.message);
                 }
             }).error(function (response) {
-            bootbox.alert(response);
+            bootbox.alert(response.data);
         });
 
         $scope.serviceEdit = function(){
@@ -201,9 +203,6 @@
             }
         }
     });
-
-
-
     app.controller('invoiceCtrl',function ($scope,$http,$routeParams) {
         /**
          * 日期时间选择控件
@@ -235,7 +234,7 @@
         if($routeParams.id==null){
             bootbox.alert("参数错误！")
         }
-        var url = "<c:url value="/mis/datavip/bills/get"/> "+"?id="+$routeParams.id
+        var  url = "<c:url value="/mis/datavip/bills/get"/>" + "?id=" + $routeParams.id;
         $http.get(url).success(function (response) {
             if (response.success){
                 $scope.bill = response.data;

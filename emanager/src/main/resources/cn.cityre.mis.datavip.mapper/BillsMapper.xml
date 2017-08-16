@@ -85,20 +85,81 @@
     source, pkey, plevel, dist_code, ha_code, pgps, buymonth, haclcode, buygroup, dealtype, 
     contentname, province_code
   </sql>
+
+    <sql id="where_sql">
+        <where>
+        <if test="billCode!=null">
+        AND bills.bill_code like CONCAT('%',#{billCode,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="bigBillCode!=null">
+        AND bills.big_billcode LIKE concat('%',#{bigBillCode,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="alipayBillCode!=null">
+        AND bills.alipay_bill_code LIKE concat('%',#{alipayBillCode,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="typeName!=null">
+        AND dic_pay_type.type_name LIKE concat('%',#{typeName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="payFlag!=null">
+        AND bills.pay_flag ={#payFlag,jdbcType=VARCHAR}
+        </if>
+        <if test="postInvoiceFlag!=null">
+        AND bills.post_invoice_flag = #{postInvoiceFlag,jdbcType=VARCHAR}
+        </if>
+        <if test="invoiceType!=null">
+        AND bills.invoice_type = #{invoiceType,jdbcType=VARCHAR}
+        </if>
+        <if test="postType!=null">
+        AND bills.post_type = #{postType,jdbcType=VARCHAR}
+        </if>
+        <if test="invoiceNoFlag!=null">
+        AND bills.invoice_no_flag = #{invoiceNoFlag,jdbcType=INTEGER}
+        </if>
+        <if test="invoiceNo!=null">
+        AND bills.invoice_no concat('%',#{invoiceNo,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="uid!=null">
+        AND userlist.uid LIKE concat('%',#{uid,jdbcType=VARCHAR},'%')
+        </if>
+        </where>
+    </sql>
     <!--Mybatis联合查询-->
-    <select id="selectDefaultByPage" resultMap="BillsMap">
-   SELECT
-   bills.big_billcode,bills.bill_code,bills.alipay_bill_code,
-   user_payment_info.start_time,user_payment_info.end_time,
-   bills.w_pay_type,ifnull(product_cost,0)as product_cost,pay_flag,pay_updatetime,bills.id,
-   dic_pay_type.type_name ,post_invoice_flag,invoice_type,invoice_title,post_user,dic_post_type.post_type_name,address,tel,w_pay_user,w_pay_tel,invoice_no,kp_invoice_time,
-   invoice_no_flag,invoice_taxno,invoice_adtel,invoice_bankno,dic_user_type.user_type_name, userlist.uid from bills
-   left join user_payment_info on user_payment_info.suid=bills.suid and user_payment_info.billcode=bills.bill_code
-   left join dic_pay_type on dic_pay_type.type_code=bills.w_pay_type
-   left join dic_post_type on dic_post_type.post_type_code=bills.post_type
-   inner join userlist on  userlist.suid=bills.suid
-   left join dic_user_type on userlist.user_type=dic_user_type.user_type_code
-  </select>
+    <select id="selectDefaultByPage" resultMap="BillsMap" parameterType="java.util.Map">
+        SELECT
+        bills.big_billcode,bills.bill_code,bills.alipay_bill_code,
+        user_payment_info.start_time,user_payment_info.end_time,
+        bills.w_pay_type,ifnull(product_cost,0)as product_cost,pay_flag,pay_updatetime,bills.id,
+        dic_pay_type.type_name
+        ,post_invoice_flag,invoice_type,invoice_title,post_user,dic_post_type.post_type_name,address,tel,w_pay_user,w_pay_tel,invoice_no,kp_invoice_time,
+        invoice_no_flag,invoice_taxno,invoice_adtel,invoice_bankno,dic_user_type.user_type_name, userlist.uid from bills
+        left join user_payment_info on user_payment_info.suid=bills.suid and user_payment_info.billcode=bills.bill_code
+        left join dic_pay_type on dic_pay_type.type_code=bills.w_pay_type
+        left join dic_post_type on dic_post_type.post_type_code=bills.post_type
+        inner join userlist on userlist.suid=bills.suid
+        left join dic_user_type on userlist.user_type=dic_user_type.user_type_code
+        <if test="_parameter!=null">
+            <include refid="where_sql"/>
+        </if>
+        ORDER by bills.pay_updatetime DESC
+    </select>
+    <!--Mybatis联合查询-->
+    <select id="selectExportInfo" resultMap="BillsMap" parameterType="java.util.Map">
+        SELECT
+        bills.big_billcode,bills.bill_code,bills.alipay_bill_code,
+        user_payment_info.start_time,user_payment_info.end_time,
+        bills.w_pay_type,ifnull(product_cost,0)as product_cost,pay_flag,pay_updatetime,bills.id,
+        dic_pay_type.type_name
+        ,post_invoice_flag,invoice_type,invoice_title,post_user,dic_post_type.post_type_name,address,tel,w_pay_user,w_pay_tel,invoice_no,kp_invoice_time,
+        invoice_no_flag,invoice_taxno,invoice_adtel,invoice_bankno,dic_user_type.user_type_name, userlist.uid from bills
+        left join user_payment_info on user_payment_info.suid=bills.suid and user_payment_info.billcode=bills.bill_code
+        left join dic_pay_type on dic_pay_type.type_code=bills.w_pay_type
+        left join dic_post_type on dic_post_type.post_type_code=bills.post_type
+        inner join userlist on userlist.suid=bills.suid
+        left join dic_user_type on userlist.user_type=dic_user_type.user_type_code
+        <if test="_parameter!=null">
+            <include refid="where_sql"/>
+        </if>
+    </select>
     <select id="selectByCode" resultMap="UserPaymentBillsMap" parameterType="java.lang.String">
     SELECT
    big_billcode,bill_code,alipay_bill_code,bills.suid,
@@ -133,20 +194,18 @@
     <update id="updateInvoice" parameterType="cn.cityre.mis.datavip.entity.Bills">
         UPDATE bills
         <set>
-            <trim prefix="(" suffix=")" suffixOverrides=",">
-                <if test="invoiceNo!=null">
-                    invoice_no=#{invoiceNo,jdbcType=VARCHAR},
-                </if>
-                <choose>
-                    <when test="kpInvoiceTime!=null">
-                        kp_invoice_time = #{kpInvoiceTime,jdbcType=TIMESTAMP},
-                    </when>
-                    <otherwise>
-                        kp_invoice_time=now(),
-                    </otherwise>
-                </choose>
-                invoice_no_flag=1,
-            </trim>
+            <if test="invoiceNo!=null">
+                invoice_no=#{invoiceNo,jdbcType=VARCHAR},
+            </if>
+            <choose>
+                <when test="kpInvoiceTime!=null">
+                    kp_invoice_time = #{kpInvoiceTime,jdbcType=TIMESTAMP},
+                </when>
+                <otherwise>
+                    kp_invoice_time=now(),
+                </otherwise>
+            </choose>
+            invoice_no_flag=1,
         </set>
         WHERE id = #{id,jdbcType=INTEGER}
     </update>

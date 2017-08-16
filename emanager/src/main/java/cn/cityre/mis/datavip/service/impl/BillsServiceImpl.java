@@ -19,9 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by cityre on 2017/7/31.
@@ -47,13 +45,88 @@ public class BillsServiceImpl implements BillsService {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = billsMapper.selectTime();
         date = simpleDateFormat.parse(simpleDateFormat.format(date));
-        PagingCriteria pagingCriteria = PagingCriteria.createCriteriaWithSearch(queryParams.getFirstResult(), queryParams.getPageSize(), queryParams.getPageNo(), searchFields);
-        PageMyBatis<Bills> pageMyBatis = billsMapper.selectDefaultByPage(pagingCriteria);
+        PagingCriteria pagingCriteria = PagingCriteria.createCriteria(queryParams.getPageSize(), queryParams.getFirstResult(), queryParams.getPageNo());
+        Map<String, Object> map = new HashMap<>();
+        map.put("pagingCriteria", pagingCriteria);
+        if (searchFields == null) {
+            map.put("billCode", null);
+            map.put("bigBillMap", null);
+            map.put("alipayBillCode", null);
+            map.put("wPayType", null);
+            map.put("payFlag", null);
+            map.put("postInvoiceFlag", null);
+            map.put("invoiceType", null);
+            map.put("postType", null);
+            map.put("invoiceNoFlag", null);
+            map.put("invoiceNo", null);
+            map.put("uid", null);
+        } else {
+            for (SearchField searchField : searchFields) {
+                if (searchField.getField().equals("billCode")) {
+                    map.put("billCode", searchField.getValue());
+                    continue;
+                } else if (searchField.getField().equals("bigBillMap")) {
+                    map.put("bigBillMap", searchField.getValue());
+                    continue;
+                } else if (searchField.getField().equals("alipayBillCode")) {
+                    map.put("alipayBillCode", searchField.getValue());
+                    continue;
+                } else if (searchField.getField().equals("wPayType")) {
+                    map.put("wPayType", searchField.getValue());
+                    continue;
+                } else if (searchField.getField().equals("payFlag")) {
+                    map.put("payFlag", searchField.getValue());
+                    continue;
+                } else if (searchField.getField().equals("postInvoiceFlag")) {
+                    map.put("postInvoiceFlag", searchField.getValue());
+                    continue;
+                } else if (searchField.getField().equals("invoiceType")) {
+                    map.put("invoiceType", searchField.getValue());
+                    continue;
+                } else if (searchField.getField().equals("postType")) {
+                    map.put("postType", searchField.getValue());
+                    continue;
+                } else if (searchField.getField().equals("invoiceNo")) {
+                    map.put("invoiceNo", searchField.getValue());
+                    continue;
+                } else if (searchField.getField().equals("uid")) {
+                    map.put("uid", searchField.getValue());
+                    continue;
+                } else {
+                    map.put("billCode", null);
+                    map.put("bigBillMap", null);
+                    map.put("alipayBillCode", null);
+                    map.put("wPayType", null);
+                    map.put("payFlag", null);
+                    map.put("postInvoiceFlag", null);
+                    map.put("invoiceType", null);
+                    map.put("postType", null);
+                    map.put("invoiceNoFlag", null);
+                    map.put("invoiceNo", null);
+                    map.put("uid", null);
+                }
+            }
+        }
+        PageMyBatis<Bills> pageMyBatis = billsMapper.selectDefaultByPage(map);
         //判断服务状态
         for (Bills bills : pageMyBatis) {
-            if (bills.getUserPaymentInfo()==null){
+
+            if (bills.getInvoiceTitle()!=null&&bills.getInvoiceTitle().equals("null")){
+                bills.setInvoiceTitle("");
+            }
+            if (bills.getTel()!=null&&bills.getTel().equals("null")){
+                bills.setTel("");
+            }
+            if (bills.getAddress()!=null&&bills.getAddress().equals("null")){
+                bills.setAddress("");
+            }
+            if (bills.getPostUser()!=null&&bills.getPostUser().equals("null")){
+                bills.setPostUser("");
+            }
+
+            if (bills.getEndTime()== null) {
                 bills.setServiceState(0);//开通服务
-            }else if (bills.getUserPaymentInfo().getEndTime().before(date)) {
+            } else if (bills.getEndTime().before(date)) {
                 bills.setServiceState(1);//服务时间结束->已关闭
             } else {
                 bills.setServiceState(2);//关闭服务
@@ -62,6 +135,72 @@ public class BillsServiceImpl implements BillsService {
         PaginationResult<Bills> paginationResult = PaginationResult.pagination(pageMyBatis, (int) pageMyBatis.getTotal(), pagingCriteria.getPageNumber(), pagingCriteria.getDisplaySize());
         DataSourceContextHolder.setDbType("dataSource_core");
         return paginationResult;
+    }
+    @Override
+    public List<Bills> getExportList(List<SearchField> searchFields) {
+        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
+        Map<String, Object> map = new HashMap<>();
+        if (searchFields == null) {
+            map.put("billCode",null);
+            map.put("bigBillMap", null);
+            map.put("alipayBillCode", null);
+            map.put("typeName", null);
+            map.put("payFlag", null);
+            map.put("postInvoiceFlag", null);
+            map.put("invoiceType", null);
+            map.put("postType", null);
+            map.put("invoiceNoFlag", null);
+            map.put("invoiceNo", null);
+            map.put("uid", null);
+        } else {
+            for (SearchField searchField : searchFields)
+                if (searchField.getField().equals("billCode")) {
+                    map.put("billCode", searchField.getValue());
+                    continue;
+            }else if (searchField.getField().equals("bigBillMap")) {
+                    map.put("bigBillMap", searchField.getValue());
+                    continue;
+                } else if (searchField.getField().equals("alipayBillCode")) {
+                    map.put("alipayBillCode", searchField.getValue());
+                    continue;
+                } else if (searchField.getField().equals("typeName")) {
+                    map.put("typeName", searchField.getValue());
+                    continue;
+                } else if (searchField.getField().equals("payFlag")) {
+                    map.put("payFlag", searchField.getValue());
+                    continue;
+                } else if (searchField.getField().equals("postInvoiceFlag")) {
+                    map.put("postInvoiceFlag", searchField.getValue());
+                    continue;
+                } else if (searchField.getField().equals("invoiceType")) {
+                    map.put("invoiceType", searchField.getValue());
+                    continue;
+                } else if (searchField.getField().equals("postType")) {
+                    map.put("postType", searchField.getValue());
+                    continue;
+                } else if (searchField.getField().equals("invoiceNo")) {
+                    map.put("invoiceNo", searchField.getValue());
+                    continue;
+                } else if (searchField.getField().equals("uid")) {
+                    map.put("uid", searchField.getValue());
+                    continue;
+                } else {
+                    map.put("bigBillMap", null);
+                    map.put("alipayBillCode", null);
+                    map.put("typeName", null);
+                    map.put("payFlag", null);
+                    map.put("postInvoiceFlag", null);
+                    map.put("invoiceType", null);
+                    map.put("postType", null);
+                    map.put("invoiceNoFlag", null);
+                    map.put("invoiceNo", null);
+                    map.put("uid", null);
+                }
+        }
+        List<Bills> list = billsMapper.selectExportInfo(map);
+        DataSourceContextHolder.setDbType("dataSource_core");
+        return list;
+
     }
 
     @Override
@@ -94,12 +233,23 @@ public class BillsServiceImpl implements BillsService {
         Date date = billsMapper.selectTime();
         date = simpleDateFormat.parse(simpleDateFormat.format(date));
         Bills bills = billsMapper.selectByCode(billCode);
-        if (bills.getUserPaymentInfo()==null){
+        if (bills.getUserPaymentInfo() == null) {
             bills.setServiceState(0);//开通服务
-        }else if (bills.getUserPaymentInfo().getEndTime().before(date)) {
+        } else if (bills.getUserPaymentInfo().getEndTime().before(date)) {
             bills.setServiceState(1);//服务时间结束->已关闭
         } else {
             bills.setServiceState(2);//关闭服务
+        }
+        //进行是否输入密码的判断
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.roll(Calendar.DAY_OF_YEAR, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 16);
+        date = calendar.getTime();
+        if (bills.getPayUpdateTime().before(date)) {
+            bills.setConfirmPassword(true);
+        } else {
+            bills.setConfirmPassword(false);
         }
         DataSourceContextHolder.setDbType("dataSource_core");
         return bills;

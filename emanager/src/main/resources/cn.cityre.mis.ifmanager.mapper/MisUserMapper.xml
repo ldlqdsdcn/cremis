@@ -22,11 +22,30 @@
     <sql id="Base_Column">
         id,unionUid,userId,nickName,realName,sex,birthday,userIcon,passwordSalt,passwordHash,oldPasswordHash,isVerified,isValid,accountSecret,createTime,updateTime
     </sql>
+    <sql id="where_sql">
+        <where>
+            <if test="realName!=null">
+                realName like CONCAT("%",#{realName,jdbcType=VARCHAR},"%")
+            </if>
+            <if test="isVerified!=null">
+                and isVerified = #{isVerified,jdbcType=TINYINT}
+            </if>
 
-    <select id="selectByPage" resultMap="BaseResultMap" >
+            <if test="createStartTime!=null">
+                AND createTime<![CDATA[>=]]>#{createStartTime}
+            </if>
+            <if test="createEndTime !=null">
+                AND createTime <![CDATA[<=]]> #{createEndTime}
+            </if>
+        </where>
+    </sql>
+    <select id="selectByPage" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column"/>
         from v2017_user
+        <if test="_parameter!=null">
+            <include refid="where_sql"/>
+        </if>
     </select>
     <!--v2017_user：查，条件：注册时间段、姓名、是否已验证、用户全局唯一ID、用户登录名，暂定这些-->
     <select id="selectByRealName" resultMap="BaseResultMap" parameterType="java.lang.String">
@@ -34,6 +53,14 @@
         <include refid="Base_Column"/>
         FROM v2017_user
         WHERE realName = #{realName,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectUserOrderByCreateTime" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column"/>
+        from v2017_user
+        WHERE createTime <![CDATA[>=]]> DATE_SUB(now(),INTERVAL 1 WEEK)
+        ORDER BY createTime DESC
     </select>
 
     <select id="selectByUid" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -50,7 +77,7 @@
         WHERE userId = #{userId,jdbcType=VARCHAR}
     </select>
 
-    <select id="selectByCreateTime" resultMap="BaseResultMap" >
+    <select id="selectByCreateTime" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column"/>
         FROM v2017_user
@@ -120,10 +147,10 @@
                 updateTime=now()
             </if>
             <!--<choose>-->
-                <!--<when test="updateTime !=null">-->
-                    <!--updateTime = #{updateTime,jdbcType=TIMESTAMP},-->
-                <!--</when>-->
-                <!--<otherwise>updateTime=now(),</otherwise>-->
+            <!--<when test="updateTime !=null">-->
+            <!--updateTime = #{updateTime,jdbcType=TIMESTAMP},-->
+            <!--</when>-->
+            <!--<otherwise>updateTime=now(),</otherwise>-->
             <!--</choose>-->
         </set>
         <where>

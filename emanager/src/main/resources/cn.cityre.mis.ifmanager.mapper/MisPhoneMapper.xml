@@ -14,11 +14,23 @@
     <sql id="Base_Column">
         id,unionUid,phone,isVerified,isPrimary,createTime,updateTime
     </sql>
-
+    <sql id="where_sql">
+        <where>
+            <if test="unionUid!=null">
+                unionUid LIKE  CONCAT("%",#{unionUid,jdbcType=VARCHAR},"%")
+            </if>
+            <!--<if test="phone!=null">-->
+                <!--and phone = #{#phone,jdbcType=VARCHAR}-->
+            <!--</if>-->
+        </where>
+    </sql>
     <select id="selectByPage" resultMap="BaseResultMap">
         select
         <include refid="Base_Column"/>
         FROM v2017_user_phone
+        <if test="_parameter!=null">
+            <include refid="where_sql"/>
+        </if>
     </select>
 
     <!--v2017_user_phone：查，条件：用户全局唯一ID，暂定这些-->

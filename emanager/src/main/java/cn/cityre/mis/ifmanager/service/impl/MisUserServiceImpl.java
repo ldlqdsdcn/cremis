@@ -18,7 +18,9 @@ import org.mybatis.pagination.dto.datatables.SearchField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by cityre on 2017/7/19.
@@ -28,31 +30,67 @@ public class MisUserServiceImpl implements MisUserService {
     @Autowired
     private MisUserMapper misUserMapper;
     @DataAccess(entity = MisUserPo.class)
-    private CommonDao<MisUserPo,Integer> userDao;
+    private CommonDao<MisUserPo, Integer> userDao;
+
     @Override
     public PaginationResult<MisUserPo> getExistUserList(Search search, QueryParams queryParams) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
         PaginationResult<MisUserPo> poPaginationResult = null;
         search.setMaxResults(queryParams.getPageSize());
         search.setFirstResult(queryParams.getFirstResult());
-
-        if (queryParams.isInit()){
+        if (queryParams.isInit()) {
             SearchResult searchResult = userDao.searchAndCount(search);
-            poPaginationResult = PaginationResult.pagination(searchResult.getResult(),searchResult.getTotalCount(),queryParams.getPageNo(),queryParams.getPageSize());
-        }else{
+            poPaginationResult = PaginationResult.pagination(searchResult.getResult(), searchResult.getTotalCount(), queryParams.getPageNo(), queryParams.getPageSize());
+        } else {
             List<MisUserPo> misUserPoList = userDao.search(search);
-            poPaginationResult = PaginationResult.pagination(misUserPoList,queryParams.getTotalRecords(),queryParams.getPageNo(),queryParams.getPageSize());
+            poPaginationResult = PaginationResult.pagination(misUserPoList, queryParams.getTotalRecords(), queryParams.getPageNo(), queryParams.getPageSize());
         }
         DataSourceContextHolder.setDbType("dataSource_core");
         return poPaginationResult;
     }
 
     @Override
+    public List<MisUserPo> getNewUser() {
+        DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
+        List<MisUserPo> list = misUserMapper.selectUserOrderByCreateTime();
+        DataSourceContextHolder.setDbType("dataSource_core");
+        return list;
+    }
+
+    @Override
     public PaginationResult<MisUserPo> getExistUserListByMybatis(List<SearchField> searchFields, QueryParams queryParams) {
         DataSourceContextHolder.setDbType("dataSource_account");
-        PagingCriteria pagingCriteria = PagingCriteria.createCriteriaWithSearch(queryParams.getFirstResult(),queryParams.getPageSize(),queryParams.getPageNo(),searchFields);
-        PageMyBatis<MisUserPo> pageMyBatis = misUserMapper.selectByPage(pagingCriteria);
-        PaginationResult<MisUserPo> poPaginationResult = PaginationResult.pagination(pageMyBatis,(int)pageMyBatis.getTotal(),queryParams.getPageNo(),queryParams.getPageSize());
+        PagingCriteria pagingCriteria = PagingCriteria.createCriteria(queryParams.getPageSize(), queryParams.getFirstResult(), queryParams.getPageNo());
+        Map<String, Object> map = new HashMap<>();
+        map.put("pagingCriteria", pagingCriteria);
+        if (searchFields == null) {
+            map.put("realName", null);
+            map.put("isVerified", null);
+            map.put("createStartTime", null);
+            map.put("createEndTime", null);
+        } else {
+            for (SearchField searchField : searchFields) {
+                if (searchField.getField().equals("realName")) {
+                    map.put("realName", searchField.getValue());
+                    continue;
+                } else if (searchField.getField().equals("isVerified")) {
+                    map.put("isVerified", searchField.getValue());
+                    continue;
+                } else if (searchField.getField().equals("createStartTime")) {
+                    map.put("createStartTime", searchField.getValue());
+                    continue;
+                } else if (searchField.getField().equals("createEndTime")) {
+                    map.put("createEndTime", searchField.getValue());
+                } else {
+                    map.put("realName", null);
+                    map.put("isVerified", null);
+                    map.put("createStartTime", null);
+                    map.put("createEndTime", null);
+                }
+            }
+        }
+        PageMyBatis<MisUserPo> pageMyBatis = misUserMapper.selectByPage(map);
+        PaginationResult<MisUserPo> poPaginationResult = PaginationResult.pagination(pageMyBatis, (int) pageMyBatis.getTotal(), queryParams.getPageNo(), queryParams.getPageSize());
         DataSourceContextHolder.setDbType("dataSource_core");
         return poPaginationResult;
     }
@@ -60,7 +98,7 @@ public class MisUserServiceImpl implements MisUserService {
     @Override
     public MisUserPo selectByUserId(String userId) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        MisUserPo misUserPo =  misUserMapper.selectByUserId(userId);
+        MisUserPo misUserPo = misUserMapper.selectByUserId(userId);
         DataSourceContextHolder.setDbType("dataSource_core");
         return misUserPo;
     }
@@ -76,7 +114,7 @@ public class MisUserServiceImpl implements MisUserService {
     @Override
     public List<MisUserPo> selectByRealName(String RealName) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        List<MisUserPo> misUserPos =  misUserMapper.selectByRealName(RealName);
+        List<MisUserPo> misUserPos = misUserMapper.selectByRealName(RealName);
         DataSourceContextHolder.setDbType("dataSource_core");
         return misUserPos;
     }
@@ -84,7 +122,7 @@ public class MisUserServiceImpl implements MisUserService {
     @Override
     public List<MisUserPo> selectByTime(String creatStartTime, String createEndTime) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        List<MisUserPo> misUserPos= misUserMapper.selectByCreateTime(creatStartTime, createEndTime);
+        List<MisUserPo> misUserPos = misUserMapper.selectByCreateTime(creatStartTime, createEndTime);
         DataSourceContextHolder.setDbType("dataSource_core");
         return misUserPos;
     }
@@ -99,7 +137,7 @@ public class MisUserServiceImpl implements MisUserService {
     @Override
     public MisUserPo getExistUserById(Integer id) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        MisUserPo misUserPo =  misUserMapper.selectById(id);
+        MisUserPo misUserPo = misUserMapper.selectById(id);
         DataSourceContextHolder.setDbType("dataSource_core");
         return misUserPo;
     }

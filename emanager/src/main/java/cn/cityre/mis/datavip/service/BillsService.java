@@ -16,6 +16,8 @@ public interface BillsService {
 
     PaginationResult<Bills> getBillsListByOthers(List<SearchField> searchFields,QueryParams queryParams) throws ParseException;
 
+    List<Bills> getExportList(List<SearchField> searchFields);
+
     List<Bills> getExistList();
 
     void addInvoice(Bills bills);

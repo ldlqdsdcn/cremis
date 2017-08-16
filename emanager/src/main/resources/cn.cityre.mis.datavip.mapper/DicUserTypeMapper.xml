@@ -15,7 +15,7 @@
     <result column="adduid" jdbcType="VARCHAR" property="addUid" />
     <result column="addtime" jdbcType="TIMESTAMP" property="addTime" />
     <result column="updateuid" jdbcType="VARCHAR" property="updateUid" />
-    <result column="updatetime" jdbcType="TIMESTAMP" property="updatTime" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.cityre.mis.datavip.entity.DicUserType">
     <result column="note" jdbcType="LONGVARCHAR" property="note" />
@@ -26,8 +26,7 @@
   </sql>
 
   <select id="selectByType" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
+    select DISTINCT user_type_name
     from dic_user_type WHERE dic_user_type.type IN ('dm','creprice')
   </select>
   <sql id="Blob_Column_List">

@@ -7,6 +7,9 @@ import cn.cityre.mis.datavip.service.BillsService;
 import cn.cityre.mis.datavip.service.UserPaymentInfoService;
 import cn.cityre.mis.datavip.util.CityreExcel;
 import cn.cityre.mis.datavip.util.ExcelExport;
+import com.dsdl.eidea.base.entity.bo.UserBo;
+import com.dsdl.eidea.base.entity.po.UserPo;
+import com.dsdl.eidea.base.service.UserService;
 import com.dsdl.eidea.base.web.vo.UserResource;
 import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.QueryParams;
@@ -14,6 +17,9 @@ import com.dsdl.eidea.core.web.def.WebConst;
 import com.dsdl.eidea.core.web.result.JsonResult;
 import com.dsdl.eidea.core.web.result.def.ErrorCodes;
 import com.dsdl.eidea.core.web.vo.PagingSettingResult;
+import cryptography.AesUtil;
+import cryptography.Md5Util;
+import cryptography.RsaUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.codehaus.groovy.util.ListHashMap;
 import org.mybatis.pagination.dto.datatables.SearchField;
@@ -37,11 +43,14 @@ import java.util.*;
 @RequestMapping(value = "/mis/datavip/bills")
 public class BillsController {
     private static final String URL = "bills";
+    private static final String SPLIT_FOR_USERNAME_AND_PASSWORD = "\\|";
 
     @Autowired
     private BillsService billsService;
     @Autowired
     private UserPaymentInfoService userPaymentInfoService;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = "/showList", method = RequestMethod.GET)
     @RequiresPermissions(value = "view")
@@ -87,12 +96,48 @@ public class BillsController {
         billsService.addInvoice(bills);
         return JsonResult.success(bills);
     }
+    @ResponseBody
+    @RequestMapping(value = "/confirmPassword",method = RequestMethod.POST)
+    public JsonResult<Boolean> confirmPassword(HttpSession httpSession,@RequestBody String password){
+        UserBo userBo = (UserBo)httpSession.getAttribute(WebConst.SESSION_LOGINUSER);
+        UserResource userResource = (UserResource)httpSession.getAttribute(WebConst.SESSION_RESOURCE);
+        UserBo user = userService.getUser(userBo.getId());
+        //去掉无用的前缀"{allparam:"和后缀"}"
+        String param = password.substring(13,password.length()-1);
+        //提取出cipherUsernameAndPassword、enkey和iv
+        String[] str = param.split(SPLIT_FOR_USERNAME_AND_PASSWORD);
+        String cipherUsernameAndPassword = str[0];
+        String enkey = str[1];
+        String iv = str[2];
+        //对加密后的用户名和密码进行解密
+        AesUtil aesUtil = new AesUtil();
+        RsaUtil rsaUtil = new RsaUtil();
+        Md5Util md5Util = new Md5Util();
+        String dec = rsaUtil.rsaDecode(enkey);
+        String decodeContent = aesUtil.aesDecode(dec ,iv , cipherUsernameAndPassword);
+        //对解密后的字符串进行拆解，还原出username和password
+        String[] cipherstr = decodeContent.split(SPLIT_FOR_USERNAME_AND_PASSWORD);
+        String username = cipherstr[0];
+        String userpassword = cipherstr[1];
+        //再用MD5进行加密,与数据库中的内容进行比对
+        String md5Password = md5Util.EncoderByMd5(userpassword).toLowerCase();
+        System.out.println(md5Password);
+        if (user.getPassword().equals(md5Password)){
+            return JsonResult.success(true);
+        }else{
+            return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(),userResource.getMessage("password.confirm.password.inconsistent"));
+        }
+
+    }
 
     @RequestMapping(value = "/openService", method = RequestMethod.POST)
     @RequiresPermissions(value = "update")
     @ResponseBody
     public JsonResult<Bills> openService(HttpSession httpSession,@RequestBody Bills bills) throws ParseException {
         UserResource userResource = (UserResource) httpSession.getAttribute(WebConst.SESSION_RESOURCE);
+        if (bills.getUserPaymentInfo()==null){
+            return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(),userResource.getMessage("error.mis.bills.payTime.empty"));
+        }
         billsService.openService(bills);
         return JsonResult.success(bills);
     }
@@ -110,7 +155,8 @@ public class BillsController {
     @RequiresPermissions("view")
     @RequestMapping(value = "/exportExcel",method = RequestMethod.POST)
     @ResponseBody
-    public void exportExcel(HttpSession httpSession, @RequestBody List<Bills> bills) throws IOException {
+    public JsonResult<String> exportExcel(HttpSession httpSession, @RequestBody List<Bills> bills) throws IOException {
+        List<SearchField> searchFields = SearchFieldHelper.getSearchField(URL,httpSession);
         List<String> headList = new ArrayList<>();
         headList.add("用户名");
         headList.add("大订单号");
@@ -163,8 +209,11 @@ public class BillsController {
         dataMap.put("invoiceNo",2);
         dataMap.put("kpInvoiceTime",2);
         dataMap.put("userTypeName",2);
+        List<Bills> dataList = billsService.getExportList(searchFields);
         ExcelExport excelExport = new CityreExcel("BillsInfo",headList);
-        excelExport.setDataList(bills,dataMap,2,true);
+        excelExport.setDataList(dataList,dataMap,2,true);
         excelExport.writeFile("F:/BillsInfo.xlsx");
+        return JsonResult.success("C:/VipInfo.xlsx");
+
     }
 }

@@ -1,5 +1,6 @@
 package cn.cityre.mis.datavip.entity;
 
+import cn.cityre.mis.datavip.converter.InvoiceTypeConverter;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
@@ -168,6 +169,8 @@ public class Bills implements java.io.Serializable {
     private String userTypeName;
     @Transient
     private String uid;
+    @Transient
+    private Boolean confirmPassword;
 
 
 

@@ -3,21 +3,16 @@
 <div class="container-fluid" ng-controller="listCtrl">
     <div class="page-header">
         <ol class="breadcrumb">
-            <li><a href="javascript:;"><i class="icon icon-tasks"></i><eidea:label key="apikey.title"/></a></li>
+            <li><a href="javascript:;"><i class="icon icon-tasks"></i><eidea:label key="cremis.datavip.bills.title"/></a></li>
         </ol>
-        <a href="#/edit" class="btn  btn-primary btn-sm" ng-show="canAdd"><eidea:label key="common.button.create"/></a>
         <button type="button" class="btn  btn-primary btn-sm" id="search_but" data-toggle="modal"
-                data-target="#confirmModal"><eidea:label key="common.button.search"/></button>
-        <button type="button" class="btn  btn-primary btn-sm" ng-disabled="!canDelete()"
-                ng-click="deleteRecord()" ng-show="canDel"><eidea:label key="common.button.delete"/></button>
-        <button type="button" class="btn btn-primary btn-sm" ng-disabled="!canDelete()"
-                ng-click="deleteLogic()" ng-show="canDel">逻辑删除</button>
+                data-target="#searchModal"><eidea:label key="common.button.search"/></button>
         <button type="button" class="btn btn-primary btn-sm"
                 ng-click="exportExcel()" >导出</button>
     </div>
     <div class="row-fluid">
         <div class="span12" >
-            <table class="table table-hover table-striped table-condensed" >
+            <table class="table table-bordered table-hover table-striped table-condensed" >
                 <thead class="">
                 <tr>
                     <th><%--序号--%><eidea:label key="base.serialNumber"/></th>
@@ -51,7 +46,6 @@
                 </tr>
                 </thead>
                 <tbody>
-
                 <tr ng-repeat="model in modelList track by $index" ng-class-even="success">
                     <td>{{(queryParams.pageNo-1)*queryParams.pageSize+$index+1}}</td>
                     <td>
@@ -73,7 +67,7 @@
                         {{model.endTime|date:"yyyy-MM-dd HH:mm:ss"}}
                     </td>
                     <td>
-                        {{model.wPayType}}
+                        {{model.typeName}}
                     </td>
                     <td>
                         {{model.productCost}}
@@ -90,10 +84,19 @@
                     <td>
                         {{model.payUpdateTime|date:"yyyy-MM-dd HH:mm:ss"}}
                     </td>
-                    <td>
-                        {{model.postInvoiceFlag}}
+                    <td ng-if="model.postInvoiceFlag==1">
+                        是
                     </td>
-                    <td>
+                    <td ng-if="model.postInvoiceFlag==0">
+                        否
+                    </td>
+                    <td ng-if="model.invoiceType==1">
+                        个人
+                    </td>
+                    <td ng-if="model.invoiceType==2">
+                        单位
+                    </td>
+                    <td ng-if="model.invoiceType==null">
                         {{model.invoiceType}}
                     </td>
                     <td>
@@ -112,7 +115,7 @@
                         {{model.postUser}}
                     </td>
                     <td>
-                        {{model.typeName}}
+                        {{model.postTypeName}}
                     </td>
                     <td>
                         {{model.address}}
@@ -137,7 +140,7 @@
                     </td>
 
                     <td ng-if="model.serviceState==2">
-                        <a ng-if="model.userPaymentInfo.endTime!=nul" class="btn btn-primary btn-xs" href="#/edit?billCode={{model.billCode}}">关闭服务<%--关闭服务--%></a>
+                        <a ng-if="model.endTime!=nul" class="btn btn-primary btn-xs" href="#/edit?billCode={{model.billCode}}">关闭服务<%--关闭服务--%></a>
                     </td>
                     <td ng-if="model.serviceState==0">
                         未开通
@@ -146,9 +149,13 @@
                     <td ng-if="model.serviceState==1">
                         已关闭
                     </td>
-                    <td>
-                        <a class="btn btn-primary btn-xs" href="#/invoiceEdit?id={{model.id}}"><eidea:label
-                                key="base.mis.datavip.invoice.edit"/><%--编辑--%></a>
+                    <td >
+
+                        <%--<a class="btn btn-primary btn-xs" href="#/invoiceEdit?id={{model.id}}" ng-show="!model.confirmPassword"><eidea:label--%>
+                                <%--key="base.mis.datavip.invoice.edit"/>&lt;%&ndash;开通发票&ndash;%&gt;</a>--%>
+                        <button type="button" class="btn btn-primary btn-xs"  data-toggle="modal"
+                                data-target="#confirmModal" ><eidea:label
+                                key="base.mis.datavip.invoice.edit"/></button>
                     </td>
                 </tr>
                 </tbody>

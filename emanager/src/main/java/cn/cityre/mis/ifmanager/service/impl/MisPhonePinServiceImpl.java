@@ -12,13 +12,16 @@ import com.dsdl.eidea.core.params.QueryParams;
 import com.dsdl.eidea.core.spring.annotation.DataAccess;
 import com.googlecode.genericdao.search.Search;
 import com.googlecode.genericdao.search.SearchResult;
+import org.mybatis.pagination.PagingParametersFinder;
 import org.mybatis.pagination.dto.PageMyBatis;
 import org.mybatis.pagination.dto.datatables.PagingCriteria;
 import org.mybatis.pagination.dto.datatables.SearchField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by cityre on 2017/8/8.
@@ -33,8 +36,28 @@ public class MisPhonePinServiceImpl implements MisPhonePinService {
     @Override
     public PaginationResult<MisPhonePinPo> getMisPhonePinListMybatis(List<SearchField> search, QueryParams queryParams) {
         DataSourceContextHolder.setDbType(DataSourceEnum.account.value());
-        PagingCriteria pagingCriteria = PagingCriteria.createCriteriaWithSearch(queryParams.getFirstResult(),queryParams.getPageSize(),queryParams.getPageNo(),search);
-        PageMyBatis<MisPhonePinPo> pageMyBatis =misPhonePinMapper.selectByPage(pagingCriteria);
+        PagingCriteria pagingCriteria = PagingCriteria.createCriteria(queryParams.getPageSize(),queryParams.getFirstResult(),queryParams.getPageNo());
+        Map<String,Object> map = new HashMap<>();
+        map.put("pagingCriteria",pagingCriteria);
+        if (search == null) {
+            map.put("phone", null);
+            map.put("action",null);
+        } else {
+            for (SearchField searchField : search) {
+                if (searchField.getField().equals("phone")) {
+                    map.put("phone", searchField.getValue());
+                    continue;
+                }else if (searchField.getField().equals("action")){
+                    map.put("action", searchField.getValue());
+                    continue;
+                }else {
+                    map.put("phone", null);
+                    map.put("action",null);
+                }
+            }
+        }
+        PageMyBatis<MisPhonePinPo> pageMyBatis =misPhonePinMapper.selectByPage(map);
+        Integer total = misPhonePinMapper.selectCount(map);
         PaginationResult<MisPhonePinPo>  paginationResult = PaginationResult.pagination(pageMyBatis,(int)pageMyBatis.getTotal(),queryParams.getPageNo(),queryParams.getPageSize());
         DataSourceContextHolder.setDbType("dataSource_core");
         return paginationResult;

@@ -107,4 +107,34 @@ public class UserList implements java.io.Serializable {
 
     @Transient
     private UserPaymentInfo userPaymentInfo;
+
+    @Transient
+    private String userTypeName;
+    @Transient
+    private String note;
+    @Transient
+    private String billCode;
+    @Transient
+    private String productCost;
+    @Transient
+    private String billsCityCode;
+    @Transient
+    private String pLevel;
+    @Transient
+    private String contentName;
+    @Transient
+    private String pGps;
+    @Transient
+    private String dealType;
+    @Transient
+    private String invoiceTitle;
+    @Transient
+    private String payFlag;
+    @Transient
+    private String payAmount;
+    @Transient
+    private Date startTime;
+    @Transient
+    private Date endTime;
+
 }

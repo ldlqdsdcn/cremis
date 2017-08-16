@@ -2,37 +2,71 @@
 <%@ include file="/inc/taglib.jsp" %>
 <div class="container-fluid" ng-controller="listCtrl">
     <div class="page-header">
-        <ol class="breadcrumb">
-            <li><a href="javascript:;"><i class="icon icon-tasks"></i><eidea:label key="apikey.title"/></a></li>
-        </ol>
-        <a href="#/edit" class="btn  btn-primary btn-sm" ng-show="canAdd"><eidea:label key="common.button.create"/></a>
-        <button type="button" class="btn  btn-primary btn-sm" id="search_but" data-toggle="modal"
-                data-target="#searchModal"><eidea:label key="common.button.search"/></button>
-        <button type="button" class="btn  btn-primary btn-sm" ng-disabled="!canDelete()"
-                ng-click="deleteRecord()" ng-show="canDel"><eidea:label key="common.button.delete"/></button>
+        <form role="form" name="editForm" novalidate ng-submit="pageChanged()" class="form-inline form-label-left">
+            <table class="table table-borderless">
+                <tr>
+                    <td class="control-label"><eidea:label key="cityre.mis.datavip.user.useruid"/>:</td>
+                    <td class="form-group"><input type="text" class="form-control" ng-model="uid"
+                                                  placeholder="<eidea:message key="common.please.input"><eidea:param value="cityre.mis.datavip.user.useruid" type="label"/></eidea:message>">
+                    </td>
+                    <td class="control-label"><eidea:label key="cityre.mis.datavip.userlist.userType"/>:</td>
+                    <td class="form-group"><select class="form-control" ng-model="userType"
+                                                   ng-options="userType.userTypeName as userType.userTypeName for userType in userTypeList"></select>
+                    </td>
+                    <td class="control-label"><eidea:label key="cityre.mis.datavip.userlist.userTel"/>:</td>
+                    <td class="form-group"><input type="text" class="form-control" ng-model="payTel"
+                                                  placeholder="<eidea:message key="common.please.input"><eidea:param value="cityre.mis.datavip.userlist.userTel" type="label"/></eidea:message>">
+                    </td>
+                    <td class="control-label"><eidea:label key="cityre.mis.datavip.userlist.payState"/>:</td>
+                    <td class="form-group"><select class="form-control" ng-model="payFlag"
+                                                   ng-options="option.key as option.value for option in billsFlagList"></select>
+                    </td>
+                    <td class="control-label"><eidea:label key="cityre.mis.datavip.user.newUser"/>:</td>
+                    <td class="form-group"><input type="checkbox" class="form-control" ng-model="newUser"
+                                                  ng-true-value="'true'"
+                                                  ng-false-value="'false'"></td>
+
+                </tr>
+                <tr>
+
+                    <td class="control-label"><eidea:label key="cityre.mis.datavip.userlist.regTime"/></td>
+                    <td class="input-group date bootstrap-datetime"><input type="date" class="form-control" ng-model="regStartTime" uib-datepicker-popup="yyyy-MM-dd HH:mm:ss"><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></td>
+                    <td class="control-label"><eidea:label key="cityre.mis.datavip.userlist.regTime"/>结束</td>
+                    <td class="input-group date bootstrap-datetime"><input type="date" class="form-control" ng-model="regEndTime" uib-datepicker-popup="yyyy-MM-dd HH:mm:ss"><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></td>
+                    <td class="control-label"><eidea:label key="cityre.mis.datavip.paymentinfo.starttime"/>:</td>
+                    <td class="input-group date bootstrap-datetime"><input type="date" class="form-control" ng-model="serviceStartTime" uib-datepicker-popup="yyyy-MM-dd HH:mm:ss"><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></td>
+                    <td class="control-label"><eidea:label key="cityre.mis.datavip.paymentinfo.endtime"/>:</td>
+                    <td class="input-group date bootstrap-datetime"><input type="date" class="form-control" ng-model="serviceEndTime" uib-datepicker-popup="yyyy-MM-dd HH:mm:ss"><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </td>
+                    <td class="control-label">
+                        <button type="submit" class="btn"><eidea:label key="common.button.search"/></button>
+                    </td>
+                </tr>
+            </table>
+        </form>
     </div>
     <div class="row-fluid">
-        <div class="span12" >
-            <table class="table table-hover table-striped table-condensed" >
+        <div class="span12">
+            <table class="table table-bordered table-hover table-striped table-condensed">
                 <thead class="">
                 <tr>
                     <th><%--序号--%><eidea:label key="base.serialNumber"/></th>
-                    <th><%--账号--%><eidea:label key="base.v2017.user.label.userId"/></th>
-                    <th><%--姓名--%><eidea:label key="cityre.mis.datavip.bill.bigBillCode"/></th>
-                    <th><%--用户类型--%><eidea:label key="cityre.mis.datavip.bill.billCode"/></th>
-                    <th><%--注册时间--%><eidea:label key="cityre.mis.datavip.bill.alipayCode"/></th>
-                    <th><%--电话--%><eidea:label key="cityre.mis.datavip.paymentinfo.starttime"/></th>
-                    <th><%--Email--%><eidea:label key="cityre.mis.datavip.paymentinfo.endtime"/></th>
-                    <th><%--状态--%><eidea:label key="cityre.mis.datavip.dicpaytype.typename"/></th>
-                    <th><%--账单号--%><eidea:label key="cityre.mis.datavip.bill.productCost"/></th>
-                    <th><%--账单状态--%><eidea:label key="cityre.mis.datavip.bill.payflag"/></th>
-                    <th><%--账单金额--%><eidea:label key="cityre.mis.datavip.bill.payTime"/></th>
-                    <th><%--服务类型--%><eidea:label key="cityre.mis.datavip.bill.postInvoiceFlag"/></th>
-                    <th><%--城市--%><eidea:label key="cityre.mis.datavip.bill.invoiceType"/></th>
-                    <th><%--查询级别--%><eidea:label key="cityre.mis.datavip.bill.invoiceTitle"/></th>
-                    <th><%--名称--%><eidea:label key="cityre.mis.datavip.bills.invoicetaxno"/></th>
-                    <th><%--附近--%><eidea:label key="cityre.mis.datavip.bills.invoiceadtel"/></th>
-                    <th><%--租售--%><eidea:label key="cityre.mis.datavip.bill.bankNo"/></th>
+                    <th><%--账号--%><eidea:label key="cityre.mis.datavip.user.useruid"/></th>
+                    <th><%--姓名--%><eidea:label key="cityre.mis.datavip.userlist.name"/></th>
+                    <th><%--用户类型--%><eidea:label key="cityre.mis.datavip.userlist.userType"/></th>
+                    <th><%--注册时间--%><eidea:label key="cityre.mis.datavip.userlist.regTime"/></th>
+                    <th><%--电话--%><eidea:label key="cityre.mis.datavip.userlist.userTel"/></th>
+                    <th><%--Email--%><eidea:label key="cityre.mis.datavip.userlist.userEmail"/></th>
+                    <th><%--状态--%><eidea:label key="cityre.mis.datavip.userlist.userState"/></th>
+                    <th><%--账单号--%><eidea:label key="cityre.mis.datavip.userlist.payCode"/></th>
+                    <th><%--账单状态--%><eidea:label key="cityre.mis.datavip.userlist.payState"/></th>
+                    <th><%--账单金额--%><eidea:label key="cityre.mis.datavip.userlist.payCost"/></th>
+                    <th><%--服务类型--%><eidea:label key="cityre.mis.datavip.userlist.serviceType"/></th>
+                    <th><%--城市--%><eidea:label key="cityre.mis.datavip.userlist.city"/></th>
+                    <th><%--查询级别--%><eidea:label key="cityre.mis.datavip.userlist.searchLevel"/></th>
+                    <th><%--名称--%><eidea:label key="cityre.mis.datavip.userlist.contentName"/></th>
+                    <th><%--附近--%><eidea:label key="cityre.mis.datavip.userlist.around"/></th>
+                    <th><%--租售--%><eidea:label key="cityre.mis.datavip.userlist.sale"/></th>
                     <th><%--服务开始时间--%><eidea:label key="cityre.mis.datavip.paymentinfo.starttime"/></th>
                     <th><%--服务结束时间--%><eidea:label key="cityre.mis.datavip.paymentinfo.endtime"/></th>
                     <th><%--发票抬头--%><eidea:label key="cityre.mis.datavip.bill.invoiceTitle"/></th>
@@ -60,20 +94,29 @@
                     <td>
                         {{model.email}}
                     </td>
-                    <td>
-                        {{model.flag}}
+                    <td ng-if="model.flag==1">
+                        激活
+                    </td>
+                    <td ng-if="model.flag==-1">
+                        无效
+                    </td>
+                    <td ng-if="model.flag==0">
+                        未激活
                     </td>
                     <td>
                         {{model.bills.billCode}}
                     </td>
+                    <td ng-if="model.bills.payFlag==0">
+                        已申请
+                    </td>
+                    <td ng-if="model.bills.payFlag==1">
+                        已支付
+                    </td>
+                    <td ng-if="model.bills.payFlag==2">
+                        已进入支付页
+                    </td>
                     <td>
-                        {{model.bills.payFlag}}
-                    </td>
-                    <td ng-if="model.userPaymentInfo.payAmount==null">
-                        {{model.bills.productCost}}
-                    </td>
-                    <td ng-if="model.userPaymentInfo.payAmount!=null">
-                        {{model.userPaymentInfo.payAmount}}
+                        <a href="#/list">{{model.userPaymentInfo.payAmount}}</a>
                     </td>
                     <td>
                         {{model.dicUserType.note}}
@@ -90,7 +133,26 @@
                     <td>
                         {{model.bills.pgps}}
                     </td>
-                    <td>
+                    <%--租售类型 1=出售 2=出租 3=新楼盘 4=新楼盘开工在售 5=新楼盘已竣工 6=新楼盘未售--%>
+                    <td ng-if="model.bills.dealType==1">
+                        出售
+                    </td>
+                    <td ng-if="model.bills.dealType==2">
+                        出租
+                    </td>
+                    <td ng-if="model.bills.dealType==3">
+                        新楼盘
+                    </td>
+                    <td ng-if="model.bills.dealType==4">
+                        新楼盘开工在售
+                    </td>
+                    <td ng-if="model.bills.dealType==5">
+                        新楼盘已竣工
+                    </td>
+                    <td ng-if="model.bills.dealType==6">
+                        新楼盘未售
+                    </td>
+                    <td ng-if="model.bills.dealType==null">
                         {{model.bills.dealType}}
                     </td>
                     <td>
