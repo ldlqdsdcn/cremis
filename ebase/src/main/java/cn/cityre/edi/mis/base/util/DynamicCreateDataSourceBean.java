@@ -6,6 +6,8 @@ import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.*;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -146,11 +148,12 @@ public class DynamicCreateDataSourceBean implements ApplicationContextAware, App
             dsi.password = passwordExpression.split("=")[1];
             mds.put(dbname, dsi);
         }
-
+//        center.url=jdbc:mysql://10.11.10.34:3307/cityre_center?user=liudalei&password=liudalei_2017&autoReconnect=true&characterEncoding=utf8
+//        cityreaccount.url
         return mds;
     }
 
-    //  自定义数据结构  
+    //  自定义数据结构
     private class DataSourceInfo {
 
         public String connUrl;
