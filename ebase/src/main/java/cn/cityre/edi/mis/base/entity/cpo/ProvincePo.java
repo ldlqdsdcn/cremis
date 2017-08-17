@@ -5,7 +5,7 @@
 * 电话：13336390671
 * email:ldlqdsd@126.com
 */
-package cn.cityre.edi.mis.base.entity.po;
+package cn.cityre.edi.mis.base.entity.cpo;
 
 import javax.persistence.*;
 import lombok.Getter;
@@ -17,7 +17,7 @@ import lombok.Setter;
 **/
 @Getter
 @Setter
-@Entity(name = "base_provinces")
+@Entity(name = "province")
 public class ProvincePo implements java.io.Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "[id]")
@@ -26,16 +26,16 @@ public class ProvincePo implements java.io.Serializable {
     /**
     * 省份id
     **/
-    @Column(name = "[provinceid]",length =20 )
+    @Column(name = "[province_code]", length = 20)
     private String provinceid;
     /**
     * 省份名称
     **/
-    @Column(name = "[province]",length =50 )
+    @Column(name = "[province_name]", length = 50)
     private String province;
     /**
     * 是否有效
     **/
-    @Column(name = "[isactive]",length =1 )
-    private String isactive;
+    @Transient
+    private String isactive = "Y";
 }

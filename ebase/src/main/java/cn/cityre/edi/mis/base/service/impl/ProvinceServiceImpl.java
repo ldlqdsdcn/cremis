@@ -6,7 +6,9 @@
  */
 package cn.cityre.edi.mis.base.service.impl;
 
-import cn.cityre.edi.mis.base.entity.po.CityPo;
+import cn.cityre.edi.mis.base.dao.CityDao;
+import cn.cityre.edi.mis.base.dao.ProvinceDao;
+import cn.cityre.edi.mis.base.entity.cpo.CityPo;
 import cn.cityre.edi.mis.sys.entity.po.RoleCityAccessPo;
 import cn.cityre.edi.mis.sys.entity.po.UserCityAccessPo;
 import com.dsdl.eidea.base.entity.bo.UserBo;
@@ -14,7 +16,7 @@ import com.dsdl.eidea.base.service.UserService;
 import com.dsdl.eidea.core.spring.annotation.DataAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import cn.cityre.edi.mis.base.entity.po.ProvincePo;
+import cn.cityre.edi.mis.base.entity.cpo.ProvincePo;
 import cn.cityre.edi.mis.base.service.ProvinceService;
 import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.QueryParams;
@@ -31,8 +33,8 @@ import java.util.stream.Collectors;
  */
 @Service("provinceService")
 public class ProvinceServiceImpl implements ProvinceService {
-    @DataAccess(entity = ProvincePo.class)
-    private CommonDao<ProvincePo, Integer> provinceDao;
+    @Autowired
+    private ProvinceDao provinceDao;
     @Autowired
     private UserService userService;
     @DataAccess(entity = UserCityAccessPo.class)
@@ -40,8 +42,8 @@ public class ProvinceServiceImpl implements ProvinceService {
 
     @DataAccess(entity = RoleCityAccessPo.class)
     private CommonDao<RoleCityAccessPo, Integer> roleCityAccessDao;
-    @DataAccess(entity = CityPo.class)
-    private CommonDao<CityPo, Integer> cityDao;
+    @Autowired
+    private CityDao cityDao;
 
     public PaginationResult<ProvincePo> getProvinceListByPaging(Search search, QueryParams queryParams) {
         search.setFirstResult(queryParams.getFirstResult());

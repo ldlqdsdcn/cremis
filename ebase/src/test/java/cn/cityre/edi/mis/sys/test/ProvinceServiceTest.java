@@ -1,6 +1,6 @@
 package cn.cityre.edi.mis.sys.test;
 
-import cn.cityre.edi.mis.base.entity.po.ProvincePo;
+import cn.cityre.edi.mis.base.entity.cpo.ProvincePo;
 import cn.cityre.edi.mis.base.service.ProvinceService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
