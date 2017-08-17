@@ -91,7 +91,7 @@
 
 @charset "UTF-8";
 .left_col {
-  background: #ffffff; }
+  background: #2A3F54; }
 
 .nav-sm .container.body .col-md-3.left_col {
   min-height: 100%;
@@ -154,7 +154,7 @@
   background: none; }
 
 .nav-sm > .nav.side-menu > li.active-sm > a {
-  color: #105594 !important; }
+  color: #1ABB9C !important; }
 
 .nav-sm .nav.side-menu li a i.toggle-up {
   display: none !important; }
@@ -171,7 +171,7 @@
   top: 0;
   width: 210px;
   z-index: 4000;
-  background: #ffffff;
+  background: #3E5367;
   display: none; }
 
 .nav-sm ul.nav.child_menu li {
@@ -188,7 +188,7 @@
 
 .menu_section h3 {
   padding-left: 23px;
-  color: #105594;
+  color: #fff;
   text-transform: uppercase;
   letter-spacing: .5px;
   font-weight: bold;
@@ -222,11 +222,11 @@
 .profile_info span {
   font-size: 13px;
   line-height: 30px;
-  color: #105594; }
+  color: #BAB8B8; }
 
 .profile_info h2 {
   font-size: 14px;
-  color: #105594;
+  color: #ECF0F1;
   margin: 0;
   font-weight: 300; }
 
@@ -252,7 +252,7 @@
   margin-top: 5px;
   font-size: 10px;
   min-width: inherit;
-  color: #105594; }
+  color: #C4CFDA; }
 
 .active a span.fa {
   text-align: right !important;
@@ -417,7 +417,7 @@
   padding: 0; }
 
 .navbar-nav > li > a, .navbar-brand, .navbar-nav > li > a {
-  color: #105594 !important; }
+  color: #fff !important; }
 
 .top_nav .nav > li > a:focus, .top_nav .nav > li > a:hover, .top_nav .nav .open > a, .top_nav .nav .open > a:focus, .top_nav .nav .open > a:hover {
   background: #D9DEE4; }
@@ -584,7 +584,7 @@ a:hover, a:focus {
   margin-bottom: 6px; }
 
 .nav.side-menu > li > a:hover {
-  color: #105594 !important; }
+  color: #F2F5F7 !important; }
 
 .nav.side-menu > li > a:hover, .nav > li > a:focus {
   text-decoration: none;
@@ -622,7 +622,7 @@ a:hover, a:focus {
   top: 0; }
 
 .nav.side-menu > li > a, .nav.child_menu > li > a {
-  color: #105594;
+  color: #E7E7E7;
   font-weight: 500; }
 
 .nav.child_menu li li:hover,
@@ -631,7 +631,7 @@ a:hover, a:focus {
 
 .nav.child_menu li li a:hover,
 .nav.child_menu li li a.active {
-  color: #1055AB; }
+  color: #fff; }
 
 .nav > li > a {
   position: relative;
@@ -652,7 +652,7 @@ a:hover, a:focus {
 
 .nav.side-menu > li.active > a {
   text-shadow: rgba(0, 0, 0, 0.25) 0 -1px 0;
-  background:#ffffff;
+  background: linear-gradient(#334556, #2C4257), #2A3F54;
   box-shadow: rgba(0, 0, 0, 0.25) 0 1px 0, inset rgba(255, 255, 255, 0.16) 0 1px 0; }
 
 .navbar-brand, .navbar-nav > li > a {
@@ -727,7 +727,7 @@ a:hover, a:focus {
   font-size: 26px; }
 
 .nav.child_menu > li > a {
-  color: #105594;
+  color: rgba(255, 255, 255, 0.75);
   font-size: 12px;
   padding: 9px; }
 
@@ -1514,7 +1514,7 @@ span.right {
   padding: 5px 0 0 0;
   position: fixed;
   width: 230px;
-  background: #ffffff; }
+  background: #2A3F54; }
 
 .sidebar-footer a {
   padding: 7px 0 3px;
