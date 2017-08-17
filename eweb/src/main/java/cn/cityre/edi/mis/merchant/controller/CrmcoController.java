@@ -35,7 +35,7 @@ import java.util.Map;
 /**
 *
 */ @Controller
-@RequestMapping("/base/crmco")
+@RequestMapping("/merchant/crmco")
 public class CrmcoController extends BaseController {
 @Autowired
 private CrmcoService crmcoService;

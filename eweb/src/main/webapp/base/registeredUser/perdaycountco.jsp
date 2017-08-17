@@ -24,7 +24,7 @@
 
         function findPerdaycountcoSeachFn() {
             var opts = $("#perdaycountco_ids").datagrid("options");
-            opts.url = "perdaycountco";
+            opts.url = "<%=path%>/merchant/registeredUser/perdaycountco";
             var cocode = '<%=cocode%>';
             $("#perdaycountco_ids").datagrid(
                 "load",{

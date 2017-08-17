@@ -32,7 +32,7 @@ import java.util.Map;
 /**
 *
 */ @Controller
-@RequestMapping("/base/userApplyForHouse")
+@RequestMapping("/process/userApplyForHouse")
 public class UserApplyForHouseController extends BaseController {
 ;
 @Autowired

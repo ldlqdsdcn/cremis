@@ -19,7 +19,7 @@
 
         function findUserSeachFn() {
             var opts = $("#userList_ids").datagrid("options");
-            opts.url = '<%=path%>' + "/base/registeredUser/list";
+            opts.url = '<%=path%>' + "/merchant/registeredUser/list";
             var uidstr = $("#user_ids").val();
             var phoneStr = $("#phone_ids").val();
             var eamilStr = $("#email_ids").val();
@@ -40,7 +40,7 @@
         }
         function  getUserInfo(uid) {
             var html = "";
-            html += "<a href='<%=path%>/base/agentCheck/getUserInfo?uid="+uid+"' target='_blank'><font color='blue'>用户信息</font></a>"  ;
+            html += "<a href='<%=path%>/merchant/agentCheck/getUserInfo?uid="+uid+"' target='_blank'><font color='blue'>用户信息</font></a>"  ;
             return html;
         }
         function getServiceHa(index) {
@@ -56,7 +56,7 @@
             var cocode = row.cocode;
             $.ajax({
                 type:'POST',
-                url:'serviceHaDetail',
+                url:'<%=path%>/merchant/registeredUser/serviceHaDetail',
                 data:{"cocode":cocode,"uid":uid},
                 dataType:"json",
                 success:function(data){

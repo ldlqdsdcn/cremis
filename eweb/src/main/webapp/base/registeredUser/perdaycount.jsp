@@ -24,7 +24,7 @@
 
         function findCouserInfoSeachFn() {
             var opts = $("#perdaycount_ids").datagrid("options");
-            opts.url = "perdaycount";
+            opts.url = "<%=path%>/merchant/registeredUser/perdaycount";
             var uid = '<%=uid%>';
             $("#perdaycount_ids").datagrid(
                 "load",{

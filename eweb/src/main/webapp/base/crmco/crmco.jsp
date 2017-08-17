@@ -25,7 +25,7 @@
           findCrmcoSeachFn();
         });
         function getcocl_select(){
-            var url ="getcocl";
+            var url ="<%=path%>/merchant/crmco/getcocl";
             $("#cocl_cbx").combobox({
                 panelHeight: "300px",
                 mode:"remote",
@@ -42,7 +42,7 @@
             });
         }
         function getcocl_edit(){
-            var url ="getcocl";
+            var url ="<%=path%>/merchant/crmco/getcocl";
             $("#ed1_cbx").combobox({
                 panelHeight: "300px",
                 mode:"remote",
@@ -60,7 +60,7 @@
         }
         function findCrmcoSeachFn() {
             var opts = $("#crmco_ids").datagrid("options");
-            opts.url = "list";
+            opts.url = "<%=path%>/merchant/crmco/list";
 
             var d1 = $("#d1_cbx").combobox('getValue');
             var source = $("#source_cbx").combobox('getValue');
@@ -101,7 +101,7 @@
 
         function findCrmcoReload() {
             var opts = $("#crmco_ids").datagrid("options");
-            opts.url = "list";
+            opts.url = "<%=path%>/merchant/crmco/list";
 
             var d1 = $("#d1_cbx").combobox('getValue');
             var source = $("#source_cbx").combobox('getValue');
@@ -165,7 +165,7 @@
             var couid = row.couid;
             $.ajax({
                 type:'POST',
-                url:'crmco_agree',
+                url:'<%=path%>/merchant/crmco/crmco_agree',
                 data:{"cocode":cocode,"couid":couid},
                 dataType:"json",
                 success:function(data){
@@ -208,7 +208,7 @@
             var cocode = $("#crmco_cocode").val();
             $.ajax({
                 type:'POST',
-                url:'crmco_refuse',
+                url:'<%=path%>/merchant/crmco/crmco_refuse',
                 data:{"cocode":cocode,"reason":reason},
                 dataType:"json",
                 success:function(data){
@@ -268,7 +268,7 @@
             }
             $.ajax({
                 type:'POST',
-                url:'crmco_edit',
+                url:'<%=path%>/merchant/crmco/crmco_edit',
                 data:{"coname":coname,"d1":d1,"coaddr":coaddr,"cobrief":cobrief,"cowebsite":cowebsite,"coemail":coemail,"cotel":cotel,"coMob":coMob,"cofax":cofax,"cocode":cocode},
                 dataType:"json",
                 success:function(data){
@@ -299,7 +299,7 @@
             var cocode =$("#ecocode_IN").val();
             $.ajax({
                 type:'POST',
-                url:'crmco_delete',
+                url:'<%=path%>/merchant/crmco/crmco_delete',
                 data:{"cocode":cocode},
                 dataType:"json",
                 success:function(data){
@@ -399,7 +399,7 @@
             $('#remanageDig').window('open');
         }
         function getCoManage(){
-            var url ="getCoManage";
+            var url ="<%=path%>/merchant/crmco/getCoManage";
             $("#ruser_cbx").combobox({
                 panelHeight: "300px",
                 mode:"remote",
@@ -425,7 +425,7 @@
             var cocode = $("#rcocode_IN").val();
             $.ajax({
                 type:'POST',
-                url:'crmco_remanage',
+                url:'<%=path%>/merchant/crmco/crmco_remanage',
                 data:{"cocode":cocode,"olduid":olduid,"newuid":newuid},
                 dataType:"json",
                 success:function(data){

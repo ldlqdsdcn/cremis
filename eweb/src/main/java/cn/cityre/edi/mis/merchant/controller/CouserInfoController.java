@@ -33,7 +33,7 @@ import java.util.Map;
 /**
 *
 */ @Controller
-@RequestMapping("/base/couserInfo")
+@RequestMapping("/merchant/couserInfo")
 public class CouserInfoController extends BaseController {
 ;
 @Autowired

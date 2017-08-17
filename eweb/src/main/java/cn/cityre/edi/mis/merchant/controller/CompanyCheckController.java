@@ -31,7 +31,7 @@ import java.util.Map;
 /**
 *
 */ @Controller
-@RequestMapping("/base/companyCheck")
+@RequestMapping("/merchant/companyCheck")
 public class CompanyCheckController extends BaseController {
 ;
 @Autowired

@@ -108,7 +108,7 @@
                             coCodeStr = coCodeStr.substring(0,coCodeStr.length-1);
                             $.ajax({
                                 type:'POST',
-                                url:'checkAll',
+                                url:'<%=path%>/merchant/agentCheck/checkAll',
                                 data:{"idStr":coCodeStr,"certification":1},
                                 dataType:"json",
                                 success:function(data){
@@ -141,7 +141,7 @@
                         coCodeStr = coCodeStr.substring(0,coCodeStr.length-1);
                         $.ajax({
                             type:'POST',
-                            url:'checkAll',
+                            url:'<%=path%>/merchant/agentCheck/checkAll',
                             data:{"idStr":coCodeStr,"certification":-1},
                             dataType:"json",
                             success:function(data){
@@ -183,7 +183,7 @@
 
         function findAgentCheckSeachFn() {
             var opts = $("#checkAgent_ids").datagrid("options");
-            opts.url = "list";
+            opts.url = "<%=path%>/merchant/agentCheck/list";
             var status = $("#statusValue").combobox('getValue');
             var agentName = $("#agentName_ids").val();
             var agentUid = $("#agentUid_ids").val();
@@ -204,7 +204,7 @@
 
         function findAgentCheckReload() {
             var opts = $("#checkAgent_ids").datagrid("options");
-            opts.url = "list";
+            opts.url = "<%=path%>/merchant/agentCheck/list";
             var status = $("#statusValue").combobox('getValue');
             var agentName = $("#agentName_ids").val();
             var agentUid = $("#agentUid_ids").val();
@@ -243,7 +243,7 @@
             var uid = row.uid;
             $.ajax({
                 type:'POST',
-                url:'checkOne',
+                url:'<%=path%>/merchant/agentCheck/checkOne',
                 data:{"uid":uid,"certification":1},
                 dataType:"json",
                 success:function(data){
@@ -264,7 +264,7 @@
             var uid = row.uid;
             $.ajax({
                 type:'POST',
-                url:'checkOne',
+                url:'<%=path%>/merchant/agentCheck/checkOne',
                 data:{"uid":uid,"certification":-1},
                 dataType:"json",
                 success:function(data){
@@ -283,7 +283,7 @@
             var row = rows[index];
             var uid = row.uid;
             var html = "";
-            html += "<a href='<%=path%>/base/agentCheck/getUserInfo?uid="+uid+"' target='_blank'><font color='blue'>"+uid+"</font></a>";
+            html += "<a href='<%=path%>/merchant/agentCheck/getUserInfo?uid="+uid+"' target='_blank'><font color='blue'>"+uid+"</font></a>";
             html+="| <a target='_blank\' href='http://<%=citycode%>.cityhouse.cn/agency.html?uid="+uid+"'>进入空间</a>";
             return html;
         }

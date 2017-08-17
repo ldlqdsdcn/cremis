@@ -33,7 +33,7 @@ import java.util.Map;
 /**
 *
 */ @Controller
-@RequestMapping("/base/agentCheck")
+@RequestMapping("/merchant/agentCheck")
 public class AgentCheckController extends BaseController {
 ;
 @Autowired
