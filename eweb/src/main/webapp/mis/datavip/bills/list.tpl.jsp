@@ -1,24 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/inc/taglib.jsp" %>
 <div class="container-fluid" ng-controller="listCtrl">
-    <%--<script type="text/javascript">--%>
-        <%--function ShowExport() {--%>
-            <%--var url = "<c:url value="/mis/datavip/bills/exportExl"/>";--%>
-            <%--var condition = $("#searchForm").serialize();//获取条件--%>
-            <%--alert(condition);--%>
-            <%--executeExport(url, condition);//执行导出--%>
-        <%--}--%>
-        <%--function executeExport(url, condition) {--%>
-            <%--$.ajax({--%>
-                <%--type: "POST",--%>
-                <%--url: url,--%>
-                <%--data: condition,--%>
-                <%--success: function (filePath) {--%>
-                    <%--var downUrl = '/FileUpload/DownloadFile?file=' + filePath;--%>
-                    <%--window.location = downUrl;--%>
-                <%--}--%>
-            <%--});--%>
-        <%--}--%>
     <div class="page-header">
         <form role="form" name="editForm" id="searchForm" novalidate ng-submit="pageChanged()" class="form-inline form-label-left">
             <table class="table table-borderless">
@@ -89,7 +71,7 @@
                     <th><%--支付金额--%><eidea:label key="cityre.mis.datavip.bill.productCost"/></th>
                     <th><%--是否支付--%><eidea:label key="cityre.mis.datavip.bill.payflag"/></th>
                     <th><%--支付时间--%><eidea:label key="cityre.mis.datavip.bill.payTime"/></th>
-                    <th><%--邮寄发票--%><eidea:label key="cityre.mis.datavip.bill.postInvoiceFlag"/></th>
+                    <th><%--邮寄发票--%>邮寄发票</th>
                     <th><%--发票类型--%><eidea:label key="cityre.mis.datavip.bill.invoiceType"/></th>
                     <th><%--发票抬头--%><eidea:label key="cityre.mis.datavip.bill.invoiceTitle"/></th>
                     <th><%--纳税人识别号--%><eidea:label key="cityre.mis.datavip.bills.invoicetaxno"/></th>
