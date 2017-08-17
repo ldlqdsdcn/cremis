@@ -187,7 +187,7 @@ function acceptHouseLoanBtnClick(){
 	var preAmount = $("#preamount_dig").val();
 	var preDate = $("#predate_dig").val();
 	var preMisName = $("#premisname_dig").val();
-	var url='<%=path%>' + "/base/userApplyForHouse/addBankInfo";
+	var url='<%=path%>' + "/process/userApplyForHouse/addBankInfo";
 	$.post(url,{bankname:bankname,amount:amount,date:date,id:id,status:status,preBankName:preBankName,preAmount:preAmount,preDate:preDate,preMisName:preMisName},function(data){
 		if(data.result == 'success'){
 			
@@ -209,7 +209,7 @@ function houseInfoBtnClick(){
 	var bldgno_dig = $("#bldgno_dig").val();
 	var unit_dig = $("#unit_dig").val();
 	var roomno_dig = $("#roomno_dig").val();
-	var url='<%=path%>' + "/base/userApplyForHouse/addHouseInfo";
+	var url='<%=path%>' + "/process/userApplyForHouse/addHouseInfo";
 	$.post(url,{id:id,district_dig:district_dig,street_dig:street_dig,stno_dig:stno_dig,ha_dig:ha_dig,bldgno_dig:bldgno_dig,unit_dig:unit_dig,roomno_dig:roomno_dig},function(data){
 		if(data.result == 'success'){
 			
