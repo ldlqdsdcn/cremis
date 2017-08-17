@@ -83,9 +83,33 @@ public class UserListServiceImpl implements UserListService {
     }
 
     @Override
-    public List<UserList> getExportList() {
+    public List<UserList> getExportList(SearchParams searchParams) {
         DataSourceContextHolder.setDbType("dataSource_cityreaccount");
-        List<UserList> list = userListMapper.selectExportInfo();
+        Map<String, Object> map = new HashMap<>();
+        if (searchParams.getPayFlag()!=null&&!searchParams.getPayFlag().equals("null")){
+            map.put("payFlag",searchParams.getPayFlag());
+        }
+        if (searchParams.getUid()!=null){
+            map.put("uid",searchParams.getUid());
+        }
+        if (searchParams.getUserType()!=null&&!searchParams.getUserType().equals("null")){
+            map.put("userType",searchParams.getUserType());
+        }
+        if (searchParams.getRegStartTime()!=null){
+            map.put("regStartTime",searchParams.getRegStartTime());
+        }if (searchParams.getRegEndTime()!=null){
+            map.put("regEndTime",searchParams.getRegEndTime());
+        }
+        if (searchParams.getServiceStartTime()!=null){
+            map.put("serviceStartTime",searchParams.getServiceStartTime());
+        }
+        if (searchParams.getServiceEndTime()!=null){
+            map.put("serviceEndTime",searchParams.getServiceEndTime());
+        }
+        if (searchParams.getNewUser().equals("true")){
+            map.put("newUser",true);
+        }
+        List<UserList> list = userListMapper.selectExportInfo(map);
         DataSourceContextHolder.setDbType("dataSource_core");
         return list;
     }

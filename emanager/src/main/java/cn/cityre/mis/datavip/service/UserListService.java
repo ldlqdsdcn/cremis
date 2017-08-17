@@ -18,6 +18,6 @@ public interface UserListService {
     /*根据用户suid获取用户*/
     UserList getExistUserListBySuid(String suid);
 
-    List<UserList> getExportList();
+    List<UserList> getExportList(SearchParams searchParams);
 
 }

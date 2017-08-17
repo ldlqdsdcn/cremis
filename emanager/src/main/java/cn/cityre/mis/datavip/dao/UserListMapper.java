@@ -1,5 +1,6 @@
 package cn.cityre.mis.datavip.dao;
 
+import cn.cityre.mis.datavip.dto.SearchParams;
 import cn.cityre.mis.datavip.entity.UserList;
 import org.mybatis.pagination.dto.PageMyBatis;
 import org.mybatis.pagination.dto.datatables.PagingCriteria;
@@ -13,7 +14,7 @@ public interface UserListMapper {
 
     PageMyBatis<UserList> selectUserInfoByPage(Map<String, Object> map);
 
-    List<UserList> selectExportInfo();
+    List<UserList> selectExportInfo(Map<String,Object> map);
 
     String selectUserPassword(String suid);
 

@@ -121,7 +121,6 @@
                 }
             });
         };
-
 //        获取支付类型
         $http.get("<c:url value="/mis/datavip/bills/getPayType"/>").success(function (response) {
             if (response.success){
@@ -192,9 +191,10 @@
             };
             $rootScope.listQueryParams = $scope.queryParams;
         }
-        var bills={"bills":$scope.modelList};
+        var searchBillParams={"uid":$scope.uid,"billCode":$scope.billCode,"bigBillCode":$scope.bigBillCode,"alipayBillCode":$scope.alipayBillCode,
+            "typeCode":$scope.typeCode,"payFlag":$scope.payFlag,"invoiceNoFlag":$scope.invoiceNoFlag,"postTypeCode":$scope.postTypeCode,"invoiceNo":$scope.invoiceNo,"postInvoiceFlag":$scope.postInvoiceFlag,"invoiceType":$scope.invoiceType}
         $scope.exportExcel=function () {
-            $http.post("<c:url value="/mis/datavip/bills/exportExcel"/> ",$scope.modelList).success(function (response) {
+            $http.post("<c:url value="/mis/datavip/bills/exportExl"/> ",searchBillParams).success(function (response) {
                 if (response.success){
                     $scope.message="<eidea:label key="base.save.success"/>"
                 }

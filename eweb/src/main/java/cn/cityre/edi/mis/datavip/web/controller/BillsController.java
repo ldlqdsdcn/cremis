@@ -261,9 +261,9 @@ public class BillsController {
         return JsonResult.success(userPaymentInfo);
     }
 
-    @RequestMapping("/exportExl")
-    public ResponseEntity<byte[]> exportExl(Bills bills, Model model) throws IOException {
-        List<Bills> stocks = billsService.getExportList();
+    @RequestMapping(value = "/exportExl",method = RequestMethod.POST)
+    public ResponseEntity<byte[]> exportExl(Bills bills, Model model,@RequestBody SearchBillParams searchBillParams) throws IOException {
+        List<Bills> stocks = billsService.getExportList(searchBillParams);
         return ExlUtil.getDataStream(new BillsHeader(),stocks, "账单信息");
     }
 }

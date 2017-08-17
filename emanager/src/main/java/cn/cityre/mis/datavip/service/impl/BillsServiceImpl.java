@@ -128,11 +128,44 @@ public class BillsServiceImpl implements BillsService {
             return paginationResult;
         }
         @Override
-        public List<Bills> getExportList (){
+        public List<Bills> getExportList (SearchBillParams searchBillParams){
             DataSourceContextHolder.setDbType("dataSource_cityreaccount");
-            Map<String, Object> map = new HashMap<>();
+            Map<String,Object> map = new HashMap<>();
+            if (searchBillParams.getUid() != null) {
+                map.put("uid", searchBillParams.getUid());
+            }
+            if (searchBillParams.getBillCode() != null) {
+                map.put("billCode", searchBillParams.getBillCode());
+            }
+            if (searchBillParams.getAlipayBillCode() != null) {
+                map.put("alipayBillCode", searchBillParams.getAlipayBillCode());
+            }
+            if (searchBillParams.getBigBillCode() != null) {
+                map.put("bigBillCode", searchBillParams.getBigBillCode());
+            }
+            if (searchBillParams.getInvoiceType() != null&&!searchBillParams.getInvoiceType().equals("null")) {
+                map.put("invoiceType", searchBillParams.getInvoiceType());
+            }
+            if (searchBillParams.getTypeCode() != null&&!searchBillParams.getTypeCode().equals("null")) {
+                map.put("typeCode", searchBillParams.getTypeCode());
+            }
+            if (searchBillParams.getInvoiceNo() != null) {
+                map.put("invoiceNo", searchBillParams.getInvoiceNo());
+            }
+            if (searchBillParams.getPostInvoiceFlag() != null&&!searchBillParams.getPostInvoiceFlag().equals("null")) {
+                map.put("postInvoiceFlag", searchBillParams.getPostInvoiceFlag());
+            }
+            if (searchBillParams.getInvoiceNoFlag() != null&&!searchBillParams.getInvoiceNoFlag().equals("null")) {
+                map.put("invoiceNoFlag", searchBillParams.getInvoiceNoFlag());
+            }
+            if (searchBillParams.getPayFlag() != null&&!searchBillParams.getPayFlag().equals("null")) {
+                map.put("payFlag", searchBillParams.getPayFlag());
+            }
+            if (searchBillParams.getPostTypeCode() != null&&!searchBillParams.getPostTypeCode().equals("null")) {
+                map.put("postTypeCode", searchBillParams.getPostTypeCode());
+            }
 
-            List<Bills> list = billsMapper.selectExportInfo();
+            List<Bills> list = billsMapper.selectExportInfo(map);
             DataSourceContextHolder.setDbType("dataSource_core");
             return list;
 

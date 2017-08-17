@@ -156,7 +156,10 @@
         left join dic_post_type on dic_post_type.post_type_code=bills.post_type
         inner join userlist on userlist.suid=bills.suid
         left join dic_user_type on userlist.user_type=dic_user_type.user_type_code
-
+        <if test="_parameter!=null">
+            <include refid="where_sql"/>
+        </if>
+        ORDER by pay_updatetime DESC
     </select>
     <select id="selectByCode" resultMap="UserPaymentBillsMap" parameterType="java.lang.String">
     SELECT

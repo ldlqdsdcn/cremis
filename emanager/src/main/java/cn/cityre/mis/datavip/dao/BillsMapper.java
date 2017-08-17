@@ -1,5 +1,6 @@
 package cn.cityre.mis.datavip.dao;
 
+import cn.cityre.mis.datavip.dto.SearchBillParams;
 import cn.cityre.mis.datavip.entity.Bills;
 import org.apache.ibatis.annotations.Param;
 import org.mybatis.pagination.dto.PageMyBatis;
@@ -15,7 +16,7 @@ public interface BillsMapper {
     //asp中default查询方法
     PageMyBatis<Bills> selectDefaultByPage(Map<String, Object> map);
 
-    List<Bills> selectExportInfo();
+    List<Bills> selectExportInfo(Map<String,Object> map);
 
     Bills selectByCode(String billCode);
 
