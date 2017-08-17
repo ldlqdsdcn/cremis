@@ -122,7 +122,7 @@
 
         buttonHeader.listInit($scope,$window);
     });
-    app.controller('editCtrl', function ($routeParams,$scope, $http,$window,$timeout, Upload) {
+    app.controller('editCtrl', function ($routeParams,$scope, $http,$window,$timeout,Upload) {
         $scope.canAdd=PrivilegeService.hasPrivilege('add');
         var url = "<c:url value="/base/client/create"/>";
         if ($routeParams.id != null) {

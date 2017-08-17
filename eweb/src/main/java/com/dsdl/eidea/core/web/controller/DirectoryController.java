@@ -12,6 +12,7 @@ import com.dsdl.eidea.core.web.result.def.ErrorCodes;
 import com.dsdl.eidea.core.web.util.SearchHelper;
 import com.dsdl.eidea.core.web.vo.PagingSettingResult;
 import com.googlecode.genericdao.search.Search;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -113,7 +114,7 @@ public class DirectoryController {
 
     }
 
-    @RequestMapping(value = "create", method = RequestMethod.GET)
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
     @ResponseBody
     @RequiresPermissions(value = "add")
     public JsonResult<DirectoryBo> create() {
@@ -121,6 +122,13 @@ public class DirectoryController {
         directoryBo.setCreated(true);
         directoryBo.setIsactive("N");
         return JsonResult.success(directoryBo);
+    }
+    @RequestMapping(value = "/getList",method = RequestMethod.GET)
+    @ResponseBody
+    @RequiresPermissions(value = "view")
+    public JsonResult<List<DirectoryBo>> getList(){
+        List<DirectoryBo> directoryBos = directoryService.findAllValidDirectory();
+        return JsonResult.success(directoryBos);
     }
 
 }

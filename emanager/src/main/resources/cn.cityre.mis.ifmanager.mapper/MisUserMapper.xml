@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cityre.mis.ifmanager.dao.MisUserMapper">
+    <resultMap id="BaseResultMap" type="cn.cityre.mis.ifmanager.entity.MisUserPo">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="unionUid" property="unionUid" jdbcType="VARCHAR"/>
+        <result column="userId" property="userId" jdbcType="VARCHAR"/>
+        <result column="nickName" property="nickName" jdbcType="VARCHAR"/>
+        <result column="realName" property="realName" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="TINYINT"/>
+        <result column="birthday" property="birthday" jdbcType="DATE"/>
+        <result column="userIcon" property="userIcon" jdbcType="VARCHAR"/>
+        <result column="passwordSalt" property="passwordSalt" jdbcType="VARCHAR"/>
+        <result column="passwordHash" property="passwordHash" jdbcType="VARCHAR"/>
+        <result column="oldPasswordHash" property="oldPasswordHash" jdbcType="VARCHAR"/>
+        <result column="isVerified" property="isVerified" jdbcType="TINYINT"/>
+        <result column="isValid" property="isValid" jdbcType="TINYINT"/>
+        <result column="accountSecret" property="accountSecret" jdbcType="VARCHAR"/>
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column">
+        id,unionUid,userId,nickName,realName,sex,birthday,userIcon,passwordSalt,passwordHash,oldPasswordHash,isVerified,isValid,accountSecret,createTime,updateTime
+    </sql>
+    <sql id="where_sql">
+        <where>
+            <if test="realName!=null">
+                realName like CONCAT("%",#{realName,jdbcType=VARCHAR},"%")
+            </if>
+            <if test="isVerified!=null">
+                and isVerified = #{isVerified,jdbcType=TINYINT}
+            </if>
+
+            <if test="createStartTime!=null">
+                AND createTime<![CDATA[>=]]>#{createStartTime}
+            </if>
+            <if test="createEndTime !=null">
+                AND createTime <![CDATA[<=]]> #{createEndTime}
+            </if>
+        </where>
+    </sql>
+    <select id="selectByPage" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column"/>
+        from v2017_user
+        <if test="_parameter!=null">
+            <include refid="where_sql"/>
+        </if>
+    </select>
+    <!--v2017_user：查，条件：注册时间段、姓名、是否已验证、用户全局唯一ID、用户登录名，暂定这些-->
+    <select id="selectByRealName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column"/>
+        FROM v2017_user
+        WHERE realName = #{realName,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectUserOrderByCreateTime" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column"/>
+        from v2017_user
+        WHERE createTime <![CDATA[>=]]> DATE_SUB(now(),INTERVAL 1 WEEK)
+        ORDER BY createTime DESC
+    </select>
+
+    <select id="selectByUid" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column"/>
+        FROM v2017_user
+        WHERE unionUid = #{unionUid,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column"/>
+        FROM v2017_user
+        WHERE userId = #{userId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByCreateTime" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column"/>
+        FROM v2017_user
+        WHERE
+        <if test="createStartTime!=null and createStartTime !=''">
+            createTime <![CDATA[>=]]> #{createStartTime}
+
+        </if>
+        <if test="createStartTime !=null and createEndTime !=null">
+            AND
+        </if>
+        <if test="createEndTime !=null">
+            createTime <![CDATA[<=]]> #{createEndTime}
+        </if>
+
+    </select>
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="Base_Column"/>
+        FROM
+        v2017_user
+        WHERE id = #{id,jdbcType=INTEGER}
+    </select>
+    <update id="updateById" parameterType="cn.cityre.mis.ifmanager.entity.MisUserPo">
+        UPDATE v2017_user
+        <set>
+            <if test="unionUid!=null">
+                unionUid = #{unionUid,jdbcTyp=VARCHAR},
+            </if>
+            <if test="userId != null">
+                userId = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="nickName!=null">
+                nickName = #{nickName,jdbcType = VARCHAR},
+            </if>
+            <if test="realName !=null">
+                realName = #{realName,jdbcType = VARCHAR},
+            </if>
+            <if test="sex!=null">
+                sex = #{sex,jdbcType = VARCHAR},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType = DATE},
+            </if>
+            <if test="userIcon !=null">
+                userIcon = #{userIcon,jdbcType = VARCHAR},
+            </if>
+            <if test="passwordSalt!=null">
+                passwordSalt = #{passwordSalt,jdbcType= VARCHAR},
+            </if>
+            <if test="passwordHash!=null">
+                passwordHash = #{passwordHash,jdbcType=VARCHAR},
+            </if>
+            <if test="oldPasswordHash !=null">
+                oldPasswordHash = #{oldPasswordHash,jdbcType=VARCHAR},
+            </if>
+            <if test="isVerified!=null">
+                isVerified = #{isVerified,jdbcType = TINYINT},
+            </if>
+            <if test="isValid !=null">
+                isValid = #{isValid,jdbcType=TINYINT},
+            </if>
+            <if test="accountSecret!=null">
+                accountSecret = #{accountSecret,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime!=null">
+                updateTime=now()
+            </if>
+            <!--<choose>-->
+            <!--<when test="updateTime !=null">-->
+            <!--updateTime = #{updateTime,jdbcType=TIMESTAMP},-->
+            <!--</when>-->
+            <!--<otherwise>updateTime=now(),</otherwise>-->
+            <!--</choose>-->
+        </set>
+        <where>
+            id = #{id,jdbcType=INTEGER}
+        </where>
+    </update>
+</mapper>

@@ -76,4 +76,13 @@ public class DirectoryServiceImpl implements DirectoryService {
         List<DirectoryPo> userPoList = directoryDao.search(search);
         return modelMapper.map(userPoList,new TypeToken<List<DirectoryBo>>(){}.getType());
     }
+
+    @Override
+    public List<DirectoryBo> findAllValidDirectory() {
+        Search search = new Search();
+        search.addFilterEqual("isactive","Y");
+        List<DirectoryPo> directoryPos = directoryDao.search(search);
+        List<DirectoryBo> directoryBos = modelMapper.map(directoryPos,new TypeToken<List<DirectoryBo>>(){}.getType());
+        return directoryBos;
+    }
 }

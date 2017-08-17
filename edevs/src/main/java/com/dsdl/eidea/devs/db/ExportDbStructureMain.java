@@ -256,7 +256,7 @@ public class ExportDbStructureMain {
 
     private void writeReport() {
         try {
-            FileOutputStream fileOut = new FileOutputStream("DatabaseDir.xls");
+            FileOutputStream fileOut = new FileOutputStream("F:/DatabaseDir.xls");
             wb.write(fileOut);
             fileOut.close();
         } catch (FileNotFoundException e) {

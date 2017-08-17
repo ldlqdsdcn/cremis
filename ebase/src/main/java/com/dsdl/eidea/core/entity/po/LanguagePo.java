@@ -13,8 +13,7 @@ import java.util.Set;
  * CoreLanguage entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "core_language", catalog = "cityre_mis", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
-@org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
+@Table(name = "core_language", catalog = "cityre_mis")
 @Setter
 @Getter
 public class LanguagePo implements java.io.Serializable {

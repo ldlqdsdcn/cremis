@@ -249,9 +249,9 @@
             $scope.menuPageChanged($scope.menuDelFlag);
         }
         //访问目录设置
-        var param = {"queryParams": $scope.queryParams};
+//        var param = {"queryParams": $scope.queryParams};
         $scope.selectDir=function () {
-            $http.post("<c:url value="/base/directory/list"/>",param).success(function (data) {
+            $http.get("<c:url value="/base/directory/getList"/>").success(function (data) {
                 if (data.success) {
                     $scope.updateDirList(data.data);
                 }else {
@@ -260,7 +260,7 @@
             });
         }
         $scope.updateDirList = function (data) {
-            $scope.directoryList = data.data;
+            $scope.directoryList = data;
             for (var i = 0; i < $scope.directoryList.length; i++) {
                 if($scope.dirIds != null && $scope.dirIds.length > 0){
                     for(var j = 0; j <$scope.dirIds.length; j++){

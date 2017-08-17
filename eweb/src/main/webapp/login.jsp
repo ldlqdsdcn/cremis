@@ -46,8 +46,12 @@
       <div class="login_wrapper">
         <div class="animate form login_form">
           <section class="login_content">
+              <div class="text-center center-margin">
+                  <img src="http://www.cityre.cn/images/img2017/logo_cityre2017.png">
+              </div>
             <form class="form-horizontal" name="loginForm" novalidate="novalidate" ng-submit="submit();"
                   ng-submit-force="true">
+
                 <h1><eidea:label key="login.title"/></h1>
               <div class="form-group">
                 <input type="text" class="form-control" id="username" name="username" ng-model="loginBo.username" placeholder="<eidea:label key="login.userName"/>">

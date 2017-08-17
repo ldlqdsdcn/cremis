@@ -1,5 +1,6 @@
 package com.dsdl.eidea.core.service.impl;
 
+import cn.cityre.edi.mis.base.util.DataSourceContextHolder;
 import com.dsdl.eidea.core.dao.CommonDao;
 import com.dsdl.eidea.core.dao.SearchColumnDao;
 import com.dsdl.eidea.core.dao.SearchDao;
@@ -135,6 +136,7 @@ public class SearchServiceImpl implements SearchService {
     }
 
     public SearchBo getSearchBoByUri(String uri) {
+        DataSourceContextHolder.setDbType("dataSource_core");
         Search search = new Search();
         search.addFilterEqual("uri", uri);
         SearchPo searchPo = searchDao.searchUnique(search);

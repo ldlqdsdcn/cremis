@@ -18,7 +18,6 @@
         <property name="dataSource" ref="dynamicDataSource"/>
         <!-- mybatis配置文件 -->
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
-        <!--<property name="mapperLocations" value="classpath*:com/dsdl/**/*Mapper.xml"/>-->
         <property name="mapperLocations">
             <list>
                 <value>classpath*:com/dsdl/**/*Mapper.xml</value>
@@ -27,6 +26,8 @@
         </property>
     </bean>
 
+
+    
     <!-- 配置SqlSessionTemplate -->
     <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
         <constructor-arg index="0" ref="sqlSessionFactory"/>
