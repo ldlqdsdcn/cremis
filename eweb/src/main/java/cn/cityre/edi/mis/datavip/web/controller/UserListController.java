@@ -103,9 +103,11 @@ public class UserListController {
         return JsonResult.success(jsonObject.toString());
     }
 
-    @RequestMapping("/exportExl")
+    @RequestMapping(value = "/exportExl",method = RequestMethod.GET)
     public ResponseEntity<byte[]> exportExl(UserList userList, Model model) throws IOException {
-        List<UserList> stocks = userListService.getExportList();
-        return ExlUtil.getDataStream(new InvoiceTypeHeader(),stocks, "会员购买信息");
+        SearchParams searchParams = new SearchParams();
+        List<UserList> userLists = userListService.getExportList(searchParams);
+
+        return ExlUtil.getDataStream(new InvoiceTypeHeader(),userLists, "会员购买信息");
     }
 }

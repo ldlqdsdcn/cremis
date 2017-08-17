@@ -1,7 +1,9 @@
 package cn.cityre.mis.cityreaccount.datavip.dao;
 
 import cn.cityre.mis.cityreaccount.datavip.entity.Bills;
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.pagination.dto.PageMyBatis;
+import org.mybatis.pagination.dto.datatables.PagingCriteria;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -13,7 +15,7 @@ public interface BillsMapper {
     //asp中default查询方法
     PageMyBatis<Bills> selectDefaultByPage(Map<String, Object> map);
 
-    List<Bills> selectExportInfo();
+    List<Bills> selectExportInfo(Map<String,Object> map);
 
     Bills selectByCode(String billCode);
 

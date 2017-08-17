@@ -165,7 +165,6 @@ public class BillsController {
     @RequiresPermissions(value = "view")
     public JsonResult<List<DicPayType>> getPayType() {
         List<DicPayType> list = dicPayTypeService.getExistAllType();
-        list.add(null);
         return JsonResult.success(list);
     }
 
@@ -175,7 +174,6 @@ public class BillsController {
     @RequiresPermissions(value = "view")
     public JsonResult<List<DicPostType>> getPostType() {
         List<DicPostType> list = dicPostTypeService.getExistPostTypeList();
-        list.add(null);
         return JsonResult.success(list);
     }
 
@@ -259,8 +257,9 @@ public class BillsController {
         return JsonResult.success(userPaymentInfo);
     }
 
-    @RequestMapping("/exportExl")
-    public ResponseEntity<byte[]> exportExl(Bills bills, Model model) throws IOException {
+    @RequestMapping(value = "/exportExl",method = RequestMethod.GET)
+    public ResponseEntity<byte[]> exportExl(Bills bills, Model model) throws IOException, ParseException {
+
         List<Bills> stocks = billsService.getExportList();
         return ExlUtil.getDataStream(new BillsHeader(),stocks, "账单信息");
     }

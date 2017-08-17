@@ -101,8 +101,8 @@ public class ExcelUtil {
 					for (int num = 0; num < fieldNames.length; num++) {
 						Object value = ReflectionUtils.invokeGetterMethod(obj,
 								fieldNames[num]);
-						cells[cellNum].setCellValue(value == null ? "" : value
-								.toString());
+						cells[cellNum].setCellValue(value == null ? "" : value.toString()
+								);
 						cellNum++;
 					}
 				}
@@ -176,7 +176,7 @@ public class ExcelUtil {
 		dateRow.setHeight((short) 350);
 		HSSFCell dateCell = dateRow.createCell(0);
 		dateCell.setCellStyle(dateStyle);
-		dateCell.setCellValue(new SimpleDateFormat("yyyy-MM-dd")
+		dateCell.setCellValue(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 				.format(new Date()));
 	}
 

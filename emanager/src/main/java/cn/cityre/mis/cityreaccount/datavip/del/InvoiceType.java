@@ -4,7 +4,7 @@ package cn.cityre.mis.cityreaccount.datavip.del;
  * Created by cityre on 2017/8/15.
  */
 public enum InvoiceType {
-    PERSONAL(1,"个人"),COMPANY(2,"单位"),NULL(null,null);
+    PERSONAL(1,"个人"),COMPANY(2,"单位");
     private Integer key;
     private String value;
 

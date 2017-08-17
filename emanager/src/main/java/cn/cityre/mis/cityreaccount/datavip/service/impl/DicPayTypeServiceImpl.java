@@ -18,9 +18,7 @@ public class DicPayTypeServiceImpl implements DicPayTypeService {
     private DicPayTypeMapper dicPayTypeMapper;
     @Override
     public List<DicPayType> getExistAllType() {
-        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
         List<DicPayType> list = dicPayTypeMapper.selectAllType();
-        DataSourceContextHolder.setDbType("dataSource_core");
         return list;
     }
 }

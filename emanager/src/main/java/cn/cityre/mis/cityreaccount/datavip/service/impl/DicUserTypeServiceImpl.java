@@ -19,9 +19,7 @@ public class DicUserTypeServiceImpl implements DicUserTypeService {
 
     @Override
     public List<DicUserType> getExistUserTypeList() {
-        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
         List<DicUserType> list = dicUserTypeMapper.selectByType();
-        DataSourceContextHolder.setDbType("dataSource_core");
 
         return list;
     }

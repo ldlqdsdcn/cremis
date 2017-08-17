@@ -17,7 +17,7 @@ public class InvoiceTypeHeader implements ExcelHeader {
     @Override
     public List<String[]> getFieldNames() {
         List<String[]> fieldNames = new ArrayList<String[]>();
-        fieldNames.add(new String[] { "uid", "userName",  "userTypeName","regTime","payTel","email","flag", "payAmount", "note", "billsCityCode","pLevel","contentName","pGps","dealType","startTime","endTime","invoiceTitle"});
+        fieldNames.add(new String[] { "uid", "userName",  "userTypeName","regTimeString","payTel","email","flagString", "billCode","payFlag","payAmount", "note", "billsCityCode","pLevel","contentName","pGps","dealType","startTimeString","endTimeString","invoiceTitle"});
         return fieldNames;
     }
 }

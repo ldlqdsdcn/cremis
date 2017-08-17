@@ -169,6 +169,18 @@ public class Bills implements java.io.Serializable {
     private String uid;
     @Transient
     private Boolean confirmPassword;
+    @Transient
+    private String payFlagString;
+    @Transient
+    private String invoiceTypeString;
+    @Transient
+    private String startTimeString;
+    @Transient
+    private String endTimeString;
+    @Transient
+    private String kpInvoiceTimeString;
+    @Transient
+    private String payUpdateTimeString;
 
 
 

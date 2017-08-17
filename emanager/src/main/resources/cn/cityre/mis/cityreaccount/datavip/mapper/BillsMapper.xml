@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.cityre.mis.cityreaccount.datavip.dao.BillsMapper">
-    <resultMap id="BaseResultMap" type="cn.cityre.mis.datavip.entity.Bills">
+    <resultMap id="BaseResultMap" type="cn.cityre.mis.cityreaccount.datavip.entity.Bills">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="suid" jdbcType="VARCHAR" property="suid"/>
         <result column="big_billcode" jdbcType="VARCHAR" property="bigBillCode"/>
@@ -156,7 +156,10 @@
         left join dic_post_type on dic_post_type.post_type_code=bills.post_type
         inner join userlist on userlist.suid=bills.suid
         left join dic_user_type on userlist.user_type=dic_user_type.user_type_code
-
+        <if test="_parameter!=null">
+            <include refid="where_sql"/>
+        </if>
+        ORDER by pay_updatetime DESC
     </select>
     <select id="selectByCode" resultMap="UserPaymentBillsMap" parameterType="java.lang.String">
     SELECT

@@ -21,6 +21,7 @@ import java.util.Map.Entry;
  */
 public class DynamicCreateDataSourceBean implements ApplicationContextAware, ApplicationListener {
     private String filename = "/datasource/city.properties";
+    private static final String DATABASE_PROP_FILE = "database.properties";
     private ConfigurableApplicationContext app;
 
     private DynamicDataSource dynamicDataSource;
@@ -35,7 +36,7 @@ public class DynamicCreateDataSourceBean implements ApplicationContextAware, App
 
 
     public void onApplicationEvent(ApplicationEvent event) {
-        // 如果是容器刷新事件OR Start Event  
+        // 如果是容器刷新事件OR Start Event
         if (event instanceof ContextRefreshedEvent) {
             try {
                 regDynamicBean();
@@ -47,9 +48,9 @@ public class DynamicCreateDataSourceBean implements ApplicationContextAware, App
     }
 
     private void regDynamicBean() throws IOException {
-        // 解析属性文件，得到数据源Map  
+        // 解析属性文件，得到数据源Map
         Map<String, DataSourceInfo> mapCustom = parsePropertiesFile();
-        // 把数据源bean注册到容器中  
+        // 把数据源bean注册到容器中
         addSourceBeanToApp(mapCustom);
     }
 
@@ -68,12 +69,12 @@ public class DynamicCreateDataSourceBean implements ApplicationContextAware, App
         BeanDefinitionBuilder bdb;
 
 
-        // 根据数据源得到数据，动态创建数据源bean 并将bean注册到applicationContext中去  
+        // 根据数据源得到数据，动态创建数据源bean 并将bean注册到applicationContext中去
         while (iter.hasNext()) {
 
-            //  bean ID  
+            //  bean ID
             String beanKey = iter.next();
-            //  创建bean  
+            //  创建bean
             // bdb = BeanDefinitionBuilder.rootBeanDefinition(DATASOURCE_BEAN_CLASS);
 
 
@@ -97,18 +98,18 @@ public class DynamicCreateDataSourceBean implements ApplicationContextAware, App
             bdb.addPropertyValue("testOnReturn", true);
             bdb.addPropertyValue("testWhileIdle", true);
 
-            //  注册bean  
+            //  注册bean
             acf.registerBeanDefinition(beanKey, bdb.getBeanDefinition());
 
-            //  放入map中，注意一定是刚才创建bean对象  
+            //  放入map中，注意一定是刚才创建bean对象
 //            Object obj = app.getBean(beanKey);
             targetDataSources.put(beanKey, app.getBean(beanKey));
 
         }
-        //  将创建的map对象set到 targetDataSources；  
+        //  将创建的map对象set到 targetDataSources；
         dynamicDataSource.setTargetDataSources(targetDataSources);
 
-        //  必须执行此操作，才会重新初始化AbstractRoutingDataSource 中的 resolvedDataSources，也只有这样，动态切换才会起效  
+        //  必须执行此操作，才会重新初始化AbstractRoutingDataSource 中的 resolvedDataSources，也只有这样，动态切换才会起效
         dynamicDataSource.afterPropertiesSet();
 
     }
@@ -148,9 +149,28 @@ public class DynamicCreateDataSourceBean implements ApplicationContextAware, App
             dsi.password = passwordExpression.split("=")[1];
             mds.put(dbname, dsi);
         }
+        Resource fileResource = new ClassPathResource(DATABASE_PROP_FILE);
+        InputStream inputStream = fileResource.getInputStream();
+        Properties properties = new Properties();
+        properties.load(inputStream);
+        inputStream.close();
 //        center.url=jdbc:mysql://10.11.10.34:3307/cityre_center?user=liudalei&password=liudalei_2017&autoReconnect=true&characterEncoding=utf8
 //        cityreaccount.url
+        mds.put("dataSource_center", addDataSourceInfo("center", properties));
+        mds.put("dataSource_account", addDataSourceInfo("useraccount_center", properties));
+        mds.put("dataSource_cityreaccount", addDataSourceInfo("cityre_center", properties));
         return mds;
+    }
+
+    DataSourceInfo addDataSourceInfo(String dbCode, Properties prop) {
+        String url = prop.getProperty("jdbc." + dbCode + ".connection.url");
+        String username = prop.getProperty("jdbc." + dbCode+ ".connection.username");
+        String password = prop.getProperty("jdbc." + dbCode + ".connection.password");
+        DataSourceInfo dsi = new DataSourceInfo();
+        dsi.connUrl = url;
+        dsi.userName = username;
+        dsi.password = password;
+        return dsi;
     }
 
     //  自定义数据结构

@@ -17,7 +17,7 @@ public class BillsHeader implements ExcelHeader {
 	public List<String[]> getFieldNames() {
 		// TODO Auto-generated method stub
 		List<String[]> fieldNames = new ArrayList<String[]>();
-		fieldNames.add(new String[] { "billCode", "bigBillCode", "alipayBillCode", "startTime","endTime","typeName","productCost","payFlag", "payUpdateTime", "typeName", "invoiceType","invoiceTitle","invoiceTaxNo","invoiceAdTel","invoiceBankNo","postUser","postTypeName","address","tel","wPayUser","wPayTel","invoiceNo","kpInvoiceTime","userTypeName"});
+		fieldNames.add(new String[] { "billCode", "bigBillCode", "alipayBillCode", "startTimeString","endTimeString","typeName","productCost","payFlagString", "payUpdateTimeString", "typeName", "invoiceTypeString","invoiceTitle","invoiceTaxNo","invoiceAdTel","invoiceBankNo","postUser","postTypeName","address","tel","wPayUser","wPayTel","invoiceNo","kpInvoiceTimeString","userTypeName"});
 		return fieldNames;
 	}
 

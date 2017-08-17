@@ -2,7 +2,7 @@
 <%@ include file="/inc/taglib.jsp" %>
 <div class="container-fluid" ng-controller="listCtrl">
     <div class="page-header">
-        <form role="form" name="editForm" novalidate ng-submit="pageChanged()" class="form-inline form-label-left">
+        <form role="form" name="editForm" id="searchForm" novalidate ng-submit="pageChanged()" class="form-inline form-label-left">
             <table class="table table-borderless">
                 <tr>
                     <td class="control-label"><%--订购单号--%><eidea:label key="cityre.mis.datavip.bill.bigBillCode"/>:</td>
@@ -26,16 +26,14 @@
                     <td class="form-group"><select class="form-control" ng-model="typeCode" ng-init="typeCode='null'"><option value="null">请选择</option><option ng-repeat="option in payTypeList" value="{{option.typeCode}}">{{option.typeName}}</option></select>
                     </td>
                     <td class="control-label"><%--支付状态--%><eidea:label key="cityre.mis.datavip.bill.payflag"/></td>
-                    <td class="form-group"><select class="form-control" ng-model="payFlag" ng-init="payFlag='null'"
-                    >   <option value="null">请选择</option>
+                    <td class="form-group"><select class="form-control" ng-model="payFlag" ng-init="payFlag='null'">   <option value="null">请选择</option>
                         <option ng-repeat="option in billsFlag" value="{{option.key}}">{{option.value}}</option></select></td>
 
                 </tr>
                 <tr>
                     <td class="control-label"><%--开票与否--%><eidea:label key="cityre.mis.datavip.bill.kpInvoiceType"/></td>
                     <td class="form-group"><select class="form-control" ng-model="invoiceNoFlag"  ng-init="invoiceNoFlag='null'"><option value="null">请选择</option><option ng-repeat="option in invoiceStateList" value="{{option.key}}">{{option.value}}</option></select></td>
-                    <td class="control-label"><%--邮寄发票--%><eidea:label
-                            key="cityre.mis.datavip.bill.postInvoiceFlag"/></td>
+                    <td class="control-label"><%--邮寄发票--%>邮寄发票:</td>
                     <td class="form-group"><select class="form-control" ng-model="postInvoiceFlag" ng-init="postInvoiceFlag='null'"><option value="null">请选择</option><option ng-repeat="option in falgList" value="{{option.key}}">{{option.value}}</option></select></td>
                     <td class="control-label"><%--收件类型--%><eidea:label key="cityre.mis.datavip.bill.postType"/></td>
                     <td class="form-group"><select class="form-control" ng-model="postTypeCode" ng-init="postTypeCode='null'"><option value="null">请选择</option>
@@ -50,7 +48,7 @@
                     </td>
                     <td class="control-label">
                         <button type="submit" class="btn"><eidea:label key="common.button.search"/></button>
-                        <a href="<c:url value ="/mis/datavip/bills/exportExl"/>" target="_blank">导出</a>
+                        <a href="<c:url value="/mis/datavip/bills/exportExl"/>" target="_blank">导出</a>
                     </td>
                 </tr>
             </table>
@@ -73,7 +71,7 @@
                     <th><%--支付金额--%><eidea:label key="cityre.mis.datavip.bill.productCost"/></th>
                     <th><%--是否支付--%><eidea:label key="cityre.mis.datavip.bill.payflag"/></th>
                     <th><%--支付时间--%><eidea:label key="cityre.mis.datavip.bill.payTime"/></th>
-                    <th><%--邮寄发票--%><eidea:label key="cityre.mis.datavip.bill.postInvoiceFlag"/></th>
+                    <th><%--邮寄发票--%>邮寄发票</th>
                     <th><%--发票类型--%><eidea:label key="cityre.mis.datavip.bill.invoiceType"/></th>
                     <th><%--发票抬头--%><eidea:label key="cityre.mis.datavip.bill.invoiceTitle"/></th>
                     <th><%--纳税人识别号--%><eidea:label key="cityre.mis.datavip.bills.invoicetaxno"/></th>
@@ -88,8 +86,8 @@
                     <th><%--发票号--%><eidea:label key="cityre.mis.datavip.bills.invoiceNo"/></th>
                     <th><%--开票日期--%><eidea:label key="cityre.mis.datavip.bills.kpInvoiceTime"/></th>
                     <th><%--用户类型--%><eidea:label key="cityre.mis.datavip.bills.usertype"/></th>
-                    <th><%--发票操作--%><eidea:label key="cityre.mis.datavip.invoice.operate"/></th>
-                    <th><%--服务操作--%><eidea:label key="cityre.mis.datavip.service.operate"/></th>
+                    <th><%--发票操作--%><eidea:label key="cityre.mis.datavip.service.operate"/></th>
+                    <th><%--服务操作--%><eidea:label key="cityre.mis.datavip.invoice.operate"/></th>
                 </tr>
                 </thead>
                 <tbody>
