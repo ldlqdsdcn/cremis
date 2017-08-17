@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cityre.mis.city.tradeProcess.dao.Qd_contractDao">
+
+
+    <sql id="Query_Where_Clause">
+        <where>
+             1 = 1
+            <if test="status != null">
+               <if test="status != '' and status != '-1'">
+                   and c.status = #{status}
+               </if>
+            </if>
+            <if test="phone != null and phone != ''">
+                and c.customerTel like #{phone}
+            </if>
+
+            <if test="startDate != null and startDate != '' ">
+                <![CDATA[   and c.bookTime  >= #{startDate} ]]>
+            </if>
+            <if test="endDate != null and endDate != '' ">
+                <![CDATA[   and c.bookTime  <= #{endDate} ]]>
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectQd_contractList" parameterType="java.util.Map" resultType="cn.cityre.mis.city.tradeProcess.entity.po.Qd_contract" >
+        select d.dist_name district, h.name ha,s.street_name street, p.stno stno,p.bldgarea bldgArea,p.floor floor,p.bheight height,f.price price,
+        c.id id,c.dealCode dealCode,c.originid originid,c.bldgno bldgno,c.unit unit,c.roomno roomno,c.status status,c.customerUID customerUID,c.customerName customerName,
+        c.customerTel customerTel, c.bookTime bookTime, c.agencyUID agencyUID,c.contractPrice contractPrice,c.agencyNote agencyNote,c.contractDate contractDate,c.contractTime contractTime,
+        c.bankUID bankUID,c.loanAmount loanAmount,c.bankNote bankNote,c.loanDate loanDate,c.loanTime loanTime,c.misUID misUID,c.misBankName misBankName,c.misLoanAmount misLoanAmount,
+        c.misLoanDate misLoanDate,c.misNote misNote,c.misTime misTime,c.updatetime updatetime
+        from qd_contract c left join qd_forsale f on c.dealCode = f.dealcode left join qd_prop p on f.propcode = p.propcode
+        left join district d on d.dist_code = p.distcode
+        left join ha_kindred h on p.ha = h.ha_code and h.kindred_cl_code = 'rn'
+        left join street_kindred s on p.streetcode = s.street_code and s.kindred_cl_code = 'rn'
+        <include refid="Query_Where_Clause" />
+        limit #{limitStart} ,  #{limitEnd}
+    </select>
+
+    <select id="selectQd_contractCount" parameterType="java.util.Map" resultType="java.lang.Integer" >
+        select count(c.id)   from qd_contract c
+        <include refid="Query_Where_Clause" />
+    </select>
+
+    <select id="selectBankConameFromCoCouser" parameterType="java.lang.String" resultType="java.lang.String">
+        select co.CoName CoName from co ,co_user us where co.cocode = us.cocode and us.UID = #{uid}
+    </select>
+    <select id="selectTelNoFromUser_tel"  parameterType="java.lang.String" resultType="java.lang.String">
+        select telNo from user_tel where uid = #{uid} order by regtime desc,id desc limit 1
+    </select>
+    <select id="selectAgentConameFromCoCouser1" parameterType="java.lang.String" resultType="java.lang.String">
+       select co.CoName CoName  from co,co_user us where co.cocl='BR' and co.cocode=us.cocode and us.setUID  is not null AND us.UID= #{uid}
+    </select>
+    <select id="selectAgentConameFromCoCouser2"  parameterType="java.lang.String" resultType="java.lang.String">
+        select co.CoName from co,co_user us where co.cocl='BR' and co.cocode=us.user_type AND us.UID =#{uid}
+    </select>
+    <select id="selectQd_historyCountByContractID"  parameterType="java.lang.Integer" resultType="java.lang.Integer">
+     select count(id) from qd_contract_history where contractID = #{id}
+    </select>
+    <insert id="insertQd_contract_history" parameterType = "java.util.Map"
+            useGeneratedKeys="true"
+            keyProperty="id">
+        insert into qd_contract_history
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="contractID != null">
+                contractID  ,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="userType != null">
+                userType,
+            </if>
+            <if test="bankName != null">
+                bankName,
+            </if>
+            <if test="updateTime != null">
+                updateTime,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="loanDate != null">
+                loanDate,
+            </if>
+            <if test="userName != null">
+                userName,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="contractID != null">
+                #{contractID},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="userType != null">
+                #{userType},
+            </if>
+            <if test="bankName != null">
+                #{bankName},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+            <if test="amount != null">
+                #{amount},
+            </if>
+            <if test="loanDate != null">
+                #{loanDate},
+            </if>
+            <if test="userName != null">
+                #{userName},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateQd_contractById" parameterType="java.util.Map">
+        update qd_contract
+        <set>
+            <if test="status != null ">
+                status = #{status} ,
+            </if>
+            <if test="bankname != null">
+                misBankName = #{bankname},
+            </if>
+            <if test="amount != null">
+                misLoanAmount = #{amount},
+            </if>
+            <if test="date != null">
+                misLoanDate = #{date},
+            </if>
+            <if test="sysuid != null">
+                misUID = #{sysuid},
+            </if>
+            <if test="misTime != null">
+                misTime = #{misTime},
+            </if>
+            <if test="district != null">
+                district = #{district},
+            </if>
+            <if test="street != null">
+                street = #{street},
+            </if>
+            <if test="stno != null">
+                stno = #{stno},
+            </if>
+            <if test="ha != null">
+                ha = #{ha},
+            </if>
+            <if test="bldgno != null">
+                bldgno = #{bldgno},
+            </if>
+            <if test="unit != null">
+                unit = #{unit},
+            </if>
+            <if test="roomno != null">
+                roomno = #{roomno},
+            </if>
+            <if test="unit != null">
+                unit = #{unit},
+            </if>
+            <if test="updatetime != null">
+                updatetime = #{updatetime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+
+    <select id="selectQd_contract_historyList" parameterType="java.lang.Integer" resultType="cn.cityre.mis.city.tradeProcess.entity.po.Qd_contract_history" >
+       select *  from qd_contract_history where contractID = #{id}
+        limit #{limitStart} ,  #{limitEnd}
+    </select>
+
+    <select id="selectQd_contract_historyCount" parameterType="java.lang.Integer" resultType="java.lang.Integer" >
+        select count(id) num  from qd_contract_history where contractID =#{id}
+    </select>
+
+    <select id="selectNameFromUser" parameterType="java.lang.String" resultType="java.lang.String" >
+       select name from sys_user where username = #{uid}
+    </select>
+</mapper>

@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cityre.mis.cityreaccount.datavip.dao.CartbillsMapper">
+    <resultMap id="BaseResultMap" type="cn.cityre.mis.cityreaccount.datavip.entity.CartBills">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="uid" jdbcType="VARCHAR" property="uid"/>
+        <result column="big_billcode" jdbcType="VARCHAR" property="bigBillcode"/>
+        <result column="alipay_bill_code" jdbcType="VARCHAR" property="alipayBillCode"/>
+        <result column="post_invoice_flag" jdbcType="INTEGER" property="postInvoiceFlag"/>
+        <result column="product_num" jdbcType="INTEGER" property="productNum"/>
+        <result column="product_cost" jdbcType="DOUBLE" property="productCost"/>
+        <result column="product_remark" jdbcType="VARCHAR" property="productRemark"/>
+        <result column="invoice_type" jdbcType="INTEGER" property="invoiceType"/>
+        <result column="invoice_title" jdbcType="VARCHAR" property="invoiceTitle"/>
+        <result column="post_user" jdbcType="VARCHAR" property="postUser"/>
+        <result column="post_type" jdbcType="VARCHAR" property="postType"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="tel" jdbcType="VARCHAR" property="tel"/>
+        <result column="addtime" jdbcType="TIMESTAMP" property="addTime"/>
+        <result column="updatetime" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="pay_flag" jdbcType="INTEGER" property="payFlag"/>
+        <result column="pay_updatetime" jdbcType="TIMESTAMP" property="payUpdateTime"/>
+        <result column="w_pay_type" jdbcType="VARCHAR" property="wPayType"/>
+        <result column="w_pay_user" jdbcType="VARCHAR" property="wPayUser"/>
+        <result column="w_pay_tel" jdbcType="VARCHAR" property="wPayTel"/>
+        <result column="invoice_taxno" jdbcType="VARCHAR" property="invoiceTaxNo"/>
+        <result column="invoice_adtel" jdbcType="VARCHAR" property="invoiceAdTel"/>
+        <result column="invoice_bankno" jdbcType="VARCHAR" property="invoiceBankNo"/>
+        <result column="source" jdbcType="INTEGER" property="source"/>
+        <result column="pkey" jdbcType="VARCHAR" property="pKey"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, uid, big_billcode, alipay_bill_code, post_invoice_flag, product_num, product_cost, 
+    product_remark, invoice_type, invoice_title, post_user, post_type, address, tel, 
+    addtime, updatetime, pay_flag, pay_updatetime, w_pay_type, w_pay_user, w_pay_tel, 
+    invoice_taxno, invoice_adtel, invoice_bankno, source, pkey
+  </sql>
+    <!--通过大订单号更新-->
+    <update id="updateByBigBillCode" parameterType="cn.cityre.mis.cityreaccount.datavip.entity.CartBills">
+        UPDATE cartbills
+        <set>
+            <if test="payUpdateTime!=null">
+                pay_update_time = #{payUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            pay_flag=1,
+        </set>
+        WHERE big_billcode=#{bigBillCode,jdbcType=VARCHAR}
+    </update>
+
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cartbills
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cartbills
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+    <insert id="insert" parameterType="cn.cityre.mis.cityreaccount.datavip.entity.CartBills" useGeneratedKeys="true" keyProperty="id"
+            keyColumn="id">
+        insert into cartbills
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="bigBillcode != null">
+                big_billcode,
+            </if>
+            <if test="alipayBillCode != null">
+                alipay_bill_code,
+            </if>
+            <if test="postInvoiceFlag != null">
+                post_invoice_flag,
+            </if>
+            <if test="productNum != null">
+                product_num,
+            </if>
+            <if test="productCost != null">
+                product_cost,
+            </if>
+            <if test="productRemark != null">
+                product_remark,
+            </if>
+            <if test="invoiceType != null">
+                invoice_type,
+            </if>
+            <if test="invoiceTitle != null">
+                invoice_title,
+            </if>
+            <if test="postUser != null">
+                post_user,
+            </if>
+            <if test="postType != null">
+                post_type,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="tel != null">
+                tel,
+            </if>
+            <if test="addtime != null">
+                addtime,
+            </if>
+            <if test="updatetime != null">
+                updatetime,
+            </if>
+            <if test="payFlag != null">
+                pay_flag,
+            </if>
+            <if test="payUpdatetime != null">
+                pay_updatetime,
+            </if>
+            <if test="wPayType != null">
+                w_pay_type,
+            </if>
+            <if test="wPayUser != null">
+                w_pay_user,
+            </if>
+            <if test="wPayTel != null">
+                w_pay_tel,
+            </if>
+            <if test="invoiceTaxno != null">
+                invoice_taxno,
+            </if>
+            <if test="invoiceAdtel != null">
+                invoice_adtel,
+            </if>
+            <if test="invoiceBankno != null">
+                invoice_bankno,
+            </if>
+            <if test="source != null">
+                source,
+            </if>
+            <if test="pkey != null">
+                pkey,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="bigBillcode != null">
+                #{bigBillcode,jdbcType=VARCHAR},
+            </if>
+            <if test="alipayBillCode != null">
+                #{alipayBillCode,jdbcType=VARCHAR},
+            </if>
+            <if test="postInvoiceFlag != null">
+                #{postInvoiceFlag,jdbcType=INTEGER},
+            </if>
+            <if test="productNum != null">
+                #{productNum,jdbcType=INTEGER},
+            </if>
+            <if test="productCost != null">
+                #{productCost,jdbcType=DOUBLE},
+            </if>
+            <if test="productRemark != null">
+                #{productRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="invoiceType != null">
+                #{invoiceType,jdbcType=INTEGER},
+            </if>
+            <if test="invoiceTitle != null">
+                #{invoiceTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="postUser != null">
+                #{postUser,jdbcType=VARCHAR},
+            </if>
+            <if test="postType != null">
+                #{postType,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="addtime != null">
+                #{addtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatetime != null">
+                #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="payFlag != null">
+                #{payFlag,jdbcType=INTEGER},
+            </if>
+            <if test="payUpdatetime != null">
+                #{payUpdatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="wPayType != null">
+                #{wPayType,jdbcType=VARCHAR},
+            </if>
+            <if test="wPayUser != null">
+                #{wPayUser,jdbcType=VARCHAR},
+            </if>
+            <if test="wPayTel != null">
+                #{wPayTel,jdbcType=VARCHAR},
+            </if>
+            <if test="invoiceTaxno != null">
+                #{invoiceTaxno,jdbcType=VARCHAR},
+            </if>
+            <if test="invoiceAdtel != null">
+                #{invoiceAdtel,jdbcType=VARCHAR},
+            </if>
+            <if test="invoiceBankno != null">
+                #{invoiceBankno,jdbcType=VARCHAR},
+            </if>
+            <if test="source != null">
+                #{source,jdbcType=INTEGER},
+            </if>
+            <if test="pkey != null">
+                #{pkey,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="cn.cityre.mis.cityreaccount.datavip.entity.CartBills">
+        update cartbills
+        <set>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="bigBillcode != null">
+                big_billcode = #{bigBillcode,jdbcType=VARCHAR},
+            </if>
+            <if test="alipayBillCode != null">
+                alipay_bill_code = #{alipayBillCode,jdbcType=VARCHAR},
+            </if>
+            <if test="postInvoiceFlag != null">
+                post_invoice_flag = #{postInvoiceFlag,jdbcType=INTEGER},
+            </if>
+            <if test="productNum != null">
+                product_num = #{productNum,jdbcType=INTEGER},
+            </if>
+            <if test="productCost != null">
+                product_cost = #{productCost,jdbcType=DOUBLE},
+            </if>
+            <if test="productRemark != null">
+                product_remark = #{productRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="invoiceType != null">
+                invoice_type = #{invoiceType,jdbcType=INTEGER},
+            </if>
+            <if test="invoiceTitle != null">
+                invoice_title = #{invoiceTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="postUser != null">
+                post_user = #{postUser,jdbcType=VARCHAR},
+            </if>
+            <if test="postType != null">
+                post_type = #{postType,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                tel = #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="addtime != null">
+                addtime = #{addtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatetime != null">
+                updatetime = #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="payFlag != null">
+                pay_flag = #{payFlag,jdbcType=INTEGER},
+            </if>
+            <if test="payUpdatetime != null">
+                pay_updatetime = #{payUpdatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="wPayType != null">
+                w_pay_type = #{wPayType,jdbcType=VARCHAR},
+            </if>
+            <if test="wPayUser != null">
+                w_pay_user = #{wPayUser,jdbcType=VARCHAR},
+            </if>
+            <if test="wPayTel != null">
+                w_pay_tel = #{wPayTel,jdbcType=VARCHAR},
+            </if>
+            <if test="invoiceTaxno != null">
+                invoice_taxno = #{invoiceTaxno,jdbcType=VARCHAR},
+            </if>
+            <if test="invoiceAdtel != null">
+                invoice_adtel = #{invoiceAdtel,jdbcType=VARCHAR},
+            </if>
+            <if test="invoiceBankno != null">
+                invoice_bankno = #{invoiceBankno,jdbcType=VARCHAR},
+            </if>
+            <if test="source != null">
+                source = #{source,jdbcType=INTEGER},
+            </if>
+            <if test="pkey != null">
+                pkey = #{pkey,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

@@ -2,7 +2,6 @@ package com.dsdl.eidea.core.dao.mybatis;
 
 import com.dsdl.eidea.base.entity.bo.UserBo;
 import com.dsdl.eidea.base.entity.po.ChangelogPo;
-import com.dsdl.eidea.base.entity.po.UserPo;
 import com.dsdl.eidea.core.dao.ChangeForLogDao;
 import com.dsdl.eidea.core.dao.util.ChangelogHelper;
 import com.dsdl.eidea.core.def.ChangeOperatorType;
@@ -38,7 +37,7 @@ public class ChangeForLogDaoMybatis implements ChangeForLogDao {
 
     private SessionFactory sessionFactory;
     @Autowired
-    private SqlSessionTemplate sqlSessionTemplate;
+    private SqlSessionTemplate sqlSessionTemplateCore;
     @Autowired(required = false)
     private HttpServletRequest request;
     private final Gson gson = new Gson();
@@ -141,7 +140,7 @@ public class ChangeForLogDaoMybatis implements ChangeForLogDao {
 
                 }
                 log.setTableId(table.getId());
-                sqlSessionTemplate.insert("com.dsdl.base.dao.sql.ChangelogMapper.insert", log);
+                sqlSessionTemplateCore.insert("com.dsdl.base.dao.sql.ChangelogMapper.insert", log);
             }
 
         } catch (Exception e) {

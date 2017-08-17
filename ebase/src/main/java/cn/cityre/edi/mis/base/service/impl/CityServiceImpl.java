@@ -7,18 +7,16 @@
 package cn.cityre.edi.mis.base.service.impl;
 
 import cn.cityre.edi.mis.base.dao.CityDao;
-import cn.cityre.edi.mis.base.util.DataSourceContextHolder;
-import cn.cityre.edi.mis.base.util.DataSourceEnum;
-import com.dsdl.eidea.core.spring.annotation.DataAccess;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import cn.cityre.edi.mis.base.entity.cpo.CityPo;
 import cn.cityre.edi.mis.base.service.CityService;
+import cn.cityre.edi.mis.base.util.DataSourceContextHolder;
+import cn.cityre.edi.mis.base.util.DataSourceEnum;
 import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.QueryParams;
-import com.googlecode.genericdao.search.SearchResult;
 import com.googlecode.genericdao.search.Search;
-import com.dsdl.eidea.core.dao.CommonDao;
+import com.googlecode.genericdao.search.SearchResult;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 

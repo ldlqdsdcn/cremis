@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cityre.mis.account.ifmanager.dao.MisEmailMapper">
+    <resultMap id="BaseResultType" type="cn.cityre.mis.account.ifmanager.entity.MisUserEmailPo">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="unionUid" property="unionUid" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="isVerified" property="isVerified" jdbcType="TINYINT"/>
+        <result column="isPrimary" property="isPrimary" jdbcType="TINYINT"/>
+        <result column="pinToken" property="pinToken" jdbcType="VARCHAR"/>
+        <result column="expireTime" property="expireTime" jdbcType="TIMESTAMP"/>
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="where_sql">
+        <where>
+            <if test="unionUid">
+            unionUid LIKE CONCAT("%",#{unionUid,jdbcType=VARCHAR},"%")
+            </if>
+        </where>
+    </sql>
+    <!--v2017_user_email：查，条件：用户全局唯一ID，暂定这些-->
+    <sql id="Base_Column">
+        unionUid,address,isVerified,isPrimary,pinToken,expireTime,createTime,updateTime
+    </sql>
+
+    <select id="selectByPage" resultMap="BaseResultType" parameterType="java.util.Map">
+        SELECT id,
+        <include refid="Base_Column"/>
+        FROM v2017_user_email
+        <if test="_parameter!=null">
+            <include refid="where_sql"/>
+        </if>
+    </select>
+
+    <select id="selectById" resultMap="BaseResultType" parameterType="java.lang.Integer">
+        select id,
+        <include refid="Base_Column"/>
+        from v2017_user_email
+        WHERE  id  = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByUid" resultMap="BaseResultType">
+        SELECT
+        <include refid="Base_Column"/>
+        FROM v2017_user_email
+        WHERE unionUid = #{unionUid}
+        <if test="isVerified!=null">
+            AND isVerified = #{isVerified}
+        </if>
+        <if test="isPrimary!=null">
+            AND isPrimary = #{isPrimary}
+        </if>
+        ORDER BY
+        isVerified DESC ,isPrimary DESC ,id DESC
+    </select>
+
+    <update id="updateByUid" parameterType="cn.cityre.mis.account.ifmanager.entity.MisUserEmailPo">
+        UPDATE v2017_user_email
+        <set>
+            <if test="isVerified!=null">
+                isVerified = #{isVerified}
+            </if>
+            <if test="isPrimary !=null">
+                isPrimary = #{isPrimary}
+            </if>
+            <if test="updateTime!=null">
+                updateTime = now()
+            </if>
+            <!--<choose>-->
+                <!--<when test="updateTime!=null">-->
+                    <!--updateTime = #{updateTime}-->
+                <!--</when>-->
+                <!--<otherwise>updateTime = now()</otherwise>-->
+            <!--</choose>-->
+    </set>
+        WHERE unionUid = #{unionUid}
+    </update>
+
+    <select id="selectEmailList" resultMap="BaseResultType">
+        SELECT id,
+        <include refid="Base_Column"/>
+        FROM v2017_user_email
+    </select>
+
+    <insert id="createEmail" parameterType="cn.cityre.mis.account.ifmanager.entity.MisUserEmailPo"
+        useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO v2017_user_email
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="unionUid!=null">
+                unionUid,
+            </if>
+            <if test="address!=null">
+                address,
+            </if>
+            <if test="isVerified!=null">
+                isVerified,
+            </if>
+            <if test="isPrimary!=null">
+                isPrimary,
+            </if>
+            <if test="pinToken!=null">
+                pinToken,
+            </if>
+                expireTime,
+                createTime,
+                updateTime,
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="unionUid!=null">
+                #{unionUid,jdbcType=VARCHAR},
+            </if>
+            <if test="address!=null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="isVerified!=null">
+             #{isVerified,jdbcType=TINYINT},
+            </if>
+            <if test="isPrimary!=null">
+                #{isPrimary,jdbcType = TINYINT},
+            </if>
+            <if test="pinToken!=null">
+               #{pinToken,jdbcType = VARCHAR},
+            </if>
+            <choose>
+                <when test="expireTime!=null">
+                    #{expireTime,jdbcType=TIMESTAMP},
+                </when>
+                <otherwise>
+--                     //当前时间加两周
+                    DATE_ADD(now(),INTERVAL 2 WEEK),
+                </otherwise>
+            </choose>
+            <choose>
+                <when test="createTime!=null">
+                     #{createTime,jdbcType=TIMESTAMP},
+                </when>
+                <otherwise>
+                    now(),
+                </otherwise>
+            </choose>
+            <choose>
+                <when test="updateTime!=null">
+                    #{updateTime,jdbcTyp=TIMESTAMP},
+                </when>
+                <otherwise>
+                    now(),
+                </otherwise>
+            </choose>
+        </trim>
+    </insert>
+
+    <!--更新-->
+    <update id="updateById" parameterType="cn.cityre.mis.account.ifmanager.entity.MisUserEmailPo">
+        UPDATE v2017_user_email
+        <set>
+          <if test="unionUid!=null">
+              unionUid = #{unionUid,jdbcType=VARCHAR},
+          </if>
+            <if test="address!=null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="isVerified!=null">
+                isVerified = #{isVerified,jdbcType=TINYINT},
+            </if>
+            <if test="isPrimary!=null">
+                isPrimary = #{isPrimary,jdbcType = TINYINT},
+            </if>
+            <if test="pinToken!=null">
+                pinToken = #{pinToken,jdbcType = VARCHAR},
+            </if>
+            <if test="expireTime!=null">
+                expireTime = #{expireTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime!=null">
+                updateTime = now()
+            </if>
+            <!--<choose>-->
+                <!--<when test="updateTime!=null">-->
+                    <!--updateTime = #{updateTime,jdbcType=TIMESTAMP},-->
+                <!--</when>-->
+                <!--<otherwise>updateTime = now(),</otherwise>-->
+            <!--</choose>-->
+        </set>
+        WHERE  id = #{id,jdbcType=INTEGER}
+    </update>
+    <!--从数据库删除-->
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        DELETE FROM v2017_user_email WHERE  id = #{id,jdbcType=INTEGER}
+    </delete>
+
+</mapper>

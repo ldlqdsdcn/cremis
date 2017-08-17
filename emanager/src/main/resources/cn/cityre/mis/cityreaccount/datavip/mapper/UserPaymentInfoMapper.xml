@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cityre.mis.cityreaccount.datavip.dao.UserPaymentInfoMapper">
+  <resultMap id="BaseResultMap" type="cn.cityre.mis.cityreaccount.datavip.entity.UserPaymentInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="suid" jdbcType="VARCHAR" property="suid" />
+    <result column="billcode" jdbcType="VARCHAR" property="billCode" />
+    <result column="account_name" jdbcType="VARCHAR" property="accountName" />
+    <result column="account_no" jdbcType="VARCHAR" property="accountNo" />
+    <result column="city_code" jdbcType="VARCHAR" property="cityCode" />
+    <result column="pay_type" jdbcType="VARCHAR" property="payType" />
+    <result column="pay_amount" jdbcType="DOUBLE" property="payAmount" />
+    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="flag" jdbcType="INTEGER" property="flag" />
+    <result column="confirm_uid" jdbcType="VARCHAR" property="confirmUid" />
+    <result column="confirm_time" jdbcType="TIMESTAMP" property="confirmTime" />
+    <result column="isource" jdbcType="VARCHAR" property="isource" />
+    <result column="plevel" jdbcType="INTEGER" property="pLevel" />
+    <result column="dist_code" jdbcType="VARCHAR" property="distCode" />
+    <result column="ha_code" jdbcType="VARCHAR" property="haCode" />
+    <result column="pgps" jdbcType="VARCHAR" property="pGps" />
+    <result column="dealtype" jdbcType="INTEGER" property="dealType" />
+    <result column="contentname" jdbcType="VARCHAR" property="contentName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, suid, billcode, account_name, account_no, city_code, pay_type, pay_amount, pay_time, 
+    start_time, end_time, add_time, remark, flag, confirm_uid, confirm_time, isource, 
+    plevel, dist_code, ha_code, pgps, dealtype, contentname
+  </sql>
+
+  <!--关闭服务需要-->
+  <select id="selectByBillCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT start_time,end_time FROM user_payment_info WHERE user_payment_info.billcode = #{billCode,jdbcType=VARCHAR}
+  </select>
+
+  <update id="updateByBillCode" parameterType="java.lang.String">
+    UPDATE user_payment_info SET end_time=now() WHERE billcode = #{billCode,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectBySuid" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM user_payment_info
+    WHERE suid = #{suid,jdbcType=VARCHAR}
+  </select>
+
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_payment_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_payment_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+
+  <insert id="insertSelective" parameterType="cn.cityre.mis.cityreaccount.datavip.entity.UserPaymentInfo" useGeneratedKeys="true"
+    keyColumn="id" keyProperty="id">
+    insert into user_payment_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="suid != null">
+        suid,
+      </if>
+      <if test="billCode != null">
+        billcode,
+      </if>
+      <if test="accountName != null">
+        account_name,
+      </if>
+      <if test="accountNo != null">
+        account_no,
+      </if>
+      <if test="cityCode != null">
+        city_code,
+      </if>
+      <if test="payType != null">
+        pay_type,
+      </if>
+      <if test="payAmount != null">
+        pay_amount,
+      </if>
+      <if test="payTime != null">
+        pay_time,
+      </if>
+        start_time,
+        end_time,
+        add_time,
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+      <if test="confirmUid != null">
+        confirm_uid,
+      </if>
+      <if test="confirmTime != null">
+        confirm_time,
+      </if>
+      <if test="isource != null">
+        isource,
+      </if>
+      <if test="pLevel != null">
+        plevel,
+      </if>
+      <if test="distCode != null">
+        dist_code,
+      </if>
+      <if test="haCode != null">
+        ha_code,
+      </if>
+      <if test="pGps != null">
+        pgps,
+      </if>
+      <if test="dealType != null">
+        dealtype,
+      </if>
+      <if test="contentName != null">
+        contentname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="suid != null">
+        #{suid,jdbcType=VARCHAR},
+      </if>
+      <if test="billCode != null">
+        #{billCode,jdbcType=VARCHAR},
+      </if>
+      <if test="accountName != null">
+        #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountNo != null">
+        #{accountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null">
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null">
+        #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="payAmount != null">
+        #{payAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="payTime != null">
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <choose>
+        <when test="startTime!=null">
+          #{startTime,jdbcType=TIMESTAMP},
+        </when>
+        <otherwise>now(),</otherwise>
+      </choose>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <choose>
+        <when test="addTime!=null">
+          #{addTime,jdbcType=TIMESTAMP},
+        </when>
+        <otherwise>now(),</otherwise>
+      </choose>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="confirmUid != null">
+        #{confirmUid,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmTime != null">
+        #{confirmTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isource != null">
+        #{isource,jdbcType=VARCHAR},
+      </if>
+      <if test="pLevel != null">
+        #{pLevel,jdbcType=INTEGER},
+      </if>
+      <if test="distCode != null">
+        #{distCode,jdbcType=VARCHAR},
+      </if>
+      <if test="haCode != null">
+        #{haCode,jdbcType=VARCHAR},
+      </if>
+      <if test="pGps != null">
+        #{pGps,jdbcType=VARCHAR},
+      </if>
+      <if test="dealType != null">
+        #{dealType,jdbcType=INTEGER},
+      </if>
+      <if test="contentName != null">
+        #{contentName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cityre.mis.cityreaccount.datavip.entity.UserPaymentInfo">
+    update user_payment_info
+    <set>
+      <if test="suid != null">
+        suid = #{suid,jdbcType=VARCHAR},
+      </if>
+      <if test="billcode != null">
+        billcode = #{billcode,jdbcType=VARCHAR},
+      </if>
+      <if test="accountName != null">
+        account_name = #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountNo != null">
+        account_no = #{accountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null">
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null">
+        pay_type = #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="payAmount != null">
+        pay_amount = #{payAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="payTime != null">
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <choose>
+        <when test="startTime!=null">
+          #{startTime.jdbcType=TIMESTAMP},
+        </when>
+        <otherwise>now(),</otherwise>
+      </choose>
+      <choose>
+        <when test="endTime!=null">
+          #{endTime,jdbcType=TIMESTAMP},
+        </when>
+        <otherwise>ADDDATE(now(),INTERVAL 1 YEAR )</otherwise>
+      </choose>
+      now(),
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="confirmUid != null">
+        confirm_uid = #{confirmUid,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmTime != null">
+        confirm_time = #{confirmTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isource != null">
+        isource = #{isource,jdbcType=VARCHAR},
+      </if>
+      <if test="plevel != null">
+        plevel = #{plevel,jdbcType=INTEGER},
+      </if>
+      <if test="distCode != null">
+        dist_code = #{distCode,jdbcType=VARCHAR},
+      </if>
+      <if test="haCode != null">
+        ha_code = #{haCode,jdbcType=VARCHAR},
+      </if>
+      <if test="pgps != null">
+        pgps = #{pgps,jdbcType=VARCHAR},
+      </if>
+      <if test="dealtype != null">
+        dealtype = #{dealtype,jdbcType=INTEGER},
+      </if>
+      <if test="contentname != null">
+        contentname = #{contentname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -15,15 +15,15 @@ import java.util.List;
 @Repository
 public class MessageDaoHibernate extends BaseDaoHibernate<MessagePo, String> implements MessageDao {
     @Autowired
-    private SqlSessionTemplate sqlSessionTemplate;
+    private SqlSessionTemplate sqlSessionTemplateCore;
 
     @Override
     public List<MsgUnion> selectLabelTrl(String lang) {
-        return sqlSessionTemplate.selectList("com.delmar.core.mybatis.sql.MessageAndLabelUnionMapper.selectLabelTrl", lang);
+        return sqlSessionTemplateCore.selectList("com.delmar.core.mybatis.sql.MessageAndLabelUnionMapper.selectLabelTrl", lang);
     }
 
     @Override
     public List<MsgUnion> selectMessageTrl(String lang) {
-        return sqlSessionTemplate.selectList("com.delmar.core.mybatis.sql.MessageAndLabelUnionMapper.selectMessageTrl", lang);
+        return sqlSessionTemplateCore.selectList("com.delmar.core.mybatis.sql.MessageAndLabelUnionMapper.selectMessageTrl", lang);
     }
 }

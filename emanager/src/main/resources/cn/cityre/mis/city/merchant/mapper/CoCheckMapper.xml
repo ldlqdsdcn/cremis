@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cityre.mis.city.merchant.dao.CoCheckDao">
+
+
+    <sql id="Query_Where_Clause">
+        <where>
+             certPhoto is not null
+            <if test="status != null">
+                <if test="status == 2 ">
+                    and (certification = 1 or certification = -1)
+                </if>
+                <if test="status != 2">
+                    and certification = #{status}
+                </if>
+            </if>
+            <if test="companyName != null and companyName != ''"> and CoName like #{companyName}</if>
+            <if test="subStartDate != null and subStartDate != ''">
+                <![CDATA[   and certPhoto_uploadtime >= #{subStartDate} ]]>
+
+            </if>
+            <if test="subEndDate != null and subEndDate != '' ">
+                <![CDATA[   and certPhoto_uploadtime <= #{subEndDate} ]]>
+            </if>
+            <if test="chkStartDate != null and chkStartDate != '' ">
+                <![CDATA[   and cocert_updatetime  >= #{chkStartDate} ]]>
+            </if>
+            <if test="chkEndDate != null and chkEndDate != '' ">
+                <![CDATA[   and cocert_updatetime  <= #{chkEndDate} ]]>
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectCoCheckList" parameterType="java.util.Map" resultType="cn.cityre.mis.city.merchant.entity.po.CoCheck" >
+       select * from co
+        <include refid="Query_Where_Clause" />
+        order by cocert_updatetime desc,id desc
+        limit #{limitStart} ,  #{limitEnd}
+    </select>
+
+    <select id="selectCoCheckCount" parameterType="java.util.Map" resultType="java.lang.Integer" >
+        select count(id) from co
+        <include refid="Query_Where_Clause" />
+    </select>
+    <update id="updateCoCheckAll" parameterType="java.util.Map" >
+        update co set certification 	=#{certification},cocert_updateuid=#{uid},cocert_updatetime= now()  where
+            id in
+            <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+    </update>
+    <update id="updateCoCheckOne" parameterType="java.util.Map" >
+        update co set certification =#{certification},cocert_updateuid=#{uid},cocert_updatetime= now()  where CoCode=#{cocode}
+    </update>
+    <select id="selectCoById" parameterType="java.lang.Integer" resultType="cn.cityre.mis.city.merchant.entity.po.CoCheck" >
+       select * from co where id = #{id}
+    </select>
+
+    <update id="updateCoByCoCode" parameterType="java.util.Map" >
+       update co set CoState=1,verifyuid=#{uid},verifytime=now(),costate_again = null where cocode = #{cocode}
+    </update>
+
+    <update id="updateCouserByUsertype" parameterType="java.lang.String" >
+      update co_user set cocode=user_type where user_type=#{cocode} and length(user_type)>2
+    </update>
+
+    <update id="updateCouserInnerCo" parameterType="java.lang.String" >
+        update co_user inner join co on co_user.cocode=co.cocode and co_user.uid=co.couid
+        set co_user.user_type=null,co_user.isadmin=1,co_user.setuid='admin',
+        co_user.setTime=now(),co_user.olservice=1,co_user.infoview=1,
+        co_user.infoupdate=1 where user_type=#{cocode} and length(user_type)>2
+    </update>
+
+    <select id="selectAdInnerCo" parameterType="java.lang.String" resultType="java.lang.String" >
+        select co.couid from ad inner join co on ad.uid=co.couid where cocode=#{cocode} and end_time>now()
+    </select>
+
+    <update id="updateAdByUidAndCocode" parameterType="java.util.Map" >
+        update ad set uid=#{cocode} where uid=#{couid} and end_time>now()
+    </update>
+
+    <select id="selectCoByCocode" parameterType="java.lang.String" resultType="cn.cityre.mis.city.merchant.entity.po.CoCheck" >
+        select * from co where cocode = #{cocode}
+    </select>
+
+    <update id="updateQd_forsale" parameterType="java.util.Map" >
+       update qd_forsale set source=#{cocode},offercls=1 where manageuid=#{couid}
+    </update>
+
+    <update id="updateQd_lease" parameterType="java.util.Map" >
+        update qd_lease set source=#{cocode},offercls=1 where manageuid=#{couid}
+    </update>
+
+    <select id="selectDealcodeFromQd_forsale" parameterType="java.lang.String" resultType="java.lang.String" >
+       select distinct dealcode from qd_forsale where manageuid=#{couid}
+    </select>
+
+    <select id="selectDealcodeFromQd_lease" parameterType="java.lang.String" resultType="java.lang.String" >
+        select distinct dealcode from qd_lease where manageuid=#{couid}
+    </select>
+
+    <select id="selectPro_fl_history" parameterType="java.util.Map" statementType="CALLABLE">
+         {call fl_history(#{type}, 3, #{dealcode})}
+    </select>
+
+    <select id="selectCoByCocodeCertification" parameterType="java.util.Map" resultType="cn.cityre.mis.city.merchant.entity.po.CoCheck" >
+        select * from co where cocode=#{cocode} and  certification=#{certification}
+    </select>
+    
+    <delete id="deleteCoByCocode" parameterType="java.lang.String">
+        delete from co where cocode=#{cocode}
+    </delete>
+    <delete id="deleteCo_matchinfoByCocode" parameterType="java.lang.String">
+        delete from co_matchinfo where source = #{cocode}
+    </delete>
+
+    <update id="updateCouidByCocode" parameterType="java.util.Map">
+        update co set couid =#{newuid} where cocode=#{cocode};
+    </update>
+
+
+</mapper>

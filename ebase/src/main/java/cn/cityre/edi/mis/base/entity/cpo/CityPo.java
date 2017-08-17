@@ -7,9 +7,10 @@
 */
 package cn.cityre.edi.mis.base.entity.cpo;
 
-import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.*;
 /**
 * table name base_cities
 *            行政区域地州市信息表
@@ -28,6 +29,12 @@ public class CityPo implements java.io.Serializable {
     **/
     @Column(name = "[city_code]", length = 20)
     private String cityid;
+
+    /**
+     * 城市id
+     **/
+    @Column(name = "[city_pinyin]", length = 50)
+    private String cityPinYin;
     /**
     * 城市名
     **/

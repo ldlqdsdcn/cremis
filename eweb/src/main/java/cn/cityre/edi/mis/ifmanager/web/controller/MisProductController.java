@@ -1,9 +1,9 @@
 package cn.cityre.edi.mis.ifmanager.web.controller;
 
 import cn.cityre.edi.mis.mis.web.util.SearchFieldHelper;
-import cn.cityre.mis.ifmanager.def.PlatformType;
-import cn.cityre.mis.ifmanager.entity.MisProductPo;
-import cn.cityre.mis.ifmanager.service.MisProductService;
+import cn.cityre.mis.account.ifmanager.def.PlatformType;
+import cn.cityre.mis.account.ifmanager.entity.MisProductPo;
+import cn.cityre.mis.account.ifmanager.service.MisProductService;
 import com.dsdl.eidea.base.web.vo.UserResource;
 import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.DeleteParams;
@@ -11,11 +11,9 @@ import com.dsdl.eidea.core.params.QueryParams;
 import com.dsdl.eidea.core.web.def.WebConst;
 import com.dsdl.eidea.core.web.result.JsonResult;
 import com.dsdl.eidea.core.web.result.def.ErrorCodes;
-import com.dsdl.eidea.core.web.util.SearchHelper;
 import com.dsdl.eidea.core.web.vo.PagingSettingResult;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.googlecode.genericdao.search.Search;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.mybatis.pagination.dto.datatables.SearchField;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -16,10 +16,10 @@ import java.util.List;
 @Repository
 public class SearchDaoHibernate  extends BaseDaoHibernate<SearchPo, Integer>  implements SearchDao {
     @Autowired
-    private SqlSessionTemplate sqlSessionTemplate;
+    private SqlSessionTemplate sqlSessionTemplateCore;
     @Override
     public List<CommonSearchResult> selectCommonList(CommonSearchParam commonSearchParam) {
-        return sqlSessionTemplate.selectList("com.delmar.core.mybatis.sql.SearchMapper.selectCommonList",commonSearchParam);
+        return sqlSessionTemplateCore.selectList("com.delmar.core.mybatis.sql.SearchMapper.selectCommonList",commonSearchParam);
     }
 
 }

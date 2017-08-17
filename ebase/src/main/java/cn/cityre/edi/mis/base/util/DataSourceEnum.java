@@ -14,7 +14,12 @@ public enum DataSourceEnum {
 	/**
 	 * 账号中心数据库信息
 	 */
-	account("dataSource_account");
+	account("dataSource_account"),
+
+	/**
+	 * 账号中心数据库信息
+	 */
+	core("dataSource_core");
 	
 	private String value;
 	

@@ -1,8 +1,8 @@
 package cn.cityre.edi.mis.ifmanager.web.controller;
 
 import cn.cityre.edi.mis.mis.web.util.SearchFieldHelper;
-import cn.cityre.mis.ifmanager.entity.MisUserEmailPo;
-import cn.cityre.mis.ifmanager.service.MisEmailService;
+import cn.cityre.mis.account.ifmanager.entity.MisUserEmailPo;
+import cn.cityre.mis.account.ifmanager.service.MisEmailService;
 import com.dsdl.eidea.base.web.vo.UserResource;
 import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.DeleteParams;
