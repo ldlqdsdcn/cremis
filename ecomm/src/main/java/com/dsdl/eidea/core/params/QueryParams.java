@@ -16,8 +16,12 @@ public class QueryParams implements Serializable {
      * 当前页 当 pageNo为-1的时候，进行统计页数count操作
      */
     private int pageNo = 0;
+
+
+
     /**
      * 页面显示记录数
+
      */
     private int pageSize = 15;
     /**
@@ -76,5 +80,28 @@ public class QueryParams implements Serializable {
             firstRow = 0;
         }
         return firstRow * pageSize;
+    }
+    public int getPageNo() {
+        return pageNo;
+    }
+
+    public void setPageNo(int pageNo) {
+        this.pageNo = pageNo;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public int getTotalRecords() {
+        return totalRecords;
+    }
+
+    public void setTotalRecords(int totalRecords) {
+        this.totalRecords = totalRecords;
     }
 }
