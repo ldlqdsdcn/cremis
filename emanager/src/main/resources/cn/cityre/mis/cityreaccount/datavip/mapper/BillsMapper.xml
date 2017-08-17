@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.cityre.mis.cityreaccount.datavip.dao.BillsMapper">
-    <resultMap id="BaseResultMap" type="cn.cityre.mis.datavip.entity.Bills">
+    <resultMap id="BaseResultMap" type="cn.cityre.mis.cityreaccount.datavip.entity.Bills">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="suid" jdbcType="VARCHAR" property="suid"/>
         <result column="big_billcode" jdbcType="VARCHAR" property="bigBillCode"/>

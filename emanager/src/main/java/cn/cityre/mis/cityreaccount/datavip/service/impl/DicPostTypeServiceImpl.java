@@ -18,9 +18,7 @@ public class DicPostTypeServiceImpl implements DicPostTypeService {
     private DicPostTypeMapper dicPostTypeMapper;
     @Override
     public List<DicPostType> getExistPostTypeList() {
-        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
         List<DicPostType> list = dicPostTypeMapper.selectAllPostType();
-        DataSourceContextHolder.setDbType("dataSource_core");
 
         return list;
     }

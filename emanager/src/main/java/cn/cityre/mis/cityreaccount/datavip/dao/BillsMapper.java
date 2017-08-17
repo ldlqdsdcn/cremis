@@ -1,7 +1,6 @@
-package cn.cityre.mis.datavip.dao;
+package cn.cityre.mis.cityreaccount.datavip.dao;
 
-import cn.cityre.mis.datavip.dto.SearchBillParams;
-import cn.cityre.mis.datavip.entity.Bills;
+import cn.cityre.mis.cityreaccount.datavip.entity.Bills;
 import org.apache.ibatis.annotations.Param;
 import org.mybatis.pagination.dto.PageMyBatis;
 import org.mybatis.pagination.dto.datatables.PagingCriteria;

@@ -32,15 +32,9 @@ public class ExlUtil {
 			e.printStackTrace();
 		}
 	    HttpHeaders headers = new HttpHeaders();  
-	    headers.setContentType(MediaType.APPLICATION_OCTET_STREAM); 
-	   
-	    /*try {
-	    	sheetName=URLEncoder.encode(sheetName,"UTF8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}*/
+	    headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 	    try {
-			sheetName=new String(sheetName.getBytes("UTF-8"),"iso-8859-1");
+			sheetName=new String(sheetName.getBytes("gbk"),"iso-8859-1");
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

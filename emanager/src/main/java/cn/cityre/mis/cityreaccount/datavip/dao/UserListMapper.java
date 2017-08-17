@@ -1,7 +1,6 @@
-package cn.cityre.mis.datavip.dao;
+package cn.cityre.mis.cityreaccount.datavip.dao;
 
-import cn.cityre.mis.datavip.dto.SearchParams;
-import cn.cityre.mis.datavip.entity.UserList;
+import cn.cityre.mis.cityreaccount.datavip.entity.UserList;
 import org.mybatis.pagination.dto.PageMyBatis;
 import org.mybatis.pagination.dto.datatables.PagingCriteria;
 import org.springframework.stereotype.Repository;

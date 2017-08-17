@@ -135,5 +135,13 @@ public class UserList implements java.io.Serializable {
     private Date startTime;
     @Transient
     private Date endTime;
+    @Transient
+    private String startTimeString;
+    @Transient
+    private String endTimeString;
+    @Transient
+    private String regTimeString;
+    @Transient
+    private String flagString;
 
 }

@@ -123,7 +123,7 @@
                         {{model.bills.cityCode}}
                     </td>
                     <td>
-                        {{model.bills.pLevel}}
+                       {{model.bills.pLevel}}
                     </td>
                     <td>
                         {{model.bills.contentName}}
