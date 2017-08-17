@@ -9,8 +9,8 @@ package cn.cityre.edi.mis.merchant.controller;
 import cn.cityre.edi.mis.base.entity.cpo.CityPo;
 import cn.cityre.edi.mis.base.util.CityDataSourceUtil;
 import cn.cityre.edi.mis.base.util.DataSourceContextHolder;
-import cn.cityre.mis.merchant.entity.po.CouserInfo;
-import cn.cityre.mis.merchant.service.CouserInfoService;
+import cn.cityre.mis.city.merchant.entity.po.CouserInfo;
+import cn.cityre.mis.city.merchant.service.CouserInfoService;
 import com.dsdl.eidea.base.entity.bo.UserBo;
 import com.dsdl.eidea.core.dto.EasyUIResult;
 import com.dsdl.eidea.core.web.controller.BaseController;
@@ -42,9 +42,9 @@ private CouserInfoService couserInfoService;
     @RequiresPermissions("view")
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
-    public EasyUIResult<CouserInfo> get(String usertype, String status, String certp, String permission, String regtimeStartDate,String regtimeEndDate,
-                                        String certtimeStartDate,String certtimeEndDate,String logintimeStartDate,String logintimeEndDate,String couseruid,
-                                        String username,String phone,String email,String coname,String order,boolean turn,
+    public EasyUIResult<CouserInfo> get(String usertype, String status, String certp, String permission, String regtimeStartDate, String regtimeEndDate,
+                                        String certtimeStartDate, String certtimeEndDate, String logintimeStartDate, String logintimeEndDate, String couseruid,
+                                        String username, String phone, String email, String coname, String order, boolean turn,
                                         EasyUiForm form)throws Exception {
         CityPo cityPo =(CityPo)session.getAttribute("currentCity");
         String citycode = cityPo.getCityid();

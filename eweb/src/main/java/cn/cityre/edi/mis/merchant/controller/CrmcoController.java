@@ -9,10 +9,10 @@ package cn.cityre.edi.mis.merchant.controller;
 import cn.cityre.edi.mis.base.entity.cpo.CityPo;
 import cn.cityre.edi.mis.base.util.CityDataSourceUtil;
 import cn.cityre.edi.mis.base.util.DataSourceContextHolder;
-import cn.cityre.mis.merchant.entity.po.CoUser;
-import cn.cityre.mis.merchant.entity.po.Cocl;
-import cn.cityre.mis.merchant.entity.po.Crmco;
-import cn.cityre.mis.merchant.service.CrmcoService;
+import cn.cityre.mis.city.merchant.entity.po.CoUser;
+import cn.cityre.mis.city.merchant.entity.po.Cocl;
+import cn.cityre.mis.city.merchant.entity.po.Crmco;
+import cn.cityre.mis.city.merchant.service.CrmcoService;
 import com.dsdl.eidea.base.entity.bo.UserBo;
 import com.dsdl.eidea.core.dto.EasyUIResult;
 import com.dsdl.eidea.core.web.controller.BaseController;
@@ -55,9 +55,9 @@ private CrmcoService crmcoService;
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
     public EasyUIResult<Crmco> get(String d1, String source, String certp, String copermission, String cocl, String cert_from,
-                                        String cert_to, String time_reg_from, String time_reg_to, String begin_time, String end_time,
-                                        String lastlogin_begin_time, String lastlogin_end_time, String couid, String Sconame, String cotel,
-                                        EasyUiForm form)throws Exception {
+                                   String cert_to, String time_reg_from, String time_reg_to, String begin_time, String end_time,
+                                   String lastlogin_begin_time, String lastlogin_end_time, String couid, String Sconame, String cotel,
+                                   EasyUiForm form)throws Exception {
         CityPo cityPo =(CityPo)session.getAttribute("currentCity");
         String citycode = cityPo.getCityid();
         String city_pinyin = cityPo.getCityPinYin();
@@ -190,7 +190,7 @@ private CrmcoService crmcoService;
     @RequiresPermissions("view")
     @RequestMapping(value = "/getCoManage", method = RequestMethod.POST)
     @ResponseBody
-    public List<CoUser> getCoManage(String cocode,String couid)throws Exception {
+    public List<CoUser> getCoManage(String cocode, String couid)throws Exception {
         CityPo cityPo =(CityPo)session.getAttribute("currentCity");
         String citycode = cityPo.getCityid();
         String citypinyin = cityPo.getCityPinYin();

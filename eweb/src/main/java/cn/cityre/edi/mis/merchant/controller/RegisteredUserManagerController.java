@@ -9,12 +9,12 @@ package cn.cityre.edi.mis.merchant.controller;
 import cn.cityre.edi.mis.base.entity.cpo.CityPo;
 import cn.cityre.edi.mis.base.util.CityDataSourceUtil;
 import cn.cityre.edi.mis.base.util.DataSourceContextHolder;
-import cn.cityre.mis.merchant.entity.po.CoInfo;
-import cn.cityre.mis.merchant.entity.po.Perdaycount;
-import cn.cityre.mis.merchant.entity.po.UserList;
-import cn.cityre.mis.merchant.service.CouserInfoService;
-import cn.cityre.mis.merchant.service.CrmcoService;
-import cn.cityre.mis.merchant.service.UserListService;
+import cn.cityre.mis.city.merchant.entity.po.CoInfo;
+import cn.cityre.mis.city.merchant.entity.po.Perdaycount;
+import cn.cityre.mis.city.merchant.entity.po.UserList;
+import cn.cityre.mis.city.merchant.service.CouserInfoService;
+import cn.cityre.mis.city.merchant.service.CrmcoService;
+import cn.cityre.mis.city.merchant.service.UserlistService;
 import com.dsdl.eidea.core.dto.EasyUIResult;
 import com.dsdl.eidea.core.web.controller.BaseController;
 import com.dsdl.eidea.util.EasyUiForm;
@@ -38,7 +38,7 @@ import java.util.Map;
 public class RegisteredUserManagerController extends BaseController {
 
     @Autowired
-    private UserListService userListService;
+    private UserlistService userListService;
     @Autowired
     private CouserInfoService couserInfoService;
     @Autowired

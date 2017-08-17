@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cityre.mis.cityreaccount.datavip.dao.UserListBackUpAddUserDmMapper">
+  <resultMap id="BaseResultMap" type="cn.cityre.mis.cityreaccount.datavip.entity.UserListBackUpAddUserDm">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="suid" jdbcType="VARCHAR" property="suid" />
+    <result column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="pwd" jdbcType="VARCHAR" property="pwd" />
+    <result column="username" jdbcType="VARCHAR" property="userName" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="regtime" jdbcType="TIMESTAMP" property="regTime" />
+    <result column="updateuid" jdbcType="VARCHAR" property="updateUid" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="user_type" jdbcType="VARCHAR" property="userType" />
+    <result column="pay_user" jdbcType="VARCHAR" property="payUser" />
+    <result column="pay_type" jdbcType="VARCHAR" property="payType" />
+    <result column="pay_tel" jdbcType="VARCHAR" property="payTel" />
+    <result column="pay_remark" jdbcType="VARCHAR" property="payRemark" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="flag" jdbcType="INTEGER" property="flag" />
+    <result column="checkuid" jdbcType="VARCHAR" property="checkUid" />
+    <result column="checktime" jdbcType="TIMESTAMP" property="checkTime" />
+  </resultMap>
+  <insert id="insert" parameterType="cn.cityre.mis.cityreaccount.datavip.entity.UserListBackUpAddUserDm">
+    insert into userlist_bak20130719_adduserdm (id, suid, uid, 
+      pwd, username, sex, 
+      regtime, updateuid, updatetime, 
+      email, user_type, pay_user, 
+      pay_type, pay_tel, pay_remark, 
+      remark, flag, checkuid, 
+      checktime)
+    values (#{id,jdbcType=INTEGER}, #{suid,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, 
+      #{pwd,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{regtime,jdbcType=TIMESTAMP}, #{updateuid,jdbcType=VARCHAR}, #{updatetime,jdbcType=TIMESTAMP}, 
+      #{email,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, #{payUser,jdbcType=VARCHAR}, 
+      #{payType,jdbcType=VARCHAR}, #{payTel,jdbcType=VARCHAR}, #{payRemark,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{flag,jdbcType=INTEGER}, #{checkuid,jdbcType=VARCHAR}, 
+      #{checktime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cityre.mis.cityreaccount.datavip.entity.UserListBackUpAddUserDm">
+    insert into userlist_bak20130719_adduserdm
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="suid != null">
+        suid,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="pwd != null">
+        pwd,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="regtime != null">
+        regtime,
+      </if>
+      <if test="updateuid != null">
+        updateuid,
+      </if>
+      <if test="updatetime != null">
+        updatetime,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="userType != null">
+        user_type,
+      </if>
+      <if test="payUser != null">
+        pay_user,
+      </if>
+      <if test="payType != null">
+        pay_type,
+      </if>
+      <if test="payTel != null">
+        pay_tel,
+      </if>
+      <if test="payRemark != null">
+        pay_remark,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+      <if test="checkuid != null">
+        checkuid,
+      </if>
+      <if test="checktime != null">
+        checktime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="suid != null">
+        #{suid,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null">
+        #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null">
+        #{regtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuid != null">
+        #{updateuid,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="payUser != null">
+        #{payUser,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null">
+        #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="payTel != null">
+        #{payTel,jdbcType=VARCHAR},
+      </if>
+      <if test="payRemark != null">
+        #{payRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="checkuid != null">
+        #{checkuid,jdbcType=VARCHAR},
+      </if>
+      <if test="checktime != null">
+        #{checktime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

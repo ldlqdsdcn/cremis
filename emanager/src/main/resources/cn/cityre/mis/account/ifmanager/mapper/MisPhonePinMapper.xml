@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cityre.mis.account.ifmanager.dao.MisPhonePinMapper">
+    <resultMap id="BaseResultMap" type="cn.cityre.mis.account.ifmanager.entity.MisPhonePinPo">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="pinToken" property="pinToken" jdbcType="VARCHAR"/>
+        <result column="pinCode" property="pinCode" jdbcType="VARCHAR"/>
+        <result column="action" property="action" jdbcType="VARCHAR"/>
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="expireTime" property="expireTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <!--v2017_phone_pin：查，条件：电话号码、操作，暂定这些-->
+    <sql id="Base_Column">
+         id,phone,pinToken,pinCode,action,createTime,expireTime
+    </sql>
+    <sql id="where_sql">
+        <where>
+            <if test="phone!=null">
+                phone = #{phone,jdbcType=VARCHAR}
+            </if>
+            <if test="action!=null">
+                v2017_phone_pin.action=#{action,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+    <select id="selectCount" resultType="java.lang.Integer">
+        SELECT
+        count(1)
+        FROM v2017_phone_pin
+        <if test="_parameter!=null">
+            <include refid="where_sql"></include>
+        </if>
+    </select>
+    <select id="selectByPage" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column"/>
+        FROM v2017_phone_pin
+        <if test="_parameter!=null">
+            <include refid="where_sql"></include>
+        </if>
+    </select>
+
+    <select id="selectByPhone" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column"/>
+        FROM v2017_phone_pin
+        WHERE phone = #{phone,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectAllList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column"/>
+        FROM v2017_phone_pin
+    </select>
+
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="Base_Column"/>
+        FROM v2017_phone_pin
+        WHERE id = #{id,jdbcType = INTEGER}
+    </select>
+
+    <insert id="createPhonePin" parameterType="cn.cityre.mis.account.ifmanager.entity.MisPhonePinPo" useGeneratedKeys="true"
+            keyProperty="id" keyColumn="id">
+        INSERT INTO v2017_phone_pin
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="phone!=null">
+                phone,
+            </if>
+            <if test="pinToken!=null">
+                pinToken,
+            </if>
+            <if test="pinCode!=null">
+                pinCode,
+            </if>
+            <if test="action!=null">
+                action,
+            </if>
+                createTime,
+                expireTime,
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="phone!=null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="pinToken!=null">
+                #{pinToken,jdbcType=VARCHAR},
+            </if>
+            <if test="pinCode!=null">
+                #{pinCode,jdbcType=VARCHAR},
+            </if>
+            <if test="action!=null">
+                #{action,jdbcType = VARCHAR},
+            </if>
+            <choose>
+                <when test="createTime!=null">
+                    #{createTime,jdbcType=TIMESTAMP},
+                </when>
+                <otherwise>now(),</otherwise>
+            </choose>
+            <choose>
+                <when test="expireTime!=null">
+                    #{expireTime,jdbcType=TIMESTAMP},
+                </when>
+                <otherwise>DATE_ADD(now(),INTERVAL 2 WEEK),</otherwise>
+            </choose>
+        </trim>
+    </insert>
+
+    <update id="updateById" parameterType="cn.cityre.mis.account.ifmanager.entity.MisPhonePinPo">
+        UPDATE v2017_phone_pin
+        <set>
+            <if test="phone!=null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="pinToken!=null">
+                pinToken =#{pinToken,jdbcType=VARCHAR},
+            </if>
+            <if test="action!=null">
+                action = #{action,jdbcType = VARCHAR},
+            </if>
+            <if test="expireTime!=null">
+                expireTime = #{expireTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        DELETE from v2017_phone_pin WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+</mapper>

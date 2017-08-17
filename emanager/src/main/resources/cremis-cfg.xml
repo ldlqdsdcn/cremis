@@ -12,8 +12,30 @@
 
     <!--dao与Mapper文件映射，，，-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="cn.cityre.mis.*.dao"/>
-        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="cn.cityre.mis.core.*.dao"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryCore"/>
+    </bean>
+    <!--dao与Mapper文件映射，，，-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="cn.cityre.mis.city.*.dao"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryCity"/>
     </bean>
 
+    <!--dao与Mapper文件映射，，，-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="cn.cityre.mis.center.*.dao"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryCenter"/>
+    </bean>
+
+    <!--dao与Mapper文件映射，，，-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="cn.cityre.mis.account.*.dao"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryAccount"/>
+    </bean>
+
+    <!--dao与Mapper文件映射，，，-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="cn.cityre.mis.cityreaccount.*.dao"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryCityreaccount"/>
+    </bean>
 </beans>

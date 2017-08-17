@@ -1,14 +1,14 @@
 package cn.cityre.edi.mis.datavip.web.controller;
 
-import cn.cityre.mis.datavip.entity.Bills;
-import cn.cityre.mis.datavip.entity.UserPaymentInfo;
-import cn.cityre.mis.datavip.entity.UserPaymentInfoHistory;
-import cn.cityre.mis.datavip.service.UserPaymentInfoHistoryService;
-import cn.cityre.mis.datavip.service.UserPaymentInfoService;
+
+import cn.cityre.mis.cityreaccount.datavip.entity.Bills;
+import cn.cityre.mis.cityreaccount.datavip.entity.UserPaymentInfo;
+import cn.cityre.mis.cityreaccount.datavip.entity.UserPaymentInfoHistory;
+import cn.cityre.mis.cityreaccount.datavip.service.UserPaymentInfoHistoryService;
+import cn.cityre.mis.cityreaccount.datavip.service.UserPaymentInfoService;
 import com.dsdl.eidea.base.web.vo.UserResource;
 import com.dsdl.eidea.core.web.def.WebConst;
 import com.dsdl.eidea.core.web.result.JsonResult;
-import com.dsdl.eidea.core.web.result.def.ErrorCodes;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

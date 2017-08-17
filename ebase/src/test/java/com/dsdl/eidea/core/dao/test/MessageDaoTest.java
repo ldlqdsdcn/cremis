@@ -7,7 +7,6 @@ import org.apache.ibatis.session.RowBounds;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mybatis.pagination.PaginationInterceptor;
 import org.mybatis.pagination.dto.PageMyBatis;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,18 +23,18 @@ import java.util.List;
 @Slf4j
 public class MessageDaoTest {
     @Autowired
-    private SqlSessionTemplate sqlSessionTemplate;
+    private SqlSessionTemplate sqlSessionTemplateCore;
     @Autowired
     private MessageDao messageDao;
     @Test
     public void testMybatisPaging()
     {
-        PageMyBatis<MsgUnion> msgUnionList= (PageMyBatis) sqlSessionTemplate.selectList("com.delmar.core.mybatis.sql.MessageAndLabelUnionMapper.selectLabelTrl","zh_CN",new RowBounds(1,20));
+        PageMyBatis<MsgUnion> msgUnionList= (PageMyBatis) sqlSessionTemplateCore.selectList("com.delmar.core.mybatis.sql.MessageAndLabelUnionMapper.selectLabelTrl","zh_CN",new RowBounds(1,20));
 
         System.out.println(msgUnionList.getTotal());
         System.out.println(msgUnionList.size());
         Assert.assertEquals(msgUnionList.size(),20);
-        List list= sqlSessionTemplate.selectList("com.delmar.core.mybatis.sql.MessageAndLabelUnionMapper.selectLabelTrl","zh_CN");
+        List list= sqlSessionTemplateCore.selectList("com.delmar.core.mybatis.sql.MessageAndLabelUnionMapper.selectLabelTrl","zh_CN");
         log.debug("list.size()="+list.size());
         log.debug(list.getClass().getName());
         log.debug("end-----------");

@@ -9,8 +9,8 @@ package cn.cityre.edi.mis.merchant.controller;
 import cn.cityre.edi.mis.base.entity.cpo.CityPo;
 import cn.cityre.edi.mis.base.util.CityDataSourceUtil;
 import cn.cityre.edi.mis.base.util.DataSourceContextHolder;
-import cn.cityre.mis.merchant.entity.po.Headportrait;
-import cn.cityre.mis.merchant.service.HeadportraitService;
+import cn.cityre.mis.city.merchant.entity.po.Headportrait;
+import cn.cityre.mis.city.merchant.service.HeadportraitService;
 import com.dsdl.eidea.base.entity.bo.UserBo;
 import com.dsdl.eidea.core.dto.EasyUIResult;
 import com.dsdl.eidea.core.web.controller.BaseController;
@@ -41,7 +41,7 @@ private HeadportraitService headportraitService;
     @RequiresPermissions("view")
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
-    public EasyUIResult<Headportrait> get(String uid,String phone,String status,String headType, String startDate, String endDate, EasyUiForm form)throws Exception {
+    public EasyUIResult<Headportrait> get(String uid, String phone, String status, String headType, String startDate, String endDate, EasyUiForm form)throws Exception {
         CityPo cityPo =(CityPo)session.getAttribute("currentCity");
         String citycode = cityPo.getCityid();
         String city_pinyin = cityPo.getCityPinYin();

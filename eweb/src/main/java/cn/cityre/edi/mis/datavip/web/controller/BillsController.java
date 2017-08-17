@@ -1,21 +1,21 @@
 package cn.cityre.edi.mis.datavip.web.controller;
 
-import cn.cityre.mis.datavip.Excel.BillsHeader;
-import cn.cityre.mis.datavip.del.BillFlagDef;
-import cn.cityre.mis.datavip.del.InvoiceFlag;
-import cn.cityre.mis.datavip.del.InvoiceState;
-import cn.cityre.mis.datavip.del.InvoiceType;
-import cn.cityre.mis.datavip.dto.SearchBillParams;
-import cn.cityre.mis.datavip.dto.SearchParams;
-import cn.cityre.mis.datavip.entity.Bills;
-import cn.cityre.mis.datavip.entity.DicPayType;
-import cn.cityre.mis.datavip.entity.DicPostType;
-import cn.cityre.mis.datavip.entity.UserPaymentInfo;
-import cn.cityre.mis.datavip.service.BillsService;
-import cn.cityre.mis.datavip.service.DicPayTypeService;
-import cn.cityre.mis.datavip.service.DicPostTypeService;
-import cn.cityre.mis.datavip.service.UserPaymentInfoService;
-import cn.cityre.mis.datavip.util.ExlUtil;
+
+import cn.cityre.mis.cityreaccount.datavip.Excel.BillsHeader;
+import cn.cityre.mis.cityreaccount.datavip.del.BillFlagDef;
+import cn.cityre.mis.cityreaccount.datavip.del.InvoiceFlag;
+import cn.cityre.mis.cityreaccount.datavip.del.InvoiceState;
+import cn.cityre.mis.cityreaccount.datavip.del.InvoiceType;
+import cn.cityre.mis.cityreaccount.datavip.dto.SearchBillParams;
+import cn.cityre.mis.cityreaccount.datavip.entity.Bills;
+import cn.cityre.mis.cityreaccount.datavip.entity.DicPayType;
+import cn.cityre.mis.cityreaccount.datavip.entity.DicPostType;
+import cn.cityre.mis.cityreaccount.datavip.entity.UserPaymentInfo;
+import cn.cityre.mis.cityreaccount.datavip.service.BillsService;
+import cn.cityre.mis.cityreaccount.datavip.service.DicPayTypeService;
+import cn.cityre.mis.cityreaccount.datavip.service.DicPostTypeService;
+import cn.cityre.mis.cityreaccount.datavip.service.UserPaymentInfoService;
+import cn.cityre.mis.cityreaccount.datavip.util.ExlUtil;
 import com.dsdl.eidea.base.entity.bo.UserBo;
 import com.dsdl.eidea.base.service.UserService;
 import com.dsdl.eidea.base.web.vo.UserResource;
@@ -40,12 +40,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.List;
 
 /**
  * Created by cityre on 2017/8/2.

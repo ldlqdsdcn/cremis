@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cityre.mis.city.merchant.dao.HeadportraitDao">
+
+
+    <sql id="Query_Where_reguser">
+        <where>
+            u.headportrait is not null and u.uid not in (select uid from co_user)
+        <if test="status != null ">
+                <if test="status == 0 ">
+                    and (u.headportrait_flag = null  or u.headportrait_flag =  0)
+                </if>
+                <if test="status == 1 or status == -1">
+                    and u.headportrait_flag = #{status}
+                </if>
+            </if>
+
+            <if test="startDate != null and startDate != ''">
+                <![CDATA[   and u.headportrait_uploadtime >=#{startDate}]]>
+            </if>
+            <if test="endDate != null and endDate != '' ">
+                <![CDATA[   and u.headportrait_uploadtime <= #{endDate} ]]>
+            </if>
+
+            <if test="phone != null and phone != ''">
+                and t.telNo like #{phone}
+            </if>
+
+        </where>
+    </sql>
+
+    <select id="selectHeadportraitList_reguser" parameterType="java.util.Map" resultType="cn.cityre.mis.city.merchant.entity.po.Headportrait" >
+        select u.id as id,u.headportrait  as imagefile,u.headportrait_flag as flag,'reguser' as headtype,u.uid as uid,u.headportrait_uploadtime as uploadtime
+        from userlist u left join user_tel t on u.UID = t.UID
+        <include refid="Query_Where_reguser" />
+        order by u.headportrait_updatetime desc
+        limit #{limitStart} ,  #{limitEnd}
+    </select>
+
+    <select id="selectHeadportraitCount_reguser" parameterType="java.util.Map" resultType="java.lang.Integer" >
+        select count(u.id) from userlist u left join user_tel t on u.UID = t.UID
+        <include refid="Query_Where_reguser" />
+    </select>
+
+
+    <sql id="Query_Where_co">
+        <where>
+            coimagefile is not null
+            <if test="status != null">
+                <if test="status == 0 ">
+                    and (coimagefile_flag = null  or coimagefile_flag =  0)
+                </if>
+                <if test="status == 1 or status == -1">
+                    and coimagefile_flag = #{status}
+                </if>
+            </if>
+
+            <if test="startDate != null and startDate != ''">
+                <![CDATA[   and coimagefile_uploadtime >=#{startDate}]]>
+            </if>
+            <if test="endDate != null and endDate != '' ">
+                <![CDATA[   and coimagefile_uploadtime <= #{endDate} ]]>
+            </if>
+            <if test="phone != null and phone != ''">
+                and CoTel like #{phone}
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectHeadportraitList_co" parameterType="java.util.Map" resultType="cn.cityre.mis.city.merchant.entity.po.Headportrait" >
+        select id,coimagefile as imagefile,coimagefile_flag as flag,
+        'co' as headtype,cocode,coname,coimagefile_uploadtime as uploadtime
+        from co
+        <include refid="Query_Where_co" />
+        order by id desc
+        limit #{limitStart} ,  #{limitEnd}
+    </select>
+
+    <select id="selectHeadportraitCount_co" parameterType="java.util.Map" resultType="java.lang.Integer" >
+        select count(id) from co
+        <include refid="Query_Where_co" />
+    </select>
+
+
+
+    <sql id="Query_Where_couser">
+        <where>
+            u.headportrait is not null and u.uid in (select uid from co_user)
+            <if test="status != null">
+                <if test="status == 0 ">
+                    and (u.headportrait_flag = null  or u.headportrait_flag =  0)
+                </if>
+                <if test="status == 1 or status == -1">
+                    and u.headportrait_flag = #{status}
+                </if>
+            </if>
+
+            <if test="startDate != null and startDate != ''">
+                <![CDATA[   and u.headportrait_updatetime >=#{startDate}]]>
+            </if>
+            <if test="endDate != null and endDate != '' ">
+                <![CDATA[   and u.headportrait_updatetime <= #{endDate} ]]>
+            </if>
+            <if test="phone != null and phone != ''">
+                and t.telNo like #{phone}
+            </if>
+            <if test="uid != null and uid != ''">
+                and u.UID = #{uid}
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectHeadportraitList_couser" parameterType="java.util.Map" resultType="cn.cityre.mis.city.merchant.entity.po.Headportrait" >
+        select u.id as id,u.headportrait as imagefile,u.headportrait_flag as flag,'couser' as headtype,u.uid as uid ,u.headportrait_uploadtime as uploadtime from userlist u
+        left join user_tel  t on u.UID = t.UID
+        <include refid="Query_Where_couser" />
+        order by u.headportrait_updatetime desc
+        limit #{limitStart} ,  #{limitEnd}
+    </select>
+
+    <select id="selectHeadportraitCount_couser" parameterType="java.util.Map" resultType="java.lang.Integer" >
+        select count(u.id) from userlist u left join user_tel t on u.UID = t.UID
+        <include refid="Query_Where_couser" />
+    </select>
+    
+    <update id="updateHeadportrait_user" parameterType="java.util.Map">
+        update userlist set headportrait_flag=#{flag},headportrait_updateuid=#{uid},headportrait_updatetime=now() where id=#{id}
+    </update>
+
+    <update id="updateHeadportrait_co" parameterType="java.util.Map">
+        update co set coimagefile_flag=#{flag},coimagefile_updateuid=#{uid},coimagefile_updatetime=now() where id=#{id}
+    </update>
+
+    <update id="updateHeadportraitAll_user" parameterType="java.util.Map" >
+        update userlist set headportrait_flag 	=#{certification},headportrait_updateuid=#{uid},headportrait_updatetime= now()  where
+        id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <update id="updateHeadportraitAll_co" parameterType="java.util.Map" >
+        update co set coimagefile_flag 	=#{certification},coimagefile_updateuid=#{uid},coimagefile_updatetime= now()  where
+        id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+</mapper>

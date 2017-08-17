@@ -1,18 +1,15 @@
 package cn.cityre.edi.mis.datavip.web.controller;
 
-import cn.cityre.edi.mis.mis.web.util.SearchFieldHelper;
-import cn.cityre.mis.datavip.Excel.BillsHeader;
-import cn.cityre.mis.datavip.Excel.InvoiceTypeHeader;
-import cn.cityre.mis.datavip.del.BillFlagDef;
-import cn.cityre.mis.datavip.dto.SearchParams;
-import cn.cityre.mis.datavip.entity.Bills;
-import cn.cityre.mis.datavip.entity.DicUserType;
-import cn.cityre.mis.datavip.entity.UserList;
-import cn.cityre.mis.datavip.service.DicUserTypeService;
-import cn.cityre.mis.datavip.service.UserListService;
-import cn.cityre.mis.datavip.util.ExlUtil;
-import cn.cityre.mis.ifmanager.entity.MisUserPo;
-import cn.cityre.mis.ifmanager.service.MisUserService;
+
+import cn.cityre.mis.account.ifmanager.service.MisUserService;
+import cn.cityre.mis.cityreaccount.datavip.Excel.InvoiceTypeHeader;
+import cn.cityre.mis.cityreaccount.datavip.del.BillFlagDef;
+import cn.cityre.mis.cityreaccount.datavip.dto.SearchParams;
+import cn.cityre.mis.cityreaccount.datavip.entity.DicUserType;
+import cn.cityre.mis.cityreaccount.datavip.entity.UserList;
+import cn.cityre.mis.cityreaccount.datavip.service.DicUserTypeService;
+import cn.cityre.mis.cityreaccount.datavip.service.UserListService;
+import cn.cityre.mis.cityreaccount.datavip.util.ExlUtil;
 import com.dsdl.eidea.base.web.vo.UserResource;
 import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.QueryParams;
@@ -22,7 +19,6 @@ import com.dsdl.eidea.core.web.vo.PagingSettingResult;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.mybatis.pagination.dto.datatables.SearchField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -35,7 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
 
 /**
  * Created by cityre on 2017/8/9.

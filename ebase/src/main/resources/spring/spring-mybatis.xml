@@ -2,35 +2,78 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
     <!--注：MyBatis不支持事务-->
-    <!--
-<bean id="sqlMapClient"
-    class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
-    <property name="configLocation">
-        <value>classpath:SqlMapConfig.xml</value>
-    </property>
-    <property name="dataSource">
-        <ref bean="dataSource" />
-    </property>
-</bean>
- -->
+
     <!-- Session工厂 -->
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <!--城市库-->
+    <bean id="sqlSessionFactoryCity" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dynamicDataSource"/>
+        <!-- mybatis配置文件 -->
+        <property name="mapperLocations" value="classpath:cn/cityre/mis/city/*/mapper/*Mapper.xml" />
+    </bean>
+    <!-- 配置SqlSessionTemplate -->
+    <bean id="sqlSessionTemplateCity" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
+        <constructor-arg index="0" ref="sqlSessionFactoryCity"/>
+    </bean>
+
+    <!--中心库-->
+    <bean id="sqlSessionFactoryCenter" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource_center"/>
+        <!-- mybatis配置文件 -->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <property name="mapperLocations">
+            <list>
+                <value>classpath*:cn.cityre.mis.center.*.mapper/*Mapper.xml</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="sqlSessionTemplateCenter" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
+        <constructor-arg index="0" ref="sqlSessionFactoryCenter"/>
+    </bean>
+
+    <!--mis库-->
+    <bean id="sqlSessionFactoryCore" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource_core"/>
         <!-- mybatis配置文件 -->
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
         <property name="mapperLocations">
             <list>
                 <value>classpath*:com/dsdl/**/*Mapper.xml</value>
-                <value>classpath*:cn.cityre.mis.*.mapper/*Mapper.xml</value>
+                <value>classpath*:cn.cityre.mis.core.*.mapper/*Mapper.xml</value>
             </list>
         </property>
     </bean>
+    <bean id="sqlSessionTemplateCore" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
+        <constructor-arg index="0" ref="sqlSessionFactoryCore"/>
+    </bean>
 
+<!--账号库-->
+    <bean id="sqlSessionFactoryAccount" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource_account"/>
+        <!-- mybatis配置文件 -->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <property name="mapperLocations">
+            <list>
+                <value>classpath*:cn.cityre.mis.account.*.mapper/*Mapper.xml</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="sqlSessionTemplateAccount" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
+        <constructor-arg index="0" ref="sqlSessionFactoryAccount"/>
+    </bean>
 
-    
-    <!-- 配置SqlSessionTemplate -->
-    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
-        <constructor-arg index="0" ref="sqlSessionFactory"/>
+<!--旧账号库-->
+    <bean id="sqlSessionFactoryCityreaccount" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource_cityreaccount"/>
+        <!-- mybatis配置文件 -->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <property name="mapperLocations">
+            <list>
+                <value>classpath*:cn.cityre.mis.cityreaccount.*.mapper/*Mapper.xml</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="sqlSessionTemplateCityreaccount" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
+        <constructor-arg index="0" ref="sqlSessionFactoryCityreaccount"/>
     </bean>
 
 </beans>
