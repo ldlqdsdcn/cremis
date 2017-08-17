@@ -161,10 +161,9 @@
 
 
     <bean id="dynamicDataSource" class="cn.cityre.edi.mis.base.util.DynamicDataSource">
-        <property name="defaultTargetDataSource" ref="dataSource_core"/>
+
         <property name="targetDataSources">
             <map>
-                <entry key="dataSource_core" value-ref="dataSource_core"/>
             </map>
         </property>
     </bean>
