@@ -68,7 +68,7 @@
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
         <property name="mapperLocations">
             <list>
-                <value>classpath*:cn.cityre.mis.cityreaccount.*.mapper/*Mapper</value>
+                <value>classpath*:cn/cityre/mis/cityreaccount/**/mapper/*Mapper.xml</value>
             </list>
         </property>
     </bean>

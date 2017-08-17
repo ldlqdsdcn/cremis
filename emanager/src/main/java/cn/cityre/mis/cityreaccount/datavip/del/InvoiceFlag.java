@@ -4,7 +4,7 @@ package cn.cityre.mis.cityreaccount.datavip.del;
  * Created by cityre on 2017/8/16.
  */
 public enum InvoiceFlag {
-    YES(1,"是"),NO(0,"否"),NULL(null,null);
+    YES(1,"是"),NO(0,"否");
     private Integer key;
     private String value;
 

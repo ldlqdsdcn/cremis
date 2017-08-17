@@ -165,7 +165,6 @@ public class BillsController {
     @RequiresPermissions(value = "view")
     public JsonResult<List<DicPayType>> getPayType() {
         List<DicPayType> list = dicPayTypeService.getExistAllType();
-        list.add(null);
         return JsonResult.success(list);
     }
 
@@ -175,7 +174,6 @@ public class BillsController {
     @RequiresPermissions(value = "view")
     public JsonResult<List<DicPostType>> getPostType() {
         List<DicPostType> list = dicPostTypeService.getExistPostTypeList();
-        list.add(null);
         return JsonResult.success(list);
     }
 
