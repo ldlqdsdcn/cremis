@@ -6,6 +6,8 @@ import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.*;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,6 +21,7 @@ import java.util.Map.Entry;
  */
 public class DynamicCreateDataSourceBean implements ApplicationContextAware, ApplicationListener {
     private String filename = "/datasource/city.properties";
+    private static final String DATABASE_PROP_FILE = "database.properties";
     private ConfigurableApplicationContext app;
 
     private DynamicDataSource dynamicDataSource;
@@ -146,8 +149,28 @@ public class DynamicCreateDataSourceBean implements ApplicationContextAware, App
             dsi.password = passwordExpression.split("=")[1];
             mds.put(dbname, dsi);
         }
-
+        Resource fileResource = new ClassPathResource(DATABASE_PROP_FILE);
+        InputStream inputStream = fileResource.getInputStream();
+        Properties properties = new Properties();
+        properties.load(inputStream);
+        inputStream.close();
+//        center.url=jdbc:mysql://10.11.10.34:3307/cityre_center?user=liudalei&password=liudalei_2017&autoReconnect=true&characterEncoding=utf8
+//        cityreaccount.url
+        mds.put("dataSource_center", addDataSourceInfo("center", properties));
+        mds.put("dataSource_account", addDataSourceInfo("useraccount_center", properties));
+        mds.put("dataSource_cityreaccount", addDataSourceInfo("cityre_center", properties));
         return mds;
+    }
+
+    DataSourceInfo addDataSourceInfo(String dbCode, Properties prop) {
+        String url = prop.getProperty("jdbc." + dbCode + ".connection.url");
+        String username = prop.getProperty("jdbc." + dbCode+ ".connection.username");
+        String password = prop.getProperty("jdbc." + dbCode + ".connection.password");
+        DataSourceInfo dsi = new DataSourceInfo();
+        dsi.connUrl = url;
+        dsi.userName = username;
+        dsi.password = password;
+        return dsi;
     }
 
     //  自定义数据结构  
