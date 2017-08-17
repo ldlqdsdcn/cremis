@@ -24,6 +24,7 @@
     <context:component-scan base-package="cn.cityre.edi.**.service"/>
     <context:component-scan base-package="cn.cityre.edi.**.dao"/>
     <context:component-scan base-package="com.dsdl.eidea.core.web.converter"/>
+    <context:component-scan base-package="cn.cityre.edi.mis.base.util"/>
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="order" value="1"/>
         <property name="locations">
@@ -32,6 +33,7 @@
                 <value>classpath:cityre_center_database.properties</value>
                 <value>classpath:mail.properties</value>
                 <value>classpath:mongodb-config.properties</value>
+                <value>classpath:imgURL.properties</value>
             </list>
         </property>
     </bean>

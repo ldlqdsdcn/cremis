@@ -19,7 +19,7 @@ PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN"
 </environment>
 </environments>
  -->
- <settings><setting name="logImpl" value="LOG4J"/></settings>
+ <settings><setting name="logImpl" value="STDOUT_LOGGING"/></settings>
  <plugins>
   <plugin interceptor="org.mybatis.pagination.PaginationInterceptor">
    <property name="dbms" value="mysql"/>
