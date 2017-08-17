@@ -71,6 +71,9 @@ public class UserListServiceImpl implements UserListService {
         return paginationResult;
     }
 
+
+
+
     @Override
     public UserList getExistUserListBySuid(String suid) {
         DataSourceContextHolder.setDbType("dataSource_cityreaccount");
