@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="/favicon.ico">
     <!-- Bootstrap -->
     <link href="<c:url value="/css/bootstrap/bootstrap.min.css"/>" rel="stylesheet">
-    <link href="<c:url value="/css/bootstrap/bootstrap-theme.min.css"/>"  rel="stylesheet"/>
+    <link href="<c:url value="/css/bootstrap/bootstrap-theme.min.css"/>" rel="stylesheet"/>
     <!-- Font Awesome -->
     <link href="<c:url value="/css/font-awesome.min.css"/>" rel="stylesheet">
     <!-- NProgress -->
@@ -42,54 +42,60 @@
 </head>
 
 <body class="login" ng-app="loginApp">
-    <div ng-controller="loginCtrl">
-      <div class="login_wrapper">
+<div ng-controller="loginCtrl">
+    <div class="login_wrapper">
         <div class="animate form login_form">
-          <section class="login_content">
-              <div class="text-center center-margin">
-                  <img src="http://www.cityre.cn/images/img2017/logo_cityre2017.png">
-              </div>
-            <form class="form-horizontal" name="loginForm" novalidate="novalidate" ng-submit="submit();"
-                  ng-submit-force="true">
+            <section class="login_content">
+                <div class="text-center center-margin">
+                    <img src="http://www.cityre.cn/images/img2017/logo_cityre2017.png">
+                </div>
+                <form class="form-horizontal" name="loginForm" novalidate="novalidate" ng-submit="submit();"
+                      ng-submit-force="true">
 
-                <h1><eidea:label key="login.title"/></h1>
-              <div class="form-group">
-                <input type="text" class="form-control" id="username" name="username" ng-model="loginBo.username" placeholder="<eidea:label key="login.userName"/>">
-              </div>
-              <div class="form-group has-feedback">
-                <input type="password" class="form-control" id="password" name="password" ng-model="loginBo.password" placeholder="<eidea:label key="login.password"/>">
-              </div>
-              <div class="form-group">
-                <select class="form-control" ng-model="loginBo.code" ng-change="changeLang()"
-                        ng-options="option.code as option.name for option in languages">
-                </select>
-               </div>
+                    <h1><eidea:label key="login.title"/></h1>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="username" name="username"
+                               ng-model="loginBo.username" placeholder="<eidea:label key="login.userName"/>">
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input type="password" class="form-control" id="password" name="password"
+                               ng-model="loginBo.password" placeholder="<eidea:label key="login.password"/>">
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" ng-model="loginBo.code" ng-change="changeLang()"
+                                ng-options="option.code as option.name for option in languages">
+                        </select>
+                    </div>
 
-              <button id="loginBtn" type="submit" class="btn btn-default btn-sm" data-loading-text="<i class='fa fa-spinner fa-pulse'></i>&nbsp;<eidea:message key="login.msg.logining"/>"><eidea:label key="login.login"/></button>
-              <div style="text-align:center;color:#a94442" class="help-block has-error error-msg" ng-show="serverReturnMessage!=null">
-                {{serverReturnMessage}}
-              </div>
-            </form>
-          </section>
+                    <button id="loginBtn" type="submit" class="btn btn-default btn-sm"
+                            data-loading-text="<i class='fa fa-spinner fa-pulse'></i>&nbsp;<eidea:message key="login.msg.logining"/>">
+                        <eidea:label key="login.login"/></button>
+                    <div style="text-align:center;color:#a94442" class="help-block has-error error-msg"
+                         ng-show="serverReturnMessage!=null">
+                        {{serverReturnMessage}}
+                    </div>
+                </form>
+            </section>
             <h3><eidea:message key="support.browser"/></h3>
             <div class="row">
-                chrome56+  firefox53+  safari5+ opera43+
+                chrome56+ firefox53+ safari5+ opera43+
             </div>
         </div>
 
-      </div>
     </div>
+</div>
 </body>
 <script type="text/javascript">
     //密钥偏移量，用于aes加密
-    var iv = CryptoJS.lib.WordArray.random(128/8).toString(CryptoJS.enc.Hex);
+    var iv = CryptoJS.lib.WordArray.random(128 / 8).toString(CryptoJS.enc.Hex);
     //用于生成初始key
-    var key = CryptoJS.lib.WordArray.random(128/8).toString(CryptoJS.enc.Hex);
+    var key = CryptoJS.lib.WordArray.random(128 / 8).toString(CryptoJS.enc.Hex);
     var app = angular.module('loginApp', ['ui.bootstrap', 'jcs-autoValidate']);
-    app.controller('loginCtrl',function ($scope,$http) {
+    app.controller('loginCtrl', function ($scope, $http) {
         <%
             String userName="";
             Cookie[] cookies=request.getCookies();
+            if(cookies!=null)
             for(Cookie cookie:cookies)
                 {
                     System.out.println(cookie.getName()+":"+cookie.getValue());
@@ -100,26 +106,26 @@
                         }
                 }
         %>
-        $scope.loginBo={"username":"<%=userName%>"};
-        $scope.loginBo.code='<%= request.getSession().getAttribute(WebConst.SESSION_RESOURCE) ==null?request.getLocale().toString():((UserResource)request.getSession().getAttribute(WebConst.SESSION_RESOURCE)).getLocale()%>';
+        $scope.loginBo = {"username": "<%=userName%>"};
+        $scope.loginBo.code = '<%= request.getSession().getAttribute(WebConst.SESSION_RESOURCE) ==null?request.getLocale().toString():((UserResource)request.getSession().getAttribute(WebConst.SESSION_RESOURCE)).getLocale()%>';
         $http.get("<c:url value="/languages"/>").success(function (data) {
             if (data.success) {
                 $scope.languages = data.data;
-            }else {
+            } else {
                 $scope.serverReturnMessage = data.message;
             }
         });
-        $scope.changeLang=function () {
-            $http.post("<c:url value="/common/addCookie"/>",{"username":$scope.loginBo.username}).success(function (data) {
-                window.location.href = "<c:url value="/common/changeLanguage"/>?language="+$scope.loginBo.code;
+        $scope.changeLang = function () {
+            $http.post("<c:url value="/common/addCookie"/>", {"username": $scope.loginBo.username}).success(function (data) {
+                window.location.href = "<c:url value="/common/changeLanguage"/>?language=" + $scope.loginBo.code;
             });
         }
         $scope.submit = function () {
             <%
                 session.setAttribute(WebConst.SESSION_TIMESTAMP,System.currentTimeMillis());
             %>
-            var usernameAndPassword = $scope.loginBo.username+"|"+$scope.loginBo.password;
-            var aesAndRsaUtil = new AesAndRsaUtil(iv,key);
+            var usernameAndPassword = $scope.loginBo.username + "|" + $scope.loginBo.password;
+            var aesAndRsaUtil = new AesAndRsaUtil(iv, key);
             var enkey = aesAndRsaUtil.encryptkey();
             var cipherUsernameAndPassword = aesAndRsaUtil.aesencrypt(usernameAndPassword);
             var allparam = cipherUsernameAndPassword + "|" + enkey + "|" + iv;
@@ -127,12 +133,16 @@
             $("#loginBtn").button('loading');
             if ($scope.loginForm.$valid) {
                 //合成一个字符串
-                loginParam={username:$scope.loginBo.username,password:$scope.loginBo.password,"code":$scope.loginBo.code};
+                loginParam = {
+                    username: $scope.loginBo.username,
+                    password: $scope.loginBo.password,
+                    "code": $scope.loginBo.code
+                };
                 $scope.serverReturnMessage = "";
-                $http.post("<c:url value="/login"/>",{"allparam":allparam}).success(function (data) {
+                $http.post("<c:url value="/login"/>", {"allparam": allparam}).success(function (data) {
                     if (data.success) {
                         window.location.href = "<c:url value="/index.jsp"/>";
-                    }else {
+                    } else {
                         $scope.serverReturnMessage = data.message;
                     }
                     $("#loginBtn").button('reset');
