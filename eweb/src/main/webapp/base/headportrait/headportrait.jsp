@@ -115,7 +115,7 @@
                             coCodeStr = coCodeStr.substring(0,coCodeStr.length-1);
                             $.ajax({
                                 type:'POST',
-                                url:'<%=path%>/merchant/headportrait/checkAll',
+                                url:'<%=path%>/mis/merchant/headportrait/checkAll',
                                 data:{"idStr":coCodeStr,"certification":1,"headtype":headtype},
                                 dataType:"json",
                                 success:function(data){
@@ -149,7 +149,7 @@
                         coCodeStr = coCodeStr.substring(0,coCodeStr.length-1);
                         $.ajax({
                             type:'POST',
-                            url:'<%=path%>/merchant/headportrait/checkAll',
+                            url:'<%=path%>/mis/merchant/headportrait/checkAll',
                             data:{"idStr":coCodeStr,"certification":-1,"headtype":headtype},
                             dataType:"json",
                             success:function(data){
@@ -193,7 +193,7 @@
 
         function findHeadportraitSeachFn() {
             var opts = $("#headportrait_ids").datagrid("options");
-            opts.url = "<%=path%>/merchant/headportrait/list";
+            opts.url = "<%=path%>/mis/merchant/headportrait/list";
             var uid = '<%=uid%>';
             var headType = $("#head_cbx").combobox('getValue');
             var phone = $("#phone_ids").val();
@@ -212,7 +212,7 @@
         }
         function findHeadportraitReload() {
             var opts = $("#headportrait_ids").datagrid("options");
-            opts.url = "<%=path%>/merchant/headportrait/list";
+            opts.url = "<%=path%>/mis/merchant/headportrait/list";
             var uid = '<%=uid%>';
             var headType = $("#head_cbx").combobox('getValue');
             var phone = $("#phone_ids").val();
@@ -240,7 +240,7 @@
             var uid = row.uid;
             var html = "";
             if(headtype == 'reguser'|| headtype == 'couser'){
-                html += "<a href='<%=path%>/merchant/agentCheck/getUserInfo?uid="+uid+"' target='_blank'><font color='blue'>"+uid+"</font></a>";
+                html += "<a href='<%=path%>/mis/merchant/agentCheck/getUserInfo?uid="+uid+"' target='_blank'><font color='blue'>"+uid+"</font></a>";
             }else if(headtype == 'co'){
                 var cocode=row.cocode;
                 var coname = row.coname;
@@ -264,7 +264,7 @@
             var imagefile = row.imagefile;
             $.ajax({
                 type:'POST',
-                url:'<%=path%>/merchant/headportrait/checkOne',
+                url:'<%=path%>/mis/merchant/headportrait/checkOne',
                 data:{"id":id,"flag":1,"headtype":headtype},
                 dataType:"json",
                 success:function(data){
@@ -287,7 +287,7 @@
             var headtype = row.headtype;
             $.ajax({
                 type:'POST',
-                url:'<%=path%>/merchant/headportrait/checkOne',
+                url:'<%=path%>/mis/merchant/headportrait/checkOne',
                 data:{"id":id,"flag":-1,"headtype":headtype},
                 dataType:"json",
                 success:function(data){

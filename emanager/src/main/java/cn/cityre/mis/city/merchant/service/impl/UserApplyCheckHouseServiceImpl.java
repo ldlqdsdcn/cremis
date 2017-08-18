@@ -1,14 +1,13 @@
-package cn.cityre.mis.city.tradeProcess.service.impl;
+package cn.cityre.mis.city.merchant.service.impl;
 
 
-import cn.cityre.edi.mis.base.util.DataSourceContextHolder;
-import cn.cityre.edi.mis.base.util.DataSourceEnum;
+import cn.cityre.mis.city.merchant.dao.Qd_contractDao;
 import cn.cityre.mis.city.merchant.dao.UserListDao;
+import cn.cityre.mis.city.merchant.entity.po.Qd_contract;
+import cn.cityre.mis.city.merchant.entity.po.Qd_contract_history;
 import cn.cityre.mis.city.merchant.entity.po.UserList;
-import cn.cityre.mis.city.tradeProcess.dao.Qd_contractDao;
-import cn.cityre.mis.city.tradeProcess.entity.po.Qd_contract;
-import cn.cityre.mis.city.tradeProcess.entity.po.Qd_contract_history;
-import cn.cityre.mis.city.tradeProcess.service.UserApplyCheckHouseService;
+import cn.cityre.mis.city.merchant.service.UserApplyCheckHouseService;
+import cn.cityre.mis.core.merchant.dao.CoreSysuserDao;
 import com.dsdl.eidea.util.LikeUtil;
 import com.dsdl.eidea.util.Page;
 import com.dsdl.eidea.util.StringUtil;
@@ -24,11 +23,12 @@ public class UserApplyCheckHouseServiceImpl implements UserApplyCheckHouseServic
 	private Qd_contractDao qd_contractDao;
 	@Autowired
 	private UserListDao userListDao;
-
+	@Autowired
+	private CoreSysuserDao coreSysuserDao;
 
 	@Override
 	public List<Qd_contract> userApplyCheckHouseList(String startDate,
-                                                     String endDate, String phone, String status, Page pager) {
+													 String endDate, String phone, String status, Page pager) {
 		List<Qd_contract> list = new ArrayList<Qd_contract>();
 		Map<String,Object> param = new HashMap<String,Object>();
 		param.put("startDate",startDate);
@@ -118,7 +118,7 @@ public class UserApplyCheckHouseServiceImpl implements UserApplyCheckHouseServic
 					if(StringUtil.isNotEmpty(coname1)){
 						agencyInfo.append(coname1+"<br/>");
 					}else{
-						String coname2= qd_contractDao.selectAgentConameFromCoCouser1(q.getAgencyUID());
+						String coname2= qd_contractDao.selectAgentConameFromCoCouser2(q.getAgencyUID());
 						if(StringUtil.isNotEmpty(coname2)){
 							agencyInfo.append(coname2+"<br/>");
 						}
@@ -137,11 +137,11 @@ public class UserApplyCheckHouseServiceImpl implements UserApplyCheckHouseServic
 					agencyInfo.append("</font>");
 					q.setAgencyInfo(agencyInfo.toString());
 				}
+
 			}
 			for(Qd_contract q : list){
 				if(q.getMisUID() != null){
-					DataSourceContextHolder.setDbType(DataSourceEnum.core.value());
-					String name = qd_contractDao.selectNameFromUser(q.getMisUID());
+					String name = coreSysuserDao.selectNameFromUser(q.getMisUID());
 					q.setMisUserName(name);
 				}
 			}

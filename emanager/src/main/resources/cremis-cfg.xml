@@ -8,7 +8,7 @@
                http://www.springframework.org/schema/context/spring-context-4.0.xsd">
     <import resource="classpath:applicationContext.xml"/>
     <context:component-scan base-package="cn.cityre.mis.**.service"/>
-    <context:component-scan base-package="cn.cityre.mis.**.dao"/>
+    <!--<context:component-scan base-package="cn.cityre.mis.**.dao"/>-->
 
     <!--dao与Mapper文件映射，，，-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

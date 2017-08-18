@@ -4,14 +4,14 @@
 * 电话：13336390671
 * email:ldlqdsd@126.com
 */
-package cn.cityre.edi.mis.tradeProcess.controller;
+package cn.cityre.edi.mis.merchant.controller;
 
 import cn.cityre.edi.mis.base.entity.cpo.CityPo;
 import cn.cityre.edi.mis.base.util.CityDataSourceUtil;
 import cn.cityre.edi.mis.base.util.DataSourceContextHolder;
-import cn.cityre.mis.city.tradeProcess.entity.po.Qd_contract;
-import cn.cityre.mis.city.tradeProcess.entity.po.Qd_contract_history;
-import cn.cityre.mis.city.tradeProcess.service.UserApplyCheckHouseService;
+import cn.cityre.mis.city.merchant.entity.po.Qd_contract;
+import cn.cityre.mis.city.merchant.entity.po.Qd_contract_history;
+import cn.cityre.mis.city.merchant.service.UserApplyCheckHouseService;
 import com.dsdl.eidea.base.entity.bo.UserBo;
 import com.dsdl.eidea.core.dto.EasyUIResult;
 import com.dsdl.eidea.core.web.controller.BaseController;
@@ -29,10 +29,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+;
+
 /**
 *
 */ @Controller
-@RequestMapping("/process/userApplyForHouse")
+@RequestMapping("/mis/merchant/userApplyForHouse")
 public class UserApplyForHouseController extends BaseController {
 ;
 @Autowired

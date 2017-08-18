@@ -70,7 +70,7 @@
 
         function findCouserInfoSeachFn() {
             var opts = $("#couserInfo_ids").datagrid("options");
-            opts.url = "<%=path%>/merchant/userInfo/list";
+            opts.url = "<%=path%>/mis/merchant/userInfo/list";
 
 
 
@@ -121,7 +121,7 @@
 
         function findCouserInfoReload() {
             var opts = $("#couserInfo_ids").datagrid("options");
-            opts.url = "<%=path%>/merchant/userInfo/list";
+            opts.url = "<%=path%>/mis/merchant/userInfo/list";
 
 
 
@@ -173,7 +173,7 @@
         function getUidURL(row){
             var uid = row.uid;
             var html = "";
-            html += "<a href='<%=path%>/merchant/agentCheck/getUserInfo?uid="+uid+"' target='_blank'><font color='blue'>"+uid+"</font></a>";
+            html += "<a href='<%=path%>/mis/merchant/agentCheck/getUserInfo?uid="+uid+"' target='_blank'><font color='blue'>"+uid+"</font></a>";
             return html;
         }
         //显示姓名或昵称链接
@@ -256,7 +256,7 @@
             var uid = row.uid;
             $.ajax({
                 type:'POST',
-                url:'<%=path%>/merchant/userInfo/userlist_agree',
+                url:'<%=path%>/mis/merchant/userInfo/userlist_agree',
                 data:{"uid":uid},
                 dataType:"json",
                 success:function(data){
@@ -299,7 +299,7 @@
                 var uid = $("#uid_td").text();
                 $.ajax({
                     type:'POST',
-                    url:'<%=path%>/merchant/userInfo/userlist_refuse',
+                    url:'<%=path%>/mis/merchant/userInfo/userlist_refuse',
                     data:{"uid":uid,"reason":reason},
                     dataType:"json",
                     success:function(data){
@@ -341,7 +341,7 @@
                 if (r){
                     $.ajax({
                         type:'POST',
-                        url:'<%=path%>/merchant/userInfo/changetoreguser',
+                        url:'<%=path%>/mis/merchant/userInfo/changetoreguser',
                         data:{"uid":uid},
                         dataType:"json",
                         success:function(data){

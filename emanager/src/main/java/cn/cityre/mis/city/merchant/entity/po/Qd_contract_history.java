@@ -1,4 +1,4 @@
-package cn.cityre.mis.city.tradeProcess.entity.po;
+package cn.cityre.mis.city.merchant.entity.po;
 
 import lombok.Getter;
 import lombok.Setter;

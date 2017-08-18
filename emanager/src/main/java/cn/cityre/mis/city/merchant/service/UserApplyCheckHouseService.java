@@ -1,8 +1,8 @@
-package cn.cityre.mis.city.tradeProcess.service;
+package cn.cityre.mis.city.merchant.service;
 
 
-import cn.cityre.mis.city.tradeProcess.entity.po.Qd_contract;
-import cn.cityre.mis.city.tradeProcess.entity.po.Qd_contract_history;
+import cn.cityre.mis.city.merchant.entity.po.Qd_contract;
+import cn.cityre.mis.city.merchant.entity.po.Qd_contract_history;
 import com.dsdl.eidea.util.Page;
 
 import java.util.List;

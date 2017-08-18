@@ -34,7 +34,7 @@ import java.util.Map;
 /**
 * Created by 刘大磊 on 2017-06-28 15:47:46.
 */ @Controller
-@RequestMapping("/merchant/registeredUser")
+@RequestMapping("/mis/merchant/registeredUser")
 public class RegisteredUserManagerController extends BaseController {
 
     @Autowired

@@ -187,7 +187,7 @@ function acceptHouseLoanBtnClick(){
 	var preAmount = $("#preamount_dig").val();
 	var preDate = $("#predate_dig").val();
 	var preMisName = $("#premisname_dig").val();
-	var url='<%=path%>' + "/process/userApplyForHouse/addBankInfo";
+	var url='<%=path%>' + "/mis/merchant/userApplyForHouse/addBankInfo";
 	$.post(url,{bankname:bankname,amount:amount,date:date,id:id,status:status,preBankName:preBankName,preAmount:preAmount,preDate:preDate,preMisName:preMisName},function(data){
 		if(data.result == 'success'){
 			
@@ -209,7 +209,7 @@ function houseInfoBtnClick(){
 	var bldgno_dig = $("#bldgno_dig").val();
 	var unit_dig = $("#unit_dig").val();
 	var roomno_dig = $("#roomno_dig").val();
-	var url='<%=path%>' + "/process/userApplyForHouse/addHouseInfo";
+	var url='<%=path%>' + "/mis/merchant/userApplyForHouse/addHouseInfo";
 	$.post(url,{id:id,district_dig:district_dig,street_dig:street_dig,stno_dig:stno_dig,ha_dig:ha_dig,bldgno_dig:bldgno_dig,unit_dig:unit_dig,roomno_dig:roomno_dig},function(data){
 		if(data.result == 'success'){
 			
@@ -261,7 +261,7 @@ function houseInfoBtnClick(){
     <div data-options="region:'center',border:false" >
         <table class="easyui-datagrid"  toolbar="#activityTools" pagination="true" 
         		rownumbers="true" fitColumns="true" border="false" data-options="singleSelect:true,nowrap:false,pageSize:50,pageList:[50,100,150,200]"
-               url="<%=path %>/base/userApplyForHouse/list"
+               url="<%=path %>/mis/merchant/userApplyForHouse/list"
                id="userApplyCheckHouseList_ids" 
                style="overflow:auto;width:auto;height:880px ">
             <thead>

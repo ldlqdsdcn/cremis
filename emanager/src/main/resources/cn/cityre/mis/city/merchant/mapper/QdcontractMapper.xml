@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.cityre.mis.city.tradeProcess.dao.Qd_contractDao">
+<mapper namespace="cn.cityre.mis.city.merchant.dao.Qd_contractDao">
 
 
     <sql id="Query_Where_Clause">
@@ -24,7 +24,7 @@
         </where>
     </sql>
 
-    <select id="selectQd_contractList" parameterType="java.util.Map" resultType="cn.cityre.mis.city.tradeProcess.entity.po.Qd_contract" >
+    <select id="selectQd_contractList" parameterType="java.util.Map" resultType="cn.cityre.mis.city.merchant.entity.po.Qd_contract" >
         select d.dist_name district, h.name ha,s.street_name street, p.stno stno,p.bldgarea bldgArea,p.floor floor,p.bheight height,f.price price,
         c.id id,c.dealCode dealCode,c.originid originid,c.bldgno bldgno,c.unit unit,c.roomno roomno,c.status status,c.customerUID customerUID,c.customerName customerName,
         c.customerTel customerTel, c.bookTime bookTime, c.agencyUID agencyUID,c.contractPrice contractPrice,c.agencyNote agencyNote,c.contractDate contractDate,c.contractTime contractTime,
@@ -169,7 +169,7 @@
     </update>
 
 
-    <select id="selectQd_contract_historyList" parameterType="java.lang.Integer" resultType="cn.cityre.mis.city.tradeProcess.entity.po.Qd_contract_history" >
+    <select id="selectQd_contract_historyList" parameterType="java.lang.Integer" resultType="cn.cityre.mis.city.merchant.entity.po.Qd_contract_history" >
        select *  from qd_contract_history where contractID = #{id}
         limit #{limitStart} ,  #{limitEnd}
     </select>
@@ -178,7 +178,4 @@
         select count(id) num  from qd_contract_history where contractID =#{id}
     </select>
 
-    <select id="selectNameFromUser" parameterType="java.lang.String" resultType="java.lang.String" >
-       select name from sys_user where username = #{uid}
-    </select>
 </mapper>

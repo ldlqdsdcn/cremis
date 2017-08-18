@@ -24,7 +24,7 @@
     <div data-options="region:'center',border:false" >
         <table class="easyui-datagrid"  toolbar="#activityTools" pagination="true" 
         		rownumbers="true" fitColumns="true" border="false" data-options="singleSelect:true,pageSize:50,pageList:[50,100,150,200]"
-               url="<%=path %>/process/userApplyForHouse/historylist?id=<%=qd_contract_id %>"
+               url="<%=path %>/mis/merchant/userApplyForHouse/historylist?id=<%=qd_contract_id %>"
                id="historyList_ids" 
                style="overflow:auto;width:auto; ">
             <thead>

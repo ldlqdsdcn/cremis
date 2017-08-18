@@ -1,8 +1,8 @@
-package cn.cityre.mis.city.tradeProcess.dao;
+package cn.cityre.mis.city.merchant.dao;
 
 
-import cn.cityre.mis.city.tradeProcess.entity.po.Qd_contract;
-import cn.cityre.mis.city.tradeProcess.entity.po.Qd_contract_history;
+import cn.cityre.mis.city.merchant.entity.po.Qd_contract;
+import cn.cityre.mis.city.merchant.entity.po.Qd_contract_history;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,6 +25,4 @@ public interface Qd_contractDao {
 
     List<Qd_contract_history> selectQd_contract_historyList(Integer id);
     int selectQd_contract_historyCount(Integer id);
-
-    String selectNameFromUser(String uid);
 }

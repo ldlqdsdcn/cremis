@@ -105,7 +105,7 @@
                             coCodeStr = coCodeStr.substring(0,coCodeStr.length-1);
                             $.ajax({
                                 type:'POST',
-                                url:'<%=path%>/merchant/companyCheck/checkAll',
+                                url:'<%=path%>/mis/merchant/companyCheck/checkAll',
                                 data:{"idStr":coCodeStr,"certification":1},
                                 dataType:"json",
                                 success:function(data){
@@ -138,7 +138,7 @@
                         coCodeStr = coCodeStr.substring(0,coCodeStr.length-1);
                         $.ajax({
                             type:'POST',
-                            url:'<%=path%>/merchant/companyCheck/checkAll',
+                            url:'<%=path%>/mis/merchant/companyCheck/checkAll',
                             data:{"idStr":coCodeStr,"certification":-1},
                             dataType:"json",
                             success:function(data){
@@ -180,7 +180,7 @@
 
         function findCompanyCheckSeachFn() {
             var opts = $("#checkCompany_ids").datagrid("options");
-            opts.url = "<%=path%>/merchant/companyCheck/list";
+            opts.url = "<%=path%>/mis/merchant/companyCheck/list";
             var status = $("#statusValue").combobox('getValue');
             var companyName = $("#companyName_ids").val();
             var subStartDate = $("#subStartDate").datebox('getValue');
@@ -199,7 +199,7 @@
 
         function findCompanyCheckReload() {
             var opts = $("#checkCompany_ids").datagrid("options");
-            opts.url = "<%=path%>/merchant/companyCheck/list";
+            opts.url = "<%=path%>/mis/merchant/companyCheck/list";
             var status = $("#statusValue").combobox('getValue');
             var companyName = $("#companyName_ids").val();
             var subStartDate = $("#subStartDate").datebox('getValue');
@@ -234,7 +234,7 @@
             var cocode = row.coCode;
             $.ajax({
                 type:'POST',
-                url:'<%=path%>/merchant/companyCheck/checkOne',
+                url:'<%=path%>/mis/merchant/companyCheck/checkOne',
                 data:{"cocode":cocode,"certification":1},
                 dataType:"json",
                 success:function(data){
@@ -256,7 +256,7 @@
             console.log(cocode);
             $.ajax({
                 type:'POST',
-                url:'<%=path%>/merchant/companyCheck/checkOne',
+                url:'<%=path%>/mis/merchant/companyCheck/checkOne',
                 data:{"cocode":cocode,"certification":-1},
                 dataType:"json",
                 success:function(data){
@@ -276,7 +276,7 @@
             var cocode = row.coCode;
             var companyname = row.coName;
             var html = "";
-            html += "<a href='<%=path%>/merchant/registeredUser/coinfos?cocode="+cocode+"' target='_blank'><font color='blue'>"+companyname+"</font></a>";
+            html += "<a href='<%=path%>/mis/merchant/registeredUser/coinfos?cocode="+cocode+"' target='_blank'><font color='blue'>"+companyname+"</font></a>";
             return html;
         }
     </script>
