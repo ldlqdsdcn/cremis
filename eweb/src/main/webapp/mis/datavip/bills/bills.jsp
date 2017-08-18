@@ -211,7 +211,6 @@
             var url ="<c:url value="/mis/datavip/bills/exportExl"/>" +"?uid="+$scope.uid+"&billCode="+$scope.billCode+"&bigBillCode="+$scope.bigBillCode+"&alipayBillCode="+$scope.alipayBillCode+"&typeCode="+$scope.typeCode+
                 "&invoiceNo="+$scope.invoiceNo+"&invoiceFlag="+$scope.invoiceNoFlag+"&invoiceState="+$scope.invoiceType+"&payState="+$scope.payFlag
             +"&stateCode="+$scope.postTypeCode+"&invoiceFlagState="+$scope.postInvoiceFlag
-            alert(url);
             window.open(url);
         }
     $scope.pageChanged();

@@ -105,7 +105,6 @@
             var url = "<c:url value="/mis/datavip/new/exportExl"/>"+"?uid="+$scope.uid+"&userType="+$scope.userType
                 +"&payTel="+$scope.payTel+"&payFlag="+$scope.payFlag+"&newUser="+$scope.newUser+"&regStartTime="+$scope.regStartTime+
                     "&regEndTime="+$scope.regEndTime+"&serviceStartTime="+$scope.serviceStartTime+"&serviceEndTime="+$scope.serviceEndTime;
-            alert(url);
             window.open(url);
         }
 
