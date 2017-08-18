@@ -143,5 +143,7 @@ public class UserList implements java.io.Serializable {
     private String regTimeString;
     @Transient
     private String flagString;
+    @Transient
+    private String level;
 
 }

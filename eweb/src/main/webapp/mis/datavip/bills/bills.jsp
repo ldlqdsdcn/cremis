@@ -202,21 +202,18 @@
             };
             $rootScope.listQueryParams = $scope.queryParams;
         }
-
-        // 导出查询结果
         var searchBillParams = {
-            "uid": $scope.uid,
-            "billCode": $scope.billCode,
-            "bigBillCode": $scope.bigBillCode,
-            "alipayBillCode": $scope.alipayBillCode,
-            "typeCode": $scope.typeCode,
-            "payFlag": $scope.payFlag,
-            "invoiceNoFlag": $scope.invoiceNoFlag,
             "postTypeCode": $scope.postTypeCode,
-            "invoiceNo": $scope.invoiceNo,
             "postInvoiceFlag": $scope.postInvoiceFlag,
-            "invoiceType": $scope.invoiceType
-        };
+        }
+
+        $scope.exportExcel=function () {
+            var url ="<c:url value="/mis/datavip/bills/exportExl"/>" +"?uid="+$scope.uid+"&billCode="+$scope.billCode+"&bigBillCode="+$scope.bigBillCode+"&alipayBillCode="+$scope.alipayBillCode+"&typeCode="+$scope.typeCode+
+                "&invoiceNo="+$scope.invoiceNo+"&invoiceFlag="+$scope.invoiceNoFlag+"&invoiceState="+$scope.invoiceType+"&payState="+$scope.payFlag
+            +"&stateCode="+$scope.postTypeCode+"&invoiceFlagState="+$scope.postInvoiceFlag
+            alert(url);
+            window.open(url);
+        }
     $scope.pageChanged();
     });
     //    开通服务和关闭服务

@@ -7,10 +7,7 @@ import cn.cityre.mis.cityreaccount.datavip.del.InvoiceFlag;
 import cn.cityre.mis.cityreaccount.datavip.del.InvoiceState;
 import cn.cityre.mis.cityreaccount.datavip.del.InvoiceType;
 import cn.cityre.mis.cityreaccount.datavip.dto.SearchBillParams;
-import cn.cityre.mis.cityreaccount.datavip.entity.Bills;
-import cn.cityre.mis.cityreaccount.datavip.entity.DicPayType;
-import cn.cityre.mis.cityreaccount.datavip.entity.DicPostType;
-import cn.cityre.mis.cityreaccount.datavip.entity.UserPaymentInfo;
+import cn.cityre.mis.cityreaccount.datavip.entity.*;
 import cn.cityre.mis.cityreaccount.datavip.service.BillsService;
 import cn.cityre.mis.cityreaccount.datavip.service.DicPayTypeService;
 import cn.cityre.mis.cityreaccount.datavip.service.DicPostTypeService;
@@ -40,10 +37,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by cityre on 2017/8/2.
@@ -258,9 +260,51 @@ public class BillsController {
     }
 
     @RequestMapping(value = "/exportExl",method = RequestMethod.GET)
-    public ResponseEntity<byte[]> exportExl(Bills bills, Model model) throws IOException, ParseException {
-
-        List<Bills> stocks = billsService.getExportList();
-        return ExlUtil.getDataStream(new BillsHeader(),stocks, "账单信息");
+    public ResponseEntity<byte[]> exportExl(Bills bills, Model model, HttpServletRequest httpServletRequest) throws IOException, ServletException, ParseException {
+        String uid=httpServletRequest.getParameter("uid");
+        String billCode=httpServletRequest.getParameter("billCode");
+        String bigBillCode=httpServletRequest.getParameter("bigBillCode");
+        String alipayBillCode=httpServletRequest.getParameter("alipayBillCode");
+        String typeCode=httpServletRequest.getParameter("typeCode");
+        String payFlag=httpServletRequest.getParameter("payState");
+        String invoiceNoFlag=httpServletRequest.getParameter("invoiceFlag");
+        String postTypeCode=httpServletRequest.getParameter("stateCode");
+        String invoiceNo=httpServletRequest.getParameter("invoiceNo");
+        String postInvoiceFlag=httpServletRequest.getParameter("invoiceFlagState");
+        String invoiceType=httpServletRequest.getParameter("invoiceState");
+        Map<String,Object> map  = new HashMap<>();
+        if (!uid.equals("null")){
+            map.put("uid",uid);
+        }
+        if (!billCode.equals("null")){
+            map.put("billCode",billCode);
+        }
+        if (!bigBillCode.equals("null")){
+            map.put("bigBillCode",bigBillCode);
+        }
+        if (!alipayBillCode.equals("null")){
+            map.put("alipayBillCode",alipayBillCode);
+        }
+        if (!typeCode.equals("null")){
+            map.put("typeCode",typeCode);
+        }
+        if (!payFlag.equals("null")){
+            map.put("payFlag",payFlag);
+        }
+        if (!invoiceNoFlag.equals("null")){
+            map.put("invoiceNoFlag",invoiceNoFlag);
+        }
+        if (!invoiceNo.equals("null")){
+            map.put("invoiceNo",invoiceNo);
+        }
+        if (!postTypeCode.equals("null")){
+            map.put("postTypeCode",postTypeCode);}
+        if (!postInvoiceFlag.equals("null")){
+            map.put("invoiceFlag",invoiceNoFlag);}
+        if (!invoiceType.equals("null")){
+            map.put("invoiceType",invoiceType);
+        }
+        List<Bills> stocks = billsService.getExportList(map);
+        return ExlUtil.getDataStream(new BillsHeader(),stocks, "数据会员账单信息");
     }
 }

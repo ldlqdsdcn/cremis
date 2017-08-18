@@ -6,6 +6,7 @@ import com.dsdl.eidea.core.dto.PaginationResult;
 
 import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by cityre on 2017/7/31.
@@ -14,7 +15,7 @@ public interface BillsService {
 
     PaginationResult<Bills> getBillsListByOthers(SearchBillParams searchBillsParams) throws ParseException;
 
-    List<Bills> getExportList() throws ParseException;
+    List<Bills> getExportList(Map<String,Object> map) throws ParseException;
 
     List<Bills> getExistList();
 

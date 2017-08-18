@@ -19,7 +19,7 @@
                     <td class="control-label"><eidea:label key="cityre.mis.datavip.userlist.payState"/>:</td>
                     <td class="form-group"><select class="form-control" ng-model="payFlag" ng-init="payFlag='null'"><option value="null">请选择</option><option ng-repeat="option in billsFlagList" value="{{option.key}}">{{option.value}}</option></select>
                     </td>
-                    <td class="control-label"><eidea:label key="cityre.mis.datavip.user.newUser"/>:</td>
+                    <td class="control-label">是否再次购买:</td>
                     <td class="form-group"><input type="checkbox" class="form-control" ng-model="newUser"
                                                   ng-true-value="'true'"
                                                   ng-false-value="'false'"></td>
@@ -37,8 +37,10 @@
                     </td>
                     <td class="control-label">
                         <button type="submit" class="btn"><eidea:label key="common.button.search"/></button>
-                        <a href="<c:url value ="/mis/datavip/new/exportExl"/>" target="_blank">导出</a>
                     </td>
+                <td>
+                    <button type="submit" class="btn" ng-click="exportExcel()">导出</button>
+                </td>
                 </tr>
             </table>
         </form>
@@ -81,7 +83,7 @@
                         {{model.userName}}
                     </td>
                     <td>
-                        {{model.dicUserType.userTypeName}}
+                        {{model.userTypeName}}
                     </td>
                     <td>
                         {{model.regTime|date:"yyyy-MM-dd HH:mm:ss"}}
@@ -102,62 +104,59 @@
                         未激活
                     </td>
                     <td>
-                        {{model.bills.billCode}}
+                        {{model.billCode}}
                     </td>
-                    <td ng-if="model.bills.payFlag==0">
-                        已申请
-                    </td>
-                    <td ng-if="model.bills.payFlag==1">
-                        已支付
-                    </td>
-                    <td ng-if="model.bills.payFlag==2">
-                        已进入支付页
+                    <td >
+                        {{model.dealType}}
                     </td>
                     <td>
-                        <a href="#/list">{{model.userPaymentInfo.payAmount}}</a>
+                        <a href="#/list">{{model.payAmount}}</a>
                     </td>
                     <td>
-                        {{model.dicUserType.note}}
+                        {{model.note}}
                     </td>
                     <td>
-                        {{model.bills.cityCode}}
+                        {{model.billsCityCode}}
+                    </td>
+                    <td ng-if="model.level==1">
+                        小区
+                    </td>
+                    <td ng-if="model.level==2">
+                        行政
+                    </td>
+                    <td ng-if="model.level==3">
+                        城市
+                    </td>
+                    <td ng-if="model.level==4">
+                        附近
+                    </td>
+                    <td ng-if="model.level==5">
+                        省
+                    </td>
+                    <td ng-if="model.level==6">
+                        全国
+                    </td>
+                    <td ng-if="model.level==null">
+                        {{model.level}}
                     </td>
                     <td>
-                       {{model.bills.pLevel}}
+                        {{model.contentName}}
                     </td>
                     <td>
-                        {{model.bills.contentName}}
-                    </td>
-                    <td>
-                        {{model.bills.pgps}}
+                        {{model.pGps}}
                     </td>
                     <%--租售类型 1=出售 2=出租 3=新楼盘 4=新楼盘开工在售 5=新楼盘已竣工 6=新楼盘未售--%>
-                    <td ng-if="model.bills.dealType==1">
-                        出售
+                    <td >
+                        {{model.dealType}}
                     </td>
-                    <td ng-if="model.bills.dealType==2">
-                        出租
-                    </td>
-                    <td ng-if="model.bills.dealType==3">
-                        新楼盘
-                    </td>
-                    <td ng-if="model.bills.dealType==4">
-                        新楼盘开工在售
-                    </td>
-                    <td ng-if="model.bills.dealType==5">
-                        新楼盘已竣工
-                    </td>
-                    <td ng-if="model.bills.dealType==6">
-                        新楼盘未售
-                    </td>
-                    <td ng-if="model.bills.dealType==null">
-                        {{model.bills.dealType}}
+                    <td ng-if="model.dealType==null">
+                        {{model.dealType}}
                     </td>
                     <td>
-                        {{model.userPaymentInfo.startTime|date:"yyyy-MM-dd HH:mm:ss"}}
+                        {{model.startTime|date:"yyyy-MM-dd HH:mm:ss"}}
                     </td>
                     <td>
-                        {{model.userPaymentInfo.endTime|date:"yyyy-MM-dd HH:mm:ss"}}
+                        {{model.endTime|date:"yyyy-MM-dd HH:mm:ss"}}
                     </td>
                     <td>
                         {{model.invoiceTitle}}

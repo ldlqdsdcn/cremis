@@ -32,22 +32,6 @@
         <result column="nickname" jdbcType="VARCHAR" property="nickName"/>
         <result column="autoflag" jdbcType="INTEGER" property="autoFlag"/>
     </resultMap>
-    <resultMap id="UserListInfoMap" type="cn.cityre.mis.cityreaccount.datavip.entity.UserList" extends="BaseResultMap">
-        <result property="bills.billCode" column="bill_code" jdbcType="VARCHAR"/>
-        <result property="bills.productCost" column="product_cost" jdbcType="VARCHAR"/>
-        <result property="bills.cityCode" column="city_code" jdbcType="VARCHAR"/>
-        <result property="bills.pLevel" column="plevel" jdbcType="VARCHAR"/>
-        <result property="bills.contentName" column="contentname" jdbcType="VARCHAR"/>
-        <result property="bills.pgps" column="pgps" jdbcType="VARCHAR"/>
-        <result property="bills.dealType" column="dealtype" jdbcType="VARCHAR"/>
-        <result property="bills.payFlag" column="pay_flag" jdbcType="VARCHAR"/>
-        <result property="bills.invoiceTitle" column="invoice_title" jdbcType="VARCHAR"/>
-        <result property="dicUserType.userTypeName" column="user_type_name" jdbcType="VARCHAR"/>
-        <result property="dicUserType.note" column="note" jdbcType="VARCHAR"/>
-        <result property="userPaymentInfo.payAmount" column="pay_amount" jdbcType="VARCHAR"/>
-        <result property="userPaymentInfo.startTime" column="start_time" jdbcType="TIMESTAMP"/>
-        <result property="userPaymentInfo.endTime" column="end_time" jdbcType="TIMESTAMP"/>
-    </resultMap>
     <resultMap id="UserListExportMap" type="cn.cityre.mis.cityreaccount.datavip.entity.UserList" extends="BaseResultMap">
         <result property="billCode" column="bill_code" jdbcType="VARCHAR"/>
         <result property="productCost" column="product_cost" jdbcType="VARCHAR"/>
@@ -63,6 +47,7 @@
         <result property="payAmount" column="pay_amount" jdbcType="VARCHAR"/>
         <result property="startTime" column="start_time" jdbcType="TIMESTAMP"/>
         <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
+        <result property="level" column="plevel" jdbcType="INTEGER"/>
     </resultMap>
 
 
@@ -98,16 +83,16 @@
                 AND user_payment_info.end_time <![CDATA[<=]]> #{serviceEndTime,jdbcType=TIMESTAMP}
             </if>
             <if test="newUser!=null">
-                AND (select count(uid) from bills )<![CDATA[>=]]>2
+                AND (select count(uid) from bills WHERE bills.pay_flag=1)<![CDATA[>=]]>2
             </if>
         </where>
     </sql>
 
-    <select id="selectUserInfoByPage" resultMap="UserListInfoMap" parameterType="java.util.Map">
+    <select id="selectUserInfoByPage" resultMap="UserListExportMap" parameterType="java.util.Map">
         SELECT
         userlist.uid,userlist.username,userlist.regtime,userlist.email,userlist.flag,userlist.pay_tel,
         dic_user_type.user_type_name,dic_user_type.note,
-        bills.bill_code,bills.city_code,bills.plevel,bills.contentname,bills.pgps,bills.dealtype,bills.invoice_title,bills.pay_flag,
+        bills.bill_code,bills.product_cost,bills.city_code,bills.plevel,bills.contentname,bills.pgps,bills.dealtype,bills.invoice_title,bills.pay_flag,
         ifnull(user_payment_info.pay_amount,bills.product_cost) as pay_amount,user_payment_info.start_time,user_payment_info.end_time
         FROM userlist
         INNER JOIN bills ON bills.suid = userlist.suid

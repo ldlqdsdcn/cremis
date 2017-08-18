@@ -40,7 +40,6 @@ public class BillsServiceImpl implements BillsService {
 
     @Override
     public PaginationResult<Bills> getBillsListByOthers(SearchBillParams searchBillParams) throws ParseException {
-        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = billsMapper.selectTime();
         date = simpleDateFormat.parse(simpleDateFormat.format(date));
@@ -97,14 +96,18 @@ public class BillsServiceImpl implements BillsService {
             if (bills.getPostUser() != null && bills.getPostUser().equals("null")) {
                 bills.setPostUser("");
             }
-
-            if (bills.getEndTime() == null) {
-                bills.setServiceState(0);//开通服务
-            } else if (bills.getEndTime().before(date)) {
-                bills.setServiceState(1);//服务时间结束->已关闭
-            } else {
-                bills.setServiceState(2);//关闭服务
-            }
+//            if (bills.getWPayType()!=null)
+//            if (bills.getWPayType().equals("1")) {
+//                if (bills.getPayFlag() != 1) {
+//                    bills.setServiceState(0);//开通服务
+//                } else if (bills.getPayFlag() == 1 || bills.getEndTime() == null) {
+//                    bills.setServiceState(0);
+//                }
+//            } else if (bills.getEndTime().before(date)) {
+//                bills.setServiceState(1);//服务时间结束->已关闭
+//            } else {
+//                bills.setServiceState(2);//关闭服务
+//            }
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
             calendar.roll(Calendar.DAY_OF_MONTH, -1);
@@ -121,14 +124,11 @@ public class BillsServiceImpl implements BillsService {
             }
         }
         PaginationResult<Bills> paginationResult = PaginationResult.pagination(pageMyBatis, (int) pageMyBatis.getTotal(), pagingCriteria.getPageNumber(), pagingCriteria.getDisplaySize());
-        DataSourceContextHolder.setDbType("dataSource_core");
         return paginationResult;
     }
 
     @Override
-    public List<Bills> getExportList() throws ParseException {
-        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
-        Map<String, Object> map = new HashMap<>();
+    public List<Bills> getExportList(Map<String,Object> map) throws ParseException {
         List<Bills> billsList = billsMapper.selectExportInfo(map);
         List<Bills> exportList = new ArrayList<>();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -146,7 +146,7 @@ public class BillsServiceImpl implements BillsService {
                 bills.setPostUser("");
             }
             //修改支付状态
-            if (bills.getPayFlag()!=null) {
+            if (bills.getPayFlag() != null) {
                 if (bills.getPayFlag() == 1) {
                     bills.setPayFlagString("是");
                 } else if (bills.getPayFlag() == 0) {
@@ -179,37 +179,29 @@ public class BillsServiceImpl implements BillsService {
             }
             exportList.add(bills);
         }
-        DataSourceContextHolder.setDbType("dataSource_core");
         return exportList;
 
     }
 
     @Override
     public List<Bills> getExistList() {
-        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
         List<Bills> list = billsMapper.selectAllBills();
-        DataSourceContextHolder.setDbType("dataSource_core");
         return list;
     }
 
     @Override
     public void addInvoice(Bills bills) {
-        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
         billsMapper.updateInvoice(bills);
-        DataSourceContextHolder.setDbType("dataSource_core");
     }
 
     @Override
     public Bills getExistBillsById(Integer id) {
-        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
         Bills bills = billsMapper.selectByPrimaryKey(id);
-        DataSourceContextHolder.setDbType("dataSource_core");
         return bills;
     }
 
     @Override
     public Bills getExistBillsByCode(String billCode) throws ParseException {
-        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = billsMapper.selectTime();
         date = simpleDateFormat.parse(simpleDateFormat.format(date));
@@ -232,7 +224,6 @@ public class BillsServiceImpl implements BillsService {
         } else {
             bills.setConfirmPassword(false);
         }
-        DataSourceContextHolder.setDbType("dataSource_core");
         return bills;
     }
 
@@ -247,7 +238,6 @@ public class BillsServiceImpl implements BillsService {
      */
     @Override
     public void openService(Bills bills) throws ParseException {
-        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
         UserPaymentInfo userPaymentInfo = bills.getUserPaymentInfo();
         bills.setPayUpdateTime(userPaymentInfo.getPayTime());
         billsMapper.updateByBillsId(bills);
@@ -310,7 +300,6 @@ public class BillsServiceImpl implements BillsService {
         userPayment.setPayAmount(bills.getProductCost());
         userPayment.setAccountName(bills.getWPayUser());
         userPaymentInfoMapper.insertSelective(userPayment);
-        DataSourceContextHolder.setDbType("dataSouce_core");
     }
 
     /**

@@ -15,11 +15,13 @@ import com.dsdl.eidea.core.dto.PaginationResult;
 import com.dsdl.eidea.core.params.QueryParams;
 import com.dsdl.eidea.core.web.def.WebConst;
 import com.dsdl.eidea.core.web.result.JsonResult;
+import com.dsdl.eidea.core.web.result.def.ErrorCodes;
 import com.dsdl.eidea.core.web.vo.PagingSettingResult;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,9 +31,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by cityre on 2017/8/9.
@@ -65,7 +71,9 @@ public class UserListController {
         UserResource userResource = (UserResource) httpSession.getAttribute(WebConst.SESSION_RESOURCE);
         PaginationResult<UserList> paginationResult = null;
         paginationResult = userListService.getExistUserInfoList(searchParams);
-        QueryParams queryParams = searchParams.getQueryParams();
+        if (paginationResult.getData()==null){
+            return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(),userResource.getMessage("mis.datavip.error.noexist"));
+        }
         return JsonResult.success(paginationResult);
     }
 
@@ -104,10 +112,46 @@ public class UserListController {
     }
 
     @RequestMapping(value = "/exportExl",method = RequestMethod.GET)
-    public ResponseEntity<byte[]> exportExl(UserList userList, Model model) throws IOException {
-        SearchParams searchParams = new SearchParams();
-        List<UserList> userLists = userListService.getExportList(searchParams);
+    public ResponseEntity<byte[]> exportExl(UserList userList, Model model, HttpServletRequest httpRequest) throws IOException, ServletException {
+        String uid=httpRequest.getParameter("uid");
+        String userType=httpRequest.getParameter("userType");
+        String payTel=httpRequest.getParameter("payTel");
+        String payFlag=httpRequest.getParameter("payFlag");
+        String newUser=httpRequest.getParameter("newUser");
+        String regStartTime=httpRequest.getParameter("regStartTime");
+        String regEndTime=httpRequest.getParameter("regEndTime");
+        String serviceStartTime=httpRequest.getParameter("serviceStartTime");
+        String serviceEndTime=httpRequest.getParameter("serviceEndTime");
+        Map<String,Object> map = new HashMap<>();
+        if (!uid.equals("null")) {
+            map.put("uid", uid);
+        }
+        if (!userType.equals("null")){
+            map.put("userType",userType);
+        }
+        if (!payTel.equals("null")){
+            map.put("payTel",payTel);
+        }
+        if (!payFlag.equals("null")){
+            map.put("payFlag",payFlag);
+        }
+        if (!newUser.equals("null")){
+            map.put("newUser",newUser);
+        }
+        if (!regStartTime.equals("null")){
+            map.put("regStartTime",regStartTime);
+        }
+        if (!regEndTime.equals("null")){
+            map.put("regEndTime",regEndTime);
+        }
+        if (!serviceStartTime.equals("null")){
+            map.put("serviceStartTime",serviceStartTime);
+        }
+        if (!serviceEndTime.equals("null")){
+            map.put("serviceEndTime",serviceEndTime);
+        }
+        List<UserList> userLists = userListService.getExportList(map);
 
-        return ExlUtil.getDataStream(new InvoiceTypeHeader(),userLists, "会员购买信息");
+        return ExlUtil.getDataStream(new InvoiceTypeHeader(),userLists, "数据会员开票信息");
     }
 }
