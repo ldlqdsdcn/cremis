@@ -25,9 +25,7 @@ public class UserPayementInfoServiceImpl implements UserPaymentInfoService {
      */
     @Override
     public UserPaymentInfo getExistPaymentInfo(String billCode) {
-        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
         UserPaymentInfo userPaymentInfo = userPaymentInfoMapper.selectByBillCode(billCode);
-        DataSourceContextHolder.setDbType("dataSource_core");
         return userPaymentInfo;
     }
 
@@ -38,25 +36,19 @@ public class UserPayementInfoServiceImpl implements UserPaymentInfoService {
      */
     @Override
     public void closeServiceByBillCode(String billCode) {
-        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
         userPaymentInfoMapper.updateByBillCode(billCode);
-        DataSourceContextHolder.setDbType("dataSource_core");
 
     }
 
     @Override
     public List<UserPaymentInfo> getExistPaymentInfoBySuid(String suid) {
-        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
         List<UserPaymentInfo> userPaymentInfos= userPaymentInfoMapper.selectBySuid(suid);
-        DataSourceContextHolder.setDbType("dataSource_core");
         return userPaymentInfos;
     }
 
     @Override
     public void createUserPaymentInfo(UserPaymentInfo userPaymentInfo) {
-        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
         userPaymentInfoMapper.insertSelective(userPaymentInfo);
-        DataSourceContextHolder.setDbType("dataSource_core");
     }
 
 

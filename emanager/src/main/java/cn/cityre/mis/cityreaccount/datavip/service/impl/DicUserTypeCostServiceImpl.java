@@ -16,9 +16,7 @@ public class DicUserTypeCostServiceImpl implements DicUserTypeCostService {
     private DicUserTypeCostMapper dicUserTypeCostMapper;
     @Override
     public DicUserTypeCost getExistByUserType(String userType) {
-        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
         DicUserTypeCost dicUserTypeCost= dicUserTypeCostMapper.selectByUserType(userType);
-        DataSourceContextHolder.setDbType("dataSource_core");
         return dicUserTypeCost;
 
     }

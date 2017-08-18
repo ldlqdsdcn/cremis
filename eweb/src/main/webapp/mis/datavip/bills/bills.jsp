@@ -19,35 +19,35 @@
 <div name="elementPassword" ng-show="false">
 
 </div>
-<%@include  file="/mis/datavip/bills/confirm_password.jsp"%>
+<%@include file="/mis/datavip/bills/confirm_password.jsp" %>
 <script type="text/javascript">
     var app = angular.module('myApp', ['ngRoute', 'ui.bootstrap', 'jcs-autoValidate'])
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider
                 .when('/list', {templateUrl: '<c:url value="/mis/datavip/bills/list.tpl.jsp"/>'})
                 .when('/edit', {templateUrl: '<c:url value="/mis/datavip/bills/edit.tpl.jsp"/>'})
-                .when('/invoiceEdit',{templateUrl:'<c:url value="/mis/datavip/bills/invoice.tpl.jsp"/> '})
+                .when('/invoiceEdit', {templateUrl: '<c:url value="/mis/datavip/bills/invoice.tpl.jsp"/> '})
                 .otherwise({redirectTo: '/list'});
         }]);
-    app.controller('listCtrl', function ($scope,$rootScope, $http) {
+    app.controller('listCtrl', function ($scope, $rootScope, $http) {
         //查询条件
-        $scope.billCode=null;
-        $scope.bigBillCode=null;
-        $scope.alipayBillCode=null;
-        $scope.payFlag=null;
-        $scope.postInvoiceFlag=null
-        $scope.invoiceType=null;
-        $scope.postTypeCode=null;
+        $scope.billCode = null;
+        $scope.bigBillCode = null;
+        $scope.alipayBillCode = null;
+        $scope.payFlag = null;
+        $scope.postInvoiceFlag = null
+        $scope.invoiceType = null;
+        $scope.postTypeCode = null;
         $scope.invoiceNo = null
         $scope.uid = null;
         $scope.typeCode = null;
-        $scope.invoiceNoFlag=null;
+        $scope.invoiceNoFlag = null;
 
         $scope.modelList = [];
         $scope.delFlag = false;
         $scope.isLoading = true;
-        $scope.canDel=PrivilegeService.hasPrivilege('delete');
-        $scope.canAdd=PrivilegeService.hasPrivilege('add');
+        $scope.canDel = PrivilegeService.hasPrivilege('delete');
+        $scope.canAdd = PrivilegeService.hasPrivilege('add');
         $scope.updateList = function (result) {
             $scope.modelList = result.data;
             $scope.queryParams.totalRecords = result.totalRecords;
@@ -55,7 +55,7 @@
         };
         $scope.selectAll = function () {
             for (var i = 0; i < $scope.modelList.length; i++) {
-                $scope.modelList[i].delFlag=$scope.delFlag;
+                $scope.modelList[i].delFlag = $scope.delFlag;
             }
         }
         $scope.canDelete = function () {
@@ -66,12 +66,24 @@
             }
             return false;
         }
-        $scope.getBillsId=function (id) {
-            window.passConfirm=id;
+        $scope.getBillsId = function (id) {
+            window.passConfirm = id;
         }
         $scope.pageChanged = function () {
-            var searchBillParams={"uid":$scope.uid,"billCode":$scope.billCode,"bigBillCode":$scope.bigBillCode,"alipayBillCode":$scope.alipayBillCode,
-            "typeCode":$scope.typeCode,"payFlag":$scope.payFlag,"invoiceNoFlag":$scope.invoiceNoFlag,"postTypeCode":$scope.postTypeCode,"invoiceNo":$scope.invoiceNo,"postInvoiceFlag":$scope.postInvoiceFlag,"invoiceType":$scope.invoiceType,"queryParams":$scope.queryParams}
+            var searchBillParams = {
+                "uid": $scope.uid,
+                "billCode": $scope.billCode,
+                "bigBillCode": $scope.bigBillCode,
+                "alipayBillCode": $scope.alipayBillCode,
+                "typeCode": $scope.typeCode,
+                "payFlag": $scope.payFlag,
+                "invoiceNoFlag": $scope.invoiceNoFlag,
+                "postTypeCode": $scope.postTypeCode,
+                "invoiceNo": $scope.invoiceNo,
+                "postInvoiceFlag": $scope.postInvoiceFlag,
+                "invoiceType": $scope.invoiceType,
+                "queryParams": $scope.queryParams
+            }
             $http.post("<c:url value="/mis/datavip/bills/list"/>", searchBillParams)
                 .success(function (response) {
                     $scope.isLoading = false;
@@ -80,7 +92,7 @@
                     }
                     else {
                         bootbox.alert(response.message);
-                        $scope.modelList=null;
+                        $scope.modelList = null;
                     }
 
                 });
@@ -107,8 +119,8 @@
                                 ids.push($scope.modelList[i].id);
                             }
                         }
-                        $scope.queryParams.init=true;
-                        var param={"queryParams":$scope.queryParams,"ids":ids};
+                        $scope.queryParams.init = true;
+                        var param = {"queryParams": $scope.queryParams, "ids": ids};
                         $http.post("<c:url value="/base/area/deletes"/>", param).success(function (data) {
                             if (data.success) {
                                 $scope.updateList(data.data);
@@ -121,60 +133,58 @@
                 }
             });
         };
-
 //        获取支付类型
         $http.get("<c:url value="/mis/datavip/bills/getPayType"/>").success(function (response) {
-            if (response.success){
-                $scope.payTypeList=response.data;
-            }else{
-                $scope.message=response.message;
+            if (response.success) {
+                $scope.payTypeList = response.data;
+            } else {
+                $scope.message = response.message;
             }
         });
         //        获取邮寄类型
         $http.get("<c:url value="/mis/datavip/bills/getPostType"/>").success(function (response) {
-            if (response.success){
-                $scope.postTypeList=response.data;
-            }else{
-                $scope.message=response.message;
+            if (response.success) {
+                $scope.postTypeList = response.data;
+            } else {
+                $scope.message = response.message;
             }
         });
         //        获取支付状态
         $http.get("<c:url value="/mis/datavip/bills/getBillFlag"/>").success(function (response) {
-            if (response.success){
-                var billFlag=$.parseJSON(response.data);
+            if (response.success) {
+                var billFlag = $.parseJSON(response.data);
                 $scope.billsFlag = billFlag.billFlagList
-            }else{
-                $scope.message=response.message;
+            } else {
+                $scope.message = response.message;
             }
         });
         //        获取发票状态
         $http.get("<c:url value="/mis/datavip/bills/getInvoiceFlag"/>").success(function (response) {
-            if (response.success){
-                var invoiceFlag=$.parseJSON(response.data);
+            if (response.success) {
+                var invoiceFlag = $.parseJSON(response.data);
                 $scope.invoiceFlagType = invoiceFlag.invoiceTypeList
-            }else{
-                $scope.message=response.message;
+            } else {
+                $scope.message = response.message;
             }
         });
         //        获取发票状态
         $http.get("<c:url value="/mis/datavip/bills/getFlag"/>").success(function (response) {
-            if (response.success){
-                var flag=$.parseJSON(response.data);
-                $scope.falgList =flag.flag;
-            }else{
-                $scope.message=response.message;
+            if (response.success) {
+                var flag = $.parseJSON(response.data);
+                $scope.falgList = flag.flag;
+            } else {
+                $scope.message = response.message;
             }
         });
         //        获取发票状态
         $http.get("<c:url value="/mis/datavip/bills/getInvoiceState"/>").success(function (response) {
-            if (response.success){
-                var invoice=$.parseJSON(response.data);
-                $scope.invoiceStateList =invoice.invoiceState;
-            }else{
-                $scope.message=response.message;
+            if (response.success) {
+                var invoice = $.parseJSON(response.data);
+                $scope.invoiceStateList = invoice.invoiceState;
+            } else {
+                $scope.message = response.message;
             }
         });
-
 
 
 //可现实分页item数量
@@ -192,21 +202,21 @@
             };
             $rootScope.listQueryParams = $scope.queryParams;
         }
-        var bills={"bills":$scope.modelList};
+        var searchBillParams = {
+            "postTypeCode": $scope.postTypeCode,
+            "postInvoiceFlag": $scope.postInvoiceFlag,
+        }
+
         $scope.exportExcel=function () {
-            $http.post("<c:url value="/mis/datavip/bills/exportExcel"/> ",$scope.modelList).success(function (response) {
-                if (response.success){
-                    $scope.message="<eidea:label key="base.save.success"/>"
-                }
-            }).error(function (response) {
-                $scope.message=response.message;
-                $scope.errors=response.data;
-            })
-        };
-        $scope.pageChanged();
+            var url ="<c:url value="/mis/datavip/bills/exportExl"/>" +"?uid="+$scope.uid+"&billCode="+$scope.billCode+"&bigBillCode="+$scope.bigBillCode+"&alipayBillCode="+$scope.alipayBillCode+"&typeCode="+$scope.typeCode+
+                "&invoiceNo="+$scope.invoiceNo+"&invoiceFlag="+$scope.invoiceNoFlag+"&invoiceState="+$scope.invoiceType+"&payState="+$scope.payFlag
+            +"&stateCode="+$scope.postTypeCode+"&invoiceFlagState="+$scope.postInvoiceFlag
+            window.open(url);
+        }
+    $scope.pageChanged();
     });
-//    开通服务和关闭服务
-    app.controller('editCtrl', function ($scope, $http, $routeParams,$rootScope) {
+    //    开通服务和关闭服务
+    app.controller('editCtrl', function ($scope, $http, $routeParams, $rootScope) {
         /**
          * 日期时间选择控件
          * bootstrap-datetime 24小时时间是hh
@@ -235,18 +245,18 @@
         });
 
         $scope.message = '';
-        $scope.billsPo={};
+        $scope.billsPo = {};
         $scope.canAdd = PrivilegeService.hasPrivilege('add');
-        if ($routeParams.billCode!= null) {
-          var  url = "<c:url value="/mis/datavip/bills/getBills"/>" + "?billCode=" + $routeParams.billCode;
+        if ($routeParams.billCode != null) {
+            var url = "<c:url value="/mis/datavip/bills/getBills"/>" + "?billCode=" + $routeParams.billCode;
         }
-        var postUrl="<c:url value="/mis/datavip/bills/openService"/> "
+        var postUrl = "<c:url value="/mis/datavip/bills/openService"/> "
         $http.get(url)
             .success(function (response) {
                 if (response.success) {
                     $scope.billsPo = response.data;
-                    $rootScope.billsId=$scope.billsPo.suid;
-                    if($scope.billsPo.serviceState ==2){
+                    $rootScope.billsId = $scope.billsPo.suid;
+                    if ($scope.billsPo.serviceState == 2) {
                         postUrl = "<c:url value="/mis/datavip/userpaymentInfo/closeService"/> "
                     }
                     $scope.canSave = (PrivilegeService.hasPrivilege('add') && $scope.billsPo.id == null) || PrivilegeService.hasPrivilege('update');
@@ -256,15 +266,15 @@
             }).error(function (response) {
             bootbox.alert(response.data);
         });
-        $scope.serviceEdit = function(){
-            if ($scope.editForm.$valid){
-                $http.post(postUrl,$scope.billsPo).success(function (response) {
-                    if(response.success){
-                        $scope.message="<eidea:label key="base.save.success"/>";
-                        $scope.billsPo=response.data;
-                    }else{
-                        $scope.message=response.message;
-                        $scope.errors=response.data;
+        $scope.serviceEdit = function () {
+            if ($scope.editForm.$valid) {
+                $http.post(postUrl, $scope.billsPo).success(function (response) {
+                    if (response.success) {
+                        $scope.message = "<eidea:label key="base.save.success"/>";
+                        $scope.billsPo = response.data;
+                    } else {
+                        $scope.message = response.message;
+                        $scope.errors = response.data;
                     }
                 }).errors(function (response) {
                     bootbox.alert(response.message);
@@ -272,7 +282,7 @@
             }
         }
     });
-    app.controller('invoiceCtrl',function ($scope,$http,$routeParams) {
+    app.controller('invoiceCtrl', function ($scope, $http, $routeParams) {
         /**
          * 日期时间选择控件
          * bootstrap-datetime 24小时时间是hh
@@ -299,30 +309,30 @@
             todayBtn: 1,
             clearBtn: true
         });
-        $scope.bill={};
-        if($routeParams.id==null){
+        $scope.bill = {};
+        if ($routeParams.id == null) {
             bootbox.alert("参数错误！")
         }
-        var  url = "<c:url value="/mis/datavip/bills/get"/>" + "?id=" + $routeParams.id;
+        var url = "<c:url value="/mis/datavip/bills/get"/>" + "?id=" + $routeParams.id;
         $http.get(url).success(function (response) {
-            if (response.success){
+            if (response.success) {
                 $scope.bill = response.data;
-            }else {
+            } else {
                 bootbox.alert(response.message);
             }
         });
         $scope.addInvoice = function () {
-            if ($scope.addInvoiceForm.$valid){
-                var url='<c:url value = "/mis/datavip/bills/addInvoice"/>'
-                $http.post(url,$scope.bill).success(function (response) {
-                    if(response.success){
-                        $scope.message="<eidea:label key="base.save.success"/> "
+            if ($scope.addInvoiceForm.$valid) {
+                var url = '<c:url value = "/mis/datavip/bills/addInvoice"/>'
+                $http.post(url, $scope.bill).success(function (response) {
+                    if (response.success) {
+                        $scope.message = "<eidea:label key="base.save.success"/> "
                         $scope.bill = response.data;
-                    }else {
+                    } else {
                         $scope.message = response.message;
-                        $scope.errors=response.data;
+                        $scope.errors = response.data;
                     }
-                }).errors(function(response,status,header,config){
+                }).errors(function (response, status, header, config) {
                     alert(JSON.stringify(response.data));
                 })
             }

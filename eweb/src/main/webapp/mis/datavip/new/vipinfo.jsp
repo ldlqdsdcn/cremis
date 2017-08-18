@@ -95,12 +95,17 @@
                     $scope.isLoading = false;
                     if (response.success) {
                         $scope.updateList(response.data);
-                    }
-                    else {
+                    } else {
                         bootbox.alert(response.message);
                     }
 
                 });
+        }
+        $rootScope.exportExcel=function(){
+            var url = "<c:url value="/mis/datavip/new/exportExl"/>"+"?uid="+$scope.uid+"&userType="+$scope.userType
+                +"&payTel="+$scope.payTel+"&payFlag="+$scope.payFlag+"&newUser="+$scope.newUser+"&regStartTime="+$scope.regStartTime+
+                    "&regEndTime="+$scope.regEndTime+"&serviceStartTime="+$scope.serviceStartTime+"&serviceEndTime="+$scope.serviceEndTime;
+            window.open(url);
         }
 
 //批量删除
@@ -138,6 +143,7 @@
                 }
             });
         };
+
         //获取userTypeKList
         $http.get("<c:url value="/mis/datavip/new/getUserType"/>").success(function (response) {
             if (response.success){

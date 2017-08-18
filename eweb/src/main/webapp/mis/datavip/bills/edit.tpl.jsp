@@ -8,7 +8,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/inc/taglib.jsp" %>
 <div class="container-fluid" ng-controller="editCtrl">
-    <h3>操作将要关闭订单号{{billsPo.billCode}}的服务，请确认</h3>
+    <h3>将要操作的订单号{{billsPo.billCode}}的服务，请确认</h3>
+    <p style="color: #c83737;text-align: center;font-family: 微软雅黑">
+        注：正常情况下，开通服务的开始和结束时间是自动生成的，但在开发房价管家开通服务功能时,市场提出一些线下服务开通是需要人工指定服务开始和结束时间的，</br>
+        所以以下两项内容为手动控制服务的开始时间和结束时间
+    </p>
     <form role="form" name="editForm" novalidate ng-submit="serviceEdit()"
           class=" form-horizontal form-label-left input_mask">
         <table class="table table-borderless">
@@ -21,12 +25,6 @@
                                                                               ng-disabled="billsPo.serviceState==2">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></div>
                 </td>
-            </tr>
-            <p style="color: #c83737;text-align: center;font-family: 微软雅黑">
-                注：正常情况下，开通服务的开始和结束时间是自动生成的，但在开发房价管家开通服务功能时,市场提出一些线下服务开通是需要人工指定服务开始和结束时间的，</br>
-                所以以下两项内容为手动控制服务的开始时间和结束时间
-            </p>
-            <tr>
                 <td class="control-label"><%--开始时间：--%>服务开始时间：</td>
                 <td class="input-group date bootstrap-datetime">
                     <input type="text" class="form-control" ng-model="billsPo.userPaymentInfo.startTime"

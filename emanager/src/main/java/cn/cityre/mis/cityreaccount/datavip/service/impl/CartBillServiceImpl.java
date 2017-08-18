@@ -16,9 +16,7 @@ public class CartBillServiceImpl implements CartBillService {
     private CartbillsMapper cartbillsMapper;
     @Override
     public void updateExistCartBillByBillCode(CartBills cartBills) {
-        DataSourceContextHolder.setDbType("dataSource_cityreaccount");
         cartbillsMapper.updateByBigBillCode(cartBills);
-        DataSourceContextHolder.setDbType("dataSource_core");
 
     }
 }
