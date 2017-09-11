@@ -17,6 +17,11 @@
     id, province_code, province_name, province_pinyin, gbcode, showorder, adduid, addtime, 
     updateuid, updatetime
   </sql>
+  <select id="selectList">
+    select
+    <include refid="Base_Column_List" />
+    from province
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
