@@ -1,12 +1,6 @@
-*/target
+# Created by .ignore support plugin (hsz.mobi)
 .idea
-.idea/*
 *.iml
-/.idea/
-/.gradle/
-.gradle/
-classes/
-gradle/
-build/*
-*/build
+target
+cityre_mis/src/resources/application-my.properties
 

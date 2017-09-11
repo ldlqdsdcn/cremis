@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+  <classPathEntry location="lib/mysql-connector-java-5.1.43.jar" />
+
+  <context id="DB2Tables" targetRuntime="MyBatis3">
+    <commentGenerator>
+      <!--  关闭自动生成的注释  -->
+      <property name="suppressAllComments" value="true" />
+    </commentGenerator>
+<!--    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+        connectionURL="jdbc:mysql://localhost:3306/cityre_mis?characterEncoding=utf8"
+        userId="root"
+        password="wms123456">
+    </jdbcConnection>-->
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                    connectionURL="jdbc:mysql://10.10.123.86:3306/v2017_account_center?characterEncoding=utf8"
+                    userId="liudalei"
+                    password="liudalei_2017">
+    </jdbcConnection>
+
+    <javaTypeResolver >
+      <property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+
+    <javaModelGenerator targetPackage="cn.cityre.account.sys.model" targetProject="../cityre_mis/src/main/java">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+    <sqlMapGenerator targetPackage="cn.cityre.account.sys.mapper"  targetProject="../cityre_mis/src/main/resources">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+
+    <javaClientGenerator type="XMLMAPPER" targetPackage="cn.cityre.account.sys.dao"  targetProject="../cityre_mis/src/main/java">
+      <property name="enableSubPackages" value="true" />
+    </javaClientGenerator>
+    <table  tableName="v2017_user_phone" domainObjectName="UserPhone" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+            enableSelectByExample="false" selectByExampleQueryId="false">
+      <generatedKey column="id"  identity="true" sqlStatement="MYSQL" />
+    </table>
+    <table  tableName="v2017_user_email" domainObjectName="UserEmail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+            enableSelectByExample="false" selectByExampleQueryId="false">
+      <generatedKey column="id"  identity="true" sqlStatement="MYSQL" />
+    </table>
+<!--    <table  tableName="sys_group" domainObjectName="Group" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+            enableSelectByExample="false" selectByExampleQueryId="false">
+      <generatedKey column="id"  identity="true" sqlStatement="MYSQL" />
+    </table>
+    <table  tableName="sys_group_privileges" domainObjectName="GroupPrivileges" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+            enableSelectByExample="false" selectByExampleQueryId="false">
+      <generatedKey column="id"  identity="true" sqlStatement="MYSQL" />
+    </table>
+    <table  tableName="sys_menu" domainObjectName="Menu" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+            enableSelectByExample="false" selectByExampleQueryId="false">
+      <generatedKey column="id"  identity="true" sqlStatement="MYSQL" />
+    </table>
+    <table  tableName="sys_repository" domainObjectName="Repository" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+            enableSelectByExample="false" selectByExampleQueryId="false">
+      <generatedKey column="id"  identity="true" sqlStatement="MYSQL" />
+    </table>
+    <table  tableName="sys_user_privileges" domainObjectName="UserPrivileges" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+            enableSelectByExample="false" selectByExampleQueryId="false">
+      <generatedKey column="id"  identity="true" sqlStatement="MYSQL" />
+    </table>
+    <table  tableName="sys_usergroup" domainObjectName="UserGroup" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+            enableSelectByExample="false" selectByExampleQueryId="false">
+      <generatedKey column="id"  identity="true" sqlStatement="MYSQL" />
+    </table>-->
+    <!--<table  tableName="sys_role" domainObjectName="Role" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+            <!--enableSelectByExample="false" selectByExampleQueryId="false">-->
+      <!--<generatedKey column="id"  identity="true" sqlStatement="MYSQL" />-->
+    <!--</table>-->
+    <!--<table  tableName="sys_user_role" domainObjectName="UserRole" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+            <!--enableSelectByExample="false" selectByExampleQueryId="false">-->
+      <!--<generatedKey column="id"  identity="true" sqlStatement="MYSQL" />-->
+    <!--</table>-->
+  </context>
+</generatorConfiguration>

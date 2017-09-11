@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cityre.mis.city.dao.DistrictMapper">
+  <resultMap id="BaseResultMap" type="cn.cityre.mis.city.model.District">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="dist_name" jdbcType="VARCHAR" property="distName" />
+    <result column="dist_code" jdbcType="CHAR" property="distCode" />
+    <result column="distID" jdbcType="INTEGER" property="distid" />
+    <result column="urban_id" jdbcType="INTEGER" property="urbanId" />
+    <result column="gbcode" jdbcType="VARCHAR" property="gbcode" />
+    <result column="distspell" jdbcType="VARCHAR" property="distspell" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.cityre.mis.city.model.District">
+    <result column="dist_introduction" jdbcType="LONGVARCHAR" property="distIntroduction" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, dist_name, dist_code, distID, urban_id, gbcode, distspell
+  </sql>
+  <sql id="Blob_Column_List">
+    dist_introduction
+  </sql>
+  <sql id="Example_Where_Clause">
+    <where>
+      <if test="distName!=null"> and dist_name=#{distName,jdbcType=VARCHAR}</if>
+    </where>
+  </sql>
+  <select id="selectList" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from district
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from district
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from district
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.cityre.mis.city.model.District">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into district (dist_name, dist_code, distID, 
+      urban_id, gbcode, distspell, 
+      dist_introduction)
+    values (#{distName,jdbcType=VARCHAR}, #{distCode,jdbcType=CHAR}, #{distid,jdbcType=INTEGER}, 
+      #{urbanId,jdbcType=INTEGER}, #{gbcode,jdbcType=VARCHAR}, #{distspell,jdbcType=VARCHAR}, 
+      #{distIntroduction,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cityre.mis.city.model.District">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into district
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="distName != null">
+        dist_name,
+      </if>
+      <if test="distCode != null">
+        dist_code,
+      </if>
+      <if test="distid != null">
+        distID,
+      </if>
+      <if test="urbanId != null">
+        urban_id,
+      </if>
+      <if test="gbcode != null">
+        gbcode,
+      </if>
+      <if test="distspell != null">
+        distspell,
+      </if>
+      <if test="distIntroduction != null">
+        dist_introduction,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="distName != null">
+        #{distName,jdbcType=VARCHAR},
+      </if>
+      <if test="distCode != null">
+        #{distCode,jdbcType=CHAR},
+      </if>
+      <if test="distid != null">
+        #{distid,jdbcType=INTEGER},
+      </if>
+      <if test="urbanId != null">
+        #{urbanId,jdbcType=INTEGER},
+      </if>
+      <if test="gbcode != null">
+        #{gbcode,jdbcType=VARCHAR},
+      </if>
+      <if test="distspell != null">
+        #{distspell,jdbcType=VARCHAR},
+      </if>
+      <if test="distIntroduction != null">
+        #{distIntroduction,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cityre.mis.city.model.District">
+    update district
+    <set>
+      <if test="distName != null">
+        dist_name = #{distName,jdbcType=VARCHAR},
+      </if>
+      <if test="distCode != null">
+        dist_code = #{distCode,jdbcType=CHAR},
+      </if>
+      <if test="distid != null">
+        distID = #{distid,jdbcType=INTEGER},
+      </if>
+      <if test="urbanId != null">
+        urban_id = #{urbanId,jdbcType=INTEGER},
+      </if>
+      <if test="gbcode != null">
+        gbcode = #{gbcode,jdbcType=VARCHAR},
+      </if>
+      <if test="distspell != null">
+        distspell = #{distspell,jdbcType=VARCHAR},
+      </if>
+      <if test="distIntroduction != null">
+        dist_introduction = #{distIntroduction,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.cityre.mis.city.model.District">
+    update district
+    set dist_name = #{distName,jdbcType=VARCHAR},
+      dist_code = #{distCode,jdbcType=CHAR},
+      distID = #{distid,jdbcType=INTEGER},
+      urban_id = #{urbanId,jdbcType=INTEGER},
+      gbcode = #{gbcode,jdbcType=VARCHAR},
+      distspell = #{distspell,jdbcType=VARCHAR},
+      dist_introduction = #{distIntroduction,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cityre.mis.city.model.District">
+    update district
+    set dist_name = #{distName,jdbcType=VARCHAR},
+      dist_code = #{distCode,jdbcType=CHAR},
+      distID = #{distid,jdbcType=INTEGER},
+      urban_id = #{urbanId,jdbcType=INTEGER},
+      gbcode = #{gbcode,jdbcType=VARCHAR},
+      distspell = #{distspell,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
