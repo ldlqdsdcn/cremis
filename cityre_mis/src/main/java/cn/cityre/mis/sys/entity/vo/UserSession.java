@@ -17,6 +17,10 @@ public class UserSession {
      * 当前省份
      */
     private String currentProvinceCode;
+    /**
+     * 当前城市名
+     */
+    private String cityName;
 
     public String getUnionUid() {
         return unionUid;
@@ -64,5 +68,13 @@ public class UserSession {
 
     public void setCurrentProvinceCode(String currentProvinceCode) {
         this.currentProvinceCode = currentProvinceCode;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 }

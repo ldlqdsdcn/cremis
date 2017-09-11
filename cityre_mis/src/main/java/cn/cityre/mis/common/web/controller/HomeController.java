@@ -133,16 +133,17 @@ public class HomeController {
 
     @RequestMapping("/selectCity/{cityCode}")
     @ResponseBody
-    public JsonResult<Void> selectCity(@PathVariable String cityCode, HttpSession session) {
+    public JsonResult<City> selectCity(@PathVariable String cityCode, HttpSession session) {
         WebUtil.getUserSession(session).setCurrentCityCode(cityCode);
         City city = cityService.getCityByCode(cityCode);
         WebUtil.getUserSession(session).setCurrentProvinceCode(city.getProvinceCode());
-        return JsonResult.success(null);
+        WebUtil.getUserSession(session).setCityName(city.getCityName());
+        return JsonResult.success(city);
     }
+
     @RequestMapping("/userSession")
     @ResponseBody
-    public JsonResult<UserSession> getUserSession(HttpSession session)
-    {
+    public JsonResult<UserSession> getUserSession(HttpSession session) {
         return JsonResult.success(WebUtil.getUserSession(session));
     }
 }

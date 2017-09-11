@@ -841,14 +841,16 @@
         MIS管理中心
     </div>
     <div
-            style="float:right;height:65px;right:0px;width:450px;padding-top:6px;">
-        <div style="float:right;width:405px;height:35px;">
-            <font style="color:#666666;">&nbsp;&nbsp;您好 : </font><span
+            style="float:right;height:65px;right:0px;width:600px;padding-top:6px;">
+        <div style="float:right;width:420px;height:35px;">
+            <font style="color:#666666;">&nbsp;您好 : </font><span
                 style="color:blue;">${MIS_USER.name}</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;<font style="color:#666666;"><span
-                onclick="resetClk()" style="cursor:pointer;">重置密码</span>
-        </font>&nbsp;&nbsp;&nbsp;&nbsp;<font style="color:#666666;cursor:pointer;"
+            <font style="color:#666666;">当前城市：<span id="currentCity"><c:out value="${MIS_USER.cityName}"/> </span>   <input type="button" onclick="openDialog();" value="更换"></font>
+            &nbsp;&nbsp;
+            <font style="color:#666666;">
+                <span onclick="resetClk()" style="cursor:pointer;">重置密码</span> </font>&nbsp;&nbsp;&nbsp;&nbsp;<font style="color:#666666;cursor:pointer;"
                                              onclick="exitSys()">退出系统</font>
+
         </div>
         <div style="float:right;width:405px;height:30px;">
             <font style="color:#666666;">当前系统日期： </font><span id="time_ids"
@@ -976,6 +978,8 @@
         });
     }
     function openDialog() {
+
+
         $.ajax({
             url: "<%=path%>/userSession",
             type: 'GET',
@@ -992,6 +996,10 @@
                 }
             }
         });
+        //去除默认关闭按钮
+        $('#selectCityDig').panel({
+            closable:false
+        });
         $('#selectCityDig').dialog('open');
     }
     function saveCity() {
@@ -1003,6 +1011,7 @@
             contentType: 'application/json;charset=utf-8',
             success: function (result) {
                 if (result.success) {
+                    $("#currentCity").html(result.data.cityName);
                     $('#selectCityDig').dialog('close');
                     return;
                 }
