@@ -1,5 +1,6 @@
 package cn.cityre.mis.center.dao;
 
+import cn.cityre.mis.center.entity.query.ProvinceQuery;
 import cn.cityre.mis.center.model.Province;
 
 import java.util.List;
@@ -17,5 +18,5 @@ public interface ProvinceMapper {
 
     int updateByPrimaryKey(Province record);
 
-    List<Province> selectList();
+    List<Province> selectList(ProvinceQuery provinceQuery);
 }

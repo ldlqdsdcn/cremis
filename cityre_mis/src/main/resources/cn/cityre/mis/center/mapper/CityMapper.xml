@@ -27,15 +27,23 @@
   <sql id="Example_Where_Clause">
     <where>
       <if test="cityName!=null"> and city_name=#{cityName,jdbcType=VARCHAR}</if>
+      <if test="provinceCode!=null"> and province_code=#{provinceCode,jdbcType=VARCHAR}</if>
     </where>
   </sql>
-  <select id="selectList" parameterType="java.util.Map" resultMap="BaseResultMap">
+  <select id="selectCityByCityCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from City
+    where   city_code=#{cityCode}
+  </select>
+  <select id="selectList" parameterType="cn.cityre.mis.center.entity.query.CityQuery" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from City
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
+    order by gbcode
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 

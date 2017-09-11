@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: 刘大磊
@@ -5,7 +6,7 @@
   Time: 15:07
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://"
@@ -27,7 +28,7 @@
     <script type="text/javascript">
         //域路径
         var ctx = '<%=basePath%>';
-        var ctx2='<%=request.getScheme() + "://"
+        var ctx2 = '<%=request.getScheme() + "://"
             + request.getServerName() + ":" + request.getServerPort()
             + path %>';
     </script>
@@ -44,18 +45,18 @@
     <script language="javascript" type="text/javascript" src="<%=path%>/js/ux/datetime/WdatePicker.js"></script>
 
     <script type="text/javascript" src="<%=path%>/js/hcharts/highcharts.js"></script>
-    <link href="<%=path%>/js/art/skins/idialog.css" rel="stylesheet"      type="text/css" />
-    <script type="text/javascript" src="<%=path%>/js/ux/date.format.js"            charset="utf-8"></script>
-    <script type="text/javascript" src="<%=path%>/js/ux/validate.js"            charset="utf-8"></script>
+    <link href="<%=path%>/js/art/skins/idialog.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="<%=path%>/js/ux/date.format.js" charset="utf-8"></script>
+    <script type="text/javascript" src="<%=path%>/js/ux/validate.js" charset="utf-8"></script>
     <script type="text/javascript" src="<%=path%>/js/art/artDialog.js"></script>
     <script type="text/javascript" src="<%=path%>/js/art/plugins/iframeTools.js"></script>
-    <link href="<%=path%>/js/ztree/css/showLoading.css" rel="stylesheet"          media="screen" />
-    <link rel="stylesheet"          href="<%=path%>/js/ztree/css/zTreeStyle/zTreeStyle.css"
-          type="text/css" />
-    <script type="text/javascript"            src="<%=path%>/js/ztree/js/jquery.ztree.core-3.5.js"></script>
-    <script type="text/javascript"            src="<%=path%>/js/ztree/js/jquery.ztree.excheck-3.5.js"></script>
-    <script type="text/javascript"            src="<%=path%>/js/ztree/js/jquery.ztree.exedit-3.5.js"></script>
-    <script type="text/javascript"            src="<%=path%>/js/ztree/js/jquery.showLoading.min.js"></script>
+    <link href="<%=path%>/js/ztree/css/showLoading.css" rel="stylesheet" media="screen"/>
+    <link rel="stylesheet" href="<%=path%>/js/ztree/css/zTreeStyle/zTreeStyle.css"
+          type="text/css"/>
+    <script type="text/javascript" src="<%=path%>/js/ztree/js/jquery.ztree.core-3.5.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/ztree/js/jquery.ztree.excheck-3.5.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/ztree/js/jquery.ztree.exedit-3.5.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/ztree/js/jquery.showLoading.min.js"></script>
     <script language="javascript" type="text/javascript" src="<%=path%>/js/eidea.validate.js"></script>
     <script language="javascript" type="text/javascript" src="<%=path%>/js/eidea.util.js"></script>
     <style type="text/css">
@@ -88,9 +89,7 @@
         .cs-north-bg {
             width: 100%;
             height: 100%;
-            background:
-                    url(<%=path%>/image/header_bg.png)
-                    repeat-x;
+            background: url(<%=path%>/image/header_bg.png) repeat-x;
         }
 
         .cs-north-logo {
@@ -114,9 +113,7 @@
 
         .cs-south {
             height: 23px;
-            background:
-                    url(<%=path%>/image/panel_title.gif)
-                    repeat-x;
+            background: url(<%=path%>/image/panel_title.gif) repeat-x;
             padding-top: 5px;
             text-align: center;
         }
@@ -154,6 +151,7 @@
         .ui-skin-nav .li-skinitem span.cs-skin-on {
             border: 1px solid #FFFFFF;
         }
+
         .ui-skin-nav .li-skinitem span.gray {
             background-color: blue;
         }
@@ -175,13 +173,11 @@
             cursor: pointer;
             line-height: 20px;
             list-style: none;
-            background: url(<%=path%>/image/icon/bulletrbl.png) no-repeat 2px
-            center;
+            background: url(<%=path%>/image/icon/bulletrbl.png) no-repeat 2px center;
         }
 
         .li_fn {
-            background: url(<%=path%>/image/icon/bulletrbl.png) no-repeat 2px
-            center;
+            background: url(<%=path%>/image/icon/bulletrbl.png) no-repeat 2px center;
         }
 
         .tree_fn {
@@ -323,13 +319,13 @@
         }
     </style>
     <script type="text/javascript">
-        $(function() {
+        $(function () {
             loadSystemZtreeIMI();
 
-            var role ="<%="admin"%>";
-            if(role == "normal"){
+            var role = "<%="admin"%>";
+            if (role == "normal") {
                 $("#systemztreeId").hide();
-            }else if(role == "admin"){
+            } else if (role == "admin") {
                 $("#systemztreeId").show();
             }
 
@@ -339,7 +335,7 @@
             $('#time_ids').html(currentTime);
 
             //左边切换
-            $('.cs-navi-tab').click(function() {
+            $('.cs-navi-tab').click(function () {
                 $('#mobileAccordion_ids li').removeClass("cs_now");
                 var $this = $(this);
                 $this.addClass("cs_now");
@@ -349,7 +345,7 @@
             });
 
             //首页切换
-            $('.tab_items_href').click(function() {
+            $('.tab_items_href').click(function () {
                 $('.console-tab-div a').removeClass("_hrefselect");
                 var $this = $(this);
                 $this.addClass("_hrefselect");
@@ -357,14 +353,14 @@
             });
 
             var themes = {
-                'gray':ctx+'/css/gray/easyui.css',
-                'black':ctx+'/css/black/easyui.css',
-                'metro':ctx+'/css/metro/easyui.css',
+                'gray': ctx + '/css/gray/easyui.css',
+                'black': ctx + '/css/black/easyui.css',
+                'metro': ctx + '/css/metro/easyui.css',
             };
 
-            var skins = $('.li-skinitem span').click(function() {
+            var skins = $('.li-skinitem span').click(function () {
                 var $this = $(this);
-                if($this.hasClass('cs-skin-on')) return;
+                if ($this.hasClass('cs-skin-on')) return;
                 skins.removeClass('cs-skin-on');
                 $this.addClass('cs-skin-on');
                 var skin = $this.attr('rel');
@@ -373,15 +369,15 @@
                 skin == 'dark-hive' ? $('.cs-north-logo').css('color', '#FFFFFF') : $('.cs-north-logo').css('color', '#000000');
             });
 
-            if(getCookie('cs-skin')) {
+            if (getCookie('cs-skin')) {
                 var skin = getCookie('cs-skin');
                 $('#swicth-style').attr('href', themes[skin]);
-                $this = $('.li-skinitem span[rel='+skin+']');
+                $this = $('.li-skinitem span[rel=' + skin + ']');
                 $this.addClass('cs-skin-on');
                 skin == 'dark-hive' ? $('.cs-north-logo').css('color', '#FFFFFF') : $('.cs-north-logo').css('color', '#000000');
             }
             //调用抖动接口
-            artDialog.fn.shake = function (){
+            artDialog.fn.shake = function () {
                 var style = this.DOM.wrap[0].style,
                     p = [4, 8, 4, 0, -4, -8, -4, 0],
                     fx = function () {
@@ -402,30 +398,30 @@
         var zTreeIMI;
         //加载ztree数据
         var setting = {
-            view : {
-                dblClickExpand : false,
-                showLine : false
+            view: {
+                dblClickExpand: false,
+                showLine: false
             },
-            data : {
-                simpleData : {
-                    enable : true
+            data: {
+                simpleData: {
+                    enable: true
                 }
             },
-            callback : {
-                onClick : onTreeClick,
+            callback: {
+                onClick: onTreeClick,
             }
 
         };
         function loadSystemZtreeIMI() {
             $('#systemztreeId').showLoading();
-            var url="<%=path%>/leftmenu";
+            var url = "<%=path%>/leftmenu";
             $.ajax({
                     url: url,
                     type: 'POST',
                     dataType: "json",
                     success: function (result) {
                         var value = result;
-                        if(value.root != ""){
+                        if (value.root != "") {
                             var message = eval(value.data);
                             $.fn.zTree.init($("#systemztreeId"), setting, message);
                             $("#systemztreeId").hideLoading();
@@ -439,10 +435,10 @@
         }
 
         function onTreeClick(e, treeId, treeNode) {
-            if(treeNode.menuView  && treeNode.menuView != ""){
+            if (treeNode.menuView && treeNode.menuView != "") {
                 var m_name = treeNode.name;
                 var url = treeNode.menuView;
-                addTabto(m_name,url);
+                addTabto(m_name, url);
             }
         }
         //art 引用
@@ -455,76 +451,76 @@
         })(art.dialog.defaults);
 
         //左边树的点击 事件
-        function menuClick(node){
-            var target=node.target;
+        function menuClick(node) {
+            var target = node.target;
 
-            if(node.menutype==0){
+            if (node.menutype == 0) {
                 return;
             }
             $(this).tree('toggle', target);
 
-            var attrmenu=target.attributes;
-            if(attrmenu!='' && attrmenu != null && node.attributes != undefined){
-                var m_name="";
-                var url_text=node.attributes.menucontrol;
-                var m_iconcls=node.attributes.ename;
-                if(url_text=="ok"){
-                    m_name="数据信息管理";
-                }else{
-                    m_name=node.text;
+            var attrmenu = target.attributes;
+            if (attrmenu != '' && attrmenu != null && node.attributes != undefined) {
+                var m_name = "";
+                var url_text = node.attributes.menucontrol;
+                var m_iconcls = node.attributes.ename;
+                if (url_text == "ok") {
+                    m_name = "数据信息管理";
+                } else {
+                    m_name = node.text;
                 }
 
                 $("#hide_left_menumodule_ids").val(m_iconcls);
-                var url_=node.attributes.menuview+"?module="+m_iconcls;
-                addTabto(m_name,url_);
+                var url_ = node.attributes.menuview + "?module=" + m_iconcls;
+                addTabto(m_name, url_);
             }
         }
         //添加Tab有效果
-        function addTabto(title, url){
-            if(url){
-                var href= ctx+url;
+        function addTabto(title, url) {
+            if (url) {
+                var href = ctx + url;
                 var content = createFrame(href);
-            }else{
-                var href =  ctx+"/webi/error.jsp";
+            } else {
+                var href = ctx + "/webi/error.jsp";
                 var content = createFrame(href);
             }
-            if ($('#tabs').tabs('exists', title)&&Imi.isNotVal(url)){
+            if ($('#tabs').tabs('exists', title) && Imi.isNotVal(url)) {
                 $('#tabs').tabs('select', title);//选中并刷新
                 var currTab = $('#tabs').tabs('getSelected');
-                $('#tabs').tabs('close',title);
-                $('#tabs').tabs('add',{
-                    title:title,
-                    closable:true,
-                    content:content,
-                    tools : [ {
-                        iconCls : 'icon-mini-refresh',
-                        handler : function() {
+                $('#tabs').tabs('close', title);
+                $('#tabs').tabs('add', {
+                    title: title,
+                    closable: true,
+                    content: content,
+                    tools: [{
+                        iconCls: 'icon-mini-refresh',
+                        handler: function () {
                             refreshTab(title);
                         }
-                    } ]
+                    }]
                 });
             } else {
                 //URL 是否有效的路经
-                if(Imi.isNotVal(url)&&url!="-"){
-                    $('#tabs').tabs('add',{
-                        title:title,
-                        content:content,
-                        closable:true,
-                        tools : [ {
-                            iconCls : 'icon-mini-refresh',
-                            handler : function() {
+                if (Imi.isNotVal(url) && url != "-") {
+                    $('#tabs').tabs('add', {
+                        title: title,
+                        content: content,
+                        closable: true,
+                        tools: [{
+                            iconCls: 'icon-mini-refresh',
+                            handler: function () {
                                 refreshTab(title);
                             }
-                        } ]
+                        }]
                     });
-                }else{
+                } else {
                     //错误的地址 跳到错误的页面
-                    if(!$('#tabs').tabs('exists', title)){
-                        $('#tabs').tabs('select',title);
-                        $('#tabs').tabs('add',{
-                            title:title,
-                            content:content,
-                            closable:true
+                    if (!$('#tabs').tabs('exists', title)) {
+                        $('#tabs').tabs('select', title);
+                        $('#tabs').tabs('add', {
+                            title: title,
+                            content: content,
+                            closable: true
                         });
                     }
                 }
@@ -532,87 +528,87 @@
             tabClose();
         }
         function createFrame(url) {
-            var s = '<iframe scrolling="auto" frameborder="0"  src="'+url+'" style="width:100%;height:90%;"></iframe>';
+            var s = '<iframe scrolling="auto" frameborder="0"  src="' + url + '" style="width:100%;height:90%;"></iframe>';
             return s;
         }
 
         function tabClose() {
             /*双击关闭TAB选项卡*/
-            $(".tabs-inner").dblclick(function(){
+            $(".tabs-inner").dblclick(function () {
                 var subtitle = $(this).children(".tabs-closable").text();
-                $('#tabs').tabs('close',subtitle);
+                $('#tabs').tabs('close', subtitle);
 
             });
             /*为选项卡绑定右键*/
-            $(".tabs-inner").bind('contextmenu',function(e){
+            $(".tabs-inner").bind('contextmenu', function (e) {
                 $('#mm').menu('show', {
                     left: e.pageX,
                     top: e.pageY
                 });
-                var subtitle =$(this).children(".tabs-closable").text();
-                $('#mm').data("currtab",subtitle);
-                $('#tabs').tabs('select',subtitle);
+                var subtitle = $(this).children(".tabs-closable").text();
+                $('#mm').data("currtab", subtitle);
+                $('#tabs').tabs('select', subtitle);
                 return false;
             });
         }
         function refreshTab(title) {
-            var centerTabs=$('#tabs');
+            var centerTabs = $('#tabs');
             var tab = centerTabs.tabs('getTab', title);
             centerTabs.tabs('update', {
-                tab : tab,
-                options : tab.panel('options')
+                tab: tab,
+                options: tab.panel('options')
             });
         }
         //绑定右键菜单事件
         function tabCloseEven() {
             //刷新
-            $('#mm-tabupdate').click(function(){
+            $('#mm-tabupdate').click(function () {
                 var currTab = $('#tabs').tabs('getSelected');
-                var url =  currTab.panel('options').href;
-                var title=currTab.panel('options').title;
-                if(url != undefined &&title != '首页') {
+                var url = currTab.panel('options').href;
+                var title = currTab.panel('options').title;
+                if (url != undefined && title != '首页') {
 
                     $('#tabs').tabs('select', title);//选中并刷新
-                    $('#tabs').tabs('close',title);
-                    $('#tabs').tabs('add',{
-                        title:title,
+                    $('#tabs').tabs('close', title);
+                    $('#tabs').tabs('add', {
+                        title: title,
                         href: url,
-                        closable:true
+                        closable: true
                     });
                 }
                 tabClose();
             });
             //关闭当前
-            $('#mm-tabclose').click(function(){
+            $('#mm-tabclose').click(function () {
                 var currtab_title = $('#mm').data("currtab");
-                $('#tabs').tabs('close',currtab_title);
+                $('#tabs').tabs('close', currtab_title);
             });
             //全部关闭
-            $('#mm-tabcloseall').click(function(){
-                $('.tabs-inner span').each(function(i,n){
+            $('#mm-tabcloseall').click(function () {
+                $('.tabs-inner span').each(function (i, n) {
                     var t = $(n).text();
-                    if(t != '首页') {
-                        $('#tabs').tabs('close',t);
+                    if (t != '首页') {
+                        $('#tabs').tabs('close', t);
                     }
                 });
             });
             //关闭除当前之外的TAB
-            $('#mm-tabcloseother').click(function(){
+            $('#mm-tabcloseother').click(function () {
                 var prevall = $('.tabs-selected').prevAll();
                 var nextall = $('.tabs-selected').nextAll();
-                if(prevall.length>0){
-                    prevall.each(function(i,n){
-                        var t=$('a:eq(0) span',$(n)).text();
-                        if(t != '首页') {
-                            $('#tabs').tabs('close',t);
+                if (prevall.length > 0) {
+                    prevall.each(function (i, n) {
+                        var t = $('a:eq(0) span', $(n)).text();
+                        if (t != '首页') {
+                            $('#tabs').tabs('close', t);
                         }
                     });
-                      }
-                if(nextall.length>0) {
-                    nextall.each(function(i,n){
-                        var t=$('a:eq(0) span',$(n)).text();
-                        if(t != '首页') {
-                            $('#tabs').tabs('close',t);
+                }
+                if (nextall.length > 0) {
+                    nextall.each(function (i, n) {
+                        var t = $('a:eq(0) span', $(n)).text();
+                        if (t != '首页') {
+                            $('#tabs').tabs('close', t);
                         }
                     });
                 }
@@ -620,93 +616,94 @@
                 return false;
             });
             //关闭当前右侧的TAB
-            $('#mm-tabcloseright').click(function(){
+            $('#mm-tabcloseright').click(function () {
                 var nextall = $('.tabs-selected').nextAll();
-                if(nextall.length==0){
+                if (nextall.length == 0) {
                     //msgShow('系统提示','后边没有啦~~','error');
                     return false;
                 }
-                nextall.each(function(i,n){
-                    var t=$('a:eq(0) span',$(n)).text();
-                    $('#tabs').tabs('close',t);
+                nextall.each(function (i, n) {
+                    var t = $('a:eq(0) span', $(n)).text();
+                    $('#tabs').tabs('close', t);
                 });
                 $('#mm').menu('hide');
                 return false;
             });
             //关闭当前左侧的TAB
-            $('#mm-tabcloseleft').click(function(){
+            $('#mm-tabcloseleft').click(function () {
                 var prevall = $('.tabs-selected').prevAll();
-                if(prevall.length==0){
+                if (prevall.length == 0) {
                     return false;
                 }
-                prevall.each(function(i,n){
-                    var t=$('a:eq(0) span',$(n)).text();
-                    $('#tabs').tabs('close',t);
+                prevall.each(function (i, n) {
+                    var t = $('a:eq(0) span', $(n)).text();
+                    $('#tabs').tabs('close', t);
                 });
                 $('#mm').menu('hide');
                 return false;
             });
 
             //退出
-            $("#mm-exit").click(function(){
+            $("#mm-exit").click(function () {
                 $('#mm').menu('hide');
             })
         }
-        function setCookie(name,value) {//两个参数，一个是cookie的名子，一个是值
+        function setCookie(name, value) {//两个参数，一个是cookie的名子，一个是值
             var Days = 30; //此 cookie 将被保存 30 天
             var exp = new Date();    //new Date("December 31, 9998");
-            exp.setTime(exp.getTime() + Days*24*60*60*1000);
-            document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+            exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+            document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
         }
 
         function getCookie(name) {//取cookies函数
-            var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
-            if(arr != null) return unescape(arr[2]); return null;
+            var arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
+            if (arr != null) return unescape(arr[2]);
+            return null;
         }
         //当前系统时间
-        function currentTime(){
-            var d = new Date(),str = '';
-            var td=d.getDay();
+        function currentTime() {
+            var d = new Date(), str = '';
+            var td = d.getDay();
             var f;
-            if(td==0){
-                f="星期天";
-            }else if(td==1){
-                f="星期一";
-            }else if(td==2){
-                f="星期二";
-            }else if(td==3){
-                f="星期三";
-            }else if(td==4){
-                f="星期四";
-            }else if(td==5){
-                f="星期五";
-            }else{
-                f="星期六";
+            if (td == 0) {
+                f = "星期天";
+            } else if (td == 1) {
+                f = "星期一";
+            } else if (td == 2) {
+                f = "星期二";
+            } else if (td == 3) {
+                f = "星期三";
+            } else if (td == 4) {
+                f = "星期四";
+            } else if (td == 5) {
+                f = "星期五";
+            } else {
+                f = "星期六";
             }
-            var hours=d.getHours();
-            var hf="";
-            if(hours<13){
-                hf="上午 ";
-            }else{
-                hf="下午 ";
+            var hours = d.getHours();
+            var hf = "";
+            if (hours < 13) {
+                hf = "上午 ";
+            } else {
+                hf = "下午 ";
             }
-            str += d.getFullYear()+'年';
-            str  += d.getMonth() + 1+'月';
-            str  += d.getDate()+'日 &nbsp;';
-            str +=hf+ hours+':';
-            str  += d.getMinutes()+':';
-            str+= d.getSeconds()+'&nbsp; '+f;
+            str += d.getFullYear() + '年';
+            str += d.getMonth() + 1 + '月';
+            str += d.getDate() + '日 &nbsp;';
+            str += hf + hours + ':';
+            str += d.getMinutes() + ':';
+            str += d.getSeconds() + '&nbsp; ' + f;
             return str;
         }
-        setInterval(function(){
+        setInterval(function () {
             $('#time_ids').html(currentTime)
-        },1000);
+        }, 1000);
 
         /**
          *退出
          */
-        function exitSys(){
-            var dialogexit=art.dialog({
+        function exitSys() {
+            var dialogexit = art.dialog({
                 lock: true,
                 background: '#600',
                 opacity: 0.87,
@@ -716,14 +713,14 @@
 
                     $.ajax({
                         type: 'POST',
-                        url: ctx2+ "/login/loginout.api",
-                        success: function (value){
+                        url: ctx2 + "/login/loginout.api",
+                        success: function (value) {
                             var flag = value;
-                            if(flag){
+                            if (flag) {
 
                             }
                         },
-                        error:function(){
+                        error: function () {
                             //$.messager.alert('报错','系统在退出时，出现异常！', 'error');
                         }
                     });
@@ -741,27 +738,27 @@
         }
 
         //重置密码
-        function resetClk(){
+        function resetClk() {
             win = parent.Imi.dialog({
-                title : '重置密码',
-                href : ctx+"/web/ResetPwd.jsp",
-                width : 400,
-                height : 336,
-                buttons : [{
-                    text : '确定',
+                title: '重置密码',
+                href: ctx + "/web/ResetPwd.jsp",
+                width: 400,
+                height: 336,
+                buttons: [{
+                    text: '确定',
                     iconCls: 'icon-save',
-                    handler : function() {
+                    handler: function () {
                         //执行创建方法：
                         var f = win.find('form');
-                        var floag=f.form('validate');
-                        if(floag){
+                        var floag = f.form('validate');
+                        if (floag) {
                             restPwd(f);
                         }
                     }
-                },{
-                    text : '取消',
+                }, {
+                    text: '取消',
                     iconCls: 'icon-cancel',
-                    handler:function(){
+                    handler: function () {
                         Imi.winclose(win);
                     }
                 }]
@@ -769,40 +766,40 @@
             return false;
         }
         //重置密码提交数据
-        function restPwd(uiFrom){
-            var oldpwd=$("input[id='oldPassword_ids']",uiFrom).val();
-            var newpwd=$("input[id='newPassword_ids']",uiFrom).val();
+        function restPwd(uiFrom) {
+            var oldpwd = $("input[id='oldPassword_ids']", uiFrom).val();
+            var newpwd = $("input[id='newPassword_ids']", uiFrom).val();
             $.ajax({
-                url:ctx+"/login/resetPwd.api",
+                url: ctx + "/login/resetPwd.api",
                 type: 'POST',
-                data : {
-                    oldPassword :oldpwd,
-                    newPassword :newpwd
+                data: {
+                    oldPassword: oldpwd,
+                    newPassword: newpwd
                 },
-                beforeSend: function(XMLHttpRequest){
+                beforeSend: function (XMLHttpRequest) {
                     showProcess(true, '温馨提示', '正在提交数据...');
                 },
                 success: function (data) {
 
-                    var result=data;
+                    var result = data;
 
-                    if(result.flag){
+                    if (result.flag) {
                         Imi.winclose(win);
                         parent.Imi.messagerShow({
-                            title : '提示',
-                            msg :"<font color=blue>"+result.msg+"</font>"
+                            title: '提示',
+                            msg: "<font color=blue>" + result.msg + "</font>"
                         });
-                    }else{
+                    } else {
                         parent.Imi.messagerShow({
-                            title : '提示',
-                            msg :"<font color=red>"+result.msg+"</font>"
+                            title: '提示',
+                            msg: "<font color=red>" + result.msg + "</font>"
                         });
                     }
                 },
-                complete: function(XMLHttpRequest, textStatus){
+                complete: function (XMLHttpRequest, textStatus) {
                     showProcess(false);
                 },
-                error: function(){
+                error: function () {
                     showProcess(false);
                     $.messager.alert('温馨提示', '由于网络或服务器太忙，提交失败，请重试！');
                 }
@@ -813,31 +810,30 @@
         //web go event
 
         //菜单点击事件
-        function attrTreeFn(node){
-            var attr_=node.attributes;
-            var tge_leaf=attr_.leaf;
-            if(tge_leaf){
-                var href=attr_.href;
-                var text=node.text;
-                var gettitle=attr_.title;
-                var n_t="";
-                if(null!=gettitle){
-                    n_t=gettitle;
-                }else{
-                    n_t=text;
+        function attrTreeFn(node) {
+            var attr_ = node.attributes;
+            var tge_leaf = attr_.leaf;
+            if (tge_leaf) {
+                var href = attr_.href;
+                var text = node.text;
+                var gettitle = attr_.title;
+                var n_t = "";
+                if (null != gettitle) {
+                    n_t = gettitle;
+                } else {
+                    n_t = text;
                 }
                 addTabto(n_t, href);
-                console.log("n_t="+n_t+" href="+href);
+                console.log("n_t=" + n_t + " href=" + href);
             }
         }
-
 
 
     </script>
 
 </head>
 <body class="easyui-layout">
-<input type="hidden" id="hide_left_menumodule_ids" />
+<input type="hidden" id="hide_left_menumodule_ids"/>
 <div region="north" border="false" class="cs-north"
      style="height: 66px;overflow: hidden;background: url('<%=path%>/image/bg.png') repeat-x;">
     <div
@@ -888,7 +884,6 @@
 </div>
 
 
-
 <div id="mm" class="easyui-menu cs-tab-menu">
     <div id="mm-tabupdate">刷新</div>
     <div class="menu-sep"></div>
@@ -896,5 +891,128 @@
     <div id="mm-tabcloseother">关闭其他</div>
     <div id="mm-tabcloseall">关闭全部</div>
 </div>
+
+<div id="selectCityDig" class="easyui-dialog" title="请选择城市" data-options="iconCls:'icon-save'"
+     style="width:300px;height:200px;padding:10px">
+    <select id="pro_sel" onchange="initCityOptions(this.value)"></select><br><br>
+    <select id="city_sel"></select><br><br>
+    <input type="button" id="selCityBtn" value="保存" onclick="saveCity()">
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        <c:choose>
+        <c:when test="${MIS_USER.currentCityCode==null}">
+        openDialog();
+        </c:when>
+        <c:otherwise>
+        $('#selectCityDig').dialog('close');
+        </c:otherwise>
+        </c:choose>
+    });
+
+    function initProvinces(provinceCode, citycode) {
+        $.ajax({
+            url: "<%=path%>/provinces",
+            type: 'GET',
+            dataType: "json",
+            contentType: 'application/json;charset=utf-8',
+            success: function (result) {
+                if (result.success) {
+                    var proBuf = new StringBuffer();
+                    var provinces = result.data;
+                    for (var i = 0; i < provinces.length; i++) {
+                        proBuf.append("<option value='").append(provinces[i].code).append("'>");
+                        proBuf.append(provinces[i].name).append("</option>");
+                    }
+                    if (citycode == null) {
+                        citycode = null;
+                    }
+                    $("#pro_sel").html(proBuf.toString());
+                    if (provinceCode != null) {
+                        $("#pro_sel").val(provinceCode);
+                    }
+                    if (provinceCode != null) {
+
+                        initCityOptions(provinceCode, citycode);
+                    }
+                    else {
+                        initCityOptions(provinces[0].code, citycode);
+                    }
+
+                    return;
+                }
+                else {
+                    $.messager.alert("获取省份列表出错", result.message);
+                }
+            }
+        });
+
+    }
+    function initCityOptions(provinceCode, citycode) {
+        $.ajax({
+            url: "<%=path%>/city/" + provinceCode,
+            type: 'GET',
+            dataType: "json",
+            contentType: 'application/json;charset=utf-8',
+            success: function (result) {
+                if (result.success) {
+                    var cityBuf = new StringBuffer();
+                    var cities = result.data;
+                    for (var i = 0; i < cities.length; i++) {
+                        cityBuf.append("<option value='").append(cities[i].code).append("'>");
+                        cityBuf.append(cities[i].name).append("</option>");
+                    }
+                    $("#city_sel").html(cityBuf.toString());
+                    if (citycode != null) {
+                        $("#city_sel").val(citycode);
+                    }
+                    return;
+                }
+                else {
+                    $.messager.alert("获取城市列表出错", result.message);
+                }
+            }
+        });
+    }
+    function openDialog() {
+        $.ajax({
+            url: "<%=path%>/userSession",
+            type: 'GET',
+            dataType: "json",
+            contentType: 'application/json;charset=utf-8',
+            success: function (result) {
+                if (result.success) {
+                    var user = result.data;
+                    initProvinces(user.currentProvinceCode, user.currentCityCode);
+                    return;
+                }
+                else {
+                    $.messager.alert("获取省份列表出错", result.message);
+                }
+            }
+        });
+        $('#selectCityDig').dialog('open');
+    }
+    function saveCity() {
+        var cityCode = $("#city_sel").val();
+        $.ajax({
+            url: "<%=path%>/selectCity/" + cityCode,
+            type: 'GET',
+            dataType: "json",
+            contentType: 'application/json;charset=utf-8',
+            success: function (result) {
+                if (result.success) {
+                    $('#selectCityDig').dialog('close');
+                    return;
+                }
+                else {
+                    $('#selectCityDig').dialog('close');
+                    $.messager.alert("获取省份列表出错", result.message);
+                }
+            }
+        });
+    }
+</script>
 </body>
 </html>

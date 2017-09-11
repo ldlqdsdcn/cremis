@@ -9,6 +9,14 @@ public class UserSession {
     private String name;
     private String userId;
     private String token;
+    /*
+     *当前城市
+     */
+    private String currentCityCode;
+    /**
+     * 当前省份
+     */
+    private String currentProvinceCode;
 
     public String getUnionUid() {
         return unionUid;
@@ -40,5 +48,21 @@ public class UserSession {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getCurrentCityCode() {
+        return currentCityCode;
+    }
+
+    public void setCurrentCityCode(String currentCityCode) {
+        this.currentCityCode = currentCityCode;
+    }
+
+    public String getCurrentProvinceCode() {
+        return currentProvinceCode;
+    }
+
+    public void setCurrentProvinceCode(String currentProvinceCode) {
+        this.currentProvinceCode = currentProvinceCode;
     }
 }

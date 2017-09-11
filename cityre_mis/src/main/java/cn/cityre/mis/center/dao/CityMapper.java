@@ -1,9 +1,9 @@
 package cn.cityre.mis.center.dao;
 
+import cn.cityre.mis.center.entity.query.CityQuery;
 import cn.cityre.mis.center.model.City;
 
 import java.util.List;
-import java.util.Map;
 
 public interface CityMapper {
     int deleteByPrimaryKey(String cityCode);
@@ -18,5 +18,7 @@ public interface CityMapper {
 
     int updateByPrimaryKey(City record);
 
-    List<City> selectList(Map<String,Object> param);
+    List<City> selectList(CityQuery param);
+
+    City selectCityByCityCode(String cityCode);
 }

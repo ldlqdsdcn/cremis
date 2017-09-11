@@ -1,6 +1,7 @@
 package cn.cityre.mis.center.service;
 
 import cn.cityre.mis.center.model.City;
+import cn.cityre.mis.center.model.Province;
 
 import java.util.List;
 
@@ -13,4 +14,19 @@ public interface CityService {
      * @return
      */
     List<City> getAllCityList();
+
+    /**
+     * 获取所有的省份列表
+     * @return
+     */
+    List<Province> getAllProvinceList();
+
+    /**
+     * 根据省份编码获取城市列表
+     * @param provinceCode
+     * @return
+     */
+    List<City> getCityListByProvinceCode(String provinceCode);
+
+    City getCityByCode(String code);
 }
