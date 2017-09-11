@@ -16,7 +16,7 @@
         password="wms123456">
     </jdbcConnection>-->
     <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                    connectionURL="jdbc:mysql://10.10.123.86:3306/v2017_account_center?characterEncoding=utf8"
+                    connectionURL="jdbc:mysql://10.11.10.34:3307/cityre_center?characterEncoding=utf8"
                     userId="liudalei"
                     password="liudalei_2017">
     </jdbcConnection>
@@ -25,23 +25,23 @@
       <property name="forceBigDecimals" value="false" />
     </javaTypeResolver>
 
-    <javaModelGenerator targetPackage="cn.cityre.account.sys.model" targetProject="../cityre_mis/src/main/java">
+    <javaModelGenerator targetPackage="cn.cityre.mis.cityre_center.model" targetProject="../cityre_mis/src/main/java">
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <sqlMapGenerator targetPackage="cn.cityre.account.sys.mapper"  targetProject="../cityre_mis/src/main/resources">
+    <sqlMapGenerator targetPackage="cn.cityre.mis.cityre_center.mapper"  targetProject="../cityre_mis/src/main/resources">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
 
-    <javaClientGenerator type="XMLMAPPER" targetPackage="cn.cityre.account.sys.dao"  targetProject="../cityre_mis/src/main/java">
+    <javaClientGenerator type="XMLMAPPER" targetPackage="cn.cityre.mis.cityre_center.dao"  targetProject="../cityre_mis/src/main/java">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
-    <table  tableName="v2017_user_phone" domainObjectName="UserPhone" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+    <table  tableName="province" domainObjectName="Province" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
             enableSelectByExample="false" selectByExampleQueryId="false">
       <generatedKey column="id"  identity="true" sqlStatement="MYSQL" />
     </table>
-    <table  tableName="v2017_user_email" domainObjectName="UserEmail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+    <table  tableName="City" domainObjectName="City" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
             enableSelectByExample="false" selectByExampleQueryId="false">
       <generatedKey column="id"  identity="true" sqlStatement="MYSQL" />
     </table>
