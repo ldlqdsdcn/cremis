@@ -1,6 +1,6 @@
-package cn.cityre.mis.cityre_center.dao;
+package cn.cityre.mis.center.dao;
 
-import cn.cityre.mis.cityre_center.model.Province;
+import cn.cityre.mis.center.model.Province;
 
 public interface ProvinceMapper {
     int deleteByPrimaryKey(Integer id);

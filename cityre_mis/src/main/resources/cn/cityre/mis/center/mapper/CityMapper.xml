@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.cityre.mis.cityre_center.dao.CityMapper">
-  <resultMap id="BaseResultMap" type="cn.cityre.mis.cityre_center.model.City">
+<mapper namespace="cn.cityre.mis.center.dao.CityMapper">
+  <resultMap id="BaseResultMap" type="cn.cityre.mis.center.model.City">
     <id column="city_code" jdbcType="VARCHAR" property="cityCode" />
     <result column="id" jdbcType="INTEGER" property="id" />
     <result column="city_pinyin" jdbcType="VARCHAR" property="cityPinyin" />
@@ -26,11 +26,10 @@
   </sql>
   <sql id="Example_Where_Clause">
     <where>
-      <if test="provinceCode!=null"> and province_code=#{provinceCode,jdbcType=VARCHAR}</if>
-      <if test="cityNameLike!=null"> and city_name  like  CONCAT('%',#{cityNameLike,jdbcType=VARCHAR},'%' )</if>
+      <if test="cityName!=null"> and city_name=#{cityName,jdbcType=VARCHAR}</if>
     </where>
   </sql>
-  <select id="selectList" parameterType="cn.cityre.mis.cityre_center.entity.query.CityQuery" resultMap="BaseResultMap">
+  <select id="selectList" parameterType="java.util.Map" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from City
@@ -48,7 +47,7 @@
     delete from City
     where city_code = #{cityCode,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="cn.cityre.mis.cityre_center.model.City">
+  <insert id="insert" parameterType="cn.cityre.mis.center.model.City">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -65,7 +64,7 @@
       #{adduid,jdbcType=VARCHAR}, #{addtime,jdbcType=TIMESTAMP}, #{updateuid,jdbcType=VARCHAR}, 
       #{updatetime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="cn.cityre.mis.cityre_center.model.City">
+  <insert id="insertSelective" parameterType="cn.cityre.mis.center.model.City">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -171,7 +170,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.cityre.mis.cityre_center.model.City">
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cityre.mis.center.model.City">
     update City
     <set>
       <if test="id != null">
@@ -225,7 +224,7 @@
     </set>
     where city_code = #{cityCode,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.cityre.mis.cityre_center.model.City">
+  <update id="updateByPrimaryKey" parameterType="cn.cityre.mis.center.model.City">
     update City
     set id = #{id,jdbcType=INTEGER},
       city_pinyin = #{cityPinyin,jdbcType=VARCHAR},

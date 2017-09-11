@@ -1,4 +1,4 @@
-package cn.cityre.mis.cityre_center.model;
+package cn.cityre.mis.center.model;
 
 import java.util.Date;
 

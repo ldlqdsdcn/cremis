@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cityre.account.sys.dao.UserEmailMapper">
+  <resultMap id="BaseResultMap" type="cn.cityre.account.sys.model.UserEmail">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="unionUid" jdbcType="VARCHAR" property="unionuid" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="isVerified" jdbcType="TINYINT" property="isverified" />
+    <result column="isPrimary" jdbcType="TINYINT" property="isprimary" />
+    <result column="pinToken" jdbcType="VARCHAR" property="pintoken" />
+    <result column="expireTime" jdbcType="TIMESTAMP" property="expiretime" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, unionUid, address, isVerified, isPrimary, pinToken, expireTime, createTime, updateTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from v2017_user_email
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from v2017_user_email
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.cityre.account.sys.model.UserEmail">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into v2017_user_email (unionUid, address, isVerified, 
+      isPrimary, pinToken, expireTime, 
+      createTime, updateTime)
+    values (#{unionuid,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{isverified,jdbcType=TINYINT}, 
+      #{isprimary,jdbcType=TINYINT}, #{pintoken,jdbcType=VARCHAR}, #{expiretime,jdbcType=TIMESTAMP}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.cityre.account.sys.model.UserEmail">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into v2017_user_email
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="unionuid != null">
+        unionUid,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="isverified != null">
+        isVerified,
+      </if>
+      <if test="isprimary != null">
+        isPrimary,
+      </if>
+      <if test="pintoken != null">
+        pinToken,
+      </if>
+      <if test="expiretime != null">
+        expireTime,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+      <if test="updatetime != null">
+        updateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="unionuid != null">
+        #{unionuid,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="isverified != null">
+        #{isverified,jdbcType=TINYINT},
+      </if>
+      <if test="isprimary != null">
+        #{isprimary,jdbcType=TINYINT},
+      </if>
+      <if test="pintoken != null">
+        #{pintoken,jdbcType=VARCHAR},
+      </if>
+      <if test="expiretime != null">
+        #{expiretime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.cityre.account.sys.model.UserEmail">
+    update v2017_user_email
+    <set>
+      <if test="unionuid != null">
+        unionUid = #{unionuid,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="isverified != null">
+        isVerified = #{isverified,jdbcType=TINYINT},
+      </if>
+      <if test="isprimary != null">
+        isPrimary = #{isprimary,jdbcType=TINYINT},
+      </if>
+      <if test="pintoken != null">
+        pinToken = #{pintoken,jdbcType=VARCHAR},
+      </if>
+      <if test="expiretime != null">
+        expireTime = #{expiretime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.cityre.account.sys.model.UserEmail">
+    update v2017_user_email
+    set unionUid = #{unionuid,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      isVerified = #{isverified,jdbcType=TINYINT},
+      isPrimary = #{isprimary,jdbcType=TINYINT},
+      pinToken = #{pintoken,jdbcType=VARCHAR},
+      expireTime = #{expiretime,jdbcType=TIMESTAMP},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
