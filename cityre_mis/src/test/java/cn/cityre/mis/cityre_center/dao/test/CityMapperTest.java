@@ -1,8 +1,8 @@
-package cn.cityre.mis.center.service.test;
+package cn.cityre.mis.cityre_center.dao.test;
 
 import cn.cityre.mis.RootConfig;
-import cn.cityre.mis.center.model.City;
-import cn.cityre.mis.center.service.CityService;
+import cn.cityre.mis.cityre_center.dao.CityMapper;
+import cn.cityre.mis.cityre_center.dao.DicUserTypeMapper;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,18 +14,18 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.List;
 
 /**
- * Created by 刘大磊 on 2017/8/23 17:24.
+ * Created by 刘大磊 on 2017/9/11 11:10.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {RootConfig.class})
 @TestPropertySource(locations = "classpath:application-test.properties")
-public class CityServiceTest {
+public class CityMapperTest {
     @Autowired
-    private CityService cityService;
-
+    private CityMapper cityMapper;
     @Test
-    public void testGetAllCityList() {
-        List<City> allCityList = cityService.getAllCityList();
-        Assert.assertTrue(allCityList.size() > 0);
+    public void testGetDicUserTypeList()
+    {
+        List list=cityMapper.selectList(null);
+        Assert.assertTrue(list.size()>0);
     }
 }
