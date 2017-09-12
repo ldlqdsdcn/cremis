@@ -21,6 +21,7 @@
 
     function operation(rows, index) {
         var html = "<a href='javascript:void(0)' onclick='accountHelper.edit(" + rows.id + ")' style='margin-left:10px;margin-top:0px'>编辑</a>";
+        html=html+"<a href='javascript:void(0)' onclick='accountHelper.showCity(" + rows.id + ")' style='margin-left:10px;margin-top:0px'>城市信息</a>";
         return html;
     }
     var accountHelper = {
@@ -220,7 +221,12 @@
         },
         saveUserCity:function () {
 
-        }
+        },showCity: function (id) {
+            var url = "<%=path%>/account/user/showCities/"+id;
+            $("#userPanel").panel({href: url,onLoad:function () {
+
+            }});
+        },
     };
     $(function () {
         accountHelper.goList();

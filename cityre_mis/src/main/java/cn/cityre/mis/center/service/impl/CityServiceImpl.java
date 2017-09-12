@@ -84,6 +84,10 @@ public class CityServiceImpl implements CityService {
             List<CityBo> proCityList = new ArrayList<>();
             for (int i = cityBoList.size() - 1; i >= 0; i--) {
                 CityBo cityBo = cityBoList.get(i);
+                if(cityBo.getProvinceCode()==null)
+                {
+                    continue;
+                }
                 if (cityBo.getProvinceCode().equals(provinceBo.getCode())) {
                     cityBoList.remove(i);
                     proCityList.add(cityBo);

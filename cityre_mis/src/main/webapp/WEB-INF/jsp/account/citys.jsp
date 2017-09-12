@@ -7,17 +7,17 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div id="userPanel" class="easyui-panel" style="width:100%;max-width:100%;padding:30px 60px;">
-    <c:out value="${userCity.unionUid}"/><br>
-    <c:out value="${userCity.name}"/>
+    <c:out value="${userCity.unionUid}"/>&nbsp;&nbsp;<c:out value="${userCity.name}"/>
     <br>
-    <input type="button" class="easyui-linkbutton" onclick="accountHelper.saveUserCity()" value="保存">
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="accountHelper.saveUserCity()" style="width:80px">保存</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="accountHelper.saveUserCity()" style="width:80px">返回</a>
     <br>
     城市列表：<br>
+    全选<input type="checkbox" >
     <table style="width: 100%">
     <c:forEach items="${userCity.provinceBoList}" var="userCity">
     <tr>
-        <td><c:out value="${userCity.name}"/>
-            <input name="province" onclick="citycheck(this.value,'${userCity.code}')">
+        <td style="width: 100px;"><c:out value="${userCity.name}"/><input name="province" onclick="citycheck(this.value,'${userCity.code}')" type="checkbox">
         </td>
         <td id="${userCity.code}">
             <c:forEach items="${userCity.cityBoList}" var="city">

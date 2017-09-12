@@ -66,16 +66,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserCityBo getUserCityBo(String unionUid) {
-        AccountUser accountUser = accountUserMapper.selectByUnionUid(unionUid);
+    public UserCityBo getUserCityBo(Integer id) {
+        AccountUser accountUser = accountUserMapper.selectByPrimaryKey(id);
         UserCityQuery userCityQuery = new UserCityQuery();
-        userCityQuery.setUnionUid(unionUid);
+        userCityQuery.setUnionUid(accountUser.getUnionuid());
 
         List<UserCity> userCityList = userCityMapper.selectList(userCityQuery);
         List<String> userCityIdList = userCityList.stream().map(e -> e.getCityCode()).collect(Collectors.toList());
         List<ProvinceBo> provinceBoList = cityService.getProvinceBoList(userCityIdList);
         UserCityBo userCityBo = new UserCityBo();
-        userCityBo.setUnionUid(unionUid);
+        userCityBo.setUnionUid(accountUser.getUnionuid());
         userCityBo.setName(accountUser.getUserid());
         userCityBo.setProvinceBoList(provinceBoList);
         return userCityBo;

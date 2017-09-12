@@ -24,7 +24,7 @@ public interface UserService {
      */
     Set<String> getUserPrivileges(String unionUid);
 
-    UserCityBo getUserCityBo(String unionUid);
+    UserCityBo getUserCityBo(Integer id);
 
 
 }
