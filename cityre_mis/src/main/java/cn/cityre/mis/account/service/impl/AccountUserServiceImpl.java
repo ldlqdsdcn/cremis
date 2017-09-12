@@ -10,6 +10,7 @@ import cn.cityre.mis.sys.dao.GroupMapper;
 import cn.cityre.mis.sys.dao.RepositoryMapper;
 import cn.cityre.mis.sys.dao.UserGroupMapper;
 import cn.cityre.mis.sys.dao.UserPrivilegesMapper;
+import cn.cityre.mis.sys.entity.bo.ProvinceBo;
 import cn.cityre.mis.sys.entity.query.GroupQuery;
 import cn.cityre.mis.sys.entity.query.RepositoryQuery;
 import cn.cityre.mis.sys.entity.union.GroupRepositoryUnion;

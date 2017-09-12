@@ -1,6 +1,7 @@
 package cn.cityre.mis.sys.service;
 
 import cn.cityre.mis.account.model.AccountUser;
+import cn.cityre.mis.sys.entity.bo.UserCityBo;
 
 import java.util.Set;
 
@@ -22,4 +23,8 @@ public interface UserService {
      * @return
      */
     Set<String> getUserPrivileges(String unionUid);
+
+    UserCityBo getUserCityBo(String unionUid);
+
+
 }

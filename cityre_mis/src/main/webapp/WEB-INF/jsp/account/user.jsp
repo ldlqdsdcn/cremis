@@ -217,6 +217,9 @@
                 }
             });
 
+        },
+        saveUserCity:function () {
+
         }
     };
     $(function () {

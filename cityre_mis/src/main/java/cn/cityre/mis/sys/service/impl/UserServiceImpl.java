@@ -3,7 +3,13 @@ package cn.cityre.mis.sys.service.impl;
 import cn.cityre.mis.account.dao.AccountUserMapper;
 import cn.cityre.mis.account.entity.query.AccountUserQuery;
 import cn.cityre.mis.account.model.AccountUser;
+import cn.cityre.mis.center.service.CityService;
 import cn.cityre.mis.sys.dao.RepositoryMapper;
+import cn.cityre.mis.sys.dao.UserCityMapper;
+import cn.cityre.mis.sys.entity.bo.ProvinceBo;
+import cn.cityre.mis.sys.entity.bo.UserCityBo;
+import cn.cityre.mis.sys.entity.query.UserCityQuery;
+import cn.cityre.mis.sys.model.UserCity;
 import cn.cityre.mis.sys.service.UserService;
 import cn.cityre.mis.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +18,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -29,6 +32,10 @@ public class UserServiceImpl implements UserService {
     private AccountUserMapper accountUserMapper;
     @Autowired
     private RepositoryMapper repositoryMapper;
+    @Autowired
+    private UserCityMapper userCityMapper;
+    @Autowired
+    private CityService cityService;
 
     /**
      * @param username
@@ -56,5 +63,21 @@ public class UserServiceImpl implements UserService {
             return repositoryMapper.getAllRepositories();
         }
         return repositoryMapper.getUserRepositories(unionUid);
+    }
+
+    @Override
+    public UserCityBo getUserCityBo(String unionUid) {
+        AccountUser accountUser = accountUserMapper.selectByUnionUid(unionUid);
+        UserCityQuery userCityQuery = new UserCityQuery();
+        userCityQuery.setUnionUid(unionUid);
+
+        List<UserCity> userCityList = userCityMapper.selectList(userCityQuery);
+        List<String> userCityIdList = userCityList.stream().map(e -> e.getCityCode()).collect(Collectors.toList());
+        List<ProvinceBo> provinceBoList = cityService.getProvinceBoList(userCityIdList);
+        UserCityBo userCityBo = new UserCityBo();
+        userCityBo.setUnionUid(unionUid);
+        userCityBo.setName(accountUser.getUserid());
+        userCityBo.setProvinceBoList(provinceBoList);
+        return userCityBo;
     }
 }

@@ -9,10 +9,12 @@ import cn.cityre.mis.account.service.AccountUserService;
 import cn.cityre.mis.core.entity.result.PagingListResult;
 import cn.cityre.mis.core.web.def.WebConstant;
 import cn.cityre.mis.core.web.result.JsonResult;
+import cn.cityre.mis.sys.entity.bo.UserCityBo;
 import cn.cityre.mis.sys.entity.union.GroupRepositoryUnion;
 import cn.cityre.mis.sys.entity.vo.GroupVo;
 import cn.cityre.mis.sys.entity.vo.UserSession;
 import cn.cityre.mis.sys.model.Group;
+import cn.cityre.mis.sys.service.UserService;
 import org.mybatis.pagination.dto.PageMyBatis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,6 +34,8 @@ import java.util.List;
 public class AccountUserController {
     @Autowired
     private AccountUserService accountUserService;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping("/showAccount")
     public ModelAndView showGroup() {
@@ -77,6 +81,14 @@ public class AccountUserController {
         pagingListResult.setRows(pageMyBatis);
         pagingListResult.setTotal(pageMyBatis.getTotal());
         return pagingListResult;
+    }
+
+    @RequestMapping("/showCities/{unionUid}")
+    public ModelAndView showCities(@PathVariable("unionUid") String unionUid) {
+        UserCityBo userCityBo = userService.getUserCityBo(unionUid);
+        ModelAndView modelAndView = new ModelAndView("account/citys");
+        modelAndView.addObject("userCity", userCityBo);
+        return modelAndView;
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)

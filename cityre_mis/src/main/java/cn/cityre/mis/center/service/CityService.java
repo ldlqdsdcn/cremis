@@ -2,6 +2,7 @@ package cn.cityre.mis.center.service;
 
 import cn.cityre.mis.center.model.City;
 import cn.cityre.mis.center.model.Province;
+import cn.cityre.mis.sys.entity.bo.ProvinceBo;
 
 import java.util.List;
 
@@ -29,4 +30,6 @@ public interface CityService {
     List<City> getCityListByProvinceCode(String provinceCode);
 
     City getCityByCode(String code);
+
+    List<ProvinceBo> getProvinceBoList(List<String> cityCodeList);
 }

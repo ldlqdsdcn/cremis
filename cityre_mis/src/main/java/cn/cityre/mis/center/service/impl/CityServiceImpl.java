@@ -6,9 +6,12 @@ import cn.cityre.mis.center.entity.query.CityQuery;
 import cn.cityre.mis.center.model.City;
 import cn.cityre.mis.center.model.Province;
 import cn.cityre.mis.center.service.CityService;
+import cn.cityre.mis.sys.entity.bo.CityBo;
+import cn.cityre.mis.sys.entity.bo.ProvinceBo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,5 +54,44 @@ public class CityServiceImpl implements CityService {
     @Override
     public City getCityByCode(String code) {
         return cityMapper.selectCityByCityCode(code);
+    }
+
+    @Override
+    public List<ProvinceBo> getProvinceBoList(List<String> cityCodeList) {
+        List<CityBo> cityBoList = new ArrayList<>();
+        List<ProvinceBo> provinceBoList = new ArrayList<>();
+        List<Province> provinceList = provinceMapper.selectList(null);
+        List<City> cityList = cityMapper.selectList(null);
+        for (City city : cityList) {
+            CityBo cityBo = new CityBo();
+            cityBo.setCode(city.getCityCode());
+            cityBo.setName(city.getCityName());
+            cityBo.setProvinceCode(city.getProvinceCode());
+            for (String code : cityCodeList) {
+                if (code.equals(city.getCityCode())) {
+                    cityCodeList.remove(code);
+                    cityBo.setChecked(true);
+                    break;
+                }
+            }
+            cityBoList.add(cityBo);
+        }
+        for (Province province : provinceList) {
+            ProvinceBo provinceBo = new ProvinceBo();
+            provinceBo.setCode(province.getProvinceCode());
+            provinceBo.setName(province.getProvinceName());
+            provinceBo.setId(province.getId());
+            List<CityBo> proCityList = new ArrayList<>();
+            for (int i = cityBoList.size() - 1; i >= 0; i--) {
+                CityBo cityBo = cityBoList.get(i);
+                if (cityBo.getProvinceCode().equals(provinceBo.getCode())) {
+                    cityBoList.remove(i);
+                    proCityList.add(cityBo);
+                }
+            }
+            provinceBo.setCityBoList(proCityList);
+            provinceBoList.add(provinceBo);
+        }
+        return provinceBoList;
     }
 }

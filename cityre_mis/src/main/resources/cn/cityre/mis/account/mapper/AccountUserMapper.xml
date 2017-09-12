@@ -30,6 +30,12 @@
       <if test="nicknameLike!=null"> and nickName  like CONCAT('%',#{nicknameLike,jdbcType=VARCHAR},'%' )</if>
     </where>
   </sql>
+  <select id="selectByUnionUid" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+
+    from v2017_user where unionUid=#{value}
+  </select>
   <select id="selectList" parameterType="cn.cityre.mis.account.entity.query.AccountUserQuery" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
