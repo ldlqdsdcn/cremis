@@ -1,7 +1,10 @@
 package cn.cityre.mis.util;
 
 import cn.cityre.mis.core.web.def.WebConstant;
+import cn.cityre.mis.core.web.result.JsonResult;
+import cn.cityre.mis.core.web.result.def.ErrorCodes;
 import cn.cityre.mis.sys.entity.vo.UserSession;
+import org.springframework.validation.BindingResult;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,22 +15,40 @@ import javax.servlet.http.HttpSession;
 public class WebUtil {
     /**
      * 获取用户信息
+     *
      * @param request
      * @return
      */
-    public static UserSession getUserSession(HttpServletRequest request)
-    {
+    public static UserSession getUserSession(HttpServletRequest request) {
         return getUserSession(request.getSession());
     }
 
     /**
      * 获取用户信息
+     *
      * @param session
      * @return
      */
-    public static UserSession getUserSession(HttpSession session)
-    {
-        UserSession userSession=(UserSession)session.getAttribute(WebConstant.USER_IN_SESSION);
+    public static UserSession getUserSession(HttpSession session) {
+        UserSession userSession = (UserSession) session.getAttribute(WebConstant.USER_IN_SESSION);
         return userSession;
+    }
+
+    /**
+     * 判断是否有错误产生如果有返回 错误验证
+     * 如果没有返回null
+     *
+     * @param bindingResult
+     * @return 如果发生错误，返回错误验证提示信息 否则返回空
+     */
+    public static JsonResult hasErrorMessage(BindingResult bindingResult) {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (bindingResult.hasErrors()) {
+            bindingResult.getFieldErrors().forEach(e -> {
+                stringBuilder.append(e.getDefaultMessage()).append("<br>");
+            });
+            return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(), stringBuilder.toString());
+        }
+        return null;
     }
 }

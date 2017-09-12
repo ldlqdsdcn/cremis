@@ -7,11 +7,14 @@ import cn.cityre.mis.sys.entity.query.RepositoryQuery;
 import cn.cityre.mis.sys.model.Repository;
 import cn.cityre.mis.sys.service.RepositoryService;
 import cn.cityre.mis.util.StringUtil;
+import cn.cityre.mis.util.WebUtil;
 import org.mybatis.pagination.dto.PageMyBatis;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -73,14 +76,16 @@ public class RepositoryController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
-    public JsonResult<Repository> save(@RequestBody Repository repository) {
-        String username = "administrator";
-        if(StringUtil.isEmpty(repository.getNo()))
-        {
+    public JsonResult<Repository> save(@Validated @RequestBody Repository repository, BindingResult bindingResult, HttpServletRequest request) {
+        JsonResult error = WebUtil.hasErrorMessage(bindingResult);
+        if (error != null) {
+            return error;
+        }
+        String username = WebUtil.getUserSession(request).getUnionUid();
+        if (StringUtil.isEmpty(repository.getNo())) {
             return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(), "编号不允许为空");
         }
-        if(StringUtil.isEmpty(repository.getName()))
-        {
+        if (StringUtil.isEmpty(repository.getName())) {
             return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(), "名称不允许为空");
         }
         Date date = new Date();

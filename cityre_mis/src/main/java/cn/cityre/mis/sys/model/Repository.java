@@ -1,12 +1,14 @@
 package cn.cityre.mis.sys.model;
 
+import org.hibernate.validator.constraints.Length;
+
 import java.util.Date;
 
 public class Repository {
     private Integer id;
-
+    @Length(min = 2,max = 15,message = "编号长度在2-15之间")
     private String no;
-
+    @Length(min = 4,max = 20,message = "名称长度在4-20之间")
     private String name;
 
     private String desc;

@@ -52,5 +52,5 @@
 <script type="text/javascript"            src="<%=path%>/js/ztree/js/jquery.ztree.excheck-3.5.js"></script>
 <script type="text/javascript"            src="<%=path%>/js/ztree/js/jquery.ztree.exedit-3.5.js"></script>
 <script type="text/javascript"            src="<%=path%>/js/ztree/js/jquery.showLoading.min.js"></script>
-<script language="javascript" type="text/javascript" src="<%=path%>/js/eidea.validate.js"></script>
-<script language="javascript" type="text/javascript" src="<%=path%>/js/eidea.util.js"></script>
+<script  type="text/javascript" src="<%=path%>/js/eidea.validate.js"></script>
+<script  type="text/javascript" src="<%=path%>/js/eidea.util.js"></script>
