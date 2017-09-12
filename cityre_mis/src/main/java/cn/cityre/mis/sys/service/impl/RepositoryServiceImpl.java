@@ -1,6 +1,9 @@
 package cn.cityre.mis.sys.service.impl;
 
+import cn.cityre.mis.sys.dao.GroupPrivilegesMapper;
+import cn.cityre.mis.sys.dao.MenuMapper;
 import cn.cityre.mis.sys.dao.RepositoryMapper;
+import cn.cityre.mis.sys.dao.UserPrivilegesMapper;
 import cn.cityre.mis.sys.entity.query.RepositoryQuery;
 import cn.cityre.mis.sys.model.Repository;
 import cn.cityre.mis.sys.service.RepositoryService;
@@ -8,6 +11,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -18,18 +22,30 @@ import java.util.Set;
 public class RepositoryServiceImpl implements RepositoryService {
     @Autowired
     private RepositoryMapper repositoryMapper;
+    @Autowired
+    private MenuMapper menuMapper;
+    @Autowired
+    private GroupPrivilegesMapper groupPrivilegesMapper;
+    @Autowired
+    private UserPrivilegesMapper userPrivilegesMapper;
 
     public List<Repository> getRepositoryList(RepositoryQuery repositoryQuery) {
         return repositoryMapper.getRepositoryList(repositoryQuery, new RowBounds(repositoryQuery.getStartRow(), repositoryQuery.getRows()));
     }
-    public List<Repository> getList(RepositoryQuery repositoryQuery)
-    {
+
+    public List<Repository> getList(RepositoryQuery repositoryQuery) {
         return repositoryMapper.getRepositoryList(repositoryQuery);
     }
+
     @Override
     public void removeRepositoryList(Integer[] ids) {
+
+        List<Integer> idList = Arrays.asList(ids);
+        groupPrivilegesMapper.deleteList(null, idList);
+        userPrivilegesMapper.deleteList(null, idList);
         if (ids != null) {
             for (Integer id : ids) {
+                menuMapper.updateRepositoryList(id);
                 repositoryMapper.deleteByPrimaryKey(id);
             }
         }

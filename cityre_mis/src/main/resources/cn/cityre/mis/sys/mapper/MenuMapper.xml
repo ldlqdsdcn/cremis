@@ -45,7 +45,7 @@
 
   <select id="selectList" resultMap="unionResultMap">
     select menu.id, menu.sort_no, menu.name, menu.icon, menu.parent_menu_id, menu.type, menu.repository_id, menu.desc, menu.created, menu.createdby,menu.url,
-    menu.updated, menu.updatedby,menu.isactive,parent.name parent_menu,re.`name` repository_name from  sys_menu menu left join sys_menu parent on menu.parent_menu_id=parent.id inner join sys_repository re on menu.repository_id=re.id
+    menu.updated, menu.updatedby,menu.isactive,parent.name parent_menu,re.`name` repository_name from  sys_menu menu left join sys_menu parent on menu.parent_menu_id=parent.id left join sys_repository re on menu.repository_id=re.id
     <if test="_parameter != null">
     <where>
       <if test="nameLike!=null"> and menu.name  like CONCAT('%',#{nameLike,jdbcType=VARCHAR},'%' )</if>
