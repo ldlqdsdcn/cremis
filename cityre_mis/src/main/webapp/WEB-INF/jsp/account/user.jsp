@@ -219,7 +219,57 @@
             });
 
         },
+        selectAll:function(value)
+        {
+            var inputArrays=document.getElementsByTagName("input");
+
+            for(var i=0;i<inputArrays.length;i++)
+            {
+                var input=inputArrays[i];
+                if(input.type=='checkbox')
+                {
+                    input.checked=value;
+                }
+            }
+
+        },
+        citycheck:function (checked,divId) {
+                var div=document.getElementById(divId);
+            var inputArrays=div.getElementsByTagName("input");
+            for(var i=0;i<inputArrays.length;i++)
+            {
+                var input=inputArrays[i];
+                if(input.type=='checkbox')
+                {
+                    input.checked=checked;
+                }
+            }
+        },
         saveUserCity:function () {
+           var userCity={};
+           userCity.unionUid=$("#unionUid").val();
+            userCity.cities=[];
+            $('input:checkbox[name=city]:checked').each(function(i){
+                userCity.cities.push(this.value);
+            });
+            $.ajax({
+                url: "<%=path%>/account/user/saveCities",
+                data: JSON.stringify(userCity),
+                type: 'POST',
+                dataType: "json",
+                contentType: 'application/json;charset=utf-8',
+                success: function (result) {
+                    if (result.success) {
+                        $.messager.alert("操作成功", "操作成功！");
+                        accountHelper.goList();
+                        return;
+                    }
+                    else {
+                        $.messager.alert("操作失败", result.message);
+                    }
+                }
+            });
+
 
         },showCity: function (id) {
             var url = "<%=path%>/account/user/showCities/"+id;

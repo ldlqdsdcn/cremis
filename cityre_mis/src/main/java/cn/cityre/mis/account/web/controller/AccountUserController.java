@@ -3,6 +3,7 @@ package cn.cityre.mis.account.web.controller;
 import cn.cityre.mis.account.entity.query.AccountUserQuery;
 import cn.cityre.mis.account.entity.union.UserGroupUnion;
 import cn.cityre.mis.account.entity.union.UserRepositoryUnion;
+import cn.cityre.mis.account.entity.vo.AccountUserCitiesVo;
 import cn.cityre.mis.account.entity.vo.AccountUserVo;
 import cn.cityre.mis.account.model.AccountUser;
 import cn.cityre.mis.account.service.AccountUserService;
@@ -12,6 +13,7 @@ import cn.cityre.mis.core.web.result.JsonResult;
 import cn.cityre.mis.sys.entity.bo.UserCityBo;
 import cn.cityre.mis.sys.entity.vo.UserSession;
 import cn.cityre.mis.sys.service.UserService;
+import cn.cityre.mis.util.WebUtil;
 import org.mybatis.pagination.dto.PageMyBatis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -86,6 +88,12 @@ public class AccountUserController {
         ModelAndView modelAndView = new ModelAndView("account/citys");
         modelAndView.addObject("userCity", userCityBo);
         return modelAndView;
+    }
+    @RequestMapping(value = "/saveCities",method = RequestMethod.POST)
+    public JsonResult<Void> saveCities(@RequestBody AccountUserCitiesVo accountUserCitiesVo, HttpServletRequest request) {
+        UserSession userSession = WebUtil.getUserSession(request);
+        userService.saveUserCities(accountUserCitiesVo.getUnionUid(), accountUserCitiesVo.getCities(), userSession.getUnionUid());
+        return JsonResult.success(null);
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)

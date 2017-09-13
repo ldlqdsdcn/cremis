@@ -1,29 +1,21 @@
-package cn.cityre.mis.sys.entity.query;
+package cn.cityre.mis.account.entity.vo;
 
 import java.util.List;
 
 /**
- * Created by 刘大磊 on 2017/9/12 15:53.
+ * Created by 刘大磊 on 2017/9/13 12:00.
  */
-public class UserCityQuery {
-
+public class AccountUserCitiesVo
+{
     private String unionUid;
-    private String cityCode;
     private List<String> cities;
+
     public String getUnionUid() {
         return unionUid;
     }
 
     public void setUnionUid(String unionUid) {
         this.unionUid = unionUid;
-    }
-
-    public String getCityCode() {
-        return cityCode;
-    }
-
-    public void setCityCode(String cityCode) {
-        this.cityCode = cityCode;
     }
 
     public List<String> getCities() {

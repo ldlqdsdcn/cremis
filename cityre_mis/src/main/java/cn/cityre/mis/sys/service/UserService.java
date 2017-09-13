@@ -3,6 +3,7 @@ package cn.cityre.mis.sys.service;
 import cn.cityre.mis.account.model.AccountUser;
 import cn.cityre.mis.sys.entity.bo.UserCityBo;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -26,5 +27,6 @@ public interface UserService {
 
     UserCityBo getUserCityBo(Integer id);
 
+    void saveUserCities(String unionUid,List<String> cities,String createdBy);
 
 }

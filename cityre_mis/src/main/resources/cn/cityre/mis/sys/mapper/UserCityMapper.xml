@@ -15,8 +15,16 @@
     <where>
       <if test="unionUid!=null"> and union_uid=#{unionUid,jdbcType=VARCHAR}</if>
       <if test="cityCode!=null"> and city_code=#{cityCode,jdbcType=VARCHAR}</if>
+      <if test="cities!=null and cities.size > 0"> and  city_code not in
+        <foreach collection="cities" item="city"   open="(" close=")" separator=",">
+          #{city}
+        </foreach>
+      </if>
     </where>
   </sql>
+  <select id="countUserCity" resultType="java.lang.Integer">
+    select count(*) from sys_user_city where union_uid=#{unionUid,jdbcType=VARCHAR} and city_code=#{cityCode,jdbcType=VARCHAR}
+  </select>
   <select id="selectList" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
@@ -31,6 +39,12 @@
     from sys_user_city
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <delete id="deleteList" parameterType="cn.cityre.mis.sys.entity.query.UserCityQuery">
+    delete from sys_user_city
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sys_user_city
     where id = #{id,jdbcType=INTEGER}

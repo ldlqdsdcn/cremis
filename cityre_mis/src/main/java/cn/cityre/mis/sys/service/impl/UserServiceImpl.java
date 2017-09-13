@@ -80,4 +80,28 @@ public class UserServiceImpl implements UserService {
         userCityBo.setProvinceBoList(provinceBoList);
         return userCityBo;
     }
+
+    @Override
+    public void saveUserCities(String unionUid, List<String> cities, String createdBy) {
+        if (unionUid == null) {
+            throw new IllegalArgumentException("unionUid不允许为空");
+        }
+        Date now = new Date();
+        UserCityQuery userCityQuery = new UserCityQuery();
+        userCityQuery.setCities(cities);
+        userCityQuery.setUnionUid(unionUid);
+        userCityMapper.deleteList(userCityQuery);
+        for (String city : cities) {
+            int count = userCityMapper.countUserCity(unionUid, city);
+            if (count == 0) {
+                UserCity userCity = new UserCity();
+                userCity.setCityCode(city);
+                userCity.setUnionUid(unionUid);
+                userCity.setCreated(now);
+                userCity.setCreatedby(createdBy);
+                userCityMapper.insert(userCity);
+            }
+        }
+
+    }
 }
