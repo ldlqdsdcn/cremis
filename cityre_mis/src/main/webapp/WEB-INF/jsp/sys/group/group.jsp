@@ -22,6 +22,7 @@
 
     function operation(rows, index) {
         var html = "<a href='javascript:void(0)' onclick='groupHelper.edit(" + rows.id + ")' style='margin-left:10px;margin-top:0px'>编辑</a>";
+        html = html + "<a href='javascript:void(0)' onclick='groupHelper.showCity(" + rows.id + ")' style='margin-left:10px;margin-top:0px'>城市信息</a>";
         return html;
     }
     var groupHelper = {
@@ -178,6 +179,62 @@
                     }
                 }
             });
+
+        }
+        , selectAll: function (value) {
+            var inputArrays = document.getElementsByTagName("input");
+
+            for (var i = 0; i < inputArrays.length; i++) {
+                var input = inputArrays[i];
+                if (input.type == 'checkbox') {
+                    input.checked = value;
+                }
+            }
+
+        },
+        citycheck: function (checked, divId) {
+            var div = document.getElementById(divId);
+            var inputArrays = div.getElementsByTagName("input");
+            for (var i = 0; i < inputArrays.length; i++) {
+                var input = inputArrays[i];
+                if (input.type == 'checkbox') {
+                    input.checked = checked;
+                }
+            }
+        }, showCity: function (id) {
+
+            var url = "<%=path%>/sys/group/showCities/" + id;
+            $("#groupPanel").panel({
+                href: url, onLoad: function () {
+
+                }
+            });
+        },
+        saveGroupCity: function () {
+            var userCity = {};
+            userCity.groupId = $("#groupId").val();
+            userCity.cities = [];
+            $('input:checkbox[name=city]:checked').each(function (i) {
+                userCity.cities.push(this.value);
+            });
+            $.ajax({
+                url: "<%=path%>/sys/group/saveCities",
+                data: JSON.stringify(userCity),
+                type: 'POST',
+                dataType: "json",
+                contentType: 'application/json;charset=utf-8',
+                success: function (result) {
+                    if (result.success) {
+                        $.messager.alert("操作成功", "操作成功！");
+                        groupHelper.goList();
+                        return;
+                    }
+                    else {
+                        $.messager.alert("操作失败", result.message);
+                    }
+                }
+            });
+
 
         }
     };

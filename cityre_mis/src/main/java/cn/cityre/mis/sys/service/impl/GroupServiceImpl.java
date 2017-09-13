@@ -1,19 +1,24 @@
 package cn.cityre.mis.sys.service.impl;
 
+import cn.cityre.mis.center.service.CityService;
+import cn.cityre.mis.sys.dao.GroupCityMapper;
 import cn.cityre.mis.sys.dao.GroupMapper;
 import cn.cityre.mis.sys.dao.GroupPrivilegesMapper;
 import cn.cityre.mis.sys.dao.RepositoryMapper;
+import cn.cityre.mis.sys.entity.bo.GroupCityBo;
+import cn.cityre.mis.sys.entity.bo.ProvinceBo;
+import cn.cityre.mis.sys.entity.query.GroupCityQuery;
 import cn.cityre.mis.sys.entity.query.GroupQuery;
+import cn.cityre.mis.sys.entity.query.UserCityQuery;
 import cn.cityre.mis.sys.entity.union.GroupRepositoryUnion;
-import cn.cityre.mis.sys.model.Group;
-import cn.cityre.mis.sys.model.GroupPrivileges;
-import cn.cityre.mis.sys.model.Repository;
+import cn.cityre.mis.sys.model.*;
 import cn.cityre.mis.sys.service.GroupService;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,9 +30,13 @@ public class GroupServiceImpl implements GroupService {
     @Autowired
     private GroupMapper groupMapper;
     @Autowired
+    private GroupCityMapper groupCityMapper;
+    @Autowired
     private GroupPrivilegesMapper groupPrivilegesMapper;
     @Autowired
     private RepositoryMapper repositoryMapper;
+    @Autowired
+    private CityService cityService;
 
     @Override
     public List<Group> getGroupList(GroupQuery groupQuery) {
@@ -112,6 +121,44 @@ public class GroupServiceImpl implements GroupService {
             groupPrivilegesMapper.deleteList(id, null);
             groupMapper.deleteByPrimaryKey(id);
 
+        }
+    }
+
+    @Override
+    public GroupCityBo getGroupCityBo(Integer id) {
+        GroupCityBo groupCityBo = new GroupCityBo();
+        Group group = groupMapper.selectByPrimaryKey(id);
+        GroupCityQuery groupCityQuery = new GroupCityQuery();
+        groupCityQuery.setGroupId(id);
+        List<GroupCity> groupCityList = groupCityMapper.selectList(groupCityQuery);
+        List<String> cityIdList = groupCityList.stream().map(e -> e.getCityCode()).collect(Collectors.toList());
+        List<ProvinceBo> provinceBoList = cityService.getProvinceBoList(cityIdList);
+        groupCityBo.setGroupId(group.getId());
+        groupCityBo.setGroupName(group.getName());
+        groupCityBo.setProvinceBoList(provinceBoList);
+        return groupCityBo;
+    }
+
+    @Override
+    public void saveGroupCities(Integer groupId, List<String> cities, String createdBy) {
+        if (groupId == null) {
+            throw new IllegalArgumentException("groupId不允许为空");
+        }
+        Date now = new Date();
+        GroupCityQuery groupCityQuery = new GroupCityQuery();
+        groupCityQuery.setCities(cities);
+        groupCityQuery.setGroupId(groupId);
+        groupCityMapper.deleteList(groupCityQuery);
+        for (String city : cities) {
+            int count = groupCityMapper.countGroupCity(groupId, city);
+            if (count == 0) {
+                GroupCity groupCity = new GroupCity();
+                groupCity.setCityCode(city);
+                groupCity.setGroupId(groupId);
+                groupCity.setCreated(now);
+                groupCity.setCreatedby(createdBy);
+                groupCityMapper.insert(groupCity);
+            }
         }
     }
 }

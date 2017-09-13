@@ -1,5 +1,7 @@
 package cn.cityre.mis.sys.service;
 
+import cn.cityre.mis.sys.entity.bo.GroupCityBo;
+import cn.cityre.mis.sys.entity.bo.UserCityBo;
 import cn.cityre.mis.sys.entity.query.GroupQuery;
 import cn.cityre.mis.sys.entity.union.GroupRepositoryUnion;
 import cn.cityre.mis.sys.model.Group;
@@ -19,4 +21,9 @@ public interface GroupService {
     void saveGroup(Group group, List<GroupRepositoryUnion> groupRepositoryUnions);
 
     void deleteGroupByIds(List<Integer> ids);
+
+    GroupCityBo getGroupCityBo(Integer id);
+
+    void saveGroupCities(Integer groupId, List<String> cities, String createdBy);
+
 }

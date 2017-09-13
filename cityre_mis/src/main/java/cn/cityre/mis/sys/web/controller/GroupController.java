@@ -1,14 +1,19 @@
 package cn.cityre.mis.sys.web.controller;
 
+import cn.cityre.mis.account.entity.vo.AccountUserCitiesVo;
 import cn.cityre.mis.core.web.def.WebConstant;
 import cn.cityre.mis.core.web.result.JsonResult;
 import cn.cityre.mis.core.web.result.def.ErrorCodes;
+import cn.cityre.mis.sys.entity.bo.GroupCityBo;
+import cn.cityre.mis.sys.entity.bo.UserCityBo;
 import cn.cityre.mis.sys.entity.query.GroupQuery;
 import cn.cityre.mis.sys.entity.union.GroupRepositoryUnion;
+import cn.cityre.mis.sys.entity.vo.GroupCitiesVo;
 import cn.cityre.mis.sys.entity.vo.GroupVo;
 import cn.cityre.mis.sys.entity.vo.UserSession;
 import cn.cityre.mis.sys.model.Group;
 import cn.cityre.mis.sys.service.GroupService;
+import cn.cityre.mis.util.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -74,11 +79,11 @@ public class GroupController {
 
     @RequestMapping("/save")
     @ResponseBody
-    public JsonResult<GroupVo> save(@Validated @RequestBody GroupVo groupVo, HttpServletRequest request,BindingResult bindingResult) {
-        if (bindingResult.getFieldErrorCount()>0){
-            String message="";
-            for (int i=0;i<bindingResult.getFieldErrors().size();i++){
-                message=message+" "+bindingResult.getFieldErrors().get(i).getDefaultMessage();
+    public JsonResult<GroupVo> save(@Validated @RequestBody GroupVo groupVo, HttpServletRequest request, BindingResult bindingResult) {
+        if (bindingResult.getFieldErrorCount() > 0) {
+            String message = "";
+            for (int i = 0; i < bindingResult.getFieldErrors().size(); i++) {
+                message = message + " " + bindingResult.getFieldErrors().get(i).getDefaultMessage();
             }
             return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(), message);
         }
@@ -89,6 +94,7 @@ public class GroupController {
         return JsonResult.success(null);
 
     }
+
     @RequestMapping("/delete")
     @ResponseBody
     public JsonResult<Void> deleteGroups(@RequestBody Integer[] ids) {
@@ -97,6 +103,22 @@ public class GroupController {
         } else {
             groupService.deleteGroupByIds(Arrays.asList(ids));
         }
+        return JsonResult.success(null);
+    }
+
+    @RequestMapping("/showCities/{groupId}")
+    public ModelAndView showCities(@PathVariable("groupId") Integer groupId) {
+
+        GroupCityBo groupCityBo = groupService.getGroupCityBo(groupId);
+        ModelAndView modelAndView = new ModelAndView("sys/group/cities");
+        modelAndView.addObject("groupCity", groupCityBo);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/saveCities", method = RequestMethod.POST)
+    public JsonResult<Void> saveCities(@RequestBody GroupCitiesVo groupCitiesVo, HttpServletRequest request) {
+        UserSession userSession = WebUtil.getUserSession(request);
+        groupService.saveGroupCities(groupCitiesVo.getGroupId(), groupCitiesVo.getCities(), userSession.getUnionUid());
         return JsonResult.success(null);
     }
 }

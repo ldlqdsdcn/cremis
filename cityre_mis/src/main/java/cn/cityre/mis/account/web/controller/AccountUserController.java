@@ -85,7 +85,7 @@ public class AccountUserController {
     @RequestMapping("/showCities/{unionUid}")
     public ModelAndView showCities(@PathVariable("unionUid") Integer id) {
         UserCityBo userCityBo = userService.getUserCityBo(id);
-        ModelAndView modelAndView = new ModelAndView("account/citys");
+        ModelAndView modelAndView = new ModelAndView("account/cities");
         modelAndView.addObject("userCity", userCityBo);
         return modelAndView;
     }

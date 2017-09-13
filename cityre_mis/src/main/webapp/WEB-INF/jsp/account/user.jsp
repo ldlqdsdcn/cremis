@@ -276,7 +276,7 @@
             $("#userPanel").panel({href: url,onLoad:function () {
 
             }});
-        },
+        }
     };
     $(function () {
         accountHelper.goList();
