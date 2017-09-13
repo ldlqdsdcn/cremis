@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@include file="/inc/taglib.jsp" %>
 <%--
   User: 刘大磊
   Date: 2017/9/12
@@ -11,8 +11,9 @@
     <c:out value="${groupCity.groupName}"/>&nbsp;&nbsp;
     <input type="hidden" name="groupId" id="groupId" value="${groupCity.groupId}"/>
     <br>
-    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="groupHelper.saveGroupCity()"
-       style="width:80px">保存</a>
+    <shiro:hasPermission name="group:edit">
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="groupHelper.saveGroupCity()"
+           style="width:80px">保存</a></shiro:hasPermission>
     <a href="javascript:void(0)" class="easyui-linkbutton" onclick="groupHelper.goList()" style="width:80px">返回</a>
     <br>
     城市列表：<br>

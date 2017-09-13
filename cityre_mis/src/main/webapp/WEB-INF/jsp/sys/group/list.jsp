@@ -5,6 +5,7 @@
   Time: 14:52
   To change this template use File | Settings | File Templates.
 --%>
+<%@include file="/inc/taglib.jsp" %>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
     String path = request.getContextPath();
@@ -22,9 +23,11 @@
                 <input id="groupNameLike" style="width:150px;height:23px;" class="easyui-textbox" />
                 &nbsp;&nbsp;&nbsp;<a href="#"  onclick="groupHelper.search()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="javascript:void(0)"  onclick="groupHelper.add()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true"  style="margin-left:10px;margin-top:0px">添加</a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="javascript:void(0)"  onclick="groupHelper.remove()" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true"  style="margin-left:10px;margin-top:0px">删除</a>
+                <shiro:hasPermission name="group:edit">
+                    <a href="javascript:void(0)" onclick="groupHelper.add()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" style="margin-left:10px;margin-top:0px">添加</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="javascript:void(0)" onclick="groupHelper.remove()" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" style="margin-left:10px;margin-top:0px">删除</a>
+                </shiro:hasPermission>
             </fieldset>
         </div>
     </div>

@@ -1,5 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@include file="/inc/taglib.jsp" %>
 <%--
   Created by IntelliJ IDEA.
   User: 刘大磊
@@ -45,7 +44,9 @@
 
     </form>
     <div style="text-align:center;padding:5px 0">
-        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="groupHelper.save()" style="width:80px">保存</a>
+        <shiro:hasPermission name="group:edit">
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="groupHelper.save()" style="width:80px">保存</a>
+        </shiro:hasPermission>
         <a href="javascript:void(0)" class="easyui-linkbutton" onclick="  groupHelper.goList();" style="width:80px">返回</a>
     </div>
     <h3>权限</h3>

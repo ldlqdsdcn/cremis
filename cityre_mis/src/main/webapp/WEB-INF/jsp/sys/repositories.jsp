@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@include file="/inc/taglib.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -152,9 +153,11 @@
                 <input id="nameLike" style="width:150px;height:23px;" class="easyui-textbox" />
                 &nbsp;&nbsp;&nbsp;<a href="#" id="seach_user" onclick="repositoryHelper.search()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="javascript:void(0)"  onclick="repositoryHelper.add()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true"  style="margin-left:10px;margin-top:0px">添加</a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="javascript:void(0)"  onclick="repositoryHelper.remove()" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true"  style="margin-left:10px;margin-top:0px">删除</a>
+                <shiro:hasPermission name="repository:edit">
+                    <a href="javascript:void(0)" onclick="repositoryHelper.add()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" style="margin-left:10px;margin-top:0px">添加</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="javascript:void(0)" onclick="repositoryHelper.remove()" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" style="margin-left:10px;margin-top:0px">删除</a>
+                </shiro:hasPermission>
             </fieldset>
         </div>
     </div>
@@ -204,7 +207,9 @@
                 </table>
             </fieldset>
             <div id="dlg-buttons" style="text-align: right">
-                <a id="addUser_btn" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="repositoryHelper.save();">保存</a>
+                <shiro:hasPermission name="repository:edit">
+                    <a id="addUser_btn" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="repositoryHelper.save();">保存</a>
+                </shiro:hasPermission>
                 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="repositoryHelper.closeEditDialog();">取消</a>
             </div>
         </form>

@@ -39,12 +39,14 @@ public class MenuController {
     @Autowired
     private RepositoryService repositoryService;
 
+    @RequiresPermissions("menu:view")
     @RequestMapping("/showMenu")
     public ModelAndView showList() {
         ModelAndView modelAndView = new ModelAndView("sys/menu");
         return modelAndView;
     }
 
+    @RequiresPermissions("menu:view")
     @RequestMapping("/list")
     @ResponseBody
     public List<MenuUnion> getMenus(MenuQuery menuQuery) {
@@ -52,6 +54,7 @@ public class MenuController {
         return menuList;
     }
 
+    @RequiresPermissions("menu:edit")
     @RequestMapping("/deletes")
     @ResponseBody
     public JsonResult<Void> deletes(@RequestBody Integer[] ids, HttpServletRequest request) {
@@ -63,6 +66,7 @@ public class MenuController {
         return JsonResult.success(null);
     }
 
+    @RequiresPermissions("menu:view")
     @RequestMapping("/repositories")
     @ResponseBody
     public List<Repository> repositories() {
@@ -71,6 +75,7 @@ public class MenuController {
         return repositoryService.getList(param);
     }
 
+    @RequiresPermissions("menu:view")
     @RequestMapping("/menuFolders")
     @ResponseBody
     public List<Menu> menuFolders() {
@@ -80,6 +85,7 @@ public class MenuController {
         return menuService.selectMenuList(menuQuery);
     }
 
+    @RequiresPermissions("menu:edit")
     @RequestMapping("/save")
     @ResponseBody
     public JsonResult<Menu> save(@RequestBody Menu menu, HttpServletRequest request) {

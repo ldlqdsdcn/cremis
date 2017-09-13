@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@include file="/inc/taglib.jsp" %>
 <%--
   Created by IntelliJ IDEA.
   User: 刘大磊
@@ -158,11 +158,13 @@
                 &nbsp;&nbsp;&nbsp;<a href="#" id="seach_user" onclick="menuHelper.search()" class="easyui-linkbutton"
                                      data-options="iconCls:'icon-search'">查询</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="javascript:void(0)" onclick="menuHelper.add()" class="easyui-linkbutton"
-                   data-options="iconCls:'icon-add',plain:true" style="margin-left:10px;margin-top:0px">添加</a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="javascript:void(0)" onclick="menuHelper.remove()" class="easyui-linkbutton"
-                   data-options="iconCls:'icon-remove',plain:true" style="margin-left:10px;margin-top:0px">删除</a>
+                <shiro:hasPermission name="menu:edit">
+                    <a href="javascript:void(0)" onclick="menuHelper.add()" class="easyui-linkbutton"
+                       data-options="iconCls:'icon-add',plain:true" style="margin-left:10px;margin-top:0px">添加</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="javascript:void(0)" onclick="menuHelper.remove()" class="easyui-linkbutton"
+                       data-options="iconCls:'icon-remove',plain:true" style="margin-left:10px;margin-top:0px">删除</a>
+                </shiro:hasPermission>
             </fieldset>
         </div>
     </div>
@@ -252,8 +254,10 @@
                 </table>
             </fieldset>
             <div id="dlg-buttons" style="text-align: right">
-                <a id="addUser_btn" href="javascript:void(0)" class="easyui-linkbutton"
-                   data-options="iconCls:'icon-save',plain:true" onclick="menuHelper.save();">保存</a>
+                <shiro:hasPermission name="menu:edit">
+                    <a id="addUser_btn" href="javascript:void(0)" class="easyui-linkbutton"
+                       data-options="iconCls:'icon-save',plain:true" onclick="menuHelper.save();">保存</a>
+                </shiro:hasPermission>
                 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true"
                    onclick="menuHelper.closeEditDialog();">取消</a>
             </div>

@@ -8,6 +8,7 @@ import cn.cityre.mis.sys.model.Repository;
 import cn.cityre.mis.sys.service.RepositoryService;
 import cn.cityre.mis.util.StringUtil;
 import cn.cityre.mis.util.WebUtil;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.mybatis.pagination.dto.PageMyBatis;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,12 +37,14 @@ public class RepositoryController {
     private RepositoryService repositoryService;
 
     @RequestMapping("/showList")
+    @RequiresPermissions("repository:view")
     public String showList() {
         return "sys/repositories";
     }
 
     @RequestMapping(value = "/getList")
     @ResponseBody
+    @RequiresPermissions("repository:view")
     public PagingListResult<Repository> getRepositoryList(RepositoryQuery repositoryQuery, HttpServletRequest request) {
         log.info("========================================>");
         PagingListResult<Repository> pagingListResult = new PagingListResult();
@@ -58,6 +61,7 @@ public class RepositoryController {
         return pagingListResult;
     }
 
+    @RequiresPermissions("repository:edit")
     @RequestMapping(value = "/deleteRepositories", method = RequestMethod.POST)
     @ResponseBody
     public JsonResult<Void> deleteRepositories(@RequestBody Integer[] ids, HttpServletRequest request) {
@@ -74,6 +78,7 @@ public class RepositoryController {
         return JsonResult.success(null);
     }
 
+    @RequiresPermissions("repository:edit")
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public JsonResult<Repository> save(@Validated @RequestBody Repository repository, BindingResult bindingResult, HttpServletRequest request) {

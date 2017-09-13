@@ -14,6 +14,7 @@ import cn.cityre.mis.sys.entity.vo.UserSession;
 import cn.cityre.mis.sys.model.Group;
 import cn.cityre.mis.sys.service.GroupService;
 import cn.cityre.mis.util.WebUtil;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -37,26 +38,31 @@ public class GroupController {
     private GroupService groupService;
 
     @RequestMapping("/")
+    @RequiresPermissions("group:view")
     public ModelAndView showGroup() {
         return new ModelAndView("sys/group/group");
     }
 
+    @RequiresPermissions("group:view")
     @RequestMapping("/showList")
     public ModelAndView showList() {
         return new ModelAndView("sys/group/list");
     }
 
+    @RequiresPermissions("group:view")
     @RequestMapping("/list")
     public List<Group> list(GroupQuery groupQuery, HttpServletRequest request) {
         return groupService.getGroupList(groupQuery);
     }
 
+    @RequiresPermissions("group:view")
     @RequestMapping("/showForm")
     public ModelAndView showForm() {
         ModelAndView modelAndView = new ModelAndView("sys/group/form");
         return modelAndView;
     }
 
+    @RequiresPermissions("group:view")
     @RequestMapping("/get/{id}")
     public JsonResult<GroupVo> get(@PathVariable("id") Integer id) {
         if (id == -1) {
@@ -77,6 +83,7 @@ public class GroupController {
         return JsonResult.success(groupVo);
     }
 
+    @RequiresPermissions("group:edit")
     @RequestMapping("/save")
     @ResponseBody
     public JsonResult<GroupVo> save(@Validated @RequestBody GroupVo groupVo, HttpServletRequest request, BindingResult bindingResult) {
@@ -95,6 +102,7 @@ public class GroupController {
 
     }
 
+    @RequiresPermissions("group:edit")
     @RequestMapping("/delete")
     @ResponseBody
     public JsonResult<Void> deleteGroups(@RequestBody Integer[] ids) {
@@ -106,6 +114,7 @@ public class GroupController {
         return JsonResult.success(null);
     }
 
+    @RequiresPermissions("group:view")
     @RequestMapping("/showCities/{groupId}")
     public ModelAndView showCities(@PathVariable("groupId") Integer groupId) {
 
@@ -115,6 +124,7 @@ public class GroupController {
         return modelAndView;
     }
 
+    @RequiresPermissions("group:edit")
     @RequestMapping(value = "/saveCities", method = RequestMethod.POST)
     public JsonResult<Void> saveCities(@RequestBody GroupCitiesVo groupCitiesVo, HttpServletRequest request) {
         UserSession userSession = WebUtil.getUserSession(request);
