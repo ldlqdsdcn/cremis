@@ -92,6 +92,7 @@
         add:function()
         {
             $('#addRepository_dig').dialog('open').dialog('setTitle','添加授权点');
+            $("#id").val('');
             $('#modelForm').form('reset');
         },
         closeEditDialog:function()

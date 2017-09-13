@@ -14,6 +14,7 @@ import cn.cityre.mis.sys.entity.bo.UserCityBo;
 import cn.cityre.mis.sys.entity.vo.UserSession;
 import cn.cityre.mis.sys.service.UserService;
 import cn.cityre.mis.util.WebUtil;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.mybatis.pagination.dto.PageMyBatis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,22 +38,26 @@ public class AccountUserController {
     private UserService userService;
 
     @RequestMapping("/showAccount")
+    @RequiresPermissions("account:view")
     public ModelAndView showGroup() {
         return new ModelAndView("account/user");
     }
 
     @RequestMapping("/showList")
+    @RequiresPermissions("account:view")
     public ModelAndView showList() {
         return new ModelAndView("account/list.tpl");
     }
 
     @RequestMapping("/showForm")
+    @RequiresPermissions("account:view")
     public ModelAndView showForm() {
         ModelAndView modelAndView = new ModelAndView("account/form.tpl");
         return modelAndView;
     }
 
     @RequestMapping("/get/{id}")
+    @RequiresPermissions("account:view")
     public JsonResult<AccountUserVo> get(@PathVariable("id") Integer id) {
         if (id == -1) {
             id = null;
@@ -74,6 +79,7 @@ public class AccountUserController {
     }
 
     @RequestMapping("/list")
+    @RequiresPermissions("account:view")
     public PagingListResult<AccountUser> list(AccountUserQuery accountUserQuery) {
         PagingListResult<AccountUser> pagingListResult = new PagingListResult<>();
         PageMyBatis<AccountUser> pageMyBatis = accountUserService.getAccountUserList(accountUserQuery);
@@ -83,6 +89,7 @@ public class AccountUserController {
     }
 
     @RequestMapping("/showCities/{unionUid}")
+    @RequiresPermissions("account:view")
     public ModelAndView showCities(@PathVariable("unionUid") Integer id) {
         UserCityBo userCityBo = userService.getUserCityBo(id);
         ModelAndView modelAndView = new ModelAndView("account/cities");
@@ -90,6 +97,7 @@ public class AccountUserController {
         return modelAndView;
     }
     @RequestMapping(value = "/saveCities",method = RequestMethod.POST)
+    @RequiresPermissions("account:edit")
     public JsonResult<Void> saveCities(@RequestBody AccountUserCitiesVo accountUserCitiesVo, HttpServletRequest request) {
         UserSession userSession = WebUtil.getUserSession(request);
         userService.saveUserCities(accountUserCitiesVo.getUnionUid(), accountUserCitiesVo.getCities(), userSession.getUnionUid());
@@ -98,6 +106,7 @@ public class AccountUserController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
+    @RequiresPermissions("account:edit")
     public JsonResult<AccountUserVo> saveAccountUser(@RequestBody AccountUserVo accountUserVo, HttpServletRequest request) {
         UserSession userSession = (UserSession) request.getSession().getAttribute(WebConstant.USER_IN_SESSION);
         //TODO添加验证
