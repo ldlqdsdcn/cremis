@@ -23,5 +23,6 @@ public interface GroupPrivilegesMapper {
 
     void deleteList(@Param("groupId") Integer groupId, @Param("repositoryIdList") List<Integer> repositoryIdList);
 
+    void deleteListByRepositoryId(@Param("repositoryId") Integer repositoryId);
     int countPrivilegesByRepIdAndGroupId(@Param("groupId") Integer groupId, @Param("repositoryId") Integer repositoryId);
 }

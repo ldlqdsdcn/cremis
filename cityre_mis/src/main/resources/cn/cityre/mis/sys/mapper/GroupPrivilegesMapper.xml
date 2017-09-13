@@ -46,6 +46,9 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
+  <delete id="deleteListByRepositoryId">
+    delete from sys_group_privileges where  repository_id=#{repositoryId}
+  </delete>
   <insert id="insert" parameterType="cn.cityre.mis.sys.model.GroupPrivileges">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()

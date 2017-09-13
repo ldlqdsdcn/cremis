@@ -35,6 +35,10 @@
     from sys_user_privileges
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <delete id="deleteByRepositoryId">
+     delete from sys_user_privileges
+    where repository_id = #{repositoryId,jdbcType=INTEGER}
+  </delete>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sys_user_privileges
     where id = #{id,jdbcType=INTEGER}

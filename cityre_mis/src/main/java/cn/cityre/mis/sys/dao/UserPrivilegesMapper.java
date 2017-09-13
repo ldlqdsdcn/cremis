@@ -22,5 +22,6 @@ public interface UserPrivilegesMapper {
 
     void deleteList(@Param("unionuid") String unionUid, @Param("repositoryIdList") List<Integer> repositoryIdList);
 
+    void deleteByRepositoryId(@Param("repositoryId") Integer repositoryId);
     int countPrivilegesByRepIdAndUnionUid(@Param("unionuid") String unionUid, @Param("repositoryId") Integer repositoryId);
 }
