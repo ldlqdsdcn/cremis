@@ -18,6 +18,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
+import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -132,19 +133,20 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
         aasa.setSecurityManager(securityManager);
         return new AuthorizationAttributeSourceAdvisor();
     }
+
     @Bean
-    public SimpleMappingExceptionResolver simpleMappingExceptionResolver()
-    {
-        SimpleMappingExceptionResolver simpleMappingExceptionResolver=new SimpleMappingExceptionResolver();
-        Properties properties=new Properties();
-        properties.put("org.apache.shiro.authz.UnauthorizedException","error/noprivileges");
-        properties.put("org.apache.shiro.authz.UnauthenticatedException","error/noprivileges");
+    public SimpleMappingExceptionResolver simpleMappingExceptionResolver() {
+        SimpleMappingExceptionResolver simpleMappingExceptionResolver = new SimpleMappingExceptionResolver();
+        Properties properties = new Properties();
+        properties.put("org.apache.shiro.authz.UnauthorizedException", "error/noprivileges");
+        properties.put("org.apache.shiro.authz.UnauthenticatedException", "error/noprivileges");
         simpleMappingExceptionResolver.setExceptionMappings(properties);
         return simpleMappingExceptionResolver;
     }
 
     /**
      * 设定返回json格式数据
+     *
      * @param converters
      */
     @Override
@@ -157,5 +159,10 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
         XmlMapper xmlMapper = builder.createXmlMapper(true).build();
         xmlMapper.configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true);
         converters.add(new MappingJackson2XmlHttpMessageConverter(xmlMapper));
+    }
+
+    @Bean
+    public RequestContextListener requestContextListener() {
+        return new RequestContextListener();
     }
 }

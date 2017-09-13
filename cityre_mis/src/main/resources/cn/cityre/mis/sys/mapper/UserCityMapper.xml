@@ -33,6 +33,9 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+  <select id="selectCityCode" resultType="java.lang.String">
+    select city_code from sys_user_city WHERE union_uid=#{unionUid} UNION SELECT city_code from sys_group_city t INNER JOIN sys_usergroup t2 on t.group_id=t2.group_id where t2.unionUid=#{unionUid}
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

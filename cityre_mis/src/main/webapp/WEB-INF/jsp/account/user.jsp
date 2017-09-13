@@ -121,7 +121,7 @@
                                 $("#userTbodyContent").html(sb.toString());
 
                                 var userGroupSb=new StringBuffer();
-                                var userGroupUnionList=accountUserVo.userGroupUnionList;
+                                var userGroupUnionList = accountUserVo.userGroupUnionList;
                                for(var i=0;i<userGroupUnionList.length;i++)
                                 {
                                     var usergroup=userGroupUnionList[i];

@@ -6,6 +6,7 @@ import cn.cityre.mis.center.model.City;
 import cn.cityre.mis.center.model.Province;
 import cn.cityre.mis.center.service.CityService;
 import cn.cityre.mis.common.web.vo.MenuVo;
+import cn.cityre.mis.core.web.def.WebConstant;
 import cn.cityre.mis.core.web.result.JsonResult;
 import cn.cityre.mis.core.web.result.def.ErrorCodes;
 import cn.cityre.mis.sys.entity.vo.UserSession;
@@ -105,7 +106,13 @@ public class HomeController {
         if (StringUtil.isEmpty(provinceCode)) {
             return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(), "省份编码不允许为空");
         }
-        List<City> cities = cityService.getCityListByProvinceCode(provinceCode);
+        List<City> cities = null;
+        String unionUid = WebUtil.getUnionUid();
+        if (WebConstant.ADMINISTRATOR.equals(unionUid)) {
+            cities = cityService.getCityListByProvinceCode(provinceCode);
+        } else {
+            cities = cityService.getCityListByProvinceCodeAndUnionUid(provinceCode, unionUid);
+        }
         List<CityVo> cityVoList = new ArrayList<>();
         for (City city : cities) {
             CityVo cityVo = new CityVo();
@@ -119,8 +126,14 @@ public class HomeController {
 
     @RequestMapping("/provinces")
     @ResponseBody
-    public JsonResult<List<ProvinceVo>> getProvinceList() {
-        List<Province> provinceList = cityService.getAllProvinceList();
+    public JsonResult<List<ProvinceVo>> getProvinceList(HttpSession session) {
+        List<Province> provinceList = null;
+        String unionUid = WebUtil.getUnionUid(session);
+        if (WebConstant.ADMINISTRATOR.equals(unionUid)) {
+            provinceList = cityService.getAllProvinceList();
+        } else {
+            provinceList = cityService.getProvinceByUnionUid(unionUid);
+        }
         List<ProvinceVo> provinceVoList = new ArrayList<>();
         for (Province province : provinceList) {
             ProvinceVo provinceVo = new ProvinceVo();

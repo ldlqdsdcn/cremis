@@ -22,6 +22,18 @@
       <if test="provinceCode!=null"> and province_code=#{provinceCode,jdbcType=VARCHAR}</if>
     </where>
   </sql>
+  <select id="selectProvinceByCityCodes" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from province
+    where province_code in(select province_code from City where
+    <if test="cityCodeIn!=null and cityCodeIn.size > 0">city_code in
+      <foreach collection="cityCodeIn" item="city" open="(" close=")" separator=",">
+        #{city}
+      </foreach>
+    </if>
+    )
+  </select>
   <select id="selectList"  resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

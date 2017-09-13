@@ -11,6 +11,8 @@ public class MenuQuery {
     private String isactive;
     private Integer type;
     private Set<Integer> repIds;
+    private Set<Integer> repInIds;
+
     public String getNameLike() {
         return nameLike;
     }
@@ -49,5 +51,13 @@ public class MenuQuery {
 
     public void setRepIds(Set<Integer> repIds) {
         this.repIds = repIds;
+    }
+
+    public Set<Integer> getRepInIds() {
+        return repInIds;
+    }
+
+    public void setRepInIds(Set<Integer> repInIds) {
+        this.repInIds = repInIds;
     }
 }

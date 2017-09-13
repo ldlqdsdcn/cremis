@@ -6,6 +6,7 @@ import cn.cityre.mis.center.entity.query.CityQuery;
 import cn.cityre.mis.center.model.City;
 import cn.cityre.mis.center.model.Province;
 import cn.cityre.mis.center.service.CityService;
+import cn.cityre.mis.sys.dao.UserCityMapper;
 import cn.cityre.mis.sys.entity.bo.CityBo;
 import cn.cityre.mis.sys.entity.bo.ProvinceBo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class CityServiceImpl implements CityService {
     private CityMapper cityMapper;
     @Autowired
     private ProvinceMapper provinceMapper;
+    @Autowired
+    private UserCityMapper userCityMapper;
 
     /**
      * @return
@@ -40,6 +43,25 @@ public class CityServiceImpl implements CityService {
      */
     public List<Province> getAllProvinceList() {
         return provinceMapper.selectList(null);
+    }
+
+    @Override
+    public List<Province> getProvinceByUnionUid(String unionUid) {
+        List<String> cityCodes = userCityMapper.selectCityCode(unionUid);
+        List<Province> provinceList = provinceMapper.selectProvinceByCityCodes(cityCodes);
+        return provinceList;
+    }
+
+
+    @Override
+    public List<City> getCityListByProvinceCodeAndUnionUid(String provinceCode, String unionUid) {
+        //FIXME 需要优化 暂时实现功能
+        List<String> cityCodes = userCityMapper.selectCityCode(unionUid);
+        CityQuery cityQuery = new CityQuery();
+        cityQuery.setProvinceCode(provinceCode);
+        cityQuery.setCityCodeIn(cityCodes);
+        List<City> cityList = cityMapper.selectList(cityQuery);
+        return cityList;
     }
 
     /**
@@ -85,8 +107,7 @@ public class CityServiceImpl implements CityService {
             List<CityBo> proCityList = new ArrayList<>();
             for (int i = cityBoList.size() - 1; i >= 0; i--) {
                 CityBo cityBo = cityBoList.get(i);
-                if(cityBo.getProvinceCode()==null)
-                {
+                if (cityBo.getProvinceCode() == null) {
                     continue;
                 }
                 if (cityBo.getProvinceCode().equals(provinceBo.getCode())) {

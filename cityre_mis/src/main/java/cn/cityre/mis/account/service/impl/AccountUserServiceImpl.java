@@ -103,9 +103,13 @@ public class AccountUserServiceImpl implements AccountUserService {
             UserGroupUnion userGroupUnion = new UserGroupUnion();
             boolean check = false;
             for (UserGroup userGroup : userGroups) {
-                check = true;
-                userGroupUnion.setUserGroupId(userGroup.getId());
-                break;
+                if (userGroup.getGroupId().equals(group.getId())) {
+                    check = true;
+                    userGroupUnion.setUserGroupId(userGroup.getId());
+                    break;
+                }
+
+
             }
             if (check) {
                 userGroupUnion.setChecked(true);

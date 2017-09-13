@@ -28,6 +28,11 @@
     <where>
       <if test="cityName!=null"> and city_name=#{cityName,jdbcType=VARCHAR}</if>
       <if test="provinceCode!=null"> and province_code=#{provinceCode,jdbcType=VARCHAR}</if>
+      <if test="cityCodeIn!=null and cityCodeIn.size > 0">and city_code in
+        <foreach collection="cityCodeIn" item="city" open="(" close=")" separator=",">
+          #{city}
+        </foreach>
+      </if>
     </where>
   </sql>
   <select id="selectCityByCityCode" parameterType="java.lang.String" resultMap="BaseResultMap">

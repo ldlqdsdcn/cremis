@@ -24,4 +24,12 @@ public interface UserCityMapper {
     void deleteList(UserCityQuery userCityQuery);
 
     int countUserCity(@Param("unionUid") String unionUid, @Param("cityCode") String cityCode);
+
+    /**
+     * 获取所有可访问的城市列表
+     *
+     * @param unionUid
+     * @return
+     */
+    List<String> selectCityCode(@Param("unionUid") String unionUid);
 }

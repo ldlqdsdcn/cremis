@@ -39,6 +39,11 @@
                   #{id}
                 </foreach>
               </if>
+        <if test="repInIds!=null and repInIds.size > 0">and repository_id in
+          <foreach collection="repInIds" item="id" open="(" close=")" separator=",">
+            #{id}
+          </foreach>
+        </if>
       </where>
     </if>
   </select>

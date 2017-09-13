@@ -5,6 +5,8 @@ import cn.cityre.mis.core.web.result.JsonResult;
 import cn.cityre.mis.core.web.result.def.ErrorCodes;
 import cn.cityre.mis.sys.entity.vo.UserSession;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -21,6 +23,38 @@ public class WebUtil {
      */
     public static UserSession getUserSession(HttpServletRequest request) {
         return getUserSession(request.getSession());
+    }
+
+    public static UserSession getUserSession() {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        return getUserSession(request);
+    }
+
+    public static String getUnionUid() {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        return getUnionUid(request);
+    }
+
+    /**
+     * 获取unionUid
+     *
+     * @param request
+     * @return
+     */
+    public static String getUnionUid(HttpServletRequest request) {
+        UserSession userSession = getUserSession(request.getSession());
+        return userSession.getUnionUid();
+    }
+
+    /**
+     * 获取unionUid
+     *
+     * @param session
+     * @return
+     */
+    public static String getUnionUid(HttpSession session) {
+        UserSession userSession = getUserSession(session);
+        return userSession.getUnionUid();
     }
 
     /**

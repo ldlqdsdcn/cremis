@@ -22,6 +22,9 @@ public interface CityService {
      */
     List<Province> getAllProvinceList();
 
+    List<Province> getProvinceByUnionUid(String unionUid);
+
+    List<City> getCityListByProvinceCodeAndUnionUid(String provinceCode, String unionUid);
     /**
      * 根据省份编码获取城市列表
      * @param provinceCode
