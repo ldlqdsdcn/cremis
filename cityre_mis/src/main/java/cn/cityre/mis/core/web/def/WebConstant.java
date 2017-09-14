@@ -11,4 +11,6 @@ public class WebConstant {
     public static final String USER_IN_SESSION="MIS_USER";
 
     public static final String ADMINISTRATOR = "administrator";
+
+    public static final String API_KEY = "45a90431c8b992e92ff3873073b47132";
 }

@@ -777,36 +777,79 @@
         }
         //重置密码提交数据
         function restPwd(uiFrom) {
-            var oldpwd = $("input[id='oldPassword_ids']", uiFrom).val();
-            var newpwd = $("input[id='newPassword_ids']", uiFrom).val();
+            var oldpwd = $("#oldPassword").textbox("getValue");
+            var newpwd = $("#password").textbox("getValue");
+            var conpwd = $("#passwordConfirm").textbox("getValue");
+
+            if (eideaValidator.isEmpty(oldpwd)) {
+                parent.Imi.messagerShow({
+                    title: '提示',
+                    msg: "<font color=blue>旧密码不允许为空</font>"
+                });
+                return;
+            }
+            if (eideaValidator.isEmpty(newpwd)) {
+                parent.Imi.messagerShow({
+                    title: '提示',
+                    msg: "<font color=blue>新密码不允许为空</font>"
+                });
+                return;
+            }
+
+            if (newpwd.length < 6) {
+                parent.Imi.messagerShow({
+                    title: '提示',
+                    msg: "<font color=blue>新密码长度最少为6位</font>"
+                });
+                return;
+            }
+
+            if (eideaValidator.isEmpty(conpwd)) {
+                parent.Imi.messagerShow({
+                    title: '提示',
+                    msg: "<font color=blue>密码确认不允许为空</font>"
+                });
+                return;
+            }
+
+            if (newpwd != conpwd) {
+                parent.Imi.messagerShow({
+                    title: '提示',
+                    msg: "<font color=blue>两次密码输入不一致</font>"
+                });
+                return;
+            }
+
             $.ajax({
-                url: ctx + "/profile/showChangePassword",
+                url: ctx + "profile/changePassword",
                 type: 'POST',
                 data: {
                     oldPassword: oldpwd,
                     newPassword: newpwd
                 },
                 beforeSend: function (XMLHttpRequest) {
+
                     showProcess(true, '温馨提示', '正在提交数据...');
+
                 },
                 success: function (data) {
 
                     var result = data;
-
-                    if (result.flag) {
+                    if (result.success) {
                         Imi.winclose(win);
                         parent.Imi.messagerShow({
                             title: '提示',
-                            msg: "<font color=blue>" + result.msg + "</font>"
+                            msg: "<font color=blue>修改密码成功</font>"
                         });
                     } else {
                         parent.Imi.messagerShow({
                             title: '提示',
-                            msg: "<font color=red>" + result.msg + "</font>"
+                            msg: "<font color=red>" + result.message + "</font>"
                         });
                     }
                 },
                 complete: function (XMLHttpRequest, textStatus) {
+
                     showProcess(false);
                 },
                 error: function () {

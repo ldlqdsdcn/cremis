@@ -44,7 +44,8 @@ public class MisRealm extends AuthorizingRealm {
     private String accountCenterHost;
     @Value("${centeraccount.api.login}")
     private String loginApiUrl;
-
+    @Value("${centeraccount.api.value}")
+    private String apiKey;
     /**
      * 授权
      *
@@ -89,7 +90,7 @@ public class MisRealm extends AuthorizingRealm {
         loginParam.put("uid", usernamePasswordToken.getUsername());
         loginParam.put("pwd", pwd);
         HttpHeaders headers = new HttpHeaders();
-        headers.add("x-api-key", "45a90431c8b992e92ff3873073b47132");
+        headers.add("x-api-key", apiKey);
         RestHelper.ResponseEntity responseEntity = restHelper.get(accountCenterHost + loginApiUrl, loginParam);
 
         if (responseEntity.getStatus() == RestHelper.HttpStatus.OK) {
