@@ -319,6 +319,15 @@
         }
     </style>
     <script type="text/javascript">
+        $.extend($.fn.validatebox.defaults.rules, {
+            confirmPass: {
+                validator: function (value, param) {
+                    var pass = $(param[0]).passwordbox('getValue');
+                    return value == pass;
+                },
+                message: '两次密码输入不一致.'
+            }
+        });
         $(function () {
             loadSystemZtreeIMI();
 
@@ -592,7 +601,8 @@
                     }
                 });
             });
-            //关闭除当前之外的TAB
+            //关闭除当前之外的TAB重置密码
+
             $('#mm-tabcloseother').click(function () {
                 var prevall = $('.tabs-selected').prevAll();
                 var nextall = $('.tabs-selected').nextAll();
@@ -740,8 +750,8 @@
         //重置密码
         function resetClk() {
             win = parent.Imi.dialog({
-                title: '重置密码',
-                href: ctx + "/web/ResetPwd.jsp",
+                title: '修改密码',
+                href: ctx + "/profile/showChangePassword",
                 width: 400,
                 height: 336,
                 buttons: [{
@@ -770,7 +780,7 @@
             var oldpwd = $("input[id='oldPassword_ids']", uiFrom).val();
             var newpwd = $("input[id='newPassword_ids']", uiFrom).val();
             $.ajax({
-                url: ctx + "/login/resetPwd.api",
+                url: ctx + "/profile/showChangePassword",
                 type: 'POST',
                 data: {
                     oldPassword: oldpwd,
@@ -848,8 +858,9 @@
             <font style="color:#666666;">当前城市：<span id="currentCity"><c:out value="${MIS_USER.cityName}"/> </span>   <input type="button" onclick="openDialog();" value="更换"></font>
             &nbsp;&nbsp;
             <font style="color:#666666;">
-                <span onclick="resetClk()" style="cursor:pointer;">重置密码</span> </font>&nbsp;&nbsp;&nbsp;&nbsp;<font style="color:#666666;cursor:pointer;"
-                                             onclick="exitSys()">退出系统</font>
+                <span onclick="resetClk()" style="cursor:pointer;">修改密码</span> </font>&nbsp;&nbsp;&nbsp;&nbsp;<font
+                style="color:#666666;cursor:pointer;"
+                onclick="exitSys()">退出系统</font>
 
         </div>
         <div style="float:right;width:405px;height:30px;">
