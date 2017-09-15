@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.Enumeration;
 
@@ -81,7 +82,7 @@ public class RepositoryController {
     @RequiresPermissions("repository:edit")
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
-    public JsonResult<Repository> save(@Validated @RequestBody Repository repository, BindingResult bindingResult, HttpServletRequest request) {
+    public JsonResult<Repository> save(@Valid @RequestBody Repository repository, BindingResult bindingResult, HttpServletRequest request) {
         JsonResult error = WebUtil.hasErrorMessage(bindingResult);
         if (error != null) {
             return error;

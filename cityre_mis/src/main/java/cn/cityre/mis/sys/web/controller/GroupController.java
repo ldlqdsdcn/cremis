@@ -13,6 +13,7 @@ import cn.cityre.mis.sys.entity.vo.GroupVo;
 import cn.cityre.mis.sys.entity.vo.UserSession;
 import cn.cityre.mis.sys.model.Group;
 import cn.cityre.mis.sys.service.GroupService;
+import cn.cityre.mis.util.ValidatorHelper;
 import cn.cityre.mis.util.WebUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ import java.util.List;
 public class GroupController {
     @Autowired
     private GroupService groupService;
+    private ValidatorHelper validatorHelper = ValidatorHelper.getInstance();
 
     @RequestMapping("/")
     @RequiresPermissions("group:view")
@@ -86,13 +88,11 @@ public class GroupController {
     @RequiresPermissions("group:edit")
     @RequestMapping("/save")
     @ResponseBody
-    public JsonResult<GroupVo> save(@Validated @RequestBody GroupVo groupVo, HttpServletRequest request, BindingResult bindingResult) {
-        if (bindingResult.getFieldErrorCount() > 0) {
-            String message = "";
-            for (int i = 0; i < bindingResult.getFieldErrors().size(); i++) {
-                message = message + " " + bindingResult.getFieldErrors().get(i).getDefaultMessage();
-            }
-            return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(), message);
+    public JsonResult<GroupVo> save(@RequestBody GroupVo groupVo, HttpServletRequest request) {
+        //TODO 字段为对象的参数，spring mvc 在进入整个方法之前就进行了验证，早晨返回错误信息结构不一致，暂且用帮助类实现，以后改为切面方式
+        String errorMsg = validatorHelper.validatorBackHtmlString(groupVo);
+        if (errorMsg != null) {
+            return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(), errorMsg);
         }
         UserSession userSession = (UserSession) request.getSession().getAttribute(WebConstant.USER_IN_SESSION);
         groupVo.getGroup().setUpdated(new Date());

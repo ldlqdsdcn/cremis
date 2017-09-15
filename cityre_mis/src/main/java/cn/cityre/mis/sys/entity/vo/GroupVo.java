@@ -3,12 +3,14 @@ package cn.cityre.mis.sys.entity.vo;
 import cn.cityre.mis.sys.entity.union.GroupRepositoryUnion;
 import cn.cityre.mis.sys.model.Group;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
  * Created by 刘大磊 on 2017/9/1 15:07.
  */
 public class GroupVo {
+    @Valid
     private Group group;
 
     private List<GroupRepositoryUnion> groupRepositoryUnionList;

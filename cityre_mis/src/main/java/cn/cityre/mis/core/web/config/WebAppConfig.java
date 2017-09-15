@@ -36,7 +36,7 @@ import java.util.Properties;
  * spring mvc 配置入口
  */
 @Configuration
-@ComponentScan("cn.cityre.mis.**.controller")
+@ComponentScan({"cn.cityre.mis.**.controller", "cn.cityre.mis.**.interceptor"})
 @EnableWebMvc
 public class WebAppConfig extends WebMvcConfigurerAdapter {
     /**

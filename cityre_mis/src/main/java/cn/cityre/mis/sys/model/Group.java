@@ -8,10 +8,10 @@ import java.util.Date;
 public class Group {
     private Integer id;
     @NotBlank(message = "编号不允许为空")
-    @Length(max = 64,min = 1,message = "编号长度范围在 1-64之间")
+    @Length(max = 64, min = 4, message = "编号长度范围在 4-64之间")
     private String no;
     @NotBlank(message = "名称不允许为空")
-    @Length(max = 64,min = 1,message = "名称长度范围在 1-100之间")
+    @Length(max = 64, min = 4, message = "名称长度范围在 4-100之间")
     private String name;
     @Length(max = 200,message = "描述长度不能大于200")
     private String desc;
