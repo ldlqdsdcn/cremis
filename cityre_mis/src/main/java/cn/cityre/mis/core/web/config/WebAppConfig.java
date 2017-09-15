@@ -134,7 +134,6 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
         return new AuthorizationAttributeSourceAdvisor();
     }
 
-    @Bean
     public SimpleMappingExceptionResolver simpleMappingExceptionResolver() {
         SimpleMappingExceptionResolver simpleMappingExceptionResolver = new SimpleMappingExceptionResolver();
         Properties properties = new Properties();

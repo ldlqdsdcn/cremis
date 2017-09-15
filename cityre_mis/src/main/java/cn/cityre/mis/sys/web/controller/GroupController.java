@@ -1,6 +1,7 @@
 package cn.cityre.mis.sys.web.controller;
 
 import cn.cityre.mis.account.entity.vo.AccountUserCitiesVo;
+import cn.cityre.mis.core.web.annon.MisValid;
 import cn.cityre.mis.core.web.def.WebConstant;
 import cn.cityre.mis.core.web.result.JsonResult;
 import cn.cityre.mis.core.web.result.def.ErrorCodes;
@@ -88,12 +89,12 @@ public class GroupController {
     @RequiresPermissions("group:edit")
     @RequestMapping("/save")
     @ResponseBody
-    public JsonResult<GroupVo> save(@RequestBody GroupVo groupVo, HttpServletRequest request) {
-        //TODO 字段为对象的参数，spring mvc 在进入整个方法之前就进行了验证，早晨返回错误信息结构不一致，暂且用帮助类实现，以后改为切面方式
+    public JsonResult<GroupVo> save(@RequestBody @MisValid GroupVo groupVo, HttpServletRequest request) {
+        /*        //TODO 字段为对象的参数，spring mvc 在进入整个方法之前就进行了验证，早晨返回错误信息结构不一致，暂且用帮助类实现，以后改为切面方式
         String errorMsg = validatorHelper.validatorBackHtmlString(groupVo);
         if (errorMsg != null) {
             return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(), errorMsg);
-        }
+        }*/
         UserSession userSession = (UserSession) request.getSession().getAttribute(WebConstant.USER_IN_SESSION);
         groupVo.getGroup().setUpdated(new Date());
         groupVo.getGroup().setUpdatedby(userSession.getUnionUid());
