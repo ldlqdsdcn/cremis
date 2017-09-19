@@ -179,7 +179,6 @@
                 <th data-options="field:'created',sortable:true" width="10%">修改时间</th>
                 <th data-options="field:'createdby',sortable:true" width="10%">修改建人</th>
                 <th data-options="field:'operator',sortable:true,formatter:repositoryHelper.editColumnConverter" width="auto">相关操作</th>
-
             </tr>
             </thead>
         </table>
