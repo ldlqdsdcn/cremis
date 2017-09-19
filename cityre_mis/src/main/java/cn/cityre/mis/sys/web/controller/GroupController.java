@@ -90,7 +90,7 @@ public class GroupController {
     @RequestMapping("/save")
     @ResponseBody
     public JsonResult<GroupVo> save(@RequestBody @MisValid GroupVo groupVo, HttpServletRequest request) {
-        /*        //TODO 字段为对象的参数，spring mvc 在进入整个方法之前就进行了验证，早晨返回错误信息结构不一致，暂且用帮助类实现，以后改为切面方式
+        /*
         String errorMsg = validatorHelper.validatorBackHtmlString(groupVo);
         if (errorMsg != null) {
             return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(), errorMsg);
