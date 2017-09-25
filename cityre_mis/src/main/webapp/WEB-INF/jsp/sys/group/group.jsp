@@ -13,7 +13,8 @@
     <%@ include file="/inc/header.jsp" %>
 </head>
 <body>
-<div id="groupPanel" class="easyui-layout" data-options="fit:true,border:false">
+<div id="groupPanel" class="easyui-layout" data-options="fit:true,border:false"
+     style="min-width: 400px;overflow-x: scroll;overflow-y: scroll;">
 </div>
 <script type="text/javascript">
     $.ajaxSetup({

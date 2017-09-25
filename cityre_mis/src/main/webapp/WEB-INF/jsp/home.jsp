@@ -64,6 +64,7 @@
             font: 12px/20px "微软雅黑", "宋体", Arial, sans-serif, Verdana, Tahoma;
             padding: 0;
             margin: 0;
+            min-width: 1200px;
         }
 
         a:link {
@@ -81,6 +82,9 @@
         a:active {
             text-decoration: none;
         }
+
+        /*右侧区域滚动*/
+
 
         .cs-north {
             height: 60px;

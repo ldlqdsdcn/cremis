@@ -3,13 +3,19 @@ package cn.cityre.mis.core.web.config;
 import cn.cityre.mis.core.web.security.MisRealm;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
+import org.apache.shiro.codec.Base64;
+import org.apache.shiro.mgt.RememberMeManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -80,9 +86,10 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean(name = "securityManager")
-    public DefaultWebSecurityManager securityManager(Realm realm) {
+    public DefaultWebSecurityManager securityManager(Realm realm, RememberMeManager rememberMeManager) {
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
         defaultWebSecurityManager.setRealm(realm);
+        defaultWebSecurityManager.setRememberMeManager(rememberMeManager);
         return defaultWebSecurityManager;
     }
 
@@ -158,6 +165,47 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
         XmlMapper xmlMapper = builder.createXmlMapper(true).build();
         xmlMapper.configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true);
         converters.add(new MappingJackson2XmlHttpMessageConverter(xmlMapper));
+    }
+
+    /**
+     * 记住密码设置
+     *
+     * @return
+     */
+    @Bean
+    public SimpleCookie simpleCookie() {
+        SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
+        simpleCookie.setHttpOnly(true);
+        //默认记住2个月（单位：秒）
+        simpleCookie.setMaxAge(60 * 60 * 24 * 30 * 2);
+        return simpleCookie;
+    }
+
+    /*
+    <!-- rememberMe管理器 -->
+       <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+           <property name="cipherKey" value="#{T(org.apache.shiro.codec.Base64).decode('4AvVhmFLUs0KTA3Kprsdag==')}" />
+           <property name="cookie" ref="rememberMeCookie" />
+       </bean>*/
+    @Bean
+    public CookieRememberMeManager cookieRememberMeManager(SimpleCookie simpleCookie) {
+        CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
+        cookieRememberMeManager.setCookie(simpleCookie);
+        cookieRememberMeManager.setCipherKey(Base64.decode("'4AvVhmFLUs0KTA3Kprsdag=="));
+        return cookieRememberMeManager;
+    }
+
+    /*
+    * <!-- 基于Form表单的身份验证过滤器 -->
+    * */
+    @Bean
+    public FormAuthenticationFilter formAuthenticationFilter() {
+        FormAuthenticationFilter formAuthenticationFilter = new FormAuthenticationFilter();
+        formAuthenticationFilter.setUsernameParam("username");
+        formAuthenticationFilter.setPasswordParam("password");
+        formAuthenticationFilter.setLoginUrl("/login");
+        formAuthenticationFilter.setRememberMeParam("rememberMe");
+        return formAuthenticationFilter;
     }
 
     @Bean
