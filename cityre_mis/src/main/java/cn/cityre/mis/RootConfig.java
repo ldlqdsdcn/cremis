@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * Created by 刘大磊 on 2017/8/22 9:02.
@@ -22,6 +23,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 @Configuration
 @Import(value = {MisDaoConfig.class, AccountDaoConfig.class, CenterDaoConfig.class, CityrecenterDaoConfig.class, CityDaoConfig.class})
 @ComponentScan({"cn.cityre.mis.**.service","cn.cityre.mis.core.dao.db"})
+@EnableTransactionManagement
 public class RootConfig {
     private static final Logger log = LoggerFactory.getLogger(RootConfig.class);
 
