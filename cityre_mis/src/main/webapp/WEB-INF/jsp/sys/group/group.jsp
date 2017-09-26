@@ -71,7 +71,6 @@
                 url=url+"?id=" + id + "&time=";
             }
            // var url = "<%=path%>/sys/group/showForm/?id=" + id + "&time=";
-
             $("#groupPanel").panel({
                     href: url, onLoad: function () {
                         $.get("<%=path%>/sys/group/get/" + id, function (result) {
