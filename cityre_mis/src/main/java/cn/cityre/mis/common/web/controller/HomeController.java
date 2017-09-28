@@ -40,12 +40,15 @@ public class HomeController {
 
     @RequestMapping({"index", "/"})
     public ModelAndView showHome() {
-        return new ModelAndView("home");
+
+        //return new ModelAndView("home");
+        return new ModelAndView("main");
     }
 
     @RequestMapping("/kouhao")
     public String showKouhao() {
-        return "common/kouhao";
+        // return "common/kouhao";
+        return "desktop";
     }
 
     @RequestMapping("error/noprivileges")
