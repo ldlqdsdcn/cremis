@@ -19,4 +19,13 @@ public interface MenuService {
     List<Menu> selectMenuList(MenuQuery menuQuery);
 
     List<Menu> getLeftmenuList(String unionUid);
+
+    /**
+     * 根据父菜单id和用户的unionUid获取菜单列表
+     *
+     * @param unionUid 用户unionUid
+     * @param menuId   菜单的menuId
+     * @return
+     */
+    List<Menu> getLeftmenuList(String unionUid, Integer menuId);
 }

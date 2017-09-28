@@ -3,6 +3,12 @@ package cn.cityre.mis.common.web.vo;
 /**
  * Created by 刘大磊 on 2017/8/28 9:38.
  * 左菜单 menu类
+ *     "id": 13501,
+ "pid": 1350,
+ "state": "closed",
+ "iconCls": "",
+ "text": "表单演示",
+ "url": ""
  */
 public class MenuVo {
 
@@ -23,6 +29,12 @@ public class MenuVo {
     private boolean open = false;
 
     private String state;
+
+    private String iconCls;
+
+    private String text;
+
+    private String url;
 
     public Integer getId() {
         return id;
@@ -94,5 +106,29 @@ public class MenuVo {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public String getIconCls() {
+        return iconCls;
+    }
+
+    public void setIconCls(String iconCls) {
+        this.iconCls = iconCls;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

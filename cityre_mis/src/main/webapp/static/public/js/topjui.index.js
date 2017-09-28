@@ -107,6 +107,7 @@ $(function () {
     $(".systemName").on("click", function (e) {
         //generateMenu(e.currentTarget.dataset.menuid, e.target.textContent); //IE9及以下不兼容data-menuid属性
         //generateMenu(e.target.getAttribute('data-menuid'), e.target.textContent);
+        //生成左菜单
         generateMenu($(this).attr("id"), $(this).attr("title"));
         $(".systemName").removeClass("selected");
         $(this).addClass("selected");
@@ -314,14 +315,16 @@ function generateMenu(menuId, systemName) {
             }
         }
 
-        var url = ctx + "json/menu/menu_" + menuId + ".json";
+        var url = ctx + "menus";
+        alert(url);
         $.get(
-            url, {"levelId": "2"}, // 获取第一层目录
+            url, //{"levelId": "2"}, // 获取第一层目录
             function (data) {
                 if (data == "0") {
                     window.location = "/Account";
                 }
-                $.each(data, function (i, e) {// 循环创建手风琴的项
+                alert(JSON.stringify(data));
+                $.each(data.data, function (i, e) {// 循环创建手风琴的项
                     var pid = e.pid;
                     var isSelected = i == 0 ? true : false;
                     $('#RightAccordion').iAccordion('add', {
@@ -333,13 +336,13 @@ function generateMenu(menuId, systemName) {
                         iconCls: e.iconCls
                     });
                     $.parser.parse();
-                    $.get(ctx + "json/menu/menu_" + e.id + ".json", function (data) {// 循环创建树的项
+                    $.get(ctx + "menus?menuId=" + e.id, function (data) {// 循环创建树的项
                         $("#tree" + e.id).tree({
-                            data: data,
+                            data: data.data,
                             lines: false,
                             animate: true,
                             onBeforeExpand: function (node, param) {
-                                $("#tree" + e.id).tree('options').url = ctx + "json/menu/menu_" + node.id + ".json";
+                                $("#tree" + e.id).tree('options').url = ctx + "menus?menuId=" + e.id;
                             },
                             onClick: function (node) {
                                 if (node.url) {

@@ -12,6 +12,10 @@ public class MenuQuery {
     private Integer type;
     private Set<Integer> repIds;
     private Set<Integer> repInIds;
+    /**
+     * 拼sql的条件
+     */
+    private String conditions;
 
     public String getNameLike() {
         return nameLike;
@@ -59,5 +63,13 @@ public class MenuQuery {
 
     public void setRepInIds(Set<Integer> repInIds) {
         this.repInIds = repInIds;
+    }
+
+    public String getConditions() {
+        return conditions;
+    }
+
+    public void setConditions(String conditions) {
+        this.conditions = conditions;
     }
 }

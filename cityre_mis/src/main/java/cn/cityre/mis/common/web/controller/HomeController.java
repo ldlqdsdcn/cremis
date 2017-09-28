@@ -66,6 +66,41 @@ public class HomeController {
         return "desktop";
     }
 
+    @RequestMapping("/menus")
+    @ResponseBody
+    public JsonResult<List<MenuVo>> getLeftMenuListByParentMenuId(HttpSession session, Integer menuId) {
+        /**
+         *  *     "id": 13501,
+         "pid": 1350,
+         "state": "closed",
+         "iconCls": "",
+         "text": "表单演示",
+         "url": ""
+         */
+        List<Menu> menuList = menuService.getLeftmenuList(WebUtil.getUnionUid(), menuId);
+        List<MenuVo> menuVoList = new ArrayList<>();
+        for (Menu menu : menuList) {
+            MenuVo menuVo = new MenuVo();
+            menuVo.setId(menu.getId());
+            if (menu.getParentMenuId() == null) {
+                menuVo.setpId(1325);
+            } else {
+                menuVo.setpId(menu.getParentMenuId());
+            }
+            if (menu.getType() == 1) {
+                menuVo.setState("open");
+            } else {
+                menuVo.setState("closed");
+            }
+
+            menuVo.setIconCls(menu.getIcon());
+            menuVo.setText(menu.getName());
+            menuVo.setUrl(menu.getUrl());
+            menuVoList.add(menuVo);
+        }
+        return JsonResult.success(menuVoList);
+    }
+
     @RequestMapping("/leftmenu")
     @ResponseBody
     public JsonResult<List<MenuVo>> getLeftMenuList(HttpSession session) {

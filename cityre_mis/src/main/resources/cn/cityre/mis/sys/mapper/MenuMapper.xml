@@ -44,6 +44,9 @@
             #{id}
           </foreach>
         </if>
+        <if test="conditions!=null">
+          and ${conditions}
+        </if>
       </where>
     </if>
   </select>

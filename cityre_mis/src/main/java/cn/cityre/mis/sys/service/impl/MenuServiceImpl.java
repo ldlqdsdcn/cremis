@@ -74,6 +74,33 @@ public class MenuServiceImpl implements MenuService {
         return menuList;
     }
 
+    @Override
+    public List<Menu> getLeftmenuList(String unionUid, Integer menuId) {
+        String conditions = null;
+        MenuQuery menuQuery = new MenuQuery();
+        if (menuId != null) {
+            conditions = " parent_menu_id=" + menuId;
+        } else {
+            conditions = " parent_menu_id is null ";
+        }
+        menuQuery.setConditions(conditions);
+        if ("administrator".equals(unionUid)) {
+            return menuMapper.selectMenuList(menuQuery);
+        }
+        Set<Integer> integerList = repositoryMapper.getUserRepositoryIds(unionUid);
+        if (integerList.size() == 0) {
+            return new ArrayList<>();
+        }
+        menuQuery.setRepInIds(integerList);
+        List<Menu> menuList = menuMapper.selectMenuList(menuQuery);
+        //如果菜单列表取出来，但父菜单没权限，则找到父菜单添加到列表中。
+        for (int i = 0; i < menuList.size(); i++) {
+            Menu menu = menuList.get(i);
+            addParentMenu(menu, menuList);
+        }
+        return menuList;
+    }
+
     private void addParentMenu(Menu menu, List<Menu> menuList) {
         if (!containsParentMenu(menuList, menu.getParentMenuId())) {
             Menu parentMenu = menuMapper.selectByPrimaryKey(menu.getParentMenuId());
