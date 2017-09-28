@@ -18,9 +18,7 @@
     <meta name="keywords" content="cremis">
     <meta name="description" content="Mis系统-登录界面">
     <title>Mis系统-登录界面</title>
-
     <link rel="stylesheet" href="<c:url value="/css/cremis_common.css"/>">
-
 </head>
 
 <body>
@@ -65,9 +63,7 @@
                 <h2><p>用户姓名</p></h2>
             </div>
         </div>
-        <ul class="side-menu">
-
-        </ul>
+        <ul class="side-menu"></ul>
     </aside>
 
     <div class="layout-side-arrow">
