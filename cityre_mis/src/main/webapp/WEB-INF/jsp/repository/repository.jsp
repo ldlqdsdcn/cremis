@@ -224,14 +224,14 @@
             method: 'doAjax',
             iconCls: 'fa fa-trash',
             btnCls: 'topjui-btn-danger',
-            confirmMsg: '这个是勾选复选框实现多条数据的Ajax删除提交操作，提交grid.param中指定的参数值',
+            confirmMsg: '确认删除？',
             grid: {
                 type: 'datagrid',
                 id: 'productDg',
                 uncheckedMsg: '请先勾选要删除的数据',
-                param: 'uuid:uuid,code:code'
+                param: 'idsString:id'
             },
-            url: contextPath + '/json/response/success.json'
+            url: '<c:url value="/sys/repository/deleteRepositories"/>'
         });
 
         $("#filter").iMenubutton({
@@ -253,6 +253,5 @@
         });
     });
 </script>
-
 </body>
 </html>

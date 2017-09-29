@@ -15,8 +15,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -67,12 +69,8 @@ public class RepositoryController {
     @RequiresPermissions("repository:edit")
     @RequestMapping(value = "/deleteRepositories", method = RequestMethod.POST)
     @ResponseBody
-    public JsonResult<Void> deleteRepositories(@RequestBody Integer[] ids, HttpServletRequest request) {
-        Enumeration<String> enumeration = request.getParameterNames();
-        while (enumeration.hasMoreElements()) {
-            String name = enumeration.nextElement();
-            System.out.println(name + "  =  " + request.getParameter(name));
-        }
+    public JsonResult<Void> deleteRepositories(String idsString, HttpServletRequest request) {
+        Integer[] ids = StringUtil.convertStringToIntegerArray(idsString);
         if (ids == null || ids.length == 0) {
             return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(), "请先选中再删除");
         }
@@ -87,6 +85,7 @@ public class RepositoryController {
     public Repository get(@PathVariable("id") Integer id) {
         return repositoryService.getRepository(id);
     }
+
     @RequiresPermissions("repository:edit")
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
