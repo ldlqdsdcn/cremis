@@ -37,6 +37,8 @@
     <script type="text/javascript" src="<c:url value="/topjui/js/topjui.core.min.js"/>"></script>
     <!-- TopJUI中文支持 -->
     <script type="text/javascript" src="<c:url value="/topjui/js/locale/topjui.lang.zh_CN.js"/>"></script>
+    <script language="javascript" type="text/javascript" src="<c:url value="/js/eidea.validate.js"/>"></script>
+    <script language="javascript" type="text/javascript" src="<c:url value="/js/eidea.util.js"/>"></script>
     <!-- 首页js -->
     <script type="text/javascript" src=" <c:url value="/static/public/js/topjui.index.js"/>" charset="utf-8"></script>
 </head>
@@ -543,6 +545,6 @@
       iconCls:'fa fa-key',
       width: 400,
       height: 260,
-      href: '/html/user/modifyPassword.html'"></form>
+      href: 'profile/showChangePassword'"></form>
 </body>
 </html>

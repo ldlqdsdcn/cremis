@@ -3,6 +3,7 @@ package cn.cityre.mis.common.web.controller;
 import cn.cityre.mis.core.web.def.WebConstant;
 import cn.cityre.mis.core.web.result.JsonResult;
 import cn.cityre.mis.core.web.result.def.ErrorCodes;
+import cn.cityre.mis.def.SystemConsts;
 import cn.cityre.mis.sys.entity.vo.ErrorResponseVo;
 import cn.cityre.mis.util.RestHelper;
 import cn.cityre.mis.util.WebUtil;
@@ -37,12 +38,18 @@ public class ProfileController {
 
     @RequestMapping("/showChangePassword")
     public String showChangePassword() {
-        return "changePassword";
+        return "profile/changePassword";
     }
 
     @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
     @ResponseBody
     public JsonResult<Void> changePassword(String oldPassword, String newPassword) {
+
+        String unionUid = WebUtil.getUnionUid();
+        if (SystemConsts.SUPER_USER.equals(unionUid)) {
+            return JsonResult.fail(ErrorCodes.BUSINESS_EXCEPTION.getCode(), "超级管理员的密码是系统初始化设置的，不允许修改");
+        }
+
         Map<String, String> headerMap = new HashMap<>();
         headerMap.put("x-api-key", apiKey);
         headerMap.put("Authorization", " Bearer " + WebUtil.getUserSession().getToken());

@@ -153,6 +153,7 @@ $(function () {
         }, "json");
     });
 
+
     // 修改密码窗口
     $('#pwdDialog').iDialog({
         buttons: [{
@@ -160,38 +161,70 @@ $(function () {
             iconCls: 'fa fa-save',
             btnCls: 'topjui-btn',
             handler: function () {
-                if ($("#password").val().length < 6) {
-                    $.iMessager.alert('警告', '密码长度不能小于6位', 'messager-warning');
-                } else {
-                    var formData = $("#pwdDialog").serialize();
-                    $.ajax({
-                        url: ctx + '/json/response/success.json',
-                        type: 'post',
-                        cache: false,
-                        data: formData,
-                        beforeSend: function () {
-                            $.iMessager.progress({
-                                text: '正在操作...'
-                            });
-                        },
-                        success: function (data, response, status) {
-                            $.iMessager.progress('close');
-                            if (data.statusCode == 200) {
-                                $.iMessager.show({
-                                    title: '提示',
-                                    msg: '操作成功'
-                                });
-                                $("#pwdDialog").iDialog('close').form('reset');
+                var oldpwd = $("#oldPassword").textbox("getValue");
+                var newpwd = $("#password").textbox("getValue");
+                var conpwd = $("#passwordConfirm").textbox("getValue");
 
-                            } else {
-                                $.iMessager.alert('操作失败！', '未知错误或没有任何修改，请重试！', 'messager-error');
-                            }
-                        }
-                    });
+
+                if (eideaValidator.isEmpty(oldpwd)) {
+                    $.iMessager.alert('警告', '旧密码不允许为空', 'messager-warning');
+                    return;
                 }
-                //if($('#userPass').validatebox('isValid')){
+                if (eideaValidator.isEmpty(newpwd)) {
+                    $.iMessager.alert('警告', '新密码不允许为空', 'messager-warning');
+                    return;
+                }
 
-                //}
+                if (newpwd.length < 6) {
+                    $.iMessager.alert('警告', '新密码长度最少为6位', 'messager-warning');
+                    return;
+                }
+
+                if (eideaValidator.isEmpty(conpwd)) {
+                    $.iMessager.alert('警告', '密码确认不允许为空', 'messager-warning');
+                    return;
+                }
+
+                if (newpwd != conpwd) {
+                    $.iMessager.alert('警告', '两次密码输入不一致', 'messager-warning');
+                    return;
+                }
+                $.ajax({
+                    url: ctx + "profile/changePassword",
+                    type: 'POST',
+                    data: {
+                        oldPassword: oldpwd,
+                        newPassword: newpwd
+                    },
+                    beforeSend: function (XMLHttpRequest) {
+
+                        $.iMessager.progress({
+                            text: '正在操作...'
+                        });
+
+                    },
+                    success: function (data) {
+
+                        var result = data;
+                        if (result.success) {
+                            $.iMessager.show({
+                                title: '提示',
+                                msg: '操作成功'
+                            });
+                            $("#pwdDialog").iDialog('close').form('reset');
+                        } else {
+                            $.iMessager.alert('操作失败！', result.message, 'messager-error');
+                        }
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {
+                        $.iMessager.progress('close');
+                    },
+                    error: function () {
+                        $.iMessager.progress('close');
+                        $.messager.alert('温馨提示', '由于网络或服务器太忙，提交失败，请重试！');
+                    }
+
+                });
             }
         }]
     });
@@ -316,14 +349,12 @@ function generateMenu(menuId, systemName) {
         }
 
         var url = ctx + "menus";
-        alert(url);
         $.get(
             url, //{"levelId": "2"}, // 获取第一层目录
             function (data) {
                 if (data == "0") {
                     window.location = "/Account";
                 }
-                alert(JSON.stringify(data));
                 $.each(data.data, function (i, e) {// 循环创建手风琴的项
                     var pid = e.pid;
                     var isSelected = i == 0 ? true : false;

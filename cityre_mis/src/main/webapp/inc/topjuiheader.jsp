@@ -40,3 +40,5 @@
             + request.getServerName() + ":" + request.getServerPort()
             + path %>';
 </script>
+<script type="text/javascript" src="<%=path%>/js/eidea.validate.js"></script>
+<script type="text/javascript" src="<%=path%>/js/eidea.util.js"></script>

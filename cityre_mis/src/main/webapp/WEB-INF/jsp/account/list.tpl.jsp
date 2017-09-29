@@ -24,7 +24,7 @@
         </fieldset>
     </div>
 </div>
-<div data-options="region:'center',border:false" >
+<div data-options="region:'center',border:true">
     <table class="easyui-datagrid"  toolbar="#activityTools" pagination="true"
            rownumbers="true" fitColumns="true" border="false" data-options="rownumbers:true,singleSelect:false,pageSize:20,pageList:[20]"
            url="<%=path %>/account/user/list"
@@ -48,4 +48,20 @@
         </tr>
         </thead>
     </table>
+    <%--    <table   id="userTable" data-toggle="topjui-datagrid"
+               data-options="id:'issueInvoiceDatagrid',
+        url:'<%=path %>/account/user/list">
+            <thead>
+            <tr>
+                <th data-options="field:'id',title:'ID',checkbox:true"></th>
+                <th data-options="field:'unionuid',title:'union uid'"></th>
+                <th data-options="field:'nickname',title:'昵称'"></th>
+                <th data-options="field:'realname',title:'真实姓名'"></th>
+                <th data-options="field:'sex',title:'性别'"></th>
+                <th data-options="field:'isverified',title:'是否验证'"></th>
+                <th data-options="field:'isvalid',title:'是否有效'"></th>
+                <th data-options="field:'operator',title:'相关操作',sortable:true,formatter: function(value,row,index){return operation(row,index);}"></th>
+            </tr>
+            </thead>
+        </table>--%>
 </div>

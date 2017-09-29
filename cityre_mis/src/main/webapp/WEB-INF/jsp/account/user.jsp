@@ -9,7 +9,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <%@ include file="/inc/topjuiheader.jsp" %>
+    <%--<%@ include file="/inc/topjuiheader.jsp" %>--%>
+    <%@ include file="/inc/header.jsp" %>
 </head>
 <body>
 <div id="userPanel" class="easyui-layout" data-options="fit:true,border:false">
