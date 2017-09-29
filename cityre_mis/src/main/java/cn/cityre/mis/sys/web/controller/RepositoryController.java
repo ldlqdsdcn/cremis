@@ -16,10 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -40,7 +37,12 @@ public class RepositoryController {
     @RequestMapping("/showList")
     @RequiresPermissions("repository:view")
     public String showList() {
-        return "sys/repositories";
+        return "repository/repository";
+    }
+
+    @RequestMapping("/showForm")
+    public String showForm() {
+        return "repository/form.tpl";
     }
 
     @RequestMapping(value = "/getList")
@@ -80,9 +82,15 @@ public class RepositoryController {
     }
 
     @RequiresPermissions("repository:edit")
+    @ResponseBody
+    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
+    public Repository get(@PathVariable("id") Integer id) {
+        return repositoryService.getRepository(id);
+    }
+    @RequiresPermissions("repository:edit")
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
-    public JsonResult<Repository> save(@Valid @RequestBody Repository repository, BindingResult bindingResult, HttpServletRequest request) {
+    public JsonResult<Repository> save(@Valid Repository repository, BindingResult bindingResult, HttpServletRequest request) {
         JsonResult error = WebUtil.hasErrorMessage(bindingResult);
         if (error != null) {
             return error;

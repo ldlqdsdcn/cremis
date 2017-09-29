@@ -328,7 +328,7 @@ function logout() {
             $.iMessager.progress({
                 text: '正在退出中...'
             });
-            window.location.href = ctx + '/login.html' + location.search;
+            window.location.href = ctx + '/login' + location.search;
         }
     });
 }

@@ -67,4 +67,9 @@ public class RepositoryServiceImpl implements RepositoryService {
         if (count > 0) return true;
         return false;
     }
+
+    @Override
+    public Repository getRepository(Integer id) {
+        return repositoryMapper.selectByPrimaryKey(id);
+    }
 }

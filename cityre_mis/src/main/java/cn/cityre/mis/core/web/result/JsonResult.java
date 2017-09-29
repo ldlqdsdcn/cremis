@@ -19,17 +19,25 @@ public class JsonResult<T> implements Serializable {
     private String requestId;
     private int errorCode;
     private T data;
+    //用topJUI 必须包含这个字段
+    private int statusCode;
 
     private JsonResult() {
         this.requestId = UUID.randomUUID().toString().replaceAll("\\-", "");
     }
 
+    /**
+     * @param data
+     * @param <T>
+     * @return
+     */
     public static <T> JsonResult<T> success(T data) {
         JsonResult<T> jsonResult = new JsonResult<>();
         jsonResult.success = true;
         jsonResult.code = ResultCode.SUCCESS.getCode();
         jsonResult.message = ResultCode.SUCCESS.getMessage();
         jsonResult.data = data;
+        jsonResult.statusCode = 200;
         return jsonResult;
     }
 
@@ -75,4 +83,9 @@ public class JsonResult<T> implements Serializable {
     public T getData() {
         return data;
     }
+
+    public int getStatusCode() {
+        return statusCode;
+    }
+
 }

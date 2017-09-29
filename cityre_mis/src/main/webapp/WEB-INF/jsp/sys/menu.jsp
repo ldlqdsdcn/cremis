@@ -234,7 +234,7 @@
                     <tr>
                         <td><label>repository：</label></td>
                         <td><input class="easyui-combobox" id="repositoryId"
-                                   data-options="url: '<%=path%>/sys/menu/repositories',method: 'get',valueField: 'id',textField: 'name',required:true"/>
+                                   data-options="url: '<%=path%>/sys/menu/repositories',method: 'get',valueField: 'id',textField: 'name'"/>
                         </td>
                     </tr>
                     <tr>

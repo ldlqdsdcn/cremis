@@ -28,4 +28,6 @@ public interface RepositoryService {
     Repository saveRepository(Repository repository);
 
     boolean existRepository(String no, Integer id);
+
+    Repository getRepository(Integer id);
 }

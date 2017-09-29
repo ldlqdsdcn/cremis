@@ -15,8 +15,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
     <meta name="renderer" content="webkit">
     <meta name="keywords" content='easyui,jui,jquery easyui,easyui demo,easyui中文'/>
-    <meta name="description" content='TopJUI前端框架，基于最新版EasyUI前端框架构建，纯HTML调用功能组件，不用写JS代码的EasyUI，专注你的后端业务开发！'/>
-    <title>TopJUI前端框架 - 静态演示</title>
+    <meta name="description" content='禧泰Mis系统'/>
+    <title>禧泰Mis系统</title>
     <!-- 浏览器标签图片 -->
 
     <link rel="shortcut icon" href="<c:url value="/topjui/image/favicon.ico"/>"/>
@@ -411,7 +411,7 @@
                             <a id="showUserInfo" style="display:inline-block;" class="fa bannerbtn"
                                href="javascript:void(0)">
                                 <img src="../../topjui/image/avatar.jpg" class="user-image" alt="User Image">
-                                <span class="user-name">TopJUI</span>
+                                <span class="user-name">${MIS_USER.userId}</span>
                             </a>
                         </h3>
                         <ul class="sub">
@@ -452,7 +452,7 @@
     <div data-options="region:'south',border:true"
          style="text-align:center;height:30px;line-height:30px;border-bottom:0;overflow:hidden;">
         <input type="hidden" id="userNameId" name="userNameId" value="${userNameId}"/>
-        <span style="float:left;padding-left:5px;width:30%;text-align: left;">当前用户：${MIS_USER.name}</span>
+        <span style="float:left;padding-left:5px;width:30%;text-align: left;">当前用户：${MIS_USER.userId}</span>
         <span style="padding-right:5px;width:40%">
             版权所有 © 2014-2017
             <a href="http://www.cityre.cn/" target="_blank">青岛禧泰房地产数据有限公司</a>
