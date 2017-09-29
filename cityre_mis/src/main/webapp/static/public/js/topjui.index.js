@@ -36,7 +36,8 @@ $(function () {
         tools: [{
             iconCls: 'fa fa-home',
             handler: function () {
-                index_tabs.iTabs('select', 0);
+                $('#index_tabs').iTabs('select', 0);
+                //index_tabs.iTabs('select', 0);
             }
         }, {
             iconCls: 'fa fa-refresh',
@@ -53,10 +54,11 @@ $(function () {
         }, {
             iconCls: 'fa fa-close',
             handler: function () {
-                var index = index_tabs.iTabs('getTabIndex', index_tabs.iTabs('getSelected'));
-                var tab = index_tabs.iTabs('getTab', index);
+                var index = $('#index_tabs').iTabs('getTabIndex', $('#index_tabs').iTabs('getSelected'));
+                var tab = $('#index_tabs').iTabs('getTab', index);
                 if (tab.iPanel('options').closable) {
-                    index_tabs.iTabs('close', index);
+                    $('#index_tabs').iTabs('close', index);
+
                 }
             }
         }],
