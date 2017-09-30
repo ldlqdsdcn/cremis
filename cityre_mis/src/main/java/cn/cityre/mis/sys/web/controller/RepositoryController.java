@@ -6,6 +6,7 @@ import cn.cityre.mis.core.web.result.def.ErrorCodes;
 import cn.cityre.mis.sys.entity.query.RepositoryQuery;
 import cn.cityre.mis.sys.model.Repository;
 import cn.cityre.mis.sys.service.RepositoryService;
+import cn.cityre.mis.util.ExcelUtils;
 import cn.cityre.mis.util.StringUtil;
 import cn.cityre.mis.util.WebUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -21,9 +22,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.Date;
-import java.util.Enumeration;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * Created by 刘大磊 on 2017/8/28 12:26.
@@ -53,19 +55,36 @@ public class RepositoryController {
     public PagingListResult<Repository> getRepositoryList(RepositoryQuery repositoryQuery, HttpServletRequest request) {
         log.info("========================================>");
         PagingListResult<Repository> pagingListResult = new PagingListResult();
-        Enumeration<String> enumeration = request.getParameterNames();
-        while (enumeration.hasMoreElements()) {
-            String name = enumeration.nextElement();
-            System.out.println(name + "  =  " + request.getParameter(name));
-        }
         PageMyBatis<Repository> pageMyBatis = (PageMyBatis<Repository>) repositoryService.getRepositoryList(repositoryQuery);
-        System.out.println("total:" + pageMyBatis.getTotal());
-        System.out.println("size:" + pageMyBatis.size());
         pagingListResult.setTotal(pageMyBatis.getTotal());
         pagingListResult.setRows(pageMyBatis);
         return pagingListResult;
     }
 
+    @RequestMapping(value = "/export")
+    @ResponseBody
+    public void export(RepositoryQuery repositoryQuery, HttpServletRequest request, HttpServletResponse response) {
+        List<Repository> repositoryList = repositoryService.getRepositoryList(repositoryQuery);
+        List<Map<String, Object>> data = new ArrayList<>();
+        for (Repository repository : repositoryList) {
+            Map<String, Object> row = new HashMap<>();
+            row.put("no", repository.getNo());
+            row.put("name", repository.getName());
+            row.put("isactive", repository.getIsactive());
+            row.put("created", repository.getCreated());
+            row.put("createdby", repository.getCreatedby());
+            row.put("updated", repository.getUpdated());
+            row.put("updatedby", repository.getUpdatedby());
+            data.add(row);
+        }
+
+        try {
+            ExcelUtils.export("授权点", "授权点", new String[]{"编号", "名称", "是否有效", "创建时间", "创建人", "修改时间", "修改人"}, new String[]{"no", "name", "isactive", "created", "createdby", "updated", "updatedby"},
+                    null, null, data, request, response);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     @RequiresPermissions("repository:edit")
     @RequestMapping(value = "/deleteRepositories", method = RequestMethod.POST)
     @ResponseBody

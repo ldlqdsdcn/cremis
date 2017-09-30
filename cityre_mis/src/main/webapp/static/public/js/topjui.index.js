@@ -45,11 +45,6 @@ $(function () {
                 var refresh_tab = $('#index_tabs').iTabs('getSelected');
                 var refresh_iframe = refresh_tab.find('iframe')[0];
                 refresh_iframe.contentWindow.location.href = refresh_iframe.src;
-                //$("#index_tabs").trigger(TOPJUI.eventType.initUI.base);
-
-                //var index = index_tabs.iTabs('getTabIndex', index_tabs.iTabs('getSelected'));
-                //console.log(index);
-                //index_tabs.iTabs('getTab', index).iPanel('refresh');
             }
         }, {
             iconCls: 'fa fa-close',
@@ -58,7 +53,6 @@ $(function () {
                 var tab = $('#index_tabs').iTabs('getTab', index);
                 if (tab.iPanel('options').closable) {
                     $('#index_tabs').iTabs('close', index);
-
                 }
             }
         }],
