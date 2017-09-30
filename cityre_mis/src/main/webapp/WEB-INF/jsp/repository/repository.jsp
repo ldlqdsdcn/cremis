@@ -242,6 +242,7 @@
         $("#export").iMenubutton({
             method: 'export',
             btnCls: 'topjui-btn',
+            grid: {type: 'datagrid', 'id': 'productDg'},
             url: '<c:url value="/sys/repository/export"/>'
         });
         $('#queryBtn').iMenubutton({
