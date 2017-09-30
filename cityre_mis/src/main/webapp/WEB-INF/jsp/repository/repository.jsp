@@ -242,7 +242,7 @@
         $("#export").iMenubutton({
             method: 'export',
             btnCls: 'topjui-btn',
-            url: contextPath + '/json/response/export.html'
+            url: '<c:url value="/sys/repository/export"/>'
         });
         $('#queryBtn').iMenubutton({
             method: 'query',

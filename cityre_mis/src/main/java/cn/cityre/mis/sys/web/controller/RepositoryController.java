@@ -6,6 +6,7 @@ import cn.cityre.mis.core.web.result.def.ErrorCodes;
 import cn.cityre.mis.sys.entity.query.RepositoryQuery;
 import cn.cityre.mis.sys.model.Repository;
 import cn.cityre.mis.sys.service.RepositoryService;
+import cn.cityre.mis.util.DateTimeHelper;
 import cn.cityre.mis.util.ExcelUtils;
 import cn.cityre.mis.util.StringUtil;
 import cn.cityre.mis.util.WebUtil;
@@ -71,9 +72,10 @@ public class RepositoryController {
             row.put("no", repository.getNo());
             row.put("name", repository.getName());
             row.put("isactive", repository.getIsactive());
-            row.put("created", repository.getCreated());
+
+            row.put("created", DateTimeHelper.formatDateTime(repository.getCreated()));
             row.put("createdby", repository.getCreatedby());
-            row.put("updated", repository.getUpdated());
+            row.put("updated", DateTimeHelper.formatDateTime(repository.getUpdated()));
             row.put("updatedby", repository.getUpdatedby());
             data.add(row);
         }

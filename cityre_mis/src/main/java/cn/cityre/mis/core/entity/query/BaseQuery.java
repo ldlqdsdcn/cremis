@@ -8,11 +8,11 @@ public class BaseQuery {
     /**
      * 页码
      */
-    private int page;
+    private int page = 1;
     /**
      * 查询行数
      */
-    private int rows;
+    private int rows = 20;
     /**
      * 排序方式
      */
