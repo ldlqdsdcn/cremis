@@ -131,7 +131,7 @@ $(function () {
     });
 
     $("#setThemes").on('click', function () {
-        $("#themeStyle").iDialog('open');
+        openDialog();
     });
 
     // 保存主题

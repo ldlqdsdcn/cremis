@@ -47,8 +47,8 @@ public class HomeController {
 
     @RequestMapping("/kouhao")
     public String showKouhao() {
-        // return "common/kouhao";
-        return "desktop";
+        return "common/kouhao";
+        //return "desktop";
     }
 
     @RequestMapping("error/noprivileges")

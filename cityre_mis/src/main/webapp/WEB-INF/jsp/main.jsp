@@ -7,6 +7,12 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://"
+            + request.getServerName() + ":" + request.getServerPort()
+            + path + "/";
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -329,37 +335,37 @@
         <table style="float:left;border-spacing:0px;">
             <tr>
                 <td class="webname">
-                    <span class="fa fa-home" style="font-size:26px; padding-right:8px;"></span>禧泰数据Mis系统
+                    <span class="fa fa-building" style="font-size:26px; padding-right:8px;"></span>禧泰数据Mis系统
                 </td>
                 <td class="collapseMenu" style="text-align: center;cursor: pointer;">
                     <span class="fa fa-chevron-circle-left" style="font-size: 18px;"></span>
                 </td>
                 <td>
                     <table id="topmenucontent" cellpadding="0" cellspacing="0">
-                        <td id="1325" title="这只是静态演示" class="topmenu selected systemName">
-                            <a class="l-btn-text bannerMenu" href="javascript:void(0)">
-                                <p>
-                                    <lable class="fa  fa-hand-pointer-o"></lable>
-                                </p>
-                                <p><span style="white-space:nowrap;">静态演示</span></p>
-                            </a>
-                        </td>
-                        <td id="60" title="TopJUI开发文档" class="topmenu systemName">
-                            <a class="l-btn-text bannerMenu" href="javascript:void(0)">
-                                <p>
-                                    <lable class="fa fa-puzzle-piece"></lable>
-                                </p>
-                                <p><span style="white-space:nowrap;">开发文档</span></p>
-                            </a>
-                        </td>
-                        <td title="人力资源" class="topmenu systemName">
-                            <a class="l-btn-text bannerMenu" href="javascript:void(0)">
-                                <p>
-                                    <lable class="fa fa-sort-amount-asc"></lable>
-                                </p>
-                                <p><span style="white-space:nowrap;">人力资源</span></p>
-                            </a>
-                        </td>
+                        <%--          <td id="1325" title="这只是静态演示" class="topmenu selected systemName">
+                                      <a class="l-btn-text bannerMenu" href="javascript:void(0)">
+                                          <p>
+                                              <lable class="fa  fa-hand-pointer-o"></lable>
+                                          </p>
+                                          <p><span style="white-space:nowrap;">静态演示</span></p>
+                                      </a>
+                                  </td>
+                                  <td id="60" title="TopJUI开发文档" class="topmenu systemName">
+                                      <a class="l-btn-text bannerMenu" href="javascript:void(0)">
+                                          <p>
+                                              <lable class="fa fa-puzzle-piece"></lable>
+                                          </p>
+                                          <p><span style="white-space:nowrap;">开发文档</span></p>
+                                      </a>
+                                  </td>--%>
+                        <%-- <td title="基础数据" class="topmenu systemName">
+                             <a class="l-btn-text bannerMenu" href="javascript:void(0)">
+                                 <p>
+                                     <lable class="fa fa-database"></lable>
+                                 </p>
+                                 <p><span style="white-space:nowrap;">基础数据</span></p>
+                             </a>
+                         </td>--%>
                         <td title="系统设置" class="topmenu systemName">
                             <a class="l-btn-text bannerMenu" href="javascript:void(0)">
                                 <p>
@@ -387,7 +393,8 @@
                     <li class="m">
                         <h3>
                             <a title="选择城市" id="setThemes" class="l-btn-text bannerbtn"
-                               href="javascript:void(0)"><i class="fa fa-building">&nbsp;&nbsp;青岛</i></a>
+                               href="javascript:void(0)"><i class="fa fa-building" id="currentCity">&nbsp;&nbsp;<c:out
+                                    value="${MIS_USER.cityName}"/></i></a>
                         </h3>
                     </li>
                     <li class="s">|</li>
@@ -474,67 +481,20 @@
 <div id="themeStyle" data-options="iconCls:'fa fa-building'" style="width:600px;height:340px">
     <table style="width:100%; padding:20px; line-height:30px;text-align:center;">
         <tr>
-            <td>
-                <div class="skin-common skin-black"></div>
-                <input type="radio" name="themes" value="black" class="topjuiTheme"/>
-            </td>
-            <td>
-                <div class="skin-common skin-red"></div>
-                <input type="radio" name="themes" value="red" class="topjuiTheme"/>
-            </td>
-            <td>
-                <div class="skin-common skin-green"></div>
-                <input type="radio" name="themes" value="green" class="topjuiTheme"/>
-            </td>
-            <td>
-                <div class="skin-common skin-purple"></div>
-                <input type="radio" name="themes" value="purple" class="topjuiTheme"/>
-            </td>
-            <td>
-                <div class="skin-common skin-blue"></div>
-                <input type="radio" name="themes" value="blue" class="topjuiTheme"/>
-            </td>
-            <td>
-                <div class="skin-common skin-yellow"></div>
-                <input type="radio" name="themes" value="yellow" class="topjuiTheme"/>
+            <td style="padding-bottom: 10px;">
+                <select id="pro_sel" onchange="initCityOptions(this.value)" style="height: 30px;width: 200px;"></select>
             </td>
         </tr>
         <tr>
             <td>
-                <div class="skin-common skin-blacklight"></div>
-                <input type="radio" name="themes" value="blacklight" class="topjuiTheme"/>
-            </td>
-            <td>
-                <div class="skin-common skin-redlight"></div>
-                <input type="radio" name="themes" value="redlight" class="topjuiTheme"/>
-            </td>
-            <td>
-                <div class="skin-common skin-greenlight"></div>
-                <input type="radio" name="themes" value="greenlight" class="topjuiTheme"/>
-            </td>
-            <td>
-                <div class="skin-common skin-purplelight"></div>
-                <input type="radio" name="themes" value="purplelight" class="topjuiTheme"/>
-            </td>
-            <td>
-                <div class="skin-common skin-bluelight"></div>
-                <input type="radio" name="themes" value="bluelight" class="topjuiTheme"/>
-            </td>
-            <td>
-                <div class="skin-common skin-yellowlight"></div>
-                <input type="radio" name="themes" value="yellowlight" class="topjuiTheme"/>
+                <select id="city_sel" style="height: 30px;width: 200px;"></select>
             </td>
         </tr>
     </table>
     <table style="width: 100%; padding: 20px; line-height: 30px; text-align: center;">
         <tr>
             <td>
-                <input type="radio" name="menustyle" value="accordion" checked="checked"/>手风琴
-            <td>
-                <input type="radio" name="menustyle" value="tree"/>树形
-            </td>
-            <td>
-                <input type="checkbox" checked="checked" name="topmenu" value="topmenu"/>开启顶部菜单
+                <input type="button" value="保存" onclick="saveCity()" style="height: 30px;width: 80px"/>
             </td>
         </tr>
     </table>
@@ -547,4 +507,127 @@
       height: 260,
       href: 'profile/showChangePassword'"></form>
 </body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        <c:choose>
+        <c:when test="${MIS_USER.currentCityCode==null}">
+        openDialog();
+
+        </c:when>
+        <c:otherwise>
+
+        </c:otherwise>
+        </c:choose>
+    });
+
+    function initProvinces(provinceCode, citycode) {
+        $.ajax({
+            url: "<%=path%>/provinces",
+            type: 'GET',
+            dataType: "json",
+            contentType: 'application/json;charset=utf-8',
+            success: function (result) {
+                if (result.success) {
+                    var proBuf = new StringBuffer();
+                    var provinces = result.data;
+                    for (var i = 0; i < provinces.length; i++) {
+                        proBuf.append("<option value='").append(provinces[i].code).append("'>");
+                        proBuf.append(provinces[i].name).append("</option>");
+                    }
+                    if (citycode == null) {
+                        citycode = null;
+                    }
+                    $("#pro_sel").html(proBuf.toString());
+                    if (provinceCode != null) {
+                        $("#pro_sel").val(provinceCode);
+                    }
+                    if (provinceCode != null) {
+
+                        initCityOptions(provinceCode, citycode);
+                    }
+                    else {
+                        initCityOptions(provinces[0].code, citycode);
+                    }
+
+                    return;
+                }
+                else {
+                    $.messager.alert("获取省份列表出错", result.message);
+                }
+            }
+        });
+
+    }
+    function initCityOptions(provinceCode, citycode) {
+        $.ajax({
+            url: "<%=path%>/city/" + provinceCode,
+            type: 'GET',
+            dataType: "json",
+            contentType: 'application/json;charset=utf-8',
+            success: function (result) {
+                if (result.success) {
+                    var cityBuf = new StringBuffer();
+                    var cities = result.data;
+                    for (var i = 0; i < cities.length; i++) {
+                        cityBuf.append("<option value='").append(cities[i].code).append("'>");
+                        cityBuf.append(cities[i].name).append("</option>");
+                    }
+                    $("#city_sel").html(cityBuf.toString());
+                    if (citycode != null) {
+                        $("#city_sel").val(citycode);
+                    }
+                    return;
+                }
+                else {
+                    $.messager.alert("获取城市列表出错", result.message);
+                }
+            }
+        });
+    }
+    function openDialog() {
+
+
+        $.ajax({
+            url: "<%=path%>/userSession",
+            type: 'GET',
+            dataType: "json",
+            contentType: 'application/json;charset=utf-8',
+            success: function (result) {
+                if (result.success) {
+                    var user = result.data;
+                    initProvinces(user.currentProvinceCode, user.currentCityCode);
+                    return;
+                }
+                else {
+                    $.messager.alert("获取省份列表出错", result.message);
+                }
+            }
+        });
+        //去除默认关闭按钮
+        $('#themeStyle').panel({
+            closable: false
+        });
+        $("#themeStyle").iDialog('open');
+    }
+    function saveCity() {
+        var cityCode = $("#city_sel").val();
+        $.ajax({
+            url: "<%=path%>/selectCity/" + cityCode,
+            type: 'GET',
+            dataType: "json",
+            contentType: 'application/json;charset=utf-8',
+            success: function (result) {
+                if (result.success) {
+                    $("#currentCity").html(result.data.cityName);
+                    $("#themeStyle").iDialog('close');
+                    return;
+                }
+                else {
+                    $("#themeStyle").iDialog('close');
+                    $.messager.alert("获取省份列表出错", result.message);
+                }
+            }
+        });
+    }
+</script>
 </html>
