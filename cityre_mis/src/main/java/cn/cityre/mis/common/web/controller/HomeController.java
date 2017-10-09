@@ -40,7 +40,6 @@ public class HomeController {
 
     @RequestMapping({"index", "/"})
     public ModelAndView showHome() {
-
         //return new ModelAndView("home");
         return new ModelAndView("main");
     }
