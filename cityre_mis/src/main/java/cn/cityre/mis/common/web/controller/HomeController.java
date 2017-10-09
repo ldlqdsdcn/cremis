@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +68,7 @@ public class HomeController {
 
     @RequestMapping("/menus")
     @ResponseBody
-    public JsonResult<List<MenuVo>> getLeftMenuListByParentMenuId(HttpSession session, Integer menuId) {
+    public JsonResult<List<MenuVo>> getLeftMenuListByParentMenuId(HttpSession session, HttpServletRequest request, Integer menuId) {
         /**
          *  *     "id": 13501,
          "pid": 1350,
@@ -76,6 +77,10 @@ public class HomeController {
          "text": "表单演示",
          "url": ""
          */
+        String path = request.getContextPath();
+        String basePath = request.getScheme() + "://"
+                + request.getServerName() + ":" + request.getServerPort()
+                + path;
         List<Menu> menuList = menuService.getLeftmenuList(WebUtil.getUnionUid(), menuId);
         List<MenuVo> menuVoList = new ArrayList<>();
         for (Menu menu : menuList) {
@@ -94,7 +99,10 @@ public class HomeController {
 
             menuVo.setIconCls(menu.getIcon());
             menuVo.setText(menu.getName());
-            menuVo.setUrl(menu.getUrl());
+            if (StringUtil.isNotEmpty(menu.getUrl())) {
+                menuVo.setUrl(basePath + menu.getUrl());
+            }
+
             menuVoList.add(menuVo);
         }
         return JsonResult.success(menuVoList);
