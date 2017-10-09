@@ -55,17 +55,14 @@ public class HomeController {
     public String noprivileges() {
         return "error/noprivileges";
     }
-
     @RequestMapping("/common/frameLogin")
     public String frameLogin() {
         return "common/frameLogin";
     }
-
     @RequestMapping("/desktop")
     public String desktop() {
         return "desktop";
     }
-
     @RequestMapping("/menus")
     @ResponseBody
     public JsonResult<List<MenuVo>> getLeftMenuListByParentMenuId(HttpSession session, HttpServletRequest request, Integer menuId) {
@@ -107,7 +104,6 @@ public class HomeController {
         }
         return JsonResult.success(menuVoList);
     }
-
     @RequestMapping("/leftmenu")
     @ResponseBody
     public JsonResult<List<MenuVo>> getLeftMenuList(HttpSession session) {
@@ -144,7 +140,6 @@ public class HomeController {
         }
         return JsonResult.success(menuVoList);
     }
-
     @RequestMapping("/city/{provinceCode}")
     @ResponseBody
     public JsonResult<List<CityVo>> getCityList(@PathVariable("provinceCode") String provinceCode) {
@@ -168,7 +163,6 @@ public class HomeController {
         }
         return JsonResult.success(cityVoList);
     }
-
     @RequestMapping("/provinces")
     @ResponseBody
     public JsonResult<List<ProvinceVo>> getProvinceList(HttpSession session) {
@@ -188,7 +182,6 @@ public class HomeController {
         }
         return JsonResult.success(provinceVoList);
     }
-
     @RequestMapping("/selectCity/{cityCode}")
     @ResponseBody
     public JsonResult<City> selectCity(@PathVariable String cityCode, HttpSession session) {
@@ -198,7 +191,6 @@ public class HomeController {
         WebUtil.getUserSession(session).setCityName(city.getCityName());
         return JsonResult.success(city);
     }
-
     @RequestMapping("/userSession")
     @ResponseBody
     public JsonResult<UserSession> getUserSession(HttpSession session) {
