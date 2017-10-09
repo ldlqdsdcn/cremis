@@ -19,7 +19,7 @@
     <title>禧泰Mis系统</title>
     <!-- 浏览器标签图片 -->
 
-    <link rel="shortcut icon" href="<c:url value="/topjui/image/favicon.ico"/>"/>
+    <link rel="shortcut icon" href="<c:url value="/favicon.ico"/>"/>
     <!-- TopJUI框架样式 -->
 
     <link type="text/css" href="<c:url value="/topjui/css/topjui.core.min.css"/>" rel="stylesheet">
@@ -379,20 +379,20 @@
 
                     <!-- 单一菜单 | end -->
                     <li class="m">
-                        <h3><a title="官方网站" class="l-btn-text bannerbtn" href="http://www.topjui.com"
+                        <h3><a title="官方网站" class="l-btn-text bannerbtn" href="http://www.cityre.cn/"
                                target="_blank"><i class="fa fa-home"></i></a></h3>
                     </li>
                     <li class="s">|</li>
 
                     <li class="m">
                         <h3>
-                            <a title="切换主题" id="setThemes" class="l-btn-text bannerbtn"
-                               href="javascript:void(0)"><i class="fa fa-tree"></i></a>
+                            <a title="选择城市" id="setThemes" class="l-btn-text bannerbtn"
+                               href="javascript:void(0)"><i class="fa fa-building">&nbsp;&nbsp;青岛</i></a>
                         </h3>
                     </li>
                     <li class="s">|</li>
 
-                    <li class="m">
+                    <%--<li class="m">
                         <h3>
                             <a class="l-btn-text bannerbtn"
                                href="javascript:void(0)"><i class="fa fa-cog"></i></a>
@@ -404,7 +404,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="s">|</li>
+                    <li class="s">|</li>--%>
 
                     <li class="m">
                         <h3>
@@ -471,7 +471,7 @@
 </div>
 <![endif]-->
 
-<div id="themeStyle" data-options="iconCls:'fa fa-tree'" style="width:600px;height:340px">
+<div id="themeStyle" data-options="iconCls:'fa fa-building'" style="width:600px;height:340px">
     <table style="width:100%; padding:20px; line-height:30px;text-align:center;">
         <tr>
             <td>

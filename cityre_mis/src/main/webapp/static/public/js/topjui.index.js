@@ -127,7 +127,7 @@ $(function () {
      }, 1);*/
 
     $("#themeStyle").iDialog({
-        title: '设置主题风格'
+        title: '选择城市'
     });
 
     $("#setThemes").on('click', function () {

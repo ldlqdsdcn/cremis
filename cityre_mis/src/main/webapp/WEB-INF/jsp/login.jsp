@@ -19,7 +19,7 @@
     <meta name="keywords" content="cremis">
     <meta name="description" content="Mis系统-登录界面">
     <title>Mis系统-登录界面</title>
-
+    <link rel="shortcut icon" href="<c:url value="/favicon.ico"/>"/>
     <link rel="stylesheet" href="<c:url value="/css/cremis_common.css"/>">
 
 </head>
