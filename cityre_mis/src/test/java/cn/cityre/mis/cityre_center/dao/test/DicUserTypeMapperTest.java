@@ -19,7 +19,7 @@ import java.util.List;
 @ContextConfiguration(classes = {RootConfig.class})
 @TestPropertySource(locations = "classpath:application-test.properties")
 public class DicUserTypeMapperTest {
-    @Autowired
+    @Autowired(required = false)
     private DicUserTypeMapper dicUserTypeMapper;
     @Test
     public void testGetDicUserTypeList()

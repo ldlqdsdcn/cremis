@@ -1,8 +1,8 @@
 package cn.cityre.mis.sys.dao;
 
 import cn.cityre.mis.sys.model.User;
+import com.github.pagehelper.Page;
 import org.apache.ibatis.session.RowBounds;
-import org.mybatis.pagination.dto.PageMyBatis;
 
 import java.util.List;
 import java.util.Map;
@@ -38,6 +38,6 @@ public interface UserMapper {
      * @param rowBounds 查找范围
      * @return
      */
-    PageMyBatis<User> selectList(Map<String, Object> param, RowBounds rowBounds);
+    Page<User> selectList(Map<String, Object> param, RowBounds rowBounds);
 
 }

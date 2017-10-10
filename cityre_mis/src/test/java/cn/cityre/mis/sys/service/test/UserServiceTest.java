@@ -22,7 +22,7 @@ import java.util.Set;
 @ContextConfiguration(classes = {RootConfig.class})
 @TestPropertySource(locations = "classpath:application-test.properties")
 public class UserServiceTest {
-    @Autowired
+    @Autowired(required = false)
     private UserService userService;
 
     @Test

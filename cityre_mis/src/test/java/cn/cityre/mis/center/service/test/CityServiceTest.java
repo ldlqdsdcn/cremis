@@ -20,7 +20,7 @@ import java.util.List;
 @ContextConfiguration(classes = {RootConfig.class})
 @TestPropertySource(locations = "classpath:application-test.properties")
 public class CityServiceTest {
-    @Autowired
+    @Autowired(required = false)
     private CityService cityService;
 
     @Test
