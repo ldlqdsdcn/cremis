@@ -80,9 +80,9 @@ public class MisRealm extends AuthorizingRealm {
             AuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(authenticationToken.getPrincipal(), authenticationToken.getCredentials(), adminAccount);
 
             UserSession userSession = new UserSession();
-            userSession.setUserId("administrator");
-            userSession.setName("administrator");
-            userSession.setUnionUid("administrator");
+            userSession.setUserId(WebConstant.ADMINISTRATOR);
+            userSession.setName(WebConstant.ADMINISTRATOR);
+            userSession.setUnionUid(WebConstant.ADMINISTRATOR);
             initUserInfo(request, userSession);
             return authenticationInfo;
         }
