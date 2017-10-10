@@ -3,4 +3,8 @@
 *.iml
 target
 cityre_mis/src/resources/application-my.properties
+application-dev.properties
+.classpath
+.project
+.settings/
 
