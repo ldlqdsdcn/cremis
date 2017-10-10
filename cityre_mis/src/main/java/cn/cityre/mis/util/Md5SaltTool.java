@@ -68,7 +68,8 @@ public class Md5SaltTool {
                      e.printStackTrace();
                  }
                  //将盐数据传入消息摘要对象
-        md.update(salt);
+                 assert md != null;
+                 md.update(salt);
         //将口令的数据传给消息摘要对象
                  try {
                      md.update(password.getBytes("UTF-8"));
@@ -82,13 +83,9 @@ public class Md5SaltTool {
         //取得数据库中口令的消息摘要
         System.arraycopy(pwdInDb, SALT_LENGTH, digestInDb, 0, digestInDb.length);
         //比较根据输入口令生成的消息摘要和数据库中消息摘要是否相同
-        if (Arrays.equals(digest, digestInDb)) {
-            //口令正确返回口令匹配消息
-            return true;
-        } else {
-            //口令不正确返回口令不匹配消息
-            return false;
-        }
+                 //口令正确返回口令匹配消息
+//口令不正确返回口令不匹配消息
+                 return Arrays.equals(digest, digestInDb);
     }
 
     /**
@@ -117,6 +114,7 @@ public class Md5SaltTool {
             e.printStackTrace();
         }
         //将盐数据传入消息摘要对象
+        assert md != null;
         md.update(salt);
         //将口令的数据传给消息摘要对象
         try {

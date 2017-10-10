@@ -35,7 +35,7 @@ import java.util.*;
 @RequestMapping("/sys/repository")
 @Controller
 public class RepositoryController {
-    private Logger log = LoggerFactory.getLogger(RepositoryController.class);
+    private final static Logger log = LoggerFactory.getLogger(RepositoryController.class);
     @Autowired
     private RepositoryService repositoryService;
 
@@ -87,6 +87,7 @@ public class RepositoryController {
             e.printStackTrace();
         }
     }
+
     @RequiresPermissions("repository:edit")
     @RequestMapping(value = "/deleteRepositories", method = RequestMethod.POST)
     @ResponseBody

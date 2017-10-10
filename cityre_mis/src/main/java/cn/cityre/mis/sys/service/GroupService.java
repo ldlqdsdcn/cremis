@@ -1,7 +1,6 @@
 package cn.cityre.mis.sys.service;
 
 import cn.cityre.mis.sys.entity.bo.GroupCityBo;
-import cn.cityre.mis.sys.entity.bo.UserCityBo;
 import cn.cityre.mis.sys.entity.query.GroupQuery;
 import cn.cityre.mis.sys.entity.union.GroupRepositoryUnion;
 import cn.cityre.mis.sys.model.Group;

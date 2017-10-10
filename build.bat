@@ -1,3 +1,3 @@
 cd cityre_mis
-mvn package -Dmaven.skip.test=true
+mvn clean package -Dmaven.test.skip=true
 cd ..

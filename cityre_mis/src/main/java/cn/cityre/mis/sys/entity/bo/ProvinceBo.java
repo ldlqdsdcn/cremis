@@ -13,7 +13,7 @@ public class ProvinceBo {
 
     private String name;
 
-    List<CityBo> cityBoList;
+    private List<CityBo> cityBoList;
 
     public Integer getId() {
         return id;

@@ -62,8 +62,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 
     public boolean existRepository(String no, Integer id) {
         int count = repositoryMapper.checkNoExist(no, id);
-        if (count > 0) return true;
-        return false;
+        return count > 0;
     }
 
     @Override

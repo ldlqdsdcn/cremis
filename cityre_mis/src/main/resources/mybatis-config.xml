@@ -5,10 +5,6 @@ PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN"
 <configuration>
  <settings><setting name="logImpl" value="STDOUT_LOGGING"/></settings>
  <plugins>
-  <plugin interceptor="org.mybatis.pagination.PaginationInterceptor">
-   <property name="dbms" value="MYSQL"/>
-   <property name="sqlRegex" value=".*ByPage.*"/>
-  </plugin>
   <!-- 开源分页插件地址:http://git.oschina.net/free/Mybatis_PageHelper -->
   <plugin interceptor="com.github.pagehelper.PageHelper">
    <property name="dialect" value="mysql"/>

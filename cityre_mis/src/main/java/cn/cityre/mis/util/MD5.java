@@ -28,9 +28,9 @@ public class MD5
     private final long[] count;
     private final byte[] buffer;
     private final byte[] digest;
-    public String digestHexStr;
+    private String digestHexStr;
 
-    public MD5()
+    private MD5()
     {
         state = new long[4];
         count = new long[2];
@@ -39,11 +39,11 @@ public class MD5
         md5Init();
     }
 
-    public static long b2iu(byte byte0) {
+    private static long b2iu(byte byte0) {
         return (long) (byte0 >= 0 ? byte0 : byte0 & 0xff);
     }
 
-    public static String byteHEX(byte byte0) {
+    private static String byteHEX(byte byte0) {
         /*char ac[] = {
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
             'A', 'B', 'C', 'D', 'E', 'F'

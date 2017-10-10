@@ -65,7 +65,7 @@ public class AccountUserController {
         AccountUserVo accountUserVo = new AccountUserVo();
         List<UserRepositoryUnion> repositoryUnionList = null;
         AccountUser accountUser = null;
-        if (id == null || id == -1) {
+        if (id == null) {
             accountUser = new AccountUser();
         } else {
             accountUser = accountUserService.getAccountUser(id);

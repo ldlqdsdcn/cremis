@@ -220,8 +220,10 @@ public class RestHelper {
         initHttps(connection);
         // 设置通用的请求属性
         for (String key : headers.keySet()) {
+            assert connection != null;
             connection.setRequestProperty(key, headers.get(key));
         }
+        assert connection != null;
         connection.setRequestProperty("accept", "*/*");
         connection.setRequestProperty("connection", "Keep-Alive");
         connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
@@ -239,6 +241,7 @@ public class RestHelper {
             } catch (NoSuchAlgorithmException | KeyManagementException e) {
                 e.printStackTrace();
             }
+            assert sslcontext != null;
             ((HttpsURLConnection) httpURLConnection).setSSLSocketFactory(sslcontext.getSocketFactory());
         }
     }

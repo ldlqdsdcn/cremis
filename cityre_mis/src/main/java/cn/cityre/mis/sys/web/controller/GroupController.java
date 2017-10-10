@@ -66,7 +66,7 @@ public class GroupController {
         GroupVo groupVo = new GroupVo();
         List<GroupRepositoryUnion> repositoryUnionList = null;
         Group group = null;
-        if (id == null || id == -1) {
+        if (id == null) {
             group = new Group();
         } else {
             group = groupService.getGroup(id);

@@ -7,7 +7,7 @@ public class DataSourceContextHolder {
     private static final ThreadLocal<String> contextHolder = new ThreadLocal<>();
 
     public static String getDbType() {
-        return ((String) contextHolder.get());
+        return contextHolder.get();
     }
 
     public static void setDbType(String dbType) {

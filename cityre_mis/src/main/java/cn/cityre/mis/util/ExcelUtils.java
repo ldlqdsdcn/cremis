@@ -87,7 +87,7 @@ public class ExcelUtils {
         }
         //表格主体  解析list
         if (data != null) {
-            List styleList = new ArrayList();
+            List<HSSFCellStyle> styleList = new ArrayList<>();
 
             for (int i = 0; i < ds_titles.length; i++) {  //列数
                 HSSFCellStyle style = wb.createCellStyle();
