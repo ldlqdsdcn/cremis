@@ -10,14 +10,15 @@ import cn.cityre.mis.sys.dao.GroupMapper;
 import cn.cityre.mis.sys.dao.RepositoryMapper;
 import cn.cityre.mis.sys.dao.UserGroupMapper;
 import cn.cityre.mis.sys.dao.UserPrivilegesMapper;
-import cn.cityre.mis.sys.entity.bo.ProvinceBo;
 import cn.cityre.mis.sys.entity.query.GroupQuery;
 import cn.cityre.mis.sys.entity.query.RepositoryQuery;
-import cn.cityre.mis.sys.entity.union.GroupRepositoryUnion;
-import cn.cityre.mis.sys.model.*;
+import cn.cityre.mis.sys.model.Group;
+import cn.cityre.mis.sys.model.Repository;
+import cn.cityre.mis.sys.model.UserGroup;
+import cn.cityre.mis.sys.model.UserPrivileges;
 import cn.cityre.mis.util.StringUtil;
+import com.github.pagehelper.Page;
 import org.apache.ibatis.session.RowBounds;
-import org.mybatis.pagination.dto.PageMyBatis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,12 +44,12 @@ public class AccountUserServiceImpl implements AccountUserService {
     private GroupMapper groupMapper;
 
     @Override
-    public PageMyBatis<AccountUser> getAccountUser(int firstRow, int rows) {
+    public Page<AccountUser> getAccountUser(int firstRow, int rows) {
         return accountUserMapper.selectList(null, new RowBounds(firstRow, rows));
     }
 
     @Override
-    public PageMyBatis<AccountUser> getAccountUserList(AccountUserQuery accountUserQuery) {
+    public Page<AccountUser> getAccountUserList(AccountUserQuery accountUserQuery) {
         return accountUserMapper.selectList(accountUserQuery, new RowBounds(accountUserQuery.getStartRow(), accountUserQuery.getRows()));
     }
 

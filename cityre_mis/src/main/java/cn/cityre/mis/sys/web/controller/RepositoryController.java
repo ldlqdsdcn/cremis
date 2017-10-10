@@ -10,8 +10,8 @@ import cn.cityre.mis.util.DateTimeHelper;
 import cn.cityre.mis.util.ExcelUtils;
 import cn.cityre.mis.util.StringUtil;
 import cn.cityre.mis.util.WebUtil;
+import com.github.pagehelper.Page;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.mybatis.pagination.dto.PageMyBatis;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +56,7 @@ public class RepositoryController {
     public PagingListResult<Repository> getRepositoryList(RepositoryQuery repositoryQuery, HttpServletRequest request) {
         log.info("========================================>");
         PagingListResult<Repository> pagingListResult = new PagingListResult();
-        PageMyBatis<Repository> pageMyBatis = (PageMyBatis<Repository>) repositoryService.getRepositoryList(repositoryQuery);
+        Page<Repository> pageMyBatis = (Page<Repository>) repositoryService.getRepositoryList(repositoryQuery);
         pagingListResult.setTotal(pageMyBatis.getTotal());
         pagingListResult.setRows(pageMyBatis);
         return pagingListResult;

@@ -7,6 +7,7 @@ import cn.cityre.mis.sys.dao.UserPrivilegesMapper;
 import cn.cityre.mis.sys.entity.query.RepositoryQuery;
 import cn.cityre.mis.sys.model.Repository;
 import cn.cityre.mis.sys.service.RepositoryService;
+import com.github.pagehelper.Page;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class RepositoryServiceImpl implements RepositoryService {
     @Autowired
     private UserPrivilegesMapper userPrivilegesMapper;
 
-    public List<Repository> getRepositoryList(RepositoryQuery repositoryQuery) {
+    public Page<Repository> getRepositoryList(RepositoryQuery repositoryQuery) {
         return repositoryMapper.getRepositoryList(repositoryQuery, new RowBounds(repositoryQuery.getStartRow(), repositoryQuery.getRows()));
     }
 

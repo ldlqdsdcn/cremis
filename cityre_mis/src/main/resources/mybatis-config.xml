@@ -9,5 +9,12 @@ PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN"
    <property name="dbms" value="MYSQL"/>
    <property name="sqlRegex" value=".*ByPage.*"/>
   </plugin>
+  <!-- 开源分页插件地址:http://git.oschina.net/free/Mybatis_PageHelper -->
+  <plugin interceptor="com.github.pagehelper.PageHelper">
+   <property name="dialect" value="mysql"/>
+   <property name="pageSizeZero" value="true"/>
+   <property name="reasonable" value="true"/>
+   <property name="rowBoundsWithCount" value="true"/>
+  </plugin>
  </plugins>
 </configuration>

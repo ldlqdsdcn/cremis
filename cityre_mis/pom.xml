@@ -137,6 +137,17 @@
             <artifactId>gson</artifactId>
             <version>2.6.2</version>
         </dependency>
+        <!-- 开源分页插件地址:http://git.oschina.net/free/Mybatis_PageHelper -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>4.1.6</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.jsqlparser</groupId>
+            <artifactId>jsqlparser</artifactId>
+            <version>0.9.5</version>
+        </dependency>
         <!--集成mock测试-->
 
         <!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->

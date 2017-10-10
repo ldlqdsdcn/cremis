@@ -3,6 +3,7 @@ package cn.cityre.mis.account.service.test;
 import cn.cityre.mis.RootConfig;
 import cn.cityre.mis.account.model.AccountUser;
 import cn.cityre.mis.account.service.AccountUserService;
+import com.github.pagehelper.Page;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +25,7 @@ public class AccountUserServiceTest {
     @Test
     public void testGetAccountUserList()
     {
-        PageMyBatis<AccountUser> accountUserPageMyBatis= accountUserService.getAccountUser(20,50);
+        Page<AccountUser> accountUserPageMyBatis = accountUserService.getAccountUser(20, 50);
         for(AccountUser accountUser:accountUserPageMyBatis)
         {
             System.out.println(accountUser.getUserid());

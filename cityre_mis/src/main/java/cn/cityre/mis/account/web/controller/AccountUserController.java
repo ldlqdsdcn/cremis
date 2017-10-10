@@ -14,8 +14,8 @@ import cn.cityre.mis.sys.entity.bo.UserCityBo;
 import cn.cityre.mis.sys.entity.vo.UserSession;
 import cn.cityre.mis.sys.service.UserService;
 import cn.cityre.mis.util.WebUtil;
+import com.github.pagehelper.Page;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.mybatis.pagination.dto.PageMyBatis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -82,7 +82,7 @@ public class AccountUserController {
     @RequiresPermissions("account:view")
     public PagingListResult<AccountUser> list(AccountUserQuery accountUserQuery) {
         PagingListResult<AccountUser> pagingListResult = new PagingListResult<>();
-        PageMyBatis<AccountUser> pageMyBatis = accountUserService.getAccountUserList(accountUserQuery);
+        Page<AccountUser> pageMyBatis = accountUserService.getAccountUserList(accountUserQuery);
         pagingListResult.setRows(pageMyBatis);
         pagingListResult.setTotal(pageMyBatis.getTotal());
         return pagingListResult;

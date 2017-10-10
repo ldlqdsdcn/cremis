@@ -4,7 +4,7 @@ import cn.cityre.mis.account.entity.query.AccountUserQuery;
 import cn.cityre.mis.account.entity.union.UserGroupUnion;
 import cn.cityre.mis.account.entity.union.UserRepositoryUnion;
 import cn.cityre.mis.account.model.AccountUser;
-import org.mybatis.pagination.dto.PageMyBatis;
+import com.github.pagehelper.Page;
 
 import java.util.List;
 
@@ -18,9 +18,9 @@ public interface AccountUserService {
      * @param rows
      * @return
      */
-    PageMyBatis<AccountUser> getAccountUser(int firstRow,int rows);
+    Page<AccountUser> getAccountUser(int firstRow, int rows);
 
-    PageMyBatis<AccountUser> getAccountUserList(AccountUserQuery accountUserQuery);
+    Page<AccountUser> getAccountUserList(AccountUserQuery accountUserQuery);
     /**
      * 根据用户id获取用户信息
      * @param userId
