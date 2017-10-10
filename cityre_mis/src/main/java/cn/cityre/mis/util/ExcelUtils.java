@@ -16,9 +16,9 @@ import java.util.Map;
  */
 public class ExcelUtils {
     //excel默认宽度；
-    private static int width = 256 * 14;
+    private static final int WIDTH = 256 * 14;
     //默认字体
-    private static String excelfont = "微软雅黑";
+    private static final String EXCELFONT = "微软雅黑";
 
     /**
      * @param excelName 导出的EXCEL名字
@@ -43,7 +43,7 @@ public class ExcelUtils {
         if (widths == null) {
             widths = new int[ds_titles.length];
             for (int i = 0; i < ds_titles.length; i++) {
-                widths[i] = width;
+                widths[i] = WIDTH;
             }
         }
         if (ds_format == null) {
@@ -69,7 +69,7 @@ public class ExcelUtils {
             HSSFCellStyle style = wb.createCellStyle();
             HSSFFont font = wb.createFont();
             font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-            font.setFontName(excelfont);
+            font.setFontName(EXCELFONT);
             font.setFontHeightInPoints((short) 11);
             style.setFont(font);
             style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
@@ -92,7 +92,7 @@ public class ExcelUtils {
             for (int i = 0; i < ds_titles.length; i++) {  //列数
                 HSSFCellStyle style = wb.createCellStyle();
                 HSSFFont font = wb.createFont();
-                font.setFontName(excelfont);
+                font.setFontName(EXCELFONT);
                 font.setFontHeightInPoints((short) 10);
                 style.setFont(font);
                 style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
@@ -121,9 +121,9 @@ public class ExcelUtils {
                 }
                 styleList.add(style);
             }
-            for (int i = 0; i < data.size(); i++) {  //行数
+            for (Map<String, Object> aData : data) {  //行数
                 HSSFRow row = sheet.createRow(headerrow);
-                Map map = data.get(i);
+                Map map = aData;
                 for (int j = 0; j < ds_titles.length; j++) {  //列数
                     HSSFCell cell = row.createCell(j);
                     Object o = map.get(ds_titles[j]);
@@ -131,10 +131,10 @@ public class ExcelUtils {
                         cell.setCellValue("");
                     } else if (ds_format[j] == 4) {
                         //int
-                        cell.setCellValue((Long.valueOf((map.get(ds_titles[j])) + "")).longValue());
+                        cell.setCellValue(Long.valueOf((map.get(ds_titles[j])) + ""));
                     } else if (ds_format[j] == 5 || ds_format[j] == 6) {
                         //float
-                        cell.setCellValue((Double.valueOf((map.get(ds_titles[j])) + "")).doubleValue());
+                        cell.setCellValue(Double.valueOf((map.get(ds_titles[j])) + ""));
                     } else {
                         cell.setCellValue(map.get(ds_titles[j]) + "");
                     }
@@ -184,9 +184,9 @@ public class ExcelUtils {
         String filename = null;
         String agent = request.getHeader("USER-AGENT");
         if (null != agent) {
-            if (-1 != agent.indexOf("Firefox")) {//Firefox
+            if (agent.contains("Firefox")) {//Firefox
                 filename = "=?UTF-8?B?" + (new String(org.apache.commons.codec.binary.Base64.encodeBase64(pFileName.getBytes("UTF-8")))) + "?=";
-            } else if (-1 != agent.indexOf("Chrome")) {//Chrome
+            } else if (agent.contains("Chrome")) {//Chrome
                 filename = new String(pFileName.getBytes(), "ISO8859-1");
             } else {//IE7+
                 filename = java.net.URLEncoder.encode(pFileName, "UTF-8");

@@ -21,7 +21,7 @@ import java.lang.reflect.Method;
 @Aspect
 @Component
 public class ParameterValidatorInterceptor {
-    ValidatorHelper validatorHelper = ValidatorHelper.getInstance();
+    private ValidatorHelper validatorHelper = ValidatorHelper.getInstance();
 
     @Around("execution(* *..controller.*.*(..)) && @annotation(org.springframework.web.bind.annotation.RequestMapping)")
     public Object controllerMethodPointcut(ProceedingJoinPoint joinPoint) {

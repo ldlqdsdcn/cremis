@@ -1,6 +1,5 @@
 package cn.cityre.mis.sys.web.controller;
 
-import cn.cityre.mis.common.web.vo.MenuVo;
 import cn.cityre.mis.core.web.result.JsonResult;
 import cn.cityre.mis.core.web.result.def.ErrorCodes;
 import cn.cityre.mis.sys.entity.query.MenuQuery;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;

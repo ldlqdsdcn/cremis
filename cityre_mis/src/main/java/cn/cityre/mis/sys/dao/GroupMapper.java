@@ -4,7 +4,6 @@ import cn.cityre.mis.sys.entity.query.GroupQuery;
 import cn.cityre.mis.sys.model.Group;
 
 import java.util.List;
-import java.util.Map;
 
 public interface GroupMapper {
     int deleteByPrimaryKey(Integer id);

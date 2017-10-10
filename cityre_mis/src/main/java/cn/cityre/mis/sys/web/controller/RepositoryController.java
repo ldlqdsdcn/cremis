@@ -55,7 +55,7 @@ public class RepositoryController {
     @RequiresPermissions("repository:view")
     public PagingListResult<Repository> getRepositoryList(RepositoryQuery repositoryQuery, HttpServletRequest request) {
         log.info("========================================>");
-        PagingListResult<Repository> pagingListResult = new PagingListResult();
+        PagingListResult<Repository> pagingListResult = new PagingListResult<>();
         Page<Repository> pageMyBatis = (Page<Repository>) repositoryService.getRepositoryList(repositoryQuery);
         pagingListResult.setTotal(pageMyBatis.getTotal());
         pagingListResult.setRows(pageMyBatis);

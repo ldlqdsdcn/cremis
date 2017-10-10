@@ -1,7 +1,6 @@
 package cn.cityre.mis.center.entity.query;
 
 import cn.cityre.mis.core.entity.query.BaseQuery;
-import com.fasterxml.jackson.databind.ser.Serializers;
 
 import java.util.List;
 

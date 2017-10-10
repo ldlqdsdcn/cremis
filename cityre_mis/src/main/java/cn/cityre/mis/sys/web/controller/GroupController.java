@@ -1,12 +1,10 @@
 package cn.cityre.mis.sys.web.controller;
 
-import cn.cityre.mis.account.entity.vo.AccountUserCitiesVo;
 import cn.cityre.mis.core.web.annon.MisValid;
 import cn.cityre.mis.core.web.def.WebConstant;
 import cn.cityre.mis.core.web.result.JsonResult;
 import cn.cityre.mis.core.web.result.def.ErrorCodes;
 import cn.cityre.mis.sys.entity.bo.GroupCityBo;
-import cn.cityre.mis.sys.entity.bo.UserCityBo;
 import cn.cityre.mis.sys.entity.query.GroupQuery;
 import cn.cityre.mis.sys.entity.union.GroupRepositoryUnion;
 import cn.cityre.mis.sys.entity.vo.GroupCitiesVo;
@@ -14,17 +12,13 @@ import cn.cityre.mis.sys.entity.vo.GroupVo;
 import cn.cityre.mis.sys.entity.vo.UserSession;
 import cn.cityre.mis.sys.model.Group;
 import cn.cityre.mis.sys.service.GroupService;
-import cn.cityre.mis.util.ValidatorHelper;
 import cn.cityre.mis.util.WebUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;

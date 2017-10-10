@@ -78,9 +78,7 @@ public class WebUtil {
     public static JsonResult hasErrorMessage(BindingResult bindingResult) {
         StringBuilder stringBuilder = new StringBuilder();
         if (bindingResult.hasErrors()) {
-            bindingResult.getFieldErrors().forEach(e -> {
-                stringBuilder.append(e.getDefaultMessage()).append("<br>");
-            });
+            bindingResult.getFieldErrors().forEach(e -> stringBuilder.append(e.getDefaultMessage()).append("<br>"));
             return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(), stringBuilder.toString());
         }
         return null;

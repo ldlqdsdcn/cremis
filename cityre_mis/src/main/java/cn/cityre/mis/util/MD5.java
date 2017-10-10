@@ -15,23 +15,7 @@ import java.io.UnsupportedEncodingException;
 public class MD5
 {
 
-    static final int S11 = 7;
-    static final int S12 = 12;
-    static final int S13 = 17;
-    static final int S14 = 22;
-    static final int S21 = 5;
-    static final int S22 = 9;
-    static final int S23 = 14;
-    static final int S24 = 20;
-    static final int S31 = 4;
-    static final int S32 = 11;
-    static final int S33 = 16;
-    static final int S34 = 23;
-    static final int S41 = 6;
-    static final int S42 = 10;
-    static final int S43 = 15;
-    static final int S44 = 21;
-    static final byte PADDING[] = {
+    private static final byte PADDING[] = {
         -128, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
@@ -43,8 +27,8 @@ public class MD5
     private final long[] state;
     private final long[] count;
     private final byte[] buffer;
-    public String digestHexStr;
     private final byte[] digest;
+    public String digestHexStr;
 
     public MD5()
     {
@@ -53,6 +37,49 @@ public class MD5
         buffer = new byte[64];
         digest = new byte[16];
         md5Init();
+    }
+
+    public static long b2iu(byte byte0) {
+        return (long) (byte0 >= 0 ? byte0 : byte0 & 0xff);
+    }
+
+    public static String byteHEX(byte byte0) {
+        /*char ac[] = {
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+            'A', 'B', 'C', 'D', 'E', 'F'
+        };*/
+        char ac[] = {
+                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                'a', 'b', 'c', 'd', 'e', 'f'
+        };
+        char ac1[] = new char[2];
+        ac1[0] = ac[byte0 >>> 4 & 0xf];
+        ac1[1] = ac[byte0 & 0xf];
+        return new String(ac1);
+    }
+
+    public static String getMD5String(String value) {
+        MD5 md5 = new MD5();
+        return md5.getMD5ofStr(value);
+    }
+
+    public static void main(String args[]) {
+        MD5 md5 = new MD5();
+        System.out.println(md5.getMD5ofStr(md5.getMD5ofStr(System.currentTimeMillis() + "")));
+        System.out.println(md5.getMD5ofStr("ABC"));
+        /* if(Array.getLength(args) == 0)
+        {
+            System.out.println("MD5 Test suite:");
+            System.out.println("MD5(\"\"):" + md5.getMD5ofStr(""));
+            System.out.println("MD5(\"a\"):" + md5.getMD5ofStr("a"));
+            System.out.println("MD5(\"abc\"):" + md5.getMD5ofStr("abc"));
+            System.out.println("MD5(\"message digest\"):" + md5.getMD5ofStr("message digest"));
+            System.out.println("MD5(\"abcdefghijklmnopqrstuvwxyz\"):" + md5.getMD5ofStr("abcdefghijklmnopqrstuvwxyz"));
+            System.out.println("MD5(\"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789\"):" + md5.getMD5ofStr("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"));
+        } else
+        {
+            System.out.println("MD5(" + args[0] + ")=" + md5.getMD5ofStr(args[0]));
+        }*/
     }
 
     private void Decode(long al[], byte abyte0[], int i)
@@ -124,38 +151,12 @@ public class MD5
         return l1 ^ (l | ~l2);
     }
 
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
     private long II(long l, long l1, long l2, long l3, long l4, long l5, long l6)
     {
         l += I(l1, l2, l3) + l4 + l6;
         l = (int)l << (int)l5 | (int)l >>> (int)(32L - l5);
         l += l1;
         return l;
-    }
-
-    public static long b2iu(byte byte0)
-    {
-        return (long)(byte0 >= 0 ? byte0 : byte0 & 0xff);
-    }
-
-    public static String byteHEX(byte byte0)
-    {
-        /*char ac[] = {
-            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
-            'A', 'B', 'C', 'D', 'E', 'F'
-        };*/
-    	char ac[] = {
-                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
-                'a', 'b', 'c', 'd', 'e', 'f'
-            };
-    	char ac1[] = new char[2];
-        ac1[0] = ac[byte0 >>> 4 & 0xf];
-        ac1[1] = ac[byte0 & 0xf];
-        return new String(ac1);
     }
 
     /**
@@ -176,30 +177,6 @@ public class MD5
             digestHexStr += byteHEX(digest[i]);
 
         return digestHexStr;
-    }
-    public static String getMD5String(String value)
-    {
-        MD5 md5 = new MD5();
-        return md5.getMD5ofStr(value);
-    }
-    public static void main(String args[])
-    {
-        MD5 md5 = new MD5();
-       System.out.println(md5.getMD5ofStr(md5.getMD5ofStr(System.currentTimeMillis()+"")));
-       System.out.println(md5.getMD5ofStr("ABC"));
-        /* if(Array.getLength(args) == 0)
-        {
-            System.out.println("MD5 Test suite:");
-            System.out.println("MD5(\"\"):" + md5.getMD5ofStr(""));
-            System.out.println("MD5(\"a\"):" + md5.getMD5ofStr("a"));
-            System.out.println("MD5(\"abc\"):" + md5.getMD5ofStr("abc"));
-            System.out.println("MD5(\"message digest\"):" + md5.getMD5ofStr("message digest"));
-            System.out.println("MD5(\"abcdefghijklmnopqrstuvwxyz\"):" + md5.getMD5ofStr("abcdefghijklmnopqrstuvwxyz"));
-            System.out.println("MD5(\"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789\"):" + md5.getMD5ofStr("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"));
-        } else
-        {
-            System.out.println("MD5(" + args[0] + ")=" + md5.getMD5ofStr(args[0]));
-        }*/
     }
 
     private void md5Final()

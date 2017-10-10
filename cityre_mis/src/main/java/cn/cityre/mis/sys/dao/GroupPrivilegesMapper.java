@@ -4,7 +4,6 @@ import cn.cityre.mis.sys.model.GroupPrivileges;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Map;
 
 public interface GroupPrivilegesMapper {
     int deleteByPrimaryKey(Integer id);

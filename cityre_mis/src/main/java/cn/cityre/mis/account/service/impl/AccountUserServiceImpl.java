@@ -133,8 +133,8 @@ public class AccountUserServiceImpl implements AccountUserService {
         Date now = new Date();
         accountUser.setUpdatetime(now);
         accountUserMapper.updateByPrimaryKeySelective(accountUser);
-        List<Integer> repositoryIdList = repositoryUnionList.stream().map(e -> e.getRepositoryId()).collect(Collectors.toList());
-        List<Integer> groupIdList = groupUnionList.stream().map(e -> e.getGroupId()).collect(Collectors.toList());
+        List<Integer> repositoryIdList = repositoryUnionList.stream().map(UserRepositoryUnion::getRepositoryId).collect(Collectors.toList());
+        List<Integer> groupIdList = groupUnionList.stream().map(UserGroupUnion::getGroupId).collect(Collectors.toList());
         userPrivilegesMapper.deleteList(accountUser.getUnionuid(), repositoryIdList);
         userGroupMapper.deleteList(accountUser.getUnionuid(), groupIdList);
         for (Integer repositoryId : repositoryIdList) {

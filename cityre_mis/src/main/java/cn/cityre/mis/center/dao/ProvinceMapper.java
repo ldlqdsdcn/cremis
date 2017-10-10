@@ -3,7 +3,6 @@ package cn.cityre.mis.center.dao;
 import cn.cityre.mis.center.entity.query.ProvinceQuery;
 import cn.cityre.mis.center.model.Province;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 

@@ -1,18 +1,14 @@
 package cn.cityre.mis.common.web.controller;
 
-import cn.cityre.mis.core.web.def.WebConstant;
 import cn.cityre.mis.core.web.result.JsonResult;
 import cn.cityre.mis.core.web.result.def.ErrorCodes;
 import cn.cityre.mis.def.SystemConsts;
 import cn.cityre.mis.sys.entity.vo.ErrorResponseVo;
 import cn.cityre.mis.util.RestHelper;
 import cn.cityre.mis.util.WebUtil;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.google.gson.Gson;
-import jdk.nashorn.internal.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

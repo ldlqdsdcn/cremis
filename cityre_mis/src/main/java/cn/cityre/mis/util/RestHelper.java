@@ -20,6 +20,23 @@ import java.util.Map;
  */
 public class RestHelper {
 
+    private static final TrustManager myX509TrustManager = new X509TrustManager() {
+
+        @Override
+        public X509Certificate[] getAcceptedIssuers() {
+            return null;
+        }
+
+        @Override
+        public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+        }
+
+        @Override
+        public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+        }
+    };
+    private Map<String, String> headers = new HashMap<>();
+
     public RestHelper(Map<String, String> headers) {
         this.headers = headers;
     }
@@ -27,7 +44,25 @@ public class RestHelper {
     public RestHelper() {
     }
 
-    private Map<String, String> headers = new HashMap<>();
+    /**
+     * 对输入的字符串进行URL编码, 即转换为%20这种形式
+     *
+     * @param input 原文
+     * @return URL编码. 如果编码失败, 则返回原文
+     */
+    public static String encode(String input) {
+        if (input == null) {
+            return "";
+        }
+
+        try {
+            return URLEncoder.encode(input, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        return input;
+    }
 
     public void addHeader(String key, String value) {
         this.headers.put(key, value);
@@ -173,57 +208,6 @@ public class RestHelper {
         return this.get(url, param, null);
     }
 
-
-    public enum HttpStatus {
-        OK, ERROR
-    }
-
-    public static class ResponseEntity {
-        ResponseEntity(HttpStatus status, String body) {
-            this.status = status;
-            this.body = body;
-        }
-
-        private HttpStatus status;
-        private String body;
-
-        public HttpStatus getStatus() {
-            return status;
-        }
-
-        public void setStatus(HttpStatus status) {
-            this.status = status;
-        }
-
-        public String getBody() {
-            return body;
-        }
-
-        public void setBody(String body) {
-            this.body = body;
-        }
-    }
-
-    /**
-     * 对输入的字符串进行URL编码, 即转换为%20这种形式
-     *
-     * @param input 原文
-     * @return URL编码. 如果编码失败, 则返回原文
-     */
-    public static String encode(String input) {
-        if (input == null) {
-            return "";
-        }
-
-        try {
-            return URLEncoder.encode(input, "utf-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        return input;
-    }
-
     private HttpURLConnection getHttpURLConnection(String url) {
         HttpURLConnection connection = null;
         try {
@@ -252,28 +236,40 @@ public class RestHelper {
             try {
                 sslcontext = SSLContext.getInstance("TLS");
                 sslcontext.init(null, new TrustManager[]{myX509TrustManager}, null);
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (KeyManagementException e) {
+            } catch (NoSuchAlgorithmException | KeyManagementException e) {
                 e.printStackTrace();
             }
             ((HttpsURLConnection) httpURLConnection).setSSLSocketFactory(sslcontext.getSocketFactory());
         }
     }
 
-    private static TrustManager myX509TrustManager = new X509TrustManager() {
+    public enum HttpStatus {
+        OK, ERROR
+    }
 
-        @Override
-        public X509Certificate[] getAcceptedIssuers() {
-            return null;
+    public static class ResponseEntity {
+        private HttpStatus status;
+        private String body;
+
+        ResponseEntity(HttpStatus status, String body) {
+            this.status = status;
+            this.body = body;
         }
 
-        @Override
-        public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+        public HttpStatus getStatus() {
+            return status;
         }
 
-        @Override
-        public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+        public void setStatus(HttpStatus status) {
+            this.status = status;
         }
-    };
+
+        public String getBody() {
+            return body;
+        }
+
+        public void setBody(String body) {
+            this.body = body;
+        }
+    }
 }

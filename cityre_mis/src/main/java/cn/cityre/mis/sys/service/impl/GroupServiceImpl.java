@@ -9,9 +9,11 @@ import cn.cityre.mis.sys.entity.bo.GroupCityBo;
 import cn.cityre.mis.sys.entity.bo.ProvinceBo;
 import cn.cityre.mis.sys.entity.query.GroupCityQuery;
 import cn.cityre.mis.sys.entity.query.GroupQuery;
-import cn.cityre.mis.sys.entity.query.UserCityQuery;
 import cn.cityre.mis.sys.entity.union.GroupRepositoryUnion;
-import cn.cityre.mis.sys.model.*;
+import cn.cityre.mis.sys.model.Group;
+import cn.cityre.mis.sys.model.GroupCity;
+import cn.cityre.mis.sys.model.GroupPrivileges;
+import cn.cityre.mis.sys.model.Repository;
 import cn.cityre.mis.sys.service.GroupService;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +86,7 @@ public class GroupServiceImpl implements GroupService {
     public void saveGroup(Group group, List<GroupRepositoryUnion> groupRepositoryUnions) {
         boolean isNew = group.getId() == null;
 
-        List<Integer> repositoryIds = groupRepositoryUnions.stream().map(e -> e.getRepositoryId()).collect(Collectors.toList());
+        List<Integer> repositoryIds = groupRepositoryUnions.stream().map(GroupRepositoryUnion::getRepositoryId).collect(Collectors.toList());
         if (!isNew) {
             groupPrivilegesMapper.deleteList(group.getId(), repositoryIds);
         } else {
@@ -131,7 +133,7 @@ public class GroupServiceImpl implements GroupService {
         GroupCityQuery groupCityQuery = new GroupCityQuery();
         groupCityQuery.setGroupId(id);
         List<GroupCity> groupCityList = groupCityMapper.selectList(groupCityQuery);
-        List<String> cityIdList = groupCityList.stream().map(e -> e.getCityCode()).collect(Collectors.toList());
+        List<String> cityIdList = groupCityList.stream().map(GroupCity::getCityCode).collect(Collectors.toList());
         List<ProvinceBo> provinceBoList = cityService.getProvinceBoList(cityIdList);
         groupCityBo.setGroupId(group.getId());
         groupCityBo.setGroupName(group.getName());

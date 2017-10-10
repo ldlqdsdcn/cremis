@@ -1,7 +1,5 @@
 package cn.cityre.mis.util;
 
-import cn.cityre.mis.sys.entity.vo.GroupVo;
-
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -15,7 +13,7 @@ import java.util.stream.Collectors;
  */
 public class ValidatorHelper {
     private static final ValidatorHelper VALIDATORHELPER = new ValidatorHelper();
-    private ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+    private final ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 
     private ValidatorHelper() {
 
@@ -36,7 +34,7 @@ public class ValidatorHelper {
         Set<ConstraintViolation<Object>> constraintViolations =
                 validator.validate(param);
         if (constraintViolations.size() > 0)
-            return constraintViolations.stream().map(e -> e.getMessage()).collect(Collectors.toList());
+            return constraintViolations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
         return null;
     }
 

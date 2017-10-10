@@ -1,7 +1,6 @@
 package cn.cityre.mis.common.web.controller;
 
 import cn.cityre.mis.common.exception.AccountException;
-import cn.cityre.mis.sys.entity.vo.UserSession;
 import cn.cityre.mis.sys.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;

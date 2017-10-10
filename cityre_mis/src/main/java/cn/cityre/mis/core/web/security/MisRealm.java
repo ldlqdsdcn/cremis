@@ -31,7 +31,7 @@ import java.util.Set;
  */
 public class MisRealm extends AuthorizingRealm {
     private static final Logger log = LoggerFactory.getLogger(MisRealm.class);
-    private Gson gson = new Gson();
+    private final Gson gson = new Gson();
     @Autowired
     private RestHelper restHelper;
     @Value("${admin.account.name}")

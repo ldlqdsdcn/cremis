@@ -12,11 +12,10 @@ import java.util.UUID;
 public class JsonResult<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    private final String requestId;
     private boolean success;
     private int code;
     private String message;
-    private String requestId;
     private int errorCode;
     private T data;
     //用topJUI 必须包含这个字段

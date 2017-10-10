@@ -35,9 +35,9 @@ public class Md5SaltTool {
      * @return
      */
     public static String byteToHexString(byte[] b) {
-        StringBuffer hexString = new StringBuffer();
-        for (int i = 0; i < b.length; i++) {
-            String hex = Integer.toHexString(b[i] & 0xFF);
+        StringBuilder hexString = new StringBuilder();
+        for (byte aB : b) {
+            String hex = Integer.toHexString(aB & 0xFF);
             if (hex.length() == 1) {
                 hex = '0' + hex;
             }

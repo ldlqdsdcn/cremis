@@ -3,10 +3,10 @@ package cn.cityre.mis.core.web.result.def;
 /**
  * Created by admin on 2016/9/6.
  */
-public enum  ResultCode {
-    SUCCESS(0,"成功"),FAILURE(1,"失败");
-    private int    code;
-    private String message;
+public enum ResultCode {
+    SUCCESS(0, "成功"), FAILURE(1, "失败");
+    private final int code;
+    private final String message;
 
     ResultCode(int code, String message) {
         this.code = code;
