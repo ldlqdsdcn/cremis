@@ -38,8 +38,6 @@ import java.util.List;
 public class GroupController {
     @Autowired
     private GroupService groupService;
-    private ValidatorHelper validatorHelper = ValidatorHelper.getInstance();
-
     @RequestMapping("/")
     @RequiresPermissions("group:view")
     public ModelAndView showGroup() {

@@ -4,7 +4,7 @@ package cn.cityre.mis.sys.entity.vo;
  * Created by 刘大磊 on 2017/8/30 17:54.
  * 用户session
  */
-public class UserSession {
+public class UserSession implements java.io.Serializable {
     private String unionUid;
     private String name;
     private String userId;

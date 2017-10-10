@@ -40,7 +40,6 @@ public class RepositoryServiceImpl implements RepositoryService {
 
     @Override
     public void removeRepositoryList(Integer[] ids) {
-        List<Integer> idList = Arrays.asList(ids);
         if (ids != null) {
             for (Integer id : ids) {
                 groupPrivilegesMapper.deleteListByRepositoryId(id);
