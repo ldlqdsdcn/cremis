@@ -12,26 +12,23 @@ import java.io.UnsupportedEncodingException;
 /**
  * @author 刘大磊 2014年12月22日 上午9:03:20
  */
-public class MD5
-{
+public class MD5 {
 
     private static final byte PADDING[] = {
-        -128, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-        0, 0, 0, 0
+            -128, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0
     };
     private final long[] state;
     private final long[] count;
     private final byte[] buffer;
     private final byte[] digest;
-    private String digestHexStr;
 
-    private MD5()
-    {
+    private MD5() {
         state = new long[4];
         count = new long[2];
         buffer = new byte[64];
@@ -82,116 +79,101 @@ public class MD5
         }*/
     }
 
-    private void Decode(long al[], byte abyte0[], int i)
-    {
+    private void Decode(long al[], byte abyte0[], int i) {
         int j = 0;
-        for(int k = 0; k < i; k += 4)
-        {
+        for (int k = 0; k < i; k += 4) {
             al[j] = b2iu(abyte0[k]) | b2iu(abyte0[k + 1]) << 8 | b2iu(abyte0[k + 2]) << 16 | b2iu(abyte0[k + 3]) << 24;
             j++;
         }
 
     }
 
-    private void Encode(byte abyte0[], long al[], int i)
-    {
+    private void Encode(byte abyte0[], long al[], int i) {
         int j = 0;
-        for(int k = 0; k < i; k += 4)
-        {
-            abyte0[k] = (byte)(int)(al[j] & 255L);
-            abyte0[k + 1] = (byte)(int)(al[j] >>> 8 & 255L);
-            abyte0[k + 2] = (byte)(int)(al[j] >>> 16 & 255L);
-            abyte0[k + 3] = (byte)(int)(al[j] >>> 24 & 255L);
+        for (int k = 0; k < i; k += 4) {
+            abyte0[k] = (byte) (int) (al[j] & 255L);
+            abyte0[k + 1] = (byte) (int) (al[j] >>> 8 & 255L);
+            abyte0[k + 2] = (byte) (int) (al[j] >>> 16 & 255L);
+            abyte0[k + 3] = (byte) (int) (al[j] >>> 24 & 255L);
             j++;
         }
 
     }
 
-    private long F(long l, long l1, long l2)
-    {
+    private long F(long l, long l1, long l2) {
         return l & l1 | ~l & l2;
     }
 
-    private long FF(long l, long l1, long l2, long l3, long l4, long l5, long l6)
-    {
+    private long FF(long l, long l1, long l2, long l3, long l4, long l5, long l6) {
         l += F(l1, l2, l3) + l4 + l6;
-        l = (int)l << (int)l5 | (int)l >>> (int)(32L - l5);
+        l = (int) l << (int) l5 | (int) l >>> (int) (32L - l5);
         l += l1;
         return l;
     }
 
-    private long G(long l, long l1, long l2)
-    {
+    private long G(long l, long l1, long l2) {
         return l & l2 | l1 & ~l2;
     }
 
-    private long GG(long l, long l1, long l2, long l3, long l4, long l5, long l6)
-    {
+    private long GG(long l, long l1, long l2, long l3, long l4, long l5, long l6) {
         l += G(l1, l2, l3) + l4 + l6;
-        l = (int)l << (int)l5 | (int)l >>> (int)(32L - l5);
+        l = (int) l << (int) l5 | (int) l >>> (int) (32L - l5);
         l += l1;
         return l;
     }
 
-    private long H(long l, long l1, long l2)
-    {
+    private long H(long l, long l1, long l2) {
         return l ^ l1 ^ l2;
     }
 
-    private long HH(long l, long l1, long l2, long l3, long l4, long l5, long l6)
-    {
+    private long HH(long l, long l1, long l2, long l3, long l4, long l5, long l6) {
         l += H(l1, l2, l3) + l4 + l6;
-        l = (int)l << (int)l5 | (int)l >>> (int)(32L - l5);
+        l = (int) l << (int) l5 | (int) l >>> (int) (32L - l5);
         l += l1;
         return l;
     }
 
-    private long I(long l, long l1, long l2)
-    {
+    private long I(long l, long l1, long l2) {
         return l1 ^ (l | ~l2);
     }
 
-    private long II(long l, long l1, long l2, long l3, long l4, long l5, long l6)
-    {
+    private long II(long l, long l1, long l2, long l3, long l4, long l5, long l6) {
         l += I(l1, l2, l3) + l4 + l6;
-        l = (int)l << (int)l5 | (int)l >>> (int)(32L - l5);
+        l = (int) l << (int) l5 | (int) l >>> (int) (32L - l5);
         l += l1;
         return l;
     }
 
     /**
-     * @param  s 要加密的字符串
+     * @param s 要加密的字符串
      * @return MD5加密后字符串
      */
-    public String getMD5ofStr(String s)
-    {
+    public String getMD5ofStr(String s) {
         md5Init();
         try {
             md5Update(s.getBytes("utf-8"), s.length());
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("字符加密md5失败",e);
+            throw new RuntimeException("字符加密md5失败", e);
         }
         md5Final();
-        digestHexStr = "";
-        for(int i = 0; i < 16; i++)
-            digestHexStr += byteHEX(digest[i]);
-
-        return digestHexStr;
+        StringBuilder stringBuilder = new StringBuilder("");
+        for (int i = 0; i < 16; i++) {
+            stringBuilder.append(byteHEX(digest[i]));
+        }
+        return stringBuilder.toString();
     }
 
-    private void md5Final()
-    {
+    private void md5Final() {
         byte abyte0[] = new byte[8];
         Encode(abyte0, count, 8);
-        int i = (int)(count[0] >>> 3) & 0x3f;
+        int i = (int) (count[0] >>> 3) & 0x3f;
         int j = i >= 56 ? 120 - i : 56 - i;
         md5Update(PADDING, j);
         md5Update(abyte0, 8);
         Encode(digest, state, 16);
     }
 
-    private void md5Init()
-    {
+    private void md5Init() {
         count[0] = 0L;
         count[1] = 0L;
         state[0] = 0x67452301L;
@@ -200,13 +182,11 @@ public class MD5
         state[3] = 0x10325476L;
     }
 
-    private void md5Memcpy(byte abyte0[], byte abyte1[], int i, int j, int k)
-    {
+    private void md5Memcpy(byte abyte0[], byte abyte1[], int i, int j, int k) {
         System.arraycopy(abyte1, j, abyte0, i, k);
     }
 
-    private void md5Transform(byte abyte0[])
-    {
+    private void md5Transform(byte abyte0[]) {
         long l = state[0];
         long l1 = state[1];
         long l2 = state[2];
@@ -283,28 +263,24 @@ public class MD5
         state[3] += l3;
     }
 
-    private void md5Update(byte abyte0[], int i)
-    {
+    private void md5Update(byte abyte0[], int i) {
         byte abyte1[] = new byte[64];
-        int k = (int)(count[0] >>> 3) & 0x3f;
-        if((count[0] += i << 3) < (long)(i << 3))
+        int k = (int) (count[0] >>> 3) & 0x3f;
+        if ((count[0] += i << 3) < (long) (i << 3))
             count[1]++;
         count[1] += i >>> 29;
         int l = 64 - k;
         int j;
-        if(i >= l)
-        {
+        if (i >= l) {
             md5Memcpy(buffer, abyte0, k, 0, l);
             md5Transform(buffer);
-            for(j = l; j + 63 < i; j += 64)
-            {
+            for (j = l; j + 63 < i; j += 64) {
                 md5Memcpy(abyte1, abyte0, 0, j, 64);
                 md5Transform(abyte1);
             }
 
             k = 0;
-        } else
-        {
+        } else {
             j = 0;
         }
         md5Memcpy(buffer, abyte0, k, j, i - j);

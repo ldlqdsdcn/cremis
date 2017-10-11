@@ -139,7 +139,7 @@ public class ExcelUtils {
                         cell.setCellValue(map.get(ds_titles[j]) + "");
                     }
 
-                    cell.setCellStyle((HSSFCellStyle) styleList.get(j));
+                    cell.setCellStyle(styleList.get(j));
                 }
                 headerrow++;
             }
