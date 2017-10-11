@@ -77,7 +77,7 @@ public class MisDaoConfig {
 
     @Bean(name = "misSqlSessionFactory")
     @Primary
-    public SqlSessionFactory supportSqlSessionFactory(@Qualifier("misDataSource") DataSource misDataSource)
+    public SqlSessionFactory misSqlSessionFactory(@Qualifier("misDataSource") DataSource misDataSource)
             throws Exception {
         SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
         sqlSessionFactory.setDataSource(misDataSource);
