@@ -52,7 +52,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public List<GroupRepositoryUnion> getGroupRepositoryList(Integer groupId) {
-        List<GroupPrivileges> groupPrivilegesList = null;
+        List<GroupPrivileges> groupPrivilegesList;
         if (groupId == null) {
             groupPrivilegesList = new ArrayList<>();
         } else {

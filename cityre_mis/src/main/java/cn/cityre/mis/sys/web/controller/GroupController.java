@@ -64,8 +64,8 @@ public class GroupController {
             id = null;
         }
         GroupVo groupVo = new GroupVo();
-        List<GroupRepositoryUnion> repositoryUnionList = null;
-        Group group = null;
+        List<GroupRepositoryUnion> repositoryUnionList;
+        Group group;
         if (id == null) {
             group = new Group();
         } else {

@@ -93,7 +93,7 @@ public class RestHelper {
             // flush输出流的缓冲
             printWriter.flush();
 
-            BufferedReader in = null;
+            BufferedReader in;
             //开始获取数据
             if (200 <= httpURLConnection.getResponseCode() && httpURLConnection.getResponseCode() <= 299) {
                 in = new BufferedReader(new InputStreamReader((httpURLConnection.getInputStream()), "UTF-8"));

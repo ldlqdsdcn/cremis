@@ -181,7 +181,7 @@ public class ExcelUtils {
     public static String encodeChineseDownloadFileName(
             HttpServletRequest request, String pFileName) throws Exception {
 
-        String filename = null;
+        String filename;
         String agent = request.getHeader("USER-AGENT");
         if (null != agent) {
             if (agent.contains("Firefox")) {//Firefox

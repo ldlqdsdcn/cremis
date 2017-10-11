@@ -144,7 +144,7 @@ public class HomeController {
         if (StringUtil.isEmpty(provinceCode)) {
             return JsonResult.fail(ErrorCodes.VALIDATE_PARAM_ERROR.getCode(), "省份编码不允许为空");
         }
-        List<City> cities = null;
+        List<City> cities;
         String unionUid = WebUtil.getUnionUid();
         if (WebConstant.ADMINISTRATOR.equals(unionUid)) {
             cities = cityService.getCityListByProvinceCode(provinceCode);
@@ -164,7 +164,7 @@ public class HomeController {
     @RequestMapping("/provinces")
     @ResponseBody
     public JsonResult<List<ProvinceVo>> getProvinceList(HttpSession session) {
-        List<Province> provinceList = null;
+        List<Province> provinceList;
         String unionUid = WebUtil.getUnionUid(session);
         if (WebConstant.ADMINISTRATOR.equals(unionUid)) {
             provinceList = cityService.getAllProvinceList();

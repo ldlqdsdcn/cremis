@@ -97,7 +97,7 @@ public class Md5SaltTool {
      */
     public static String getEncryptedPwd(String password){
         //声明加密后的口令数组变量
-        byte[] pwd = null;
+        byte[] pwd;
         //随机数生成器
         SecureRandom random = new SecureRandom();
         //声明盐数组变量   12

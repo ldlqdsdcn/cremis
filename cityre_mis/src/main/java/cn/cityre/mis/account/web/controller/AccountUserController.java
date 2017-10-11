@@ -63,8 +63,8 @@ public class AccountUserController {
             id = null;
         }
         AccountUserVo accountUserVo = new AccountUserVo();
-        List<UserRepositoryUnion> repositoryUnionList = null;
-        AccountUser accountUser = null;
+        List<UserRepositoryUnion> repositoryUnionList;
+        AccountUser accountUser;
         if (id == null) {
             accountUser = new AccountUser();
         } else {

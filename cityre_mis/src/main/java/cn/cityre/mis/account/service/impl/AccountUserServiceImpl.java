@@ -61,7 +61,7 @@ public class AccountUserServiceImpl implements AccountUserService {
     @Override
     public List<UserRepositoryUnion> getAccountPrivileges(String unionUid) {
         List<UserRepositoryUnion> userRepositoryUnionList = new ArrayList<>();
-        List<UserPrivileges> userPrivilegesList = null;
+        List<UserPrivileges> userPrivilegesList;
         if (unionUid == null) {
             userPrivilegesList = new ArrayList<>();
         } else {
