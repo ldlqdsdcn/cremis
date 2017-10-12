@@ -5,4 +5,8 @@ package cn.cityre.mis.def;
  */
 public class SystemConsts {
     public final static String SUPER_USER = "administrator";
+    /**
+     * 北京城市编码
+     */
+    public final static String CITY_CODE_BEI_JING = "bj";
 }

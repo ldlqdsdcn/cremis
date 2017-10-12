@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cityre.mis.sys.dao.UserCitySelectedMapper">
+    <resultMap id="BaseResultMap" type="cn.cityre.mis.sys.model.UserCitySelected">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="city_code" jdbcType="VARCHAR" property="cityCode"/>
+        <result column="unionuid" jdbcType="VARCHAR" property="unionuid"/>
+        <result column="created" jdbcType="TIMESTAMP" property="created"/>
+        <result column="updated" jdbcType="TIMESTAMP" property="updated"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, city_code, unionuid, created, updated
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user_city_selected
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByUnionUid" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user_city_selected
+        where unionuid = #{unionuid,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_user_city_selected
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="cn.cityre.mis.sys.model.UserCitySelected">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into sys_user_city_selected (city_code, unionuid,
+        created, updated)
+        values (#{cityCode,jdbcType=VARCHAR}, #{unionuid,jdbcType=VARCHAR},
+        #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="cn.cityre.mis.sys.model.UserCitySelected">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into sys_user_city_selected
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cityCode != null">
+                city_code,
+            </if>
+            <if test="unionuid != null">
+                unionuid,
+            </if>
+            <if test="created != null">
+                created,
+            </if>
+            <if test="updated != null">
+                updated,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cityCode != null">
+                #{cityCode,jdbcType=VARCHAR},
+            </if>
+            <if test="unionuid != null">
+                #{unionuid,jdbcType=VARCHAR},
+            </if>
+            <if test="created != null">
+                #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updated != null">
+                #{updated,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.cityre.mis.sys.model.UserCitySelected">
+        update sys_user_city_selected
+        <set>
+            <if test="cityCode != null">
+                city_code = #{cityCode,jdbcType=VARCHAR},
+            </if>
+            <if test="unionuid != null">
+                unionuid = #{unionuid,jdbcType=VARCHAR},
+            </if>
+            <if test="created != null">
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updated != null">
+                updated = #{updated,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.cityre.mis.sys.model.UserCitySelected">
+    update sys_user_city_selected
+    set city_code = #{cityCode,jdbcType=VARCHAR},
+      unionuid = #{unionuid,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      updated = #{updated,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

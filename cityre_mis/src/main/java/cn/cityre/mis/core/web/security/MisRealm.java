@@ -1,12 +1,14 @@
 package cn.cityre.mis.core.web.security;
 
+import cn.cityre.mis.center.model.City;
 import cn.cityre.mis.core.web.def.WebConstant;
 import cn.cityre.mis.sys.entity.vo.ErrorResponseVo;
 import cn.cityre.mis.sys.entity.vo.LoginResponseVo;
 import cn.cityre.mis.sys.entity.vo.UserSession;
+import cn.cityre.mis.sys.service.UserCitySelectedService;
 import cn.cityre.mis.sys.service.UserService;
-import cn.cityre.mis.util.RestHelper;
 import cn.cityre.mis.util.Md5SaltTool;
+import cn.cityre.mis.util.RestHelper;
 import com.google.gson.Gson;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -33,6 +35,8 @@ public class MisRealm extends AuthorizingRealm {
     private static final Logger log = LoggerFactory.getLogger(MisRealm.class);
     private final Gson gson = new Gson();
     @Autowired
+    private UserCitySelectedService userCitySelectedService;
+    @Autowired
     private RestHelper restHelper;
     @Value("${admin.account.name}")
     private String adminAccount;
@@ -46,6 +50,7 @@ public class MisRealm extends AuthorizingRealm {
     private String loginApiUrl;
     @Value("${centeraccount.api.value}")
     private String apiKey;
+
     /**
      * 授权
      *
@@ -83,6 +88,10 @@ public class MisRealm extends AuthorizingRealm {
             userSession.setUserId(WebConstant.ADMINISTRATOR);
             userSession.setName(WebConstant.ADMINISTRATOR);
             userSession.setUnionUid(WebConstant.ADMINISTRATOR);
+            City userCitySelected = userCitySelectedService.getUserCitySelected(WebConstant.ADMINISTRATOR);
+            userSession.setCurrentProvinceCode(userCitySelected.getProvinceCode());
+            userSession.setCurrentCityCode(userCitySelected.getCityCode());
+            userSession.setCityName(userCitySelected.getCityName());
             initUserInfo(request, userSession);
             return authenticationInfo;
         }
@@ -100,6 +109,10 @@ public class MisRealm extends AuthorizingRealm {
             userSession.setName(loginResponseVo.getNickName());
             userSession.setToken(loginResponseVo.getUserToken());
             userSession.setUserId(loginResponseVo.getUserId());
+            City userCitySelected = userCitySelectedService.getUserCitySelected(loginResponseVo.getUnionUid());
+            userSession.setCurrentProvinceCode(userCitySelected.getProvinceCode());
+            userSession.setCurrentCityCode(userCitySelected.getCityCode());
+            userSession.setCityName(userCitySelected.getCityName());
             initUserInfo(request, userSession);
             AuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(authenticationToken.getPrincipal(), authenticationToken.getCredentials(), loginResponseVo.getUnionUid());
             return authenticationInfo;

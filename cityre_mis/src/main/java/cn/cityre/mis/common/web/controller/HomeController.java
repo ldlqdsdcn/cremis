@@ -12,6 +12,7 @@ import cn.cityre.mis.core.web.result.def.ErrorCodes;
 import cn.cityre.mis.sys.entity.vo.UserSession;
 import cn.cityre.mis.sys.model.Menu;
 import cn.cityre.mis.sys.service.MenuService;
+import cn.cityre.mis.sys.service.UserCitySelectedService;
 import cn.cityre.mis.util.StringUtil;
 import cn.cityre.mis.util.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,8 @@ public class HomeController {
     private MenuService menuService;
     @Autowired
     private CityService cityService;
+    @Autowired
+    private UserCitySelectedService userCitySelectedService;
 
     @RequestMapping({"index", "/"})
     public ModelAndView showHome() {
@@ -53,14 +56,17 @@ public class HomeController {
     public String noprivileges() {
         return "error/noprivileges";
     }
+
     @RequestMapping("/common/frameLogin")
     public String frameLogin() {
         return "common/frameLogin";
     }
+
     @RequestMapping("/desktop")
     public String desktop() {
         return "desktop";
     }
+
     @RequestMapping("/menus")
     @ResponseBody
     public JsonResult<List<MenuVo>> getLeftMenuListByParentMenuId(HttpSession session, HttpServletRequest request, Integer menuId) {
@@ -102,6 +108,7 @@ public class HomeController {
         }
         return JsonResult.success(menuVoList);
     }
+
     @RequestMapping("/leftmenu")
     @ResponseBody
     public JsonResult<List<MenuVo>> getLeftMenuList(HttpSession session) {
@@ -138,6 +145,7 @@ public class HomeController {
         }
         return JsonResult.success(menuVoList);
     }
+
     @RequestMapping("/city/{provinceCode}")
     @ResponseBody
     public JsonResult<List<CityVo>> getCityList(@PathVariable("provinceCode") String provinceCode) {
@@ -161,6 +169,7 @@ public class HomeController {
         }
         return JsonResult.success(cityVoList);
     }
+
     @RequestMapping("/provinces")
     @ResponseBody
     public JsonResult<List<ProvinceVo>> getProvinceList(HttpSession session) {
@@ -180,15 +189,19 @@ public class HomeController {
         }
         return JsonResult.success(provinceVoList);
     }
+
     @RequestMapping("/selectCity/{cityCode}")
     @ResponseBody
     public JsonResult<City> selectCity(@PathVariable String cityCode, HttpSession session) {
         WebUtil.getUserSession(session).setCurrentCityCode(cityCode);
         City city = cityService.getCityByCode(cityCode);
-        WebUtil.getUserSession(session).setCurrentProvinceCode(city.getProvinceCode());
-        WebUtil.getUserSession(session).setCityName(city.getCityName());
+        UserSession userSession = WebUtil.getUserSession();
+        userCitySelectedService.saveUserCitySelected(cityCode, userSession.getUnionUid());
+        userSession.setCurrentProvinceCode(city.getProvinceCode());
+        userSession.setCityName(city.getCityName());
         return JsonResult.success(city);
     }
+
     @RequestMapping("/userSession")
     @ResponseBody
     public JsonResult<UserSession> getUserSession(HttpSession session) {
